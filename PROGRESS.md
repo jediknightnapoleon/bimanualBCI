@@ -16,9 +16,9 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
 | 1.1–1.2 | Fig 1, Supp Fig 1b,c,e | medium | done |
 | 2.1–2.4 | Fig 2, Supp Fig 1d, Supp Table 1 | high/medium | done |
 | 3.1–3.3 | Fig 3, Supp Figs 2, 4 | medium/high | done |
-| 4.1–4.4 | RNN + augmentation, Fig 4 | high/low/medium | 4.1 done early (`targets.py`, `augment.py`); 4.2–4.4 todo |
-| 5.1–5.2 | Fig 5 re-scored from closed-loop logs | medium | 5.1 done early (`behavior.py`); 5.2 todo |
-| 6.1–6.2 | Final report | medium | todo |
+| 4.1–4.4 | RNN + augmentation, Fig 4 | high/low/medium | done |
+| 5.1–5.2 | Fig 5 re-scored from closed-loop logs | medium | done (analysis); commit after Phase 4 |
+| 6.1–6.2 | Final report | medium | 6.2 PMC check done; 6.1 todo |
 
 ## Log
 
@@ -165,3 +165,44 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
     - The FFN rises with laterality and stays at about 0.69 for every ρ when laterality is ≥ 2× real.
     - At laterality 0 the FFN is slightly below ridge.
 - **Phase 3 complete:** committed and pushed. `bimanual/rnn.py` and `tests/test_rnn.py` (step 4.2, written while the sweep ran; 3 tests including exact checkpoint/resume) are in this commit too.
+- **4.2 done:**
+  - Added `scripts/fig4_rnn.py` (`pixi run fig4-rnn [--stage all|smoke|search|extras|plot]`).
+  - Day 1869 OL split by block: train 1–5, val 6, test 7.
+  - 2000 augmented snippets take 6 s to generate (17 strata); training runs at 69 ms/step (batch 32).
+  - 400-step sanity check on the val block: raw r 0.94 / 0.88 (RH / LH), augmented 0.67 / 0.57 and rougher.
+- **4.3 started:** background search with 10 settings × {raw, aug} = 20 models, then extras (2 extra seeds per best setting and the "hold" target reading). Estimated about 1.5 h.
+  - Log: `results/fig4_rnn.log`; per-model results: `results/rnn_search/trials.jsonl`; checkpoints: `results/checkpoints/`.
+  - **Resume after an interruption:** rerun `pixi run fig4-rnn`. Finished models are skipped, and an unfinished one resumes from its last checkpoint (every 250 steps).
+- **2026-11-21, user instruction:** if usage remains after Phase 4, continue straight into Phase 5 without pausing. Its briefing also goes to `docs/briefings.md`.
+  - Phase 5 (CPU only) was started while the Phase 4 GPU search ran.
+- **5.2 done (run while the Phase 4 search was on the GPU):**
+  - Added `scripts/fig5_behavior.py` (`pixi run fig5-behavior`), writing `results/fig5/trials.csv`, `summary.json`, `results/figures/fig5_online.png` and `fig4e_online_speed.png`.
+  - **5a** (1776/1778/1790/1792 RNN CL, pooled):
+    - success: uniR 83%, uniL 86%, bi 71%;
+    - TTA (successful trials): uniR 2.82 s, uniL 3.02 s, bi 5.37 s;
+    - angular error: uniR 34°, uniL 43°, bi 52°.
+    - Bimanual angular error is higher, as in the paper. Bimanual TTA is about 2× unimanual, NOT "only slightly longer" (register #30; flagged in paper_check).
+  - **5b:** sequential is faster than simultaneous for every type. bi 5.3 s vs 7.1 s; success 96% vs 67%.
+  - **5c:** the RNN is better than linear at every gain on mixed blocks (linear mostly times out). On uni-only locked blocks (1855) linear works (TTA about 3.4–4.2 s), as the paper says.
+  - **4e:**
+    - success augmented vs raw: 1867 59% vs 7%; 1869 86% vs 16%.
+    - Speed: raw gives a single pulse at 0.4–1.0 s, then about 40 units/s; augmented gives sustained 150–200 units/s.
+- **4.3 interim finding:**
+  - Raw-trained models match the paper: test r about 0.92–0.95 RH and 0.83–0.89 LH (paper 0.90 / 0.83).
+  - Augmented models with 200–800-ms clips are MUCH lower (about 0.56–0.63 RH, 0.43–0.49 LH), while the paper says "slightly lower".
+  - Added `--stage clips`: the best augmented setting retrained with 2–8-s clips (the "0.2–0.8 × snippet length" reading, register #14), 3 seeds.
+  - **Resume:** after the search finishes, run `pixi run fig4-rnn --stage clips`, then the Phase 4 briefing, commit and push. Phase 5 is already analysed; commit it after Phase 4.
+- **2026-11-21, user instruction:** after Phase 4, finish everything (Phases 5 and 6) without pausing.
+  - Phase 6 adds no new analysis.
+  - At the end, give the final briefing and ASK the user for next steps.
+- **6.2 done early:** a web-fetch agent re-read PMC10796685. The results are in `docs/paper_check.md` (a new table) and the register statuses. Key points: all headline numbers are confirmed; the clip length is contradictory within the paper; Eq. 2 is the raw per-step difference (deviation #21); Fig 5a lists days 1752 / 1771, which have no CL data in Dryad.
+- **4.3–4.4 done:**
+  - 20 search models, plus 2 extra seeds × {raw, aug}, plus the "hold" target × {raw, aug}, plus 3 long-clip models. Each model takes about 100–250 s, about 1.6 GPU-h in total.
+  - Test block 7, mean of 3 seeds:
+    - raw: RH 0.96, LH 0.89, roughness 0.04 (paper 0.90 / 0.83);
+    - augmented with 200–800-ms clips: RH 0.76, LH 0.67, roughness 0.31;
+    - **augmented with 2–8-s clips: RH 0.93, LH 0.87, roughness 0.08**.
+  - The 2–8-s reading reproduces the paper's "slightly poorer ... noisier": it is now the MAIN reading (register #14).
+  - The "hold" target reading is worse for both (raw RH 0.94/LH 0.86; aug RH 0.69/LH 0.60), so "clip" stays the main reading (#13).
+  - Figure: `results/figures/fig4_rnn.png`.
+- **Phase 4 complete:** committed and pushed.

@@ -1,0 +1,220 @@
+Pixi task (fig4-rnn): python -u scripts/fig4_rnn.py --stage all
+  generated 2000 augmented snippets in 5 s (17 strata)
+smoke: 69 ms/step (batch 32) -> full search about 1.2 h; step scale 1.00 to fit the 3-h budget
+[s00_raw] kind=raw HParams(lr=0.0017142299661372733, batch=32, steps=4000, l2=1.530826847078122e-05, noise_sd=0.2594208565682763, drift_sd=0.187822151366105, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.0425  mse 0.0053  ce 0.020
+  step 1000/4000  loss 0.0383  mse 0.0053  ce 0.016
+  step 1500/4000  loss 0.0241  mse 0.0031  ce 0.008
+  step 2000/4000  loss 0.0286  mse 0.0047  ce 0.005
+  step 2500/4000  loss 0.0231  mse 0.0028  ce 0.004
+  step 3000/4000  loss 0.0195  mse 0.0027  ce 0.005
+  step 3500/4000  loss 0.0191  mse 0.0019  ce 0.006
+  step 4000/4000  loss 0.0197  mse 0.0018  ce 0.004
+[s00_raw] val r R 0.953 L 0.915 | test r R 0.940 L 0.894 | rough 0.047 | 247 s
+[s00_aug] kind=aug HParams(lr=0.0017142299661372733, batch=32, steps=4000, l2=1.530826847078122e-05, noise_sd=0.2594208565682763, drift_sd=0.187822151366105, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.1179  mse 0.0254  ce 0.058
+  step 1000/4000  loss 0.1187  mse 0.0283  ce 0.055
+  step 1500/4000  loss 0.0809  mse 0.0203  ce 0.021
+  step 2000/4000  loss 0.1129  mse 0.0253  ce 0.047
+  step 2500/4000  loss 0.0639  mse 0.0162  ce 0.014
+  step 3000/4000  loss 0.0581  mse 0.0148  ce 0.009
+  step 3500/4000  loss 0.0721  mse 0.0184  ce 0.014
+  step 4000/4000  loss 0.0562  mse 0.0156  ce 0.011
+[s00_aug] val r R 0.631 L 0.465 | test r R 0.596 L 0.445 | rough 0.468 | 248 s
+[s01_raw] kind=raw HParams(lr=0.0003255630606793431, batch=16, steps=2000, l2=9.333130104642905e-06, noise_sd=0.25063344233891505, drift_sd=0.21658528286128934, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.2202  mse 0.0212  ce 0.191
+  step 1000/2000  loss 0.0431  mse 0.0075  ce 0.027
+  step 1500/2000  loss 0.0690  mse 0.0078  ce 0.052
+  step 2000/2000  loss 0.0365  mse 0.0053  ce 0.022
+[s01_raw] val r R 0.948 L 0.904 | test r R 0.925 L 0.869 | rough 0.127 | 102 s
+[s01_aug] kind=aug HParams(lr=0.0003255630606793431, batch=16, steps=2000, l2=9.333130104642905e-06, noise_sd=0.25063344233891505, drift_sd=0.21658528286128934, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.3514  mse 0.0480  ce 0.293
+  step 1000/2000  loss 0.2323  mse 0.0416  ce 0.177
+  step 1500/2000  loss 0.1254  mse 0.0290  ce 0.081
+  step 2000/2000  loss 0.1125  mse 0.0288  ce 0.067
+[s01_aug] val r R 0.654 L 0.509 | test r R 0.629 L 0.488 | rough 0.481 | 103 s
+[s02_raw] kind=raw HParams(lr=0.002552771328935784, batch=16, steps=4000, l2=1.4788261611855016e-06, noise_sd=0.23518308685732933, drift_sd=0.29150452682754746, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.0350  mse 0.0090  ce 0.022
+  step 1000/4000  loss 0.0435  mse 0.0050  ce 0.033
+  step 1500/4000  loss 0.0194  mse 0.0050  ce 0.008
+  step 2000/4000  loss 0.0199  mse 0.0039  ce 0.009
+  step 2500/4000  loss 0.0172  mse 0.0045  ce 0.005
+  step 3000/4000  loss 0.0335  mse 0.0060  ce 0.014
+  step 3500/4000  loss 0.0496  mse 0.0068  ce 0.021
+  step 4000/4000  loss 0.0435  mse 0.0079  ce 0.011
+[s02_raw] val r R 0.912 L 0.875 | test r R 0.922 L 0.832 | rough 0.082 | 202 s
+[s02_aug] kind=aug HParams(lr=0.002552771328935784, batch=16, steps=4000, l2=1.4788261611855016e-06, noise_sd=0.23518308685732933, drift_sd=0.29150452682754746, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.1646  mse 0.0389  ce 0.117
+  step 1000/4000  loss 0.1184  mse 0.0301  ce 0.076
+  step 1500/4000  loss 0.1197  mse 0.0354  ce 0.067
+  step 2000/4000  loss 0.1219  mse 0.0382  ce 0.063
+  step 2500/4000  loss 0.1382  mse 0.0378  ce 0.075
+  step 3000/4000  loss 0.1328  mse 0.0418  ce 0.061
+  step 3500/4000  loss 0.1574  mse 0.0411  ce 0.082
+  step 4000/4000  loss 0.1912  mse 0.0487  ce 0.102
+[s02_aug] val r R 0.598 L 0.482 | test r R 0.562 L 0.429 | rough 0.530 | 204 s
+[s03_raw] kind=raw HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.1016  mse 0.0098  ce 0.062
+  step 1000/4000  loss 0.0824  mse 0.0083  ce 0.046
+  step 1500/4000  loss 0.0534  mse 0.0057  ce 0.022
+  step 2000/4000  loss 0.0589  mse 0.0060  ce 0.029
+  step 2500/4000  loss 0.0387  mse 0.0049  ce 0.012
+  step 3000/4000  loss 0.0399  mse 0.0048  ce 0.015
+  step 3500/4000  loss 0.0365  mse 0.0039  ce 0.013
+  step 4000/4000  loss 0.0363  mse 0.0030  ce 0.014
+[s03_raw] val r R 0.960 L 0.918 | test r R 0.949 L 0.893 | rough 0.065 | 204 s
+[s03_aug] kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.3096  mse 0.0549  ce 0.215
+  step 1000/4000  loss 0.2046  mse 0.0325  ce 0.126
+  step 1500/4000  loss 0.1695  mse 0.0323  ce 0.090
+  step 2000/4000  loss 0.1562  mse 0.0273  ce 0.081
+  step 2500/4000  loss 0.1401  mse 0.0260  ce 0.066
+  step 3000/4000  loss 0.1340  mse 0.0275  ce 0.059
+  step 3500/4000  loss 0.1170  mse 0.0261  ce 0.044
+  step 4000/4000  loss 0.1089  mse 0.0245  ce 0.038
+[s03_aug] val r R 0.717 L 0.609 | test r R 0.688 L 0.551 | rough 0.406 | 206 s
+[s04_raw] kind=raw HParams(lr=0.0005156255196127187, batch=48, steps=2000, l2=1.816447693826234e-06, noise_sd=0.16149203097139478, drift_sd=0.13622621705228732, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.0414  mse 0.0076  ce 0.032
+  step 1000/2000  loss 0.0214  mse 0.0041  ce 0.015
+  step 1500/2000  loss 0.0150  mse 0.0042  ce 0.008
+  step 2000/2000  loss 0.0137  mse 0.0032  ce 0.008
+[s04_raw] val r R 0.949 L 0.888 | test r R 0.936 L 0.865 | rough 0.105 | 160 s
+[s04_aug] kind=aug HParams(lr=0.0005156255196127187, batch=48, steps=2000, l2=1.816447693826234e-06, noise_sd=0.16149203097139478, drift_sd=0.13622621705228732, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.1289  mse 0.0285  ce 0.097
+  step 1000/2000  loss 0.0706  mse 0.0226  ce 0.044
+  step 1500/2000  loss 0.0433  mse 0.0177  ce 0.021
+  step 2000/2000  loss 0.0326  mse 0.0157  ce 0.012
+[s04_aug] val r R 0.591 L 0.426 | test r R 0.537 L 0.403 | rough 0.575 | 162 s
+[s05_raw] kind=raw HParams(lr=0.0009004641496985519, batch=16, steps=4000, l2=3.994425521784303e-05, noise_sd=0.31034910940222105, drift_sd=0.03433567646306794, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.0753  mse 0.0079  ce 0.039
+  step 1000/4000  loss 0.0594  mse 0.0067  ce 0.029
+  step 1500/4000  loss 0.0362  mse 0.0034  ce 0.013
+  step 2000/4000  loss 0.0288  mse 0.0028  ce 0.008
+  step 2500/4000  loss 0.0285  mse 0.0035  ce 0.008
+  step 3000/4000  loss 0.0221  mse 0.0020  ce 0.005
+  step 3500/4000  loss 0.0237  mse 0.0033  ce 0.006
+  step 4000/4000  loss 0.0252  mse 0.0044  ce 0.006
+[s05_raw] val r R 0.949 L 0.894 | test r R 0.938 L 0.875 | rough 0.054 | 200 s
+[s05_aug] kind=aug HParams(lr=0.0009004641496985519, batch=16, steps=4000, l2=3.994425521784303e-05, noise_sd=0.31034910940222105, drift_sd=0.03433567646306794, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.1931  mse 0.0327  ce 0.115
+  step 1000/4000  loss 0.1323  mse 0.0258  ce 0.060
+  step 1500/4000  loss 0.1132  mse 0.0245  ce 0.043
+  step 2000/4000  loss 0.0919  mse 0.0205  ce 0.029
+  step 2500/4000  loss 0.0787  mse 0.0180  ce 0.018
+  step 3000/4000  loss 0.0847  mse 0.0189  ce 0.022
+  step 3500/4000  loss 0.0729  mse 0.0179  ce 0.015
+  step 4000/4000  loss 0.0678  mse 0.0171  ce 0.012
+[s05_aug] val r R 0.684 L 0.556 | test r R 0.648 L 0.524 | rough 0.442 | 206 s
+[s06_raw] kind=raw HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0496  mse 0.0068  ce 0.041
+  step 1000/3000  loss 0.0247  mse 0.0059  ce 0.017
+  step 1500/3000  loss 0.0192  mse 0.0042  ce 0.013
+  step 2000/3000  loss 0.0169  mse 0.0032  ce 0.012
+  step 2500/3000  loss 0.0148  mse 0.0033  ce 0.009
+  step 3000/3000  loss 0.0103  mse 0.0026  ce 0.005
+[s06_raw] val r R 0.957 L 0.921 | test r R 0.957 L 0.879 | rough 0.067 | 191 s
+[s06_aug] kind=aug HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1889  mse 0.0398  ce 0.147
+  step 1000/3000  loss 0.1066  mse 0.0291  ce 0.074
+  step 1500/3000  loss 0.0807  mse 0.0247  ce 0.052
+  step 2000/3000  loss 0.0682  mse 0.0251  ce 0.039
+  step 2500/3000  loss 0.0547  mse 0.0233  ce 0.027
+  step 3000/3000  loss 0.0617  mse 0.0235  ce 0.033
+[s06_aug] val r R 0.740 L 0.592 | test r R 0.703 L 0.587 | rough 0.400 | 192 s
+[s07_raw] kind=raw HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1036  mse 0.0079  ce 0.060
+  step 1000/3000  loss 0.0869  mse 0.0069  ce 0.047
+  step 1500/3000  loss 0.0513  mse 0.0045  ce 0.018
+  step 2000/3000  loss 0.0578  mse 0.0065  ce 0.023
+  step 2500/3000  loss 0.0448  mse 0.0046  ce 0.013
+  step 3000/3000  loss 0.0498  mse 0.0059  ce 0.016
+[s07_raw] val r R 0.955 L 0.917 | test r R 0.947 L 0.884 | rough 0.049 | 151 s
+[s07_aug] kind=aug HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.3137  mse 0.0490  ce 0.208
+  step 1000/3000  loss 0.2242  mse 0.0395  ce 0.117
+  step 1500/3000  loss 0.2111  mse 0.0357  ce 0.105
+  step 2000/3000  loss 0.1989  mse 0.0361  ce 0.091
+  step 2500/3000  loss 0.2075  mse 0.0317  ce 0.103
+  step 3000/3000  loss 0.1810  mse 0.0313  ce 0.076
+[s07_aug] val r R 0.799 L 0.699 | test r R 0.770 L 0.671 | rough 0.320 | 149 s
+[s08_raw] kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0421  mse 0.0062  ce 0.034
+  step 1000/3000  loss 0.0181  mse 0.0042  ce 0.012
+  step 1500/3000  loss 0.0123  mse 0.0028  ce 0.008
+  step 2000/3000  loss 0.0119  mse 0.0027  ce 0.007
+  step 2500/3000  loss 0.0102  mse 0.0024  ce 0.005
+  step 3000/3000  loss 0.0084  mse 0.0023  ce 0.004
+[s08_raw] val r R 0.960 L 0.924 | test r R 0.959 L 0.879 | rough 0.037 | 241 s
+[s08_aug] kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1412  mse 0.0334  ce 0.105
+  step 1000/3000  loss 0.0880  mse 0.0282  ce 0.056
+  step 1500/3000  loss 0.0711  mse 0.0240  ce 0.043
+  step 2000/3000  loss 0.0638  mse 0.0250  ce 0.034
+  step 2500/3000  loss 0.0582  mse 0.0228  ce 0.030
+  step 3000/3000  loss 0.0619  mse 0.0242  ce 0.032
+[s08_aug] val r R 0.785 L 0.671 | test r R 0.766 L 0.658 | rough 0.360 | 241 s
+[s09_raw] kind=raw HParams(lr=0.0004071026128937358, batch=16, steps=2000, l2=5.277428955828441e-06, noise_sd=0.21668842913161038, drift_sd=0.045693412135584574, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.0656  mse 0.0078  ce 0.053
+  step 1000/2000  loss 0.0353  mse 0.0055  ce 0.024
+  step 1500/2000  loss 0.0181  mse 0.0032  ce 0.009
+  step 2000/2000  loss 0.0190  mse 0.0044  ce 0.009
+[s09_raw] val r R 0.944 L 0.890 | test r R 0.938 L 0.870 | rough 0.114 | 99 s
+[s09_aug] kind=aug HParams(lr=0.0004071026128937358, batch=16, steps=2000, l2=5.277428955828441e-06, noise_sd=0.21668842913161038, drift_sd=0.045693412135584574, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.2411  mse 0.0358  ce 0.198
+  step 1000/2000  loss 0.1254  mse 0.0278  ce 0.089
+  step 1500/2000  loss 0.0772  mse 0.0223  ce 0.045
+  step 2000/2000  loss 0.0677  mse 0.0208  ce 0.036
+[s09_aug] val r R 0.634 L 0.491 | test r R 0.574 L 0.458 | rough 0.528 | 99 s
+[best_raw_seed101] kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0326  mse 0.0061  ce 0.025
+  step 1000/3000  loss 0.0271  mse 0.0047  ce 0.021
+  step 1500/3000  loss 0.0158  mse 0.0040  ce 0.010
+  step 2000/3000  loss 0.0122  mse 0.0031  ce 0.007
+  step 2500/3000  loss 0.0113  mse 0.0030  ce 0.006
+  step 3000/3000  loss 0.0097  mse 0.0025  ce 0.005
+[best_raw_seed101] val r R 0.964 L 0.917 | test r R 0.961 L 0.888 | rough 0.040 | 238 s
+[best_raw_seed102] kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0313  mse 0.0058  ce 0.024
+  step 1000/3000  loss 0.0194  mse 0.0038  ce 0.014
+  step 1500/3000  loss 0.0129  mse 0.0034  ce 0.008
+  step 2000/3000  loss 0.0130  mse 0.0036  ce 0.007
+  step 2500/3000  loss 0.0114  mse 0.0024  ce 0.006
+  step 3000/3000  loss 0.0127  mse 0.0028  ce 0.008
+[best_raw_seed102] val r R 0.961 L 0.920 | test r R 0.957 L 0.894 | rough 0.037 | 238 s
+[best_aug_seed101] kind=aug HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.3578  mse 0.0540  ce 0.247
+  step 1000/3000  loss 0.2325  mse 0.0421  ce 0.124
+  step 1500/3000  loss 0.1952  mse 0.0333  ce 0.091
+  step 2000/3000  loss 0.2242  mse 0.0370  ce 0.115
+  step 2500/3000  loss 0.1857  mse 0.0354  ce 0.078
+  step 3000/3000  loss 0.2006  mse 0.0324  ce 0.096
+[best_aug_seed101] val r R 0.791 L 0.672 | test r R 0.762 L 0.643 | rough 0.318 | 148 s
+[best_aug_seed102] kind=aug HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.3127  mse 0.0452  ce 0.210
+  step 1000/3000  loss 0.2536  mse 0.0391  ce 0.148
+  step 1500/3000  loss 0.1955  mse 0.0372  ce 0.089
+  step 2000/3000  loss 0.1933  mse 0.0303  ce 0.091
+  step 2500/3000  loss 0.1841  mse 0.0337  ce 0.079
+  step 3000/3000  loss 0.1705  mse 0.0315  ce 0.067
+[best_aug_seed102] val r R 0.785 L 0.687 | test r R 0.759 L 0.689 | rough 0.301 | 149 s
+  generated 2000 augmented snippets in 5 s (17 strata)
+[best_raw_hold] kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0332  mse 0.0077  ce 0.024
+  step 1000/3000  loss 0.0226  mse 0.0056  ce 0.015
+  step 1500/3000  loss 0.0153  mse 0.0054  ce 0.008
+  step 2000/3000  loss 0.0147  mse 0.0036  ce 0.009
+  step 2500/3000  loss 0.0099  mse 0.0032  ce 0.004
+  step 3000/3000  loss 0.0129  mse 0.0026  ce 0.008
+[best_raw_hold] val r R 0.949 L 0.904 | test r R 0.943 L 0.863 | rough 0.041 | 238 s
+[best_aug_hold] kind=aug HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.3116  mse 0.0592  ce 0.193
+  step 1000/3000  loss 0.2473  mse 0.0480  ce 0.129
+  step 1500/3000  loss 0.2351  mse 0.0488  ce 0.112
+  step 2000/3000  loss 0.2035  mse 0.0392  ce 0.089
+  step 2500/3000  loss 0.1948  mse 0.0412  ce 0.077
+  step 3000/3000  loss 0.2104  mse 0.0376  ce 0.097
+[best_aug_hold] val r R 0.713 L 0.612 | test r R 0.692 L 0.603 | rough 0.328 | 153 s
+BEST raw: test r RH 0.959 LH 0.879 (paper raw: 0.90 / 0.83), roughness 0.037
+BEST aug: test r RH 0.770 LH 0.671 (paper raw: 0.90 / 0.83), roughness 0.320
+wrote C:\Users\10910\Downloads\bimanual_bci_test\bimanualBCI\results\figures\fig4_rnn.png
+exit 0

@@ -24,4 +24,6 @@ This branch (`replication`) adds a Python replication of the paper's offline ana
 | `pixi run fig2-dpca` | Fig 2 dPCA variance split |
 | `pixi run fig3-decoding` | Fig 3 / Supp Fig 2 decoders (add `--target cursor` for the alternative target) |
 | `pixi run fig3-sim` | Fig 3 simulations + Supp Fig 4 fSNR (about 20 min on the GPU, resumable) |
+| `pixi run fig4-rnn` | Fig 4 RNN search, raw vs augmented (about 1.5 h on the GPU, resumable) |
+| `pixi run fig5-behavior` | Fig 5a-c and Fig 4e online re-scoring |
 | `pixi run check-gpu` | Confirms PyTorch sees the GPU |

@@ -69,12 +69,38 @@ Tick each box once checked, and note what the paper actually says. Anything that
   - electrodes tuned to 0/1/2/3/4 contexts: 88 / 25 / 29 / 35 / 15.
 - [ ] **Supp Fig 1 ANOVA window and quadrant definition (#6, #18).** We use 300–700 ms and axis-aligned quadrants of the cursor→target direction.
 - [ ] **Fig 5 angular error (#8).** How is the "movement direction" computed: from cursor displacement or from decoded velocity? Is the target direction fixed at the go cue?
+- [ ] **Fig 5a bimanual vs unimanual TTA (#30). NEW.** In our re-scoring, bimanual TTA is about 2× unimanual on every day (e.g. 1776: 5.7 s vs 2.2–2.6 s). The paper calls bimanual "only slightly longer". Read the Fig 5a values off the plot and check how TTA is defined (with or without the dwell? time to the first target?).
 - [ ] **Fig 5 time to acquisition (#7).** Does it include the 500-ms dwell? We use the task's logged trial length, which does.
 - [ ] **Fig 5a day list.**
   - Supplementary Table 2 lists 1881 and 1883 under Fig 5A.
   - The Methods summary listed only 1752, 1771, 1776, 1778, 1790 and 1792.
 
   Which is right?
+
+---
+
+## Claude's PMC check (step 6.2, 2026-11-21)
+
+Claude re-read the full text on PMC (PMC10796685): Results, figure legends and Methods. Items still marked ❓ need your eyes, mostly on the figures themselves.
+
+| # | Item | What the paper says | Verdict |
+|---|---|---|---|
+| 17 | Target numbers | Fig 2b "12% suppression" (RH), "suppressed by 34%" (LH); Fig 2c RH "0.87 and 0.84", LH "0.42 and 0.45"; dPCA laterality "39%", direction "30%"; raw RNN "0.9 and 0.83" | ✅ confirmed |
+| 10 | Fig 2 block sets | "grouped consecutive blocks together in pairs to reach around 40 repetitions, at least, per trial type"; "sample size of 25" | ✅ matches our main rule (consecutive pairs, n = 25) |
+| 9/23 | cvOLS | "five-fold cross-validated ordinary least-squares regression"; no detail on how the folds are used | ❓ our split-half deviation stands (k-fold is unstable on small sets) |
+| 21 | Eq. 2 regressors | per time step, d = target position − cursor position, not normalized | ⚠️ confirmed DEVIATION: we use the unit direction at the go cue (ratios and correlations are scale-free) |
+| 24 | dPCA window / scaling | not stated; dPCA "in unimanual movement data only" | ❓ not stated; our 0–1000 ms window reproduces 39 / 30 |
+| 12 | Fig 3 trials | "482 total trials", unimanual, day 1883 (open-loop not stated) | ✅ about our 491 OL unimanual trials |
+| 11 | Fig 3 targets | "velocity target for each time step as the unit vector pointing from the cursor to the target" | ✅ our main choice (we fix the vector at the go cue; the paper updates it per step) |
+| 13 | "Saturated" targets | "moving with maximum velocity from movement onset up until they are very near the target"; 200-ms reaction time; no formula | ❓ wording leans toward a long plateau. Both of our readings were tested; "clip" did better offline |
+| 14 | Clip length | Methods: "ranging between 0.2 and 0.8 times the 10 s total snippet length" (2–8 s). Results: "ranging between 200 and 800 ms". **The paper contradicts itself.** | ⚠️ both readings tested in Phase 4 |
+| 15 | Velocity scaling under dilation | "Linear interpolation was used to either compress or stretch both the input and output clips"; no amplitude rescaling | ✅ matches |
+| 4d | Augmented offline r | not given; only "slightly poorer decoding performance on offline held-out test data and noisier output velocities" | ✅ qualitative only |
+| 7/30 | TTA | "the amount of time after the go cue in which the targets were successfully acquired"; dwell inclusion not stated; "bimanual ... only slightly longer than ... unimanual on average"; "average TTA for right- and left-hand trials was similar" | ❓ our bimanual TTA is about 2× unimanual; check the Fig 5a bars yourself |
+| 8 | Angular error | "average difference between movement direction within the 300–500 ms window after the go cue"; reference direction not stated | ❓ |
+| 29 | Fig 5a days | "6 days (trial days 1752, 1771, 1776, 1778, 1790, 1792)" | ⚠️ the Dryad files for 1752 / 1771 contain only open-loop blocks, so those days can't be re-scored |
+| — | RNN hyperparameters | random search over 100 RNNs; no values | ✅ not stated (our search is documented) |
+| — | Fig 4 training days | RNNs for Fig 4 trained on days 1867 and 1869 only | ⚠️ we trained on 1869 OL only (block split) |
 
 ---
 

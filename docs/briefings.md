@@ -4,6 +4,32 @@ Written at the end of each phase while the user was away (see the 2026-11-21 ent
 
 ---
 
+## Phase 4: RNN decoders and temporal fracturing (Fig 4b-d, day 1869). Done.
+
+### 1. What was done
+
+- `bimanual/rnn.py`: a GRU(512) decoder with a day-specific input transform, a velocity output and a context output (which hands are moving). Its checkpoints save the random-number state too, so an interrupted run resumes exactly.
+- `scripts/fig4_rnn.py`: the open-loop data split by block (train 1–5, select on 6, test on 7) and a paired random search: 10 settings, each trained on raw and on augmented data.
+- Extras: extra seeds, an alternative target reading, and a clip-length check. About 1.6 GPU-hours in total.
+
+### 2. Results ([figure](../results/figures/fig4_rnn.png))
+
+| Training data | Test r (RH / LH) | Velocity roughness |
+|---|---|---|
+| Raw | **0.96 / 0.89** (paper 0.90 / 0.83) ✅ | 0.04 |
+| Augmented, 2–8-s clips (main) | 0.93 / 0.87, "slightly poorer" ✅ | 0.08 (about 2× noisier) ✅ |
+| Augmented, 200–800-ms clips | 0.76 / 0.67, much poorer | 0.31 |
+
+Online (Phase 5, logged data): the augmented RNN acquired 59% / 86% of targets on days 1867 / 1869, against 7% / 16% for the raw-trained one. That is the payoff of augmentation that offline r doesn't show.
+
+### 3. Decisions to review
+
+- **#14, clip length.** The paper contradicts itself: Methods say 0.2–0.8 × the 10-s snippet, Results say 200–800 ms (confirmed by the PMC check). Only the 2–8-s reading reproduces "slightly poorer" offline, so it is MAIN.
+- **#13, "saturated" targets.** The "hold" reading was worse, so the clip reading is kept.
+- **#28, design.** Single-day training on 1869 (the paper used 1867 + 1869). The long-clip models reuse the best short-clip hyperparameters (#31).
+
+---
+
 ## Phase 3: Fig 3, Supp Figs 2 and 4 (day 1883). Done.
 
 ### 1. What was done

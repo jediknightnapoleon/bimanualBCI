@@ -1,0 +1,31 @@
+Pixi task (fig4-rnn): python -u scripts/fig4_rnn.py --stage clips
+  generated 2000 augmented snippets in 5 s (17 strata)
+  generated 2000 augmented snippets in 3 s (17 strata)
+[best_aug_longclip_seed0] kind=aug HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1528  mse 0.0163  ce 0.093
+  step 1000/3000  loss 0.1218  mse 0.0108  ce 0.067
+  step 1500/3000  loss 0.1107  mse 0.0108  ce 0.050
+  step 2000/3000  loss 0.1277  mse 0.0143  ce 0.068
+  step 2500/3000  loss 0.0798  mse 0.0064  ce 0.028
+  step 3000/3000  loss 0.0865  mse 0.0098  ce 0.031
+[best_aug_longclip_seed0] val r R 0.942 L 0.906 | test r R 0.930 L 0.876 | rough 0.082 | 152 s
+[best_aug_longclip_seed101] kind=aug HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1649  mse 0.0155  ce 0.108
+  step 1000/3000  loss 0.1376  mse 0.0137  ce 0.080
+  step 1500/3000  loss 0.1191  mse 0.0160  ce 0.060
+  step 2000/3000  loss 0.1116  mse 0.0138  ce 0.045
+  step 2500/3000  loss 0.0938  mse 0.0069  ce 0.039
+  step 3000/3000  loss 0.0747  mse 0.0064  ce 0.020
+[best_aug_longclip_seed101] val r R 0.945 L 0.902 | test r R 0.926 L 0.864 | rough 0.084 | 153 s
+[best_aug_longclip_seed102] kind=aug HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1969  mse 0.0200  ce 0.135
+  step 1000/3000  loss 0.1255  mse 0.0124  ce 0.070
+  step 1500/3000  loss 0.1093  mse 0.0115  ce 0.050
+  step 2000/3000  loss 0.0849  mse 0.0078  ce 0.029
+  step 2500/3000  loss 0.0999  mse 0.0125  ce 0.040
+  step 3000/3000  loss 0.0824  mse 0.0095  ce 0.028
+[best_aug_longclip_seed102] val r R 0.938 L 0.910 | test r R 0.930 L 0.880 | rough 0.080 | 153 s
+BEST raw: test r RH 0.959 LH 0.879 (paper raw: 0.90 / 0.83), roughness 0.037
+BEST aug: test r RH 0.770 LH 0.671 (paper raw: 0.90 / 0.83), roughness 0.320
+wrote C:\Users\10910\Downloads\bimanual_bci_test\bimanualBCI\results\figures\fig4_rnn.png
+exit 0

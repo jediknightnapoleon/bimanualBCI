@@ -275,7 +275,7 @@ packages:
 - pypi: ./
   name: bimanual
   version: 0.1.0
-  sha256: 25707f80f232cfae9cfe06a519f1f40f8f66a0c90f198206794ac26ea46a05fe
+  sha256: b26f0d97d6e4f05b240876628fbfd7da461ac3c28bffdf130cc22275d27d86ec
   requires_python: '>=3.12,<3.13'
 - conda: https://conda.anaconda.org/conda-forge/win-64/brotli-1.2.1-hc8c2fe1_1.conda
   sha256: 1ae9f55800f9f7aa683a83ca697ce9a52f860a937df9654f502648b976ce365d

@@ -93,3 +93,16 @@ def test_bootstrap_ci_contains_mean_and_drops_nan():
     est, lo, hi = bootstrap_ci(x, n_boot=2000)
     assert lo < est < hi
     assert 4.7 < est < 5.3
+
+
+def test_anova_fvaf():
+    from bimanual.stats import anova_fvaf
+
+    rng = np.random.default_rng(0)
+    g = np.repeat([1, 2, 3, 4], 50).astype(float)
+    tuned = np.array([0, 5, 0, -5])[g.astype(int) - 1] + rng.normal(0, 1, g.size)
+    F, p, fvaf = anova_fvaf(tuned, g)
+    assert p < 1e-5 and 0.8 < fvaf < 0.98
+    F, p, fvaf = anova_fvaf(rng.normal(0, 1, g.size), g)
+    assert p > 1e-3 and fvaf < 0.1
+    assert anova_fvaf(np.ones(200), g)[1] == 1.0  # silent electrode

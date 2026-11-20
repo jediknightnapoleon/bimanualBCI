@@ -12,6 +12,9 @@ The target numbers come from summaries of the paper text and are re-checked agai
 
 | Figure | Quantity | Paper | Ours (95% CI) | Status |
 |---|---|---|---|---|
+| Fig 1b-c | Electrode 97 / 13 / 23 tuning, uni vs bi | 97 keeps both hands; 13 suppressed for both hands; 23 LH suppressed | 97: RH identical, LH kept but weaker. 13: both hands weaker. 23: LH abolished, RH kept. ([figure](results/figures/fig1_tuning_curves.png)) | ✅ qualitative match |
+| Supp Fig 1c | Tuned electrodes (p < 1e-5), uniR / uniL / biR / biL | RH-preferring in both contexts (counts only in the figure) | 83 / 50 / 87 / 28 ([figure](results/figures/supp_fig1_tuning_counts.png)) | ✅ qualitative match; check exact counts against the PDF figure in step 6.2 |
+| Supp Fig 1e | Electrodes tuned to 0 / 1 / 2 / 3 / 4 contexts | Pie chart (figure only) | 88 / 25 / 29 / 35 / 15 | Check against the PDF in step 6.2 |
 | Fig 2b | RH tuning suppression, bimanual vs unimanual | 12% | – | pending |
 | Fig 2b | LH tuning suppression, bimanual vs unimanual | 34% | – | pending |
 | Fig 2c | RH uni/bi tuning correlation, x / y | 0.87 / 0.84 | – | pending |
@@ -21,17 +24,35 @@ The target numbers come from summaries of the paper text and are re-checked agai
 | Supp Fig 4 | Single-bin fSNR, unimanual RH | 2.03 | – | pending |
 | Fig 4d | Raw-trained RNN offline r, RH / LH | 0.90 / 0.83 | – | pending |
 
-## Deviations and assumptions
-Each one is also marked in the code with `# ASSUMPTION:` or `# DEVIATION:`. Details are in [docs/methods_notes.md](docs/methods_notes.md).
-- **Quadrants:** axis-aligned, from the cursor→target vector at the go cue. The paper doesn't define them, and its targets are at random positions.
-- **Fig 5 time to acquisition:** taken from the logged `durationBinnedMove` (≥ 499 bins = failure). The target radius isn't stored and can't be recovered as a fixed circle.
-- **cvOLS:** reimplemented from the description in Willett et al. 2020.
-- **RNN targets and augmentation:** the meaning of "saturated", the clip length (200–800 ms), and no velocity rescaling are all to be checked in Phase 4 and step 6.2.
+## Decisions, deviations and assumptions
+This is the full register. Each entry is also marked in the code with `# ASSUMPTION:` or `# DEVIATION:`, and [docs/methods_notes.md](docs/methods_notes.md) maps each to its code. **Type:** D = decision (made from evidence in the data), A = assumption (the paper is silent or ambiguous), V = deviation (we do something differently from the paper).
+
+| # | Type | Topic | What we do | Why / evidence | Status / check |
+|---|---|---|---|---|---|
+| 1 | A | Dryad data versions | Use the current download. Assume the 3 Dryad versions (Dec 28 2023, Jan 2 2024, Jan 18 2024) contain identical `.mat` data and differ only in the README. | The zip is 138.35 MB in all three versions; only the README size changes (2.16 → 2.17 KB). | Accepted (user, 2026-11-20) |
+| 2 | D | Corrupted file | Day 1867 (`t5_09_27_2021.mat`) was re-extracted by the user after its `tx` failed to decompress. | All 13 files now load fully. | Resolved |
+| 3 | D | Session/block labels | Block conditions are transcribed by hand from `Data/readme.txt` into `bimanual/sessions.py`. | `pixi run inventory` checks every block both ways: none missing, none unlabeled. | Verified |
+| 4 | V | Language | The MATLAB analysis is ported to Python. | User choice. The port matches the authors' `tuningAnalysis.m` run in Octave on day 1750 (max diff 3e-14). | Verified. The Mac MATLAB check was dropped by the user. |
+| 5 | D | Port fidelity | MATLAB quirks are kept: angles are floored to whole degrees, a target exactly on an axis gets NaN, and windows are inclusive ((15, 35) = 21 bins). | Needed for an exact match with the authors' code. | Verified |
+| 6 | A | Direction quadrants (Supp Fig 1 ANOVA; augmentation balancing) | Axis-aligned quadrants of the cursor→target vector at the go cue. | The paper doesn't define them. Targets are at random positions, and directions are evenly spread over 0–360°. | Open: affects Supp Fig 1 counts |
+| 7 | D | Fig 5 time to acquisition | Use the logged `durationBinnedMove` × 20 ms; ≥ 499 bins = 10-s timeout = failure. This includes the 500-ms dwell. | The target radius isn't stored, and no fixed radius fits all dwells (step 0.3). The logged value is the task's own record. | Decided; `behavior.time_to_acquisition` is a sanity check |
+| 8 | A | Fig 5 angular error | The target direction is fixed at the go cue; movement direction comes from the per-bin cursor displacement over 300–500 ms; bins with no movement are skipped. | The paper says only "average difference ... 300–500 ms". | Check in Phase 5 |
+| 9 | V | cvOLS / unbiased statistics | Reimplemented from the description in Willett et al. 2020, not from their code. | No code was released. Synthetic tests show it is unbiased. | Check against the Fig 2 numbers in Phase 2 |
+| 10 | A | Fig 2 block grouping | To be inferred: pairs of blocks with about 40 repetitions per trial type, n = 25 sets. | The pairing is under-specified. | Phase 2 |
+| 11 | A | Fig 3 decoder targets | Unit target direction per hand; 0 for the idle hand. | The paper says "velocities" without defining them for offline decoding. | Phase 3 |
+| 12 | A | Fig 3 trial subset | The paper uses 482 trials on day 1883; the file has 951. | To be identified. | Phase 3 |
+| 13 | A | RNN "saturated" targets | Min-jerk speed bell clipped at 0.5 of its peak and rescaled (alternative: rise then hold to the end). | The wording is ambiguous. | Phase 4: compare both |
+| 14 | A | Augmentation clip length | 200–800 ms (10–40 bins). | The paper's wording is ambiguous ("0.2–0.8 ×" vs "200–800 ms"). | PDF check in step 6.2 |
+| 15 | A | Augmentation velocity scaling | Velocity amplitude is not rescaled when a clip is stretched. | The targets encode intent, not physical speed. | Optional check in Phase 4 |
+| 16 | V | RNN hyperparameter search | About 20 random-search models instead of 100. | GPU budget (RTX 3050, 4 GB). | Confirm at the Phase 4 pause |
+| 17 | D | Paper target numbers | Taken from summaries of the paper text. | The paper was read through a summarizer. | Re-check against the PDF in step 6.2 |
+| 18 | A | Supp Fig 1 ANOVA window | Same 300–700 ms window (bins 15–35) as the encoding analyses. | The paper doesn't state the window for the ANOVA. | Applied in Phase 1 |
+| 19 | V | Supp Fig 1b layout | FVAF is shown as an electrode × context heat map, not on the array anatomy. | The data has no electrode positions. | Phase 1 |
+| 20 | D | Fig 1 curve centring and CIs | Curves are centred on their 8-direction mean, as in `tuningAnalysis.m`. CIs come from a 10k bootstrap over trials. | Follows the authors' script; the paper's CI method is 10k bootstrap. | Phase 1 |
+
+### Data quirks noted (no action yet)
+- "Unimanual only" open-loop blocks each contain about 1 bimanual trial.
+- One moving-hand trial in the whole dataset (day 1869, closed-loop) has the target at the cursor at the go cue. It gets a NaN quadrant (`min_dist` = 1). Checked in Phase 1: day 1750 is clean.
 
 ## Open items for the user
-- [ ] **MATLAB cross-check on the Mac (optional).** The Octave cross-check PASSED on 2026-11-20 (Python vs the authors' code on day 1750, max diff 3e-14). Running it in real MATLAB would confirm that Octave behaves like MATLAB here.
-  1. On the Mac, clone the fork, check out `replication`, and download the day-1750 `.mat` file from Dryad.
-  2. Run `matlab -batch "run('matlab_reference/export_tuning_reference.m')"`.
-  3. Push `results/reference/tuning_ref_matlab.mat`.
-  4. On Windows, run `pixi run compare-reference`.
 - [ ] **After Phase 6, give Claude the next steps.**

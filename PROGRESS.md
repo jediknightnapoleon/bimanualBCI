@@ -13,7 +13,7 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
 | 0.3 | Data inventory → `docs/data_inventory.md` | medium | done |
 | 0.4 | Port loader / conditions / epochs (+tests) | medium | done |
 | 0.5 | Octave cross-check vs `tuningAnalysis.m` | low–medium | done (PASS, max diff 3e-14) |
-| 1.1–1.2 | Fig 1, Supp Fig 1b,c,e | medium | todo |
+| 1.1–1.2 | Fig 1, Supp Fig 1b,c,e | medium | done |
 | 2.1–2.4 | Fig 2, Supp Fig 1d, Supp Table 1 | high/medium | 2.1 done early (`encoding.py`); 2.2–2.4 todo |
 | 3.1–3.3 | Fig 3, Supp Figs 2, 4 | medium/high | todo |
 | 4.1–4.4 | RNN + augmentation, Fig 4 | high/low/medium | 4.1 done early (`targets.py`, `augment.py`); 4.2–4.4 todo |
@@ -90,3 +90,22 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
   - Trial labels are identical; the uniR / uniL / biR / biL curves have a max absolute diff ≤ 2.8e-14.
   - The Mac MATLAB check remains an optional extra confirmation.
 - **Phase 0 complete:** committed and pushed (see the phase 0 commit).
+- **Between Phase 0 and Phase 1, at the user's request:**
+  - Turned the deviations section of `REPLICATION.md` into a numbered register of decisions, deviations and assumptions (17 entries).
+  - Added assumption #1: the 3 Dryad versions hold identical data and differ only in the README.
+  - Dropped the Mac MATLAB check (the user's decision; the Octave cross-check passed).
+- **1.1 done:**
+  - Added `scripts/fig1_tuning.py` (`pixi run fig1-tuning`), writing `results/figures/fig1_tuning_curves.png` and `results/fig1/tuning_curves.json`.
+  - The curves equal the verified port (diff 2.5e-14).
+  - Qualitatively they match the paper:
+    - electrode 97: RH preserved, LH kept but weaker;
+    - electrode 13: both hands weaker in bimanual;
+    - electrode 23: LH tuning abolished in bimanual, RH preserved.
+  - Also added `bimanual/plotting.py`, `conditions.quadrant`/`trial_quadrants` and `stats.anova_fvaf`, with tests; 66/66 pass.
+  - The near-zero-distance quirk affects only 1 trial (day 1869, CL); day 1750 is clean.
+- **1.2 done:**
+  - Added `scripts/fig1_supp_anova.py` (`pixi run fig1-anova`), writing `results/figures/supp_fig1_tuning_counts.png` and `results/fig1/supp_fig1_anova.json`.
+  - Tuned electrodes at p < 1e-5: uniR 83, uniL 50, biR 87, biL 28.
+  - Electrodes tuned to 0/1/2/3/4 contexts: 88/25/29/35/15.
+  - This matches the paper's claims: the RH is preferred in both contexts, LH tuning drops in bimanual, and tuning is mixed across contexts.
+- **Phase 1 complete:** committed and pushed.

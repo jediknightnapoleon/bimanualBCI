@@ -132,3 +132,47 @@ def trial_conditions(
             rh = NO_MOVE
         out[i] = (mt, rh, lh)
     return out
+
+
+# ----------------------------------------------------------------------------- quadrants
+#: Quadrant names, IDs 1..4 = [0, 90), [90, 180), [180, 270), [270, 360) degrees.
+QUADRANT_NAMES = ("Q1 0-90", "Q2 90-180", "Q3 180-270", "Q4 270-360")
+
+
+def quadrant(vec_xy: np.ndarray, min_dist: float = 1.0) -> float:
+    """Direction quadrant (1..4) of a 2D cursor->target vector, or NaN.
+
+    ASSUMPTION (register #6): the paper's "4 movement-direction quadrants" are
+    taken as the axis-aligned quadrants [0, 90), [90, 180), [180, 270) and
+    [270, 360) degrees. The paper doesn't define them, and its targets lie at
+    random angles that cover all directions evenly.
+
+    Vectors shorter than ``min_dist`` get NaN: the target is at the cursor, so
+    there is no direction. This happens for 1 trial in the whole dataset.
+    """
+    x, y = float(vec_xy[0]), float(vec_xy[1])
+    if np.hypot(x, y) < min_dist:
+        return np.nan
+    ang = np.degrees(np.arctan2(y, x)) % 360.0
+    return float(int(ang // 90) + 1)
+
+
+def trial_quadrants(Tp: np.ndarray, Cp: np.ndarray, go0: np.ndarray, move_type: np.ndarray) -> np.ndarray:
+    """Per-trial [RH quadrant, LH quadrant] at the go cue; NaN for the idle hand.
+
+    Args:
+        Tp, Cp: (4, n_bins) target / cursor positions.
+        go0: (n_trials,) **0-based** go-cue bins.
+        move_type: (n_trials,) 1 uniR, 2 uniL, 3 bimanual.
+
+    Returns:
+        (n_trials, 2) float array of quadrant IDs 1..4 or NaN.
+    """
+    out = np.full((len(go0), 2), np.nan)
+    for i, (g, mt) in enumerate(zip(np.asarray(go0, int), move_type)):
+        err = Tp[:, g] - Cp[:, g]
+        if mt in (UNI_RIGHT, BIMANUAL):
+            out[i, 0] = quadrant(err[0:2])
+        if mt in (UNI_LEFT, BIMANUAL):
+            out[i, 1] = quadrant(err[2:4])
+    return out

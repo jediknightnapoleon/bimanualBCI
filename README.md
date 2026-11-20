@@ -17,4 +17,6 @@ This branch (`replication`) adds a Python replication of the paper's offline ana
 | `pixi run test` | Unit tests |
 | `pixi run inventory` | Writes `docs/data_inventory.md` (contents of each session file) |
 | `pixi run compare-reference` | Checks the Python port against `tuningAnalysis.m`. First run `octave-cli matlab_reference/export_tuning_reference.m` or the MATLAB equivalent. |
+| `pixi run fig1-tuning` | Fig 1b-c tuning curves (day 1750) |
+| `pixi run fig1-anova` | Supp Fig 1b,c,e single-electrode tuning |
 | `pixi run check-gpu` | Confirms PyTorch sees the GPU |

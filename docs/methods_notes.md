@@ -22,5 +22,9 @@ This file maps each method in the paper to the code that implements it. Each sec
 | Loading and preprocessing (block-mean removal, ×50 Hz, z-score) | `bimanual/io.py` | Time-major arrays; the only place where 1-based `goCue` becomes 0-based |
 | Trial windows; `computeFeatureMatrices` port | `bimanual/epochs.py` | Windows are inclusive, like MATLAB: (15, 35) = 21 bins |
 | Fig 1b-c tuning curves (port of `tuningAnalysis.m`) | `bimanual/tuning.py::tuning_curves` | Matches Octave running the authors' code to 3e-14 (`pixi run compare-reference`) |
-| Direction quadrants (Supp Fig 1 ANOVA, augmentation balancing) | to be added in Phase 1 | ASSUMPTION: axis-aligned quadrants of the cursor→target vector at the go cue. Targets are at random positions; directions are evenly spread. |
+| Direction quadrants (Supp Fig 1 ANOVA, augmentation balancing) | `bimanual/conditions.py::quadrant`, `trial_quadrants` | ASSUMPTION: axis-aligned quadrants of the cursor→target vector at the go cue. Targets are at random positions; directions are evenly spread. |
 | Fig 5 TTA source | `durationBinnedMove` (logged) | Decision from step 0.3: use the task's logged trial length (≥ 499 bins = timeout failure); `behavior.time_to_acquisition` is a sanity check only |
+| Data version | Dryad download (current version) | ASSUMPTION: the 3 Dryad versions have identical data and differ only in the README (zip size is 138.35 MB in all) |
+| Fig 1b-c tuning curves with CIs | `scripts/fig1_tuning.py` | Trial-mean rates over bins 15–35; 10k bootstrap over trials; centred like `tuningAnalysis.m`; asserts equality with the verified port |
+| Supp Fig 1 single-electrode ANOVA and FVAF | `bimanual/stats.py::anova_fvaf`, `scripts/fig1_supp_anova.py` | 1-way ANOVA over 4 quadrants, tuned if p < 1e-5; FVAF = SS_dir / SS_total |
+| Figure style | `bimanual/plotting.py` | Fixed palette slots: blue = unimanual, orange = bimanual; hatching = left hand |

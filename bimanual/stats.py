@@ -45,3 +45,39 @@ def bootstrap_ci(
     boots = np.array([stat(x[i]) for i in idx])
     lo, hi = np.percentile(boots, [100 * alpha / 2, 100 * (1 - alpha / 2)])
     return float(stat(x)), float(lo), float(hi)
+
+
+def anova_fvaf(values: np.ndarray, groups: np.ndarray) -> tuple[float, float, float]:
+    """One-way ANOVA of one electrode's trial-averaged rates across conditions, plus FVAF.
+
+    Used for Supp Fig 1b,c,e (Methods, "Single-electrode tuning"): an electrode
+    counts as tuned in a context if p < 1e-5 across the 4 direction quadrants.
+
+    FVAF (fraction of variance accounted for) = SS_dir / SS_total, where
+    SS_total = sum_i (f_i - mean)^2 and SS_dir = sum_i (mean_{D(i)} - mean)^2.
+    That is the share of trial-to-trial variance explained by the cued
+    direction (0..1). This is the per-electrode, scalar form of the paper's
+    FVAF.
+
+    Args:
+        values: (n_trials,) trial-averaged firing rates of one electrode.
+        groups: (n_trials,) condition label of each trial (NaN rows are dropped).
+
+    Returns:
+        (F statistic, p value, FVAF).
+    """
+    from scipy.stats import f_oneway
+
+    values = np.asarray(values, float)
+    groups = np.asarray(groups, float)
+    ok = ~np.isnan(values) & ~np.isnan(groups)
+    v, g = values[ok], groups[ok]
+    levels = np.unique(g)
+    samples = [v[g == lv] for lv in levels]
+    if len(levels) < 2 or np.ptp(v) == 0:
+        return (np.nan, 1.0, 0.0)  # constant electrode: no tuning
+    F, p = f_oneway(*samples)
+    grand = v.mean()
+    ss_tot = np.sum((v - grand) ** 2)
+    ss_dir = sum(len(s_) * (s_.mean() - grand) ** 2 for s_ in samples)
+    return float(F), float(p), float(ss_dir / ss_tot)

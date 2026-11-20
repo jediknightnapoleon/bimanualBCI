@@ -77,3 +77,16 @@ def test_trial_conditions_uses_1_based_go_cue_and_idle_hand():
     np.testing.assert_array_equal(out[0], [1, 8, 9])  # uniR: LH forced to 9
     np.testing.assert_array_equal(out[1], [2, 9, 4])  # uniL: RH forced to 9
     np.testing.assert_array_equal(out[2], [3, 8, 4])  # bimanual
+
+
+def test_quadrants():
+    assert C.quadrant(np.array([1.0, 0.0])) == 1  # 0 deg
+    assert C.quadrant(np.array([0.0, 1.0])) == 2  # 90 deg
+    assert C.quadrant(np.array([-1.0, -0.001])) == 3
+    assert C.quadrant(np.array([0.5, -1.0])) == 4
+    assert np.isnan(C.quadrant(np.array([0.2, 0.1])))  # shorter than min_dist
+    Tp = np.zeros((4, 3)); Cp = np.zeros((4, 3))
+    Tp[:, 1] = [5, 5, -5, -5]
+    q = C.trial_quadrants(Tp, Cp, [1, 1, 1], [1, 2, 3])
+    assert np.isnan(q[0, 1]) and q[0, 0] == 1 and np.isnan(q[1, 0]) and q[1, 1] == 3
+    np.testing.assert_array_equal(q[2], [1, 3])

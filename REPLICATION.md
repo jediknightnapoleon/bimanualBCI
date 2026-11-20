@@ -15,12 +15,15 @@ The target numbers come from summaries of the paper text and are re-checked agai
 | Fig 1b-c | Electrode 97 / 13 / 23 tuning, uni vs bi | 97 keeps both hands; 13 suppressed for both hands; 23 LH suppressed | 97: RH identical, LH kept but weaker. 13: both hands weaker. 23: LH abolished, RH kept. ([figure](results/figures/fig1_tuning_curves.png)) | ✅ qualitative match |
 | Supp Fig 1c | Tuned electrodes (p < 1e-5), uniR / uniL / biR / biL | RH-preferring in both contexts (counts only in the figure) | 83 / 50 / 87 / 28 ([figure](results/figures/supp_fig1_tuning_counts.png)) | ✅ qualitative match; check exact counts against the PDF figure in step 6.2 |
 | Supp Fig 1e | Electrodes tuned to 0 / 1 / 2 / 3 / 4 contexts | Pie chart (figure only) | 88 / 25 / 29 / 35 / 15 | Check against the PDF in step 6.2 |
-| Fig 2b | RH tuning suppression, bimanual vs unimanual | 12% | – | pending |
-| Fig 2b | LH tuning suppression, bimanual vs unimanual | 34% | – | pending |
-| Fig 2c | RH uni/bi tuning correlation, x / y | 0.87 / 0.84 | – | pending |
-| Fig 2c | LH uni/bi tuning correlation, x / y | 0.42 / 0.45 | – | pending |
-| Fig 2 dPCA | Variance explained: laterality / direction | 39% / 30% | – | pending |
-| Supp Fig 1d | RH vs LH tuning strength | about 2× | – | pending |
+| Fig 2b | RH tuning suppression, bimanual vs unimanual | 12% | 18.7% (CI 15.5–22.5%); all schemes 18–19% ([figure](results/figures/fig2bc_tuning_change_splithalf.png)) | ✅ direction and size similar; somewhat larger |
+| Fig 2b | LH tuning suppression, bimanual vs unimanual | 34% | 41.3% (CI 34–49%); all schemes 36–41% | ✅ LH ≫ RH; t-test p = 6e-6 (n = 22) |
+| Fig 2c | RH uni/bi tuning correlation, x / y | 0.87 / 0.84 | 0.86 / 0.86 | ✅ |
+| Fig 2c | LH uni/bi tuning correlation, x / y | 0.42 / 0.45 | 0.49 / 0.60 | ✅ qualitatively (LH decorrelated); y somewhat higher |
+| Fig 2c | UniR-UniL correlation, x / y | anti-correlated in x, correlated in y | −0.34 / +0.51 | ✅ |
+| Supp Table 1 | Pairwise t-tests between correlation types (12 p-values) | 11 significant, 1 n.s. (y: UniL-BiL vs UniR-UniL, 0.76) | Same significance pattern at 0.01 in 11/12; the exception is x UniL-BiL vs BiR-BiL (paper 0.05, ours 0.001) | ✅ |
+| Supp Fig 1d | RH vs LH unimanual tuning strength (day 1776) | about 2× (LH 48% weaker) | 1.70× (LH 41% weaker) | ✅ close |
+| Fig 2 PCA | Bimanual activity is closest to unimanual RH (day 1881) | Yes (qualitative) | Centroid distance in PC1-2: bi–uniR 0.28 vs bi–uniL 3.21; full space 2.21 vs 3.53 ([figure](results/figures/fig2_pca.png)) | ✅ |
+| Fig 2 dPCA | Share of marginalized variance: laterality / direction | 39% / 30% | 0–1000 ms: **39% / 29%**; 300–700 ms: 41% / 33% (5 days, cross-validated) ([figure](results/figures/fig2_dpca.png)) | ✅ laterality > direction on every day. Non-CV estimates flip the order. |
 | Supp Fig 4 | Single-bin fSNR, unimanual RH | 2.03 | – | pending |
 | Fig 4d | Raw-trained RNN offline r, RH / LH | 0.90 / 0.83 | – | pending |
 
@@ -38,7 +41,7 @@ This is the full register. Each entry is also marked in the code with `# ASSUMPT
 | 7 | D | Fig 5 time to acquisition | Use the logged `durationBinnedMove` × 20 ms; ≥ 499 bins = 10-s timeout = failure. This includes the 500-ms dwell. | The target radius isn't stored, and no fixed radius fits all dwells (step 0.3). The logged value is the task's own record. | Decided; `behavior.time_to_acquisition` is a sanity check |
 | 8 | A | Fig 5 angular error | The target direction is fixed at the go cue; movement direction comes from the per-bin cursor displacement over 300–500 ms; bins with no movement are skipped. | The paper says only "average difference ... 300–500 ms". | Check in Phase 5 |
 | 9 | V | cvOLS / unbiased statistics | Reimplemented from the description in Willett et al. 2020, not from their code. | No code was released. Synthetic tests show it is unbiased. | Check against the Fig 2 numbers in Phase 2 |
-| 10 | A | Fig 2 block grouping | To be inferred: pairs of blocks with about 40 repetitions per trial type, n = 25 sets. | The pairing is under-specified. | Phase 2 |
+| 10 | A | Fig 2 block grouping | MAIN: consecutive pairs of all OL blocks per day, including uni-only blocks: exactly 25 pairs, 22 usable (3 uni-only pairs have about 2 bimanual trials). Robustness: all pairs of mixed blocks (38) and adjacent mixed pairs (17). | Only `adjacent_all` reproduces n = 25 (user decision 2026-11-21: matches the figure's description). | Done: all 3 schemes agree to within a few points |
 | 11 | A | Fig 3 decoder targets | Unit target direction per hand; 0 for the idle hand. | The paper says "velocities" without defining them for offline decoding. | Phase 3 |
 | 12 | A | Fig 3 trial subset | The paper uses 482 trials on day 1883; the file has 951. | To be identified. | Phase 3 |
 | 13 | A | RNN "saturated" targets | Min-jerk speed bell clipped at 0.5 of its peak and rescaled (alternative: rise then hold to the end). | The wording is ambiguous. | Phase 4: compare both |
@@ -48,6 +51,10 @@ This is the full register. Each entry is also marked in the code with `# ASSUMPT
 | 17 | D | Paper target numbers | Taken from summaries of the paper text. | The paper was read through a summarizer. | Re-check against the PDF in step 6.2 |
 | 18 | A | Supp Fig 1 ANOVA window | Same 300–700 ms window (bins 15–35) as the encoding analyses. | The paper doesn't state the window for the ANOVA. | Applied in Phase 1 |
 | 19 | V | Supp Fig 1b layout | FVAF is shown as an electrode × context heat map, not on the array anatomy. | The data has no electrode positions. | Phase 1 |
+| 21 | A | Encoding-model regressors (Eq. 2) | Unit cursor→target direction at the go cue, held constant over 300–700 ms; 0 for the idle hand. | Eq. 2 says target − cursor, but target distances vary from 30 to 750 units, and a direction-tuning model should not encode distance. Ratios and correlations don't depend on scale. | Applied in Phase 2 |
+| 22 | A | Minimum trials per context in a set | ≥ 10 trials of each type. | The cross-validated fits need enough trials. | Excludes exactly the 3 uni-only pairs |
+| 23 | V | cvOLS estimator | MAIN: split-half cross-validation (50 random halves of trials). The paper's literal 5-fold is kept as `--method kfold`. | 5-fold fits each fold alone; with about 25 bimanual trials that is about 5 trials for 5 parameters, so the estimates explode (main-scheme k-fold LH suppression 62%, correlation 1.20). Synthetic test: split-half is unbiased with far lower variance. The mixed-only schemes give similar values with either method. | Decided 2026-11-21 |
+| 24 | A | dPCA window and scaling | Unimanual OL trials; z-scored per block. Windows: 300–700 ms (pre-registered main) and 0–1000 ms (robustness). 100 random two-way splits per day; mean over 5 days. | The paper gives no window. The 0–1000 ms window reproduces 39% / 30% almost exactly, so the paper probably used a longer window. | Both reported |
 | 20 | D | Fig 1 curve centring and CIs | Curves are centred on their 8-direction mean, as in `tuningAnalysis.m`. CIs come from a 10k bootstrap over trials. | Follows the authors' script; the paper's CI method is 10k bootstrap. | Phase 1 |
 
 ### Data quirks noted (no action yet)

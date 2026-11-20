@@ -19,4 +19,7 @@ This branch (`replication`) adds a Python replication of the paper's offline ana
 | `pixi run compare-reference` | Checks the Python port against `tuningAnalysis.m`. First run `octave-cli matlab_reference/export_tuning_reference.m` or the MATLAB equivalent. |
 | `pixi run fig1-tuning` | Fig 1b-c tuning curves (day 1750) |
 | `pixi run fig1-anova` | Supp Fig 1b,c,e single-electrode tuning |
+| `pixi run fig2-tuning` | Fig 2b-c, Supp Table 1, Supp Fig 1d (add `--method kfold` for the paper's literal 5-fold) |
+| `pixi run fig2-pca` | Fig 2 PCA (day 1881) |
+| `pixi run fig2-dpca` | Fig 2 dPCA variance split |
 | `pixi run check-gpu` | Confirms PyTorch sees the GPU |

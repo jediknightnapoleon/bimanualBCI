@@ -120,21 +120,57 @@ def cv_ols(
     n_folds: int = 5,
     seed: int | None = 0,
     names: tuple[str, ...] = (),
+    method: str = "kfold",
+    n_splits: int = 50,
 ) -> CVFit:
-    """Five-fold cross-validated OLS (cvOLS), as in Methods "Encoding model".
+    """Cross-validated OLS (cvOLS), as in Methods "Encoding model".
+
+    Two ways to build the pairs of independent estimates:
+
+    * ``method="kfold"`` (the paper's "five-fold"): for each fold k, "train" =
+      fit on the other folds and "test" = fit on fold k ALONE.
+      Problem: the fold-only fit uses just 1/K of the trials. The regressors
+      are constant within a trial, so a 5-parameter bimanual model fit on a
+      fold of about 5 trials is (nearly) exactly determined and its
+      coefficients explode. Synthetic test with 25 trials: SD about 44,000
+      around a true value of 442.
+    * ``method="splithalf"``: ``n_splits`` random 50/50 splits of the TRIALS;
+      "train" = fit on half A, "test" = fit on half B. Both halves are
+      independent, so <train, test> stays unbiased, and every fit sees half
+      the trials. Synthetic test: unbiased, and it has lower variance than
+      k-fold even at 50 trials. DEVIATION (register #23): see
+      REPLICATION.md for which method is used where.
+
+    The statistics functions below work the same with either method: each
+    (train[k], test[k]) pair is an independent pair of estimates.
 
     Args:
         X: (n_samples, p) design matrix; include a column of ones for the
             baseline (b0 in Eq. 1).
         Y: (n_samples, N) firing rates (block-mean removed, per Methods).
-        groups: (n_samples,) trial IDs, so folds don't split a trial.
-        n_folds: number of folds K.
-        seed: fold-assignment seed.
+        groups: (n_samples,) trial IDs, so no split ever divides a trial.
+        n_folds: number of folds K (kfold only).
+        seed: RNG seed for the fold or split assignment.
         names: optional names for the p regressors.
+        method: "kfold" or "splithalf".
+        n_splits: number of random half-splits (splithalf only).
     """
-    folds = group_folds(groups, n_folds, seed)
-    train = np.stack([ols(X[~m], Y[~m]) for m in folds])
-    test = np.stack([ols(X[m], Y[m]) for m in folds])
+    if method == "kfold":
+        folds = group_folds(groups, n_folds, seed)
+        train = np.stack([ols(X[~m], Y[~m]) for m in folds])
+        test = np.stack([ols(X[m], Y[m]) for m in folds])
+    elif method == "splithalf":
+        rng = np.random.default_rng(seed)
+        uniq = np.unique(groups)
+        train, test = [], []
+        for _ in range(n_splits):
+            half = rng.permutation(uniq)[: len(uniq) // 2]
+            m = np.isin(groups, half)
+            train.append(ols(X[m], Y[m]))
+            test.append(ols(X[~m], Y[~m]))
+        train, test = np.stack(train), np.stack(test)
+    else:
+        raise ValueError(f"method must be 'kfold' or 'splithalf', got {method!r}")
     return CVFit(full=ols(X, Y), train=train, test=test, names=tuple(names))
 
 

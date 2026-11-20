@@ -176,3 +176,33 @@ def trial_quadrants(Tp: np.ndarray, Cp: np.ndarray, go0: np.ndarray, move_type: 
         if mt in (UNI_LEFT, BIMANUAL):
             out[i, 1] = quadrant(err[2:4])
     return out
+
+
+# ----------------------------------------------------------------------------- regressors
+def trial_directions(Tp: np.ndarray, Cp: np.ndarray, go0: np.ndarray, move_type: np.ndarray) -> np.ndarray:
+    """Unit cursor->target direction of each hand at the go cue, 0 for the idle hand.
+
+    These are the velocity regressors of the encoding model (Eq. 1-2):
+    columns [d_rx, d_ry, d_lx, d_ly].
+
+    ASSUMPTION (register #21): Eq. 2 defines d as target minus cursor
+    position. We use its DIRECTION at the go cue (unit length), held constant
+    over the analysis window. Target distances in this dataset range from
+    about 30 to 750 units, and raw position differences would mix distance
+    into a direction-tuning model. Tuning-strength RATIOS and correlations
+    don't depend on this scale.
+
+    Args:
+        Tp, Cp: (4, n_bins); go0: (n_trials,) 0-based; move_type: (n_trials,).
+
+    Returns:
+        (n_trials, 4) array. A vector shorter than 1 unit gives 0 (no direction).
+    """
+    out = np.zeros((len(go0), 4))
+    for i, (g, mt) in enumerate(zip(np.asarray(go0, int), move_type)):
+        err = Tp[:, g] - Cp[:, g]
+        for cols, moves in ((slice(0, 2), mt in (UNI_RIGHT, BIMANUAL)), (slice(2, 4), mt in (UNI_LEFT, BIMANUAL))):
+            n = np.hypot(*err[cols])
+            if moves and n >= 1.0:
+                out[i, cols] = err[cols] / n
+    return out

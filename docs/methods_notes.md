@@ -11,7 +11,7 @@ This file maps each method in the paper to the code that implements it. Each sec
 | Fig 5 angular error (300–500 ms after go) | `bimanual/behavior.py::angular_error` | ASSUMPTION: the target direction is fixed at the go cue; movement direction comes from the per-bin cursor displacement; bins with no movement are skipped. |
 | Fig 4e speed traces | `bimanual/behavior.py::speed_profile` | Speed per bin |
 | 95% bootstrap CIs (10k) | `bimanual/stats.py::bootstrap_ci` | Percentile bootstrap; NaNs (failed trials) are dropped |
-| Eq. 1–2 encoding model, cvOLS (5-fold) | `bimanual/encoding.py::cv_ols` | Folds split by trial (`groups`). Each fold yields a train fit and a test-fold-only fit. |
+| Eq. 1–2 encoding model, cvOLS | `bimanual/encoding.py::cv_ols` | `method="kfold"` (the paper's 5-fold: train on the other folds, test on fold k alone) or `"splithalf"` (50 random trial halves; MAIN, register #23). Splits are always by trial (`groups`). |
 | Tuning strength (Fig 2b) | `encoding.py::cv_magnitude`, `tuning_strength` | Unbiased squared norm = mean of cross-fold products <train_k, test_k>; magnitude = signed square root; a hand's strength = mean of its x and y magnitudes. DEVIATION: reimplemented from the Willett et al. 2020 description, not their code. |
 | Tuning correlation (Fig 2c) | `encoding.py::cv_correlation` | Channel-centered (Pearson). Models from different trials use full-fit cross products; within one model, cross-fold products. Can slightly exceed ±1. |
 | Eq. 4 laterality axis and removal (Figs 2, 3) | `encoding.py::laterality_axis`, `remove_axis` | Removal projects out the unit b_lat; a refit then gives b_lat ≈ 0 |
@@ -28,3 +28,8 @@ This file maps each method in the paper to the code that implements it. Each sec
 | Fig 1b-c tuning curves with CIs | `scripts/fig1_tuning.py` | Trial-mean rates over bins 15–35; 10k bootstrap over trials; centred like `tuningAnalysis.m`; asserts equality with the verified port |
 | Supp Fig 1 single-electrode ANOVA and FVAF | `bimanual/stats.py::anova_fvaf`, `scripts/fig1_supp_anova.py` | 1-way ANOVA over 4 quadrants, tuned if p < 1e-5; FVAF = SS_dir / SS_total |
 | Figure style | `bimanual/plotting.py` | Fixed palette slots: blue = unimanual, orange = bimanual; hatching = left hand |
+| Fig 2 block sets | `bimanual/blocksets.py` | `adjacent_all` (main, n = 25), `all_pairs_mixed` (38), `adjacent_mixed` (17) |
+| Encoding regressors | `conditions.trial_directions` | Unit direction at the go cue (register #21) |
+| Fig 2b-c, Supp Table 1, Supp Fig 1d | `scripts/fig2_tuning_change.py` | Three cvOLS models per set (uniR, uniL, bi); suppression = bi/uni strength; 4 correlation types × x/y; pairwise two-sample t-tests |
+| Fig 2 PCA (day 1881) | `scripts/fig2_pca.py` | OL trials; z-scored block-wise; trial means over bins 15–35; SVD; condition-centroid distances in the top 2/3 PCs and the full space |
+| Fig 2 dPCA variance (laterality / direction / interaction / time) | `bimanual/dpca_analysis.py`, `scripts/fig2_dpca.py` | Own marginalization (each factor absorbs its interaction with time, as in Kobak et al. 2016); two-split CV variance = sum(M1·M2), averaged over 100 splits. The dPCA package is installed but not needed for the variance numbers. |

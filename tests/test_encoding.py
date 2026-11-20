@@ -116,3 +116,21 @@ def test_zero_regressor_column_is_harmless():
     X5 = np.c_[X, np.zeros((len(X), 2))]
     fit = E.cv_ols(X5, Y, g)
     assert np.allclose(fit.full[3:], 0)
+
+
+def test_splithalf_is_unbiased_and_stable_with_few_trials():
+    """With 25 trials and a 5-parameter model, k-fold explodes but split-half stays unbiased."""
+    rng = np.random.default_rng(6)
+    B = np.zeros((5, N_CH)); B[3] = rng.normal(0, 0.4, N_CH)
+    true = np.sum(B[3] ** 2)
+    est = []
+    for rep in range(30):
+        n_tr = 25
+        a1, a2 = rng.uniform(0, 2 * np.pi, (2, n_tr))
+        d = np.repeat(np.c_[np.cos(a1), np.sin(a1), np.cos(a2), np.sin(a2)], BINS_PER_TRIAL, axis=0)
+        X = np.c_[np.ones(len(d)), d]
+        Y = X @ B + rng.normal(0, NOISE, (len(d), N_CH))
+        g = np.repeat(np.arange(n_tr), BINS_PER_TRIAL)
+        est.append(E.cv_sq_norm(E.cv_ols(X, Y, g, seed=rep, method="splithalf"), 3))
+    assert np.mean(est) == pytest.approx(true, rel=0.25)
+    assert np.std(est) < 2 * true  # stable (k-fold SD is orders of magnitude larger here)

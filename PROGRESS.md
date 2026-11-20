@@ -14,7 +14,7 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
 | 0.4 | Port loader / conditions / epochs (+tests) | medium | done |
 | 0.5 | Octave cross-check vs `tuningAnalysis.m` | low–medium | done (PASS, max diff 3e-14) |
 | 1.1–1.2 | Fig 1, Supp Fig 1b,c,e | medium | done |
-| 2.1–2.4 | Fig 2, Supp Fig 1d, Supp Table 1 | high/medium | 2.1 done early (`encoding.py`); 2.2–2.4 todo |
+| 2.1–2.4 | Fig 2, Supp Fig 1d, Supp Table 1 | high/medium | done |
 | 3.1–3.3 | Fig 3, Supp Figs 2, 4 | medium/high | todo |
 | 4.1–4.4 | RNN + augmentation, Fig 4 | high/low/medium | 4.1 done early (`targets.py`, `augment.py`); 4.2–4.4 todo |
 | 5.1–5.2 | Fig 5 re-scored from closed-loop logs | medium | 5.1 done early (`behavior.py`); 5.2 todo |
@@ -109,3 +109,31 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
   - Electrodes tuned to 0/1/2/3/4 contexts: 88/25/29/35/15.
   - This matches the paper's claims: the RH is preferred in both contexts, LH tuning drops in bimanual, and tuning is mixed across contexts.
 - **Phase 1 complete:** committed and pushed.
+- **2.2 done (2026-11-21):**
+  - Added `bimanual/blocksets.py` with 3 block-set schemes. The main one, `adjacent_all`, gives exactly 25 sets (22 usable); `all_pairs_mixed` gives 38 and `adjacent_mixed` 17.
+  - Added `conditions.trial_directions` and `scripts/fig2_tuning_change.py` (`pixi run fig2-tuning [--method splithalf|kfold]`).
+  - **Finding:** the paper's literal 5-fold cvOLS explodes on sets with about 25 bimanual trials (each fold has about 5 trials for a 5-parameter model; in synthetic tests the SD is about 44,000 against a true value of 442).
+    - I added a split-half cvOLS (`method="splithalf"`, 50 random trial halves). It is unbiased, stable, and has lower variance than k-fold even with 50 trials.
+    - Split-half is now the main estimator; k-fold results are kept for comparison (register #23).
+  - Results (split-half, main scheme):
+    - Suppression: RH 18.7% (paper 12%), LH 41.3% (paper 34%); t-test p = 6e-6.
+    - Uni-vs-bi correlation: RH 0.86 / 0.86 (paper 0.87 / 0.84); LH 0.49 / 0.60 (paper 0.42 / 0.45).
+    - UniR-UniL: x −0.34, y +0.51 (anti-correlated in x, correlated in y, as in the paper).
+    - Supp Table 1: 11/12 p-values agree with the paper at 0.01.
+    - Supp Fig 1d: RH/LH = 1.70 (LH 41% weaker; paper about 2×, 48%).
+  - All 3 schemes agree to within a few percentage points.
+- **2.3 done:**
+  - Added `scripts/fig2_pca.py` (`pixi run fig2-pca`), writing `results/figures/fig2_pca.png` and `results/fig2/pca.json`.
+  - Day 1881 OL trials: 277 uniR, 237 uniL, 138 bi. PC1 explains 17.6% of variance and PC2 10.0%.
+  - Centroid distances in PC1-2: bi–uniR 0.28, bi–uniL 3.21. Full space: 2.21 vs 3.53.
+  - So bimanual is closest to uniR, as in the paper.
+  - Next: step 2.4, dPCA (high effort).
+- **2.4 done:**
+  - Added `bimanual/dpca_analysis.py` (Kobak-style marginalization, two-split cross-validated variance) with `tests/test_dpca.py`, and `scripts/fig2_dpca.py` (`pixi run fig2-dpca`).
+  - Cross-validated fractions, mean over the 5 days:
+    - 300–700 ms: laterality 41%, direction 33%, interaction 23%, time 3%.
+    - 0–1000 ms: laterality 39%, direction 29%, interaction 20%, time 12%.
+    - The paper reports 39% / 30%, so the 0–1000 ms window matches almost exactly.
+  - Laterality > direction on every day.
+  - Without cross-validation the order flips (direction 35% > laterality 28%), so cross-validation is essential to the claim.
+- **Phase 2 complete:** committed and pushed.

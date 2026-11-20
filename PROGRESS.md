@@ -15,7 +15,7 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
 | 0.5 | Octave cross-check vs `tuningAnalysis.m` | low–medium | done (PASS, max diff 3e-14) |
 | 1.1–1.2 | Fig 1, Supp Fig 1b,c,e | medium | done |
 | 2.1–2.4 | Fig 2, Supp Fig 1d, Supp Table 1 | high/medium | done |
-| 3.1–3.3 | Fig 3, Supp Figs 2, 4 | medium/high | todo |
+| 3.1–3.3 | Fig 3, Supp Figs 2, 4 | medium/high | done |
 | 4.1–4.4 | RNN + augmentation, Fig 4 | high/low/medium | 4.1 done early (`targets.py`, `augment.py`); 4.2–4.4 todo |
 | 5.1–5.2 | Fig 5 re-scored from closed-loop logs | medium | 5.1 done early (`behavior.py`); 5.2 todo |
 | 6.1–6.2 | Final report | medium | todo |
@@ -137,3 +137,31 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
   - Laterality > direction on every day.
   - Without cross-validation the order flips (direction 35% > laterality 28%), so cross-validation is essential to the claim.
 - **Phase 2 complete:** committed and pushed.
+- **Between Phase 2 and Phase 3:** added `docs/paper_check.md`, a check-list of paper details for the user to verify (linked to register numbers), plus plain-language explanations of the paradigm and of dPCA/CV. It goes into the Phase 3 commit.
+- **3.1–3.2 done:**
+  - Added `bimanual/decoders.py` (stratified trial folds, ridge with an alpha sweep by Pearson r, and a 1×512 ReLU FFN with early stopping, in PyTorch on the GPU) with `tests/test_decoders.py`.
+  - Added `scripts/fig3_decoding.py` (`pixi run fig3-decoding [--target direction|cursor]`). Predictions are cached in `results/cache/` so a rerun can resume.
+  - **Env fix:** the conda-forge MKL (LLVM libomp) clashed with torch's Intel libiomp5md (OMP Error #15). The conda BLAS is now OpenBLAS (`libblas *openblas` in pyproject). Tests and the Octave cross-check still pass.
+  - Day 1883: 491 OL unimanual trials (the paper says 482; register #12).
+  - Targets: the recorded OL cursor velocity was tried first. It is mostly the onset ramp (the cursor starts moving about 300 ms after go), so every r is capped low. MAIN = unit direction (register #11); cursor velocity is kept as an alternative.
+  - Direction results:
+    - r: ridge R 0.72/0.79, L 0.45/0.56; FFN R 0.75/0.80, L 0.56/0.69.
+    - Paired bootstrap: FFN − ridge +0.072 overall and +0.120 for the LH (p < 0.001). Removing laterality costs the FFN 0.080 (LH 0.131) and ridge 0.000 (p = 0.78).
+    - Jitter (L): ridge 0.84, FFN 0.42, FFN − lat 0.84.
+    - Bimanual: RH > LH; the FFN is slightly below ridge (only 131 trials).
+  - Cursor targets: the same effects, smaller but significant.
+  - Next: step 3.3, simulations (high effort).
+- **2026-11-21, user instruction (going to sleep):** run on through Phases 3 and 4 WITHOUT pausing, and stop before Phase 5.
+  - Phase-end briefings go to `docs/briefings.md`; phase-end commits and pushes go ahead as approved.
+  - The RNN search budget defaults to about 20 models, capped at about 3 GPU-hours.
+  - Effort stays high.
+  - Ambiguities get the documented default plus a register entry, flagged for review.
+- **3.3 done:**
+  - Added `bimanual/simulate.py` (Eq. 4 population, i.i.d. Gaussian bin noise, clipping, fSNR) with `tests/test_simulate.py`, and `scripts/fig3_simulations.py` (`pixi run fig3-sim`, resumable through `results/fig3/sim_grid.jsonl`).
+  - Real day-1883 magnitudes (Hz): Rx 120, Ry 149, Lx 48, Ly 81, lat 86. RH-LH correlation: x −0.38, y +0.53.
+  - **fSNR:** real single-bin 2.11 (paper 2.03), window-average 4.60. Simulated (σ = 56.6 Hz): 2.12 single-bin and 9.01 window-average, the same mismatch the paper reports.
+  - **Sweep** (6 ρ × 5 laterality scales, 2000 + 2000 trials × 20 bins, 20% held out):
+    - Ridge falls from 0.59 to 0.50 as ρ goes 0→1 (LH 0.45 → 0.32), independent of laterality.
+    - The FFN rises with laterality and stays at about 0.69 for every ρ when laterality is ≥ 2× real.
+    - At laterality 0 the FFN is slightly below ridge.
+- **Phase 3 complete:** committed and pushed. `bimanual/rnn.py` and `tests/test_rnn.py` (step 4.2, written while the sweep ran; 3 tests including exact checkpoint/resume) are in this commit too.

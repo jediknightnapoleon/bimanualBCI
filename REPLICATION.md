@@ -24,7 +24,13 @@ The target numbers come from summaries of the paper text and are re-checked agai
 | Supp Fig 1d | RH vs LH unimanual tuning strength (day 1776) | about 2× (LH 48% weaker) | 1.70× (LH 41% weaker) | ✅ close |
 | Fig 2 PCA | Bimanual activity is closest to unimanual RH (day 1881) | Yes (qualitative) | Centroid distance in PC1-2: bi–uniR 0.28 vs bi–uniL 3.21; full space 2.21 vs 3.53 ([figure](results/figures/fig2_pca.png)) | ✅ |
 | Fig 2 dPCA | Share of marginalized variance: laterality / direction | 39% / 30% | 0–1000 ms: **39% / 29%**; 300–700 ms: 41% / 33% (5 days, cross-validated) ([figure](results/figures/fig2_dpca.png)) | ✅ laterality > direction on every day. Non-CV estimates flip the order. |
-| Supp Fig 4 | Single-bin fSNR, unimanual RH | 2.03 | – | pending |
+| Fig 3b | Unimanual single-bin decoding: FFN vs ridge (day 1883) | FFN better on all dims, largest gain for the LH (values in the figure only) | r ridge R 0.72/0.79, L 0.45/0.56; FFN R 0.75/0.80, L 0.56/0.69. FFN − ridge: +0.07 overall, +0.12 LH (p < 0.001) ([figure](results/figures/fig3_decoding_direction.png)) | ✅ |
+| Fig 3b | Laterality removed | Hurts the FFN, not ridge | FFN −0.08 (LH −0.13), p < 0.001; ridge ±0.000 (p = 0.78) | ✅ |
+| Fig 3c | Idle-cursor jitter | FFN steadier; laterality removal increases FFN jitter | L jitter: ridge 0.84, FFN 0.42, FFN − lat 0.84 | ✅ |
+| Supp Fig 2c | Bimanual decoding | RH better than LH | RH 0.68–0.77 vs LH 0.32–0.49 | ✅ |
+| Supp Fig 4 | Single-bin fSNR, unimanual RH (day 1883) | 2.03 | **2.11**; window-average 4.60 ([figure](results/figures/supp_fig4_fsnr.png)) | ✅ |
+| Supp Fig 4 | i.i.d. noise matches single-bin but not window-average fSNR | Yes | Simulated: 2.12 single-bin (matched), 9.01 window-average (vs real 4.60) | ✅ |
+| Fig 3d-e | Simulation: ridge degrades as RH-LH tuning correlation rises; the FFN holds when laterality is large | Qualitative | Ridge r 0.59 → 0.50 (LH 0.45 → 0.32) for ρ 0→1, flat across laterality. FFN ≈ 0.69 for every ρ at laterality ≥ 2× real; FFN jitter is far below ridge once laterality > 0 ([figure](results/figures/fig3_simulations.png)) | ✅ |
 | Fig 4d | Raw-trained RNN offline r, RH / LH | 0.90 / 0.83 | – | pending |
 
 ## Decisions, deviations and assumptions
@@ -42,8 +48,8 @@ This is the full register. Each entry is also marked in the code with `# ASSUMPT
 | 8 | A | Fig 5 angular error | The target direction is fixed at the go cue; movement direction comes from the per-bin cursor displacement over 300–500 ms; bins with no movement are skipped. | The paper says only "average difference ... 300–500 ms". | Check in Phase 5 |
 | 9 | V | cvOLS / unbiased statistics | Reimplemented from the description in Willett et al. 2020, not from their code. | No code was released. Synthetic tests show it is unbiased. | Check against the Fig 2 numbers in Phase 2 |
 | 10 | A | Fig 2 block grouping | MAIN: consecutive pairs of all OL blocks per day, including uni-only blocks: exactly 25 pairs, 22 usable (3 uni-only pairs have about 2 bimanual trials). Robustness: all pairs of mixed blocks (38) and adjacent mixed pairs (17). | Only `adjacent_all` reproduces n = 25 (user decision 2026-11-21: matches the figure's description). | Done: all 3 schemes agree to within a few points |
-| 11 | A | Fig 3 decoder targets | Unit target direction per hand; 0 for the idle hand. | The paper says "velocities" without defining them for offline decoding. | Phase 3 |
-| 12 | A | Fig 3 trial subset | The paper uses 482 trials on day 1883; the file has 951. | To be identified. | Phase 3 |
+| 11 | A | Fig 3 decoder targets | MAIN: unit cursor→target direction at the go cue (0 for the idle hand), constant over the 400-ms window. ALT: recorded OL cursor velocity (`--target cursor`). | In OL trials the cursor starts moving about 300 ms after go, so cursor velocity in the window is mostly the onset ramp scaled by distance, which caps every r low. Unit direction equals the saturated targets the paper's online decoders used. Every effect holds with both targets. | Done |
+| 12 | A | Fig 3 trial subset | All 491 open-loop unimanual trials of day 1883 (254 uniR, 237 uniL, from all 8 OL blocks). | The closest natural subset to the paper's 482 (the file has 951 trials in total). | Done |
 | 13 | A | RNN "saturated" targets | Min-jerk speed bell clipped at 0.5 of its peak and rescaled (alternative: rise then hold to the end). | The wording is ambiguous. | Phase 4: compare both |
 | 14 | A | Augmentation clip length | 200–800 ms (10–40 bins). | The paper's wording is ambiguous ("0.2–0.8 ×" vs "200–800 ms"). | PDF check in step 6.2 |
 | 15 | A | Augmentation velocity scaling | Velocity amplitude is not rescaled when a clip is stretched. | The targets encode intent, not physical speed. | Optional check in Phase 4 |
@@ -55,6 +61,9 @@ This is the full register. Each entry is also marked in the code with `# ASSUMPT
 | 22 | A | Minimum trials per context in a set | ≥ 10 trials of each type. | The cross-validated fits need enough trials. | Excludes exactly the 3 uni-only pairs |
 | 23 | V | cvOLS estimator | MAIN: split-half cross-validation (50 random halves of trials). The paper's literal 5-fold is kept as `--method kfold`. | 5-fold fits each fold alone; with about 25 bimanual trials that is about 5 trials for 5 parameters, so the estimates explode (main-scheme k-fold LH suppression 62%, correlation 1.20). Synthetic test: split-half is unbiased with far lower variance. The mixed-only schemes give similar values with either method. | Decided 2026-11-21 |
 | 24 | A | dPCA window and scaling | Unimanual OL trials; z-scored per block. Windows: 300–700 ms (pre-registered main) and 0–1000 ms (robustness). 100 random two-way splits per day; mean over 5 days. | The paper gives no window. The 0–1000 ms window reproduces 39% / 30% almost exactly, so the paper probably used a longer window. | Both reported |
+| 25 | V | FFN training details | ReLU, Adam (lr 1e-3, weight decay 1e-4), MSE on standardized targets, batch 512, early stopping on 10% of the training trials; PyTorch on the GPU. Ridge: closed form, alpha grid 0.1–1e5, best mean CV r. | The paper gives only "1 dense layer, 512 units, TensorFlow v1" and "RidgeCV swept to maximize Pearson correlation". | Phase 3 |
+| 26 | D | Environment: BLAS | conda-forge numpy/scipy use OpenBLAS instead of MKL. | The MKL build loads LLVM `libomp.dll`, which aborts against the Intel `libiomp5md.dll` in the PyTorch wheel (OMP Error #15). The reference cross-check is unchanged (3e-14). | Done |
+| 27 | A | Simulation details | 20 noisy bins per trial; 8 wedge directions; one population draw per grid cell; ρ ∈ {0, .25, .5, .75, .9, 1}, laterality ×{0, .5, 1, 2, 4} of the real size; noise σ calibrated (bisection) to the real single-bin fSNR at ρ = 0, lat ×1; ridge alpha chosen on 10% of the training trials. | The paper gives no per-trial bin count, grid values or seeds. | Phase 3 |
 | 20 | D | Fig 1 curve centring and CIs | Curves are centred on their 8-direction mean, as in `tuningAnalysis.m`. CIs come from a 10k bootstrap over trials. | Follows the authors' script; the paper's CI method is 10k bootstrap. | Phase 1 |
 
 ### Data quirks noted (no action yet)
@@ -62,4 +71,5 @@ This is the full register. Each entry is also marked in the code with `# ASSUMPT
 - One moving-hand trial in the whole dataset (day 1869, closed-loop) has the target at the cursor at the go cue. It gets a NaN quadrant (`min_dist` = 1). Checked in Phase 1: day 1750 is clean.
 
 ## Open items for the user
+- [ ] **Check the paper against [docs/paper_check.md](docs/paper_check.md)** and report anything that contradicts our assumptions.
 - [ ] **After Phase 6, give Claude the next steps.**

@@ -1,0 +1,197 @@
+# Reader's guide and paper-check list
+
+**Who this is for:** you, reading the paper (Deo et al. 2024, *Sci Rep* 14:1598) alongside this replication.
+
+There are three parts:
+
+1. **Things to check in the paper yourself.** Claude read the paper through a summarizer, not the PDF, so some details are uncertain. Each entry says what to look for, where it probably is, what we assumed, and why it matters.
+2. **The experiment paradigm**, in plain terms.
+3. **dPCA**, the time window and cross-validation, in plain terms.
+
+The numbered register in [REPLICATION.md](../REPLICATION.md) is the full list of decisions and assumptions; register numbers (#) refer to it.
+
+---
+
+## 1. Things to check in the paper yourself
+
+Tick each box once checked, and note what the paper actually says. Anything that contradicts our choice should be raised with Claude so the analysis can be redone.
+
+### High priority: could change headline numbers
+
+- [ ] **Target numbers (#17).** All "paper" values in `REPLICATION.md` came from summaries. Check them against the text and figures:
+  - Fig 2b suppression: RH 12%, LH 34%.
+  - Fig 2c correlations: RH 0.87 (x) / 0.84 (y); LH 0.42 (x) / 0.45 (y).
+  - dPCA: laterality 39%, direction 30%.
+  - Supp Fig 1d: LH 48% weaker.
+  - Fig 4d: raw-trained RNN r = 0.90 (RH) / 0.83 (LH).
+  - Supp Fig 4: single-bin fSNR 2.03.
+
+  *Where:* Results sections for Figs 2 and 4, the figure legends, and the Supplementary PDF.
+- [ ] **Block grouping for Fig 2b-c (#10).** The paper says the data were "grouped in pairs of blocks to ~40 repetitions per trial type", with n = 25.
+  - **Our main rule:** consecutive pairs of all open-loop blocks, including the unimanual-only ones. This gives exactly 25 sets, but 3 of them have almost no bimanual trials, so 22 are usable.
+  - **What to look for:** any sentence on how blocks were paired, whether unimanual-only blocks were used, and whether n = 25 counts sets or something else.
+  - *Where:* Methods, "Tuning strength and correlation"; the Fig 2 legend.
+- [ ] **Five-fold cvOLS (#23).** We found that the literal five-fold estimate becomes unstable when a set has about 25 bimanual trials, so we switched to split-half.
+  - **What to look for:** exactly how the paper's cvOLS works. Does each fold's "test" coefficient come from that fold alone? Is a reference (e.g. Willett et al. 2020) followed?
+  - *Where:* Methods, "Encoding model"; the cited references.
+- [ ] **Encoding-model regressors (#21).** Eq. 2 defines d as target position minus cursor position.
+  - **Our choice:** the unit direction at the go cue, held constant over 300–700 ms, because target distances vary from 30 to 750 units.
+  - **What to look for:** is d per time bin, at the go cue, or normalized?
+  - *Where:* Methods, Eq. 2.
+- [ ] **dPCA time window (#24).** We report both windows:
+  - 300–700 ms gives laterality 41% / direction 33%;
+  - 0–1000 ms gives 39% / 29%, which matches the paper.
+
+  **What to look for:** the window used for dPCA, and whether rates were z-scored.
+  - *Where:* Methods, "Demixed PCA"; the Fig 2d legend.
+
+### Medium priority: needed for upcoming phases
+
+- [ ] **Fig 3 trial subset (#12).** *(We now use the 491 OL unimanual trials; check what the paper's 482 are.)* The paper uses 482 trials from day 1883, while the file has 951 (open-loop, recalibration and closed-loop). Which blocks or trial types make up the 482?
+  - *Where:* Methods, "Offline single-bin decoding"; the Fig 3 legend.
+- [ ] **Fig 3 decoder targets (#11).** *(We now use the unit direction; recorded cursor velocity gives much lower r. Check which the paper used, and what its r values look like in Fig 3b.)* What were ridge and the FFN trained to output: cursor velocity, the direction to the target, or something else? What did the idle hand's target look like?
+  - *Where:* Methods, "Single-bin decoders".
+- [ ] **"Saturated" velocity targets for the RNN (#13).**
+  - **Our reading:** the minimum-jerk speed bell clipped at half its peak.
+  - **Alternative:** rise, then hold until the trial ends.
+
+  Look for the exact definition, a formula, or the description of Fig 4b.
+  - *Where:* Methods, "RNN decoder" / "Velocity targets"; the Fig 4b legend.
+- [ ] **Augmentation clip length (#14).** Is it "0.2–0.8 × snippet length" or "200–800 ms"? We assume 200–800 ms.
+  - *Where:* Methods, "Data augmentation"; the Fig 4c legend.
+- [ ] **Augmentation velocity scaling (#15).** When a clip is stretched or compressed in time, is the velocity target rescaled? We assume not.
+- [ ] **RNN hyperparameters.** Any values for learning rate, batch size, number of steps, input noise, mean drift or L2 weight, even in a table or supplement.
+
+### Low priority: details and sanity checks
+
+- [ ] **Supp Fig 1 counts.** Read off the bar heights and pie values. Ours:
+  - tuned electrodes: uniR 83, uniL 50, biR 87, biL 28;
+  - electrodes tuned to 0/1/2/3/4 contexts: 88 / 25 / 29 / 35 / 15.
+- [ ] **Supp Fig 1 ANOVA window and quadrant definition (#6, #18).** We use 300–700 ms and axis-aligned quadrants of the cursor→target direction.
+- [ ] **Fig 5 angular error (#8).** How is the "movement direction" computed: from cursor displacement or from decoded velocity? Is the target direction fixed at the go cue?
+- [ ] **Fig 5 time to acquisition (#7).** Does it include the 500-ms dwell? We use the task's logged trial length, which does.
+- [ ] **Fig 5a day list.**
+  - Supplementary Table 2 lists 1881 and 1883 under Fig 5A.
+  - The Methods summary listed only 1752, 1771, 1776, 1778, 1790 and 1792.
+
+  Which is right?
+
+---
+
+## 2. The experiment paradigm
+
+**Participant and recording.**
+- Participant T5 has paralysis from a cervical spinal cord injury.
+- He has two 96-electrode Utah arrays (192 electrodes in total) in the hand area of the LEFT motor cortex, the dominant hemisphere.
+- On each electrode, voltage dips below −3.5 × that electrode's RMS noise are counted as "spikes" (threshold crossings) in 20-ms bins. The files contain these counts (`tx`) for every bin.
+
+**The screen.** Two cursors: a white "R" for the right hand and a purple "L" for the left. Each has a target circle in its own colour. T5 imagines gripping a joystick in each hand and pushing it.
+
+**Trial types.** Each trial is one of three, chosen at random:
+- **Bimanual:** both cursors move.
+- **Unimanual right:** only the right cursor moves.
+- **Unimanual left:** only the left cursor moves.
+
+**Open-loop (OL) blocks, the "instructed delay" task.**
+
+1. **Delay (1–2 s, random).** Lines connect each cursor to its target, and T5 prepares the movement.
+2. **Go cue (a beep).** The lines disappear.
+3. **Movement (1–2 s).** The cursors glide to their targets on their own, along smooth minimum-jerk paths, and arrive together. T5 attempts the movement in sync.
+4. **End beep.** T5 stops and prepares for the next trial.
+
+The computer moves the cursors, so the neural activity is a clean response to known intended movements. That makes this the data used to study tuning (Figs 1–2) and to train decoders.
+
+Targets are at random positions in a ±300-unit workspace, and each trial starts where the previous target was. Movement directions therefore cover all angles.
+
+**Closed-loop (CL) blocks, real brain control.**
+- The cursors are driven by a decoder (the RNN or a linear decoder) that reads the neural activity in real time.
+- **Success:** both cursors sit inside their targets at the same time for 500 ms without a break. Leaving a target restarts the 500-ms count.
+- **Timeout:** 10 s, which counts as a failure.
+
+**Closed-loop recalibration (CLR) blocks.** Assisted closed-loop blocks used to retune the decoder before evaluation:
+- **"Lock mode"** freezes the idle cursor on unimanual trials.
+- **Push assistance** nudges the cursor toward the target.
+- **Error assistance** damps sideways motion.
+
+**Days and what they test** (see `bimanual/sessions.py` and `docs/data_inventory.md`):
+
+| Days | Purpose |
+|---|---|
+| 1750 | Open-loop only; tuning examples (Fig 1, Supp Fig 1) |
+| 1752, 1771 | Open-loop pilot data used to first train the RNN |
+| 1776, 1778, 1790, 1792 | Open-loop + RNN closed-loop evaluation (Fig 2, Fig 5a) |
+| 1853, 1855 | RNN vs linear decoder at several gains (Fig 5c) |
+| 1867, 1869 | RNN trained with vs without augmentation (Fig 4) |
+| 1881, 1883 | Sequential (one hand at a time) vs simultaneous strategy (Fig 5b); also Figs 2 and 3 |
+
+**What `durationBinnedMove` means.**
+- On open-loop trials: the length of the move period.
+- On closed-loop trials: the time to acquisition. The maximum is 499 bins, the 10-s timeout.
+
+---
+
+## 3. dPCA, the time window, and cross-validation
+
+### The question
+
+Each of the 192 electrodes' firing rates varies with **which hand** moves (laterality), **where** it moves (4 direction quadrants), and **time** within the movement.
+
+The paper asks: how much of the population activity is explained by laterality versus direction?
+- If laterality dominates, the cortex carries a strong "which hand" signal.
+- A decoder can use that signal to tell the hands apart.
+- This is the paper's explanation for why nonlinear decoders work (Fig 3).
+
+### Splitting the variance (marginalization)
+
+Average the trials into 8 conditions (2 hands × 4 directions), each a time course per electrode. Then split that array into four non-overlapping parts that add back up to the data:
+
+| Part | Captures | Computed as |
+|---|---|---|
+| Time | What all conditions share, e.g. the ramp-up after go | Average over all conditions |
+| Laterality | How right-hand trials differ from left-hand trials | Average over directions, minus time |
+| Direction | How the 4 directions differ | Average over hands, minus time |
+| Interaction | Direction effects that differ between hands | Whatever is left |
+
+The parts don't overlap, so their variances add up. "Laterality 39%" means 39% of the summed variance is in the laterality part.
+
+Full dPCA also finds a few neural directions that best capture each part, for plotting. The percentages come from the split alone, so we compute them directly (`bimanual/dpca_analysis.py`).
+
+### Why the time window matters
+
+The time part only captures change within the window.
+
+| Window | Time explains | Laterality / direction | |
+|---|---|---|---|
+| 300–700 ms after go | 3% (activity is roughly steady mid-movement) | 41% / 33% | |
+| 0–1000 ms | 12% (includes the rise from rest after the go cue) | 39% / 29% | ≈ paper |
+
+The conclusion (laterality > direction, every day) holds in both windows; only the exact percentages shift. The paper doesn't state its window, which is why it's on the check list.
+
+### Why cross-validation decides the answer
+
+Condition averages still contain leftover noise. Noise always ADDS variance, since squared wobbles are positive, so a naive estimate inflates every part.
+
+The inflation is uneven:
+- Laterality comes from just 2 big averaged groups, so its noise largely averages out.
+- Direction and interaction come from smaller groups, so they are inflated more.
+
+**The paper's fix (two-split cross-validation):**
+
+1. Split the trials into two random halves.
+2. Do the full split on each half separately.
+3. Multiply the two halves' parts together element by element, and sum.
+
+The true signal is the same in both halves, so it survives. The noise is independent between halves, so its products cancel to 0 on average. We repeat this over 100 random splits.
+
+| | Laterality | Direction |
+|---|---|---|
+| Without CV | 28% | 35% (wrong order) |
+| With CV | 41% | 33% |
+
+Without cross-validation, the paper's main claim would come out backwards purely because of noise. Our simulated tests confirm it: on pure noise the CV estimate is 0 on average, while the naive estimate shows a large fake laterality effect.
+
+**The same idea in Fig 2b-c.** Tuning strengths and correlations are also computed from independent halves of the data (cvOLS):
+- a noisy tuning vector looks stronger than it really is;
+- noisy correlations shrink toward 0.
+
+Comparing estimates from independent data removes both biases.

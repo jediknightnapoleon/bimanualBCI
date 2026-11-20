@@ -4,6 +4,37 @@ Written at the end of each phase while the user was away (see the 2026-11-21 ent
 
 ---
 
+## Phase 5: Online performance re-scored from closed-loop logs (Fig 5a-c, Fig 4e). Done.
+
+### 1. What was done
+
+`scripts/fig5_behavior.py` scores every closed-loop evaluation trial (CL blocks only; assisted recalibration blocks are excluded):
+- success and time to acquisition (TTA), taken from the logged `durationBinnedMove` (≥ 499 bins = timeout);
+- angular error at 300–500 ms after go;
+- 10k bootstrap CIs.
+
+It also plots the active-cursor speed profiles for Fig 4e. The trial table is in `results/fig5/trials.csv`.
+
+### 2. Results ([Fig 5](../results/figures/fig5_online.png), [Fig 4e](../results/figures/fig4e_online_speed.png))
+
+| Claim | Ours | |
+|---|---|---|
+| 5a: bimanual angular error higher | bi 52° vs uniR 34° / uniL 43°, on every day | ✅ |
+| 5a: bimanual TTA "only slightly longer" | bi 5.4 s vs uni 2.8 / 3.0 s (about 2× on every day) | ⚠️ |
+| 5a: uniR and uniL TTA similar | 2.8 vs 3.0 s | ✅ |
+| 5a: decoders sometimes failed | success 99% / 97% (1776 / 1778) vs 63% / 43% (1790 / 1792) | ✅ |
+| 5b: sequential faster than simultaneous | bi 5.3 vs 7.1 s; success 96% vs 67% | ✅ |
+| 5c: RNN better than linear at all gains | Linear mostly times out on mixed blocks; works on uni-only locked blocks | ✅ |
+| 4e: augmented RNN works online, raw makes pulses | success 59% / 86% vs 7% / 16%; raw makes one speed pulse, then nearly stops | ✅ |
+
+### 3. Decisions to review
+
+- **#29, Fig 5a days.** The paper lists 1752, 1771, 1776, 1778, 1790 and 1792, but the Dryad files for 1752 / 1771 contain no CL blocks, so Fig 5a uses the 4 days that have them.
+- **#30, bimanual TTA.** About 2× unimanual, larger than "only slightly longer". It is on your paper-check list: compare it with the Fig 5a bars.
+- **#7, TTA source.** The logged value is used. Recomputing TTA from positions with a fixed radius of 60 agrees within 2 bins on only 60% of trials, so the task's own record is more trustworthy.
+
+---
+
 ## Phase 4: RNN decoders and temporal fracturing (Fig 4b-d, day 1869). Done.
 
 ### 1. What was done

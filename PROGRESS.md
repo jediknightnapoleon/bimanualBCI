@@ -17,7 +17,7 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
 | 2.1–2.4 | Fig 2, Supp Fig 1d, Supp Table 1 | high/medium | done |
 | 3.1–3.3 | Fig 3, Supp Figs 2, 4 | medium/high | done |
 | 4.1–4.4 | RNN + augmentation, Fig 4 | high/low/medium | done |
-| 5.1–5.2 | Fig 5 re-scored from closed-loop logs | medium | done (analysis); commit after Phase 4 |
+| 5.1–5.2 | Fig 5 re-scored from closed-loop logs | medium | done |
 | 6.1–6.2 | Final report | medium | 6.2 PMC check done; 6.1 todo |
 
 ## Log
@@ -206,3 +206,4 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
   - The "hold" target reading is worse for both (raw RH 0.94/LH 0.86; aug RH 0.69/LH 0.60), so "clip" stays the main reading (#13).
   - Figure: `results/figures/fig4_rnn.png`.
 - **Phase 4 complete:** committed and pushed.
+- **Phase 5 complete:** briefing written; committed and pushed.

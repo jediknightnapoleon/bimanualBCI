@@ -18,7 +18,7 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
 | 3.1–3.3 | Fig 3, Supp Figs 2, 4 | medium/high | done |
 | 4.1–4.4 | RNN + augmentation, Fig 4 | high/low/medium | done |
 | 5.1–5.2 | Fig 5 re-scored from closed-loop logs | medium | done |
-| 6.1–6.2 | Final report | medium | 6.2 PMC check done; 6.1 todo |
+| 6.1–6.2 | Final report | medium | done |
 
 ## Log
 
@@ -207,3 +207,4 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
   - Figure: `results/figures/fig4_rnn.png`.
 - **Phase 4 complete:** committed and pushed.
 - **Phase 5 complete:** briefing written; committed and pushed.
+- **Phase 6 complete (2026-11-21):** `REPLICATION.md` has its summary; the briefings are written. REPLICATION DONE. Waiting for the user's next steps.

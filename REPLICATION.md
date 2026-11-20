@@ -4,17 +4,46 @@
 
 **Data:** Dryad, [doi:10.5061/dryad.sn02v6xbb](https://doi.org/10.5061/dryad.sn02v6xbb).
 
-This report is filled in as each phase finishes. Progress is tracked in [PROGRESS.md](PROGRESS.md).
+**Status (2026-11-21): complete.** Every result that can be reproduced offline was attempted. Phase-by-phase notes are in [docs/briefings.md](docs/briefings.md); the build log is [PROGRESS.md](PROGRESS.md).
+
+## Summary
+
+**Every qualitative claim of the paper reproduces from the public data.** Most headline numbers land close to the paper's:
+
+- **Neural tuning (Figs 1–2):**
+  - The non-dominant LEFT hand's tuning is suppressed (41% vs 18% for the RH; paper 34% / 12%) and decorrelated (uni/bi r 0.49 / 0.60 vs RH 0.86 / 0.86; paper 0.42 / 0.45 vs 0.87 / 0.84) during bimanual movement.
+  - Bimanual activity sits on top of unimanual-RH activity.
+  - Laterality explains more variance than direction (cross-validated dPCA 39% vs 29%; paper 39% / 30%).
+- **Decoders (Fig 3):**
+  - A one-layer nonlinear decoder beats ridge regression, mostly on the LH (+0.12 r).
+  - It does so by using the laterality dimension: removing it erases the advantage and the steadier idle cursor.
+  - Simulations reproduce the mechanism. The real single-bin fSNR is 2.11 (paper 2.03).
+- **RNNs (Fig 4):**
+  - Raw-trained RNN offline r = 0.96 / 0.89 (paper 0.90 / 0.83).
+  - Time-warped, shuffled ("fractured") training data costs a little offline (0.93 / 0.87, noisier).
+  - Online, the logged sessions show the fractured-data RNN acquiring 59–86% of targets vs 7–16% for the raw-trained one.
+- **Online control (Fig 5):** RNN ≫ linear decoder; sequential strategy faster than simultaneous; bimanual angular errors higher.
+
+**Where we differ:**
+
+1. Bimanual time to acquisition is about 2× unimanual in the logs, where the paper says "only slightly longer" (#30).
+2. RH suppression comes out slightly larger (18.7% vs 12%).
+3. Two methods had to deviate to work at all:
+   - split-half instead of 5-fold cvOLS, because 5-fold explodes on small sets (#23);
+   - unit-direction regressors instead of raw position differences in Eq. 2 (#21).
+4. The paper contradicts itself on the augmentation clip length (#14). Only the 2–8 s reading reproduces its offline result.
+
+**Not reproducible offline:** live closed-loop control, so Figs 4e and 5 are re-scored from the logs. Days 1752 / 1771 have no closed-loop data on Dryad.
 
 ## Results: paper vs replication
 
-The target numbers come from summaries of the paper text and are re-checked against the PDF in step 6.2.
+The paper's numbers were re-checked against the full text on PMC in step 6.2 (see [docs/paper_check.md](docs/paper_check.md)). Values given only in figures are marked "figure only".
 
 | Figure | Quantity | Paper | Ours (95% CI) | Status |
 |---|---|---|---|---|
 | Fig 1b-c | Electrode 97 / 13 / 23 tuning, uni vs bi | 97 keeps both hands; 13 suppressed for both hands; 23 LH suppressed | 97: RH identical, LH kept but weaker. 13: both hands weaker. 23: LH abolished, RH kept. ([figure](results/figures/fig1_tuning_curves.png)) | ✅ qualitative match |
-| Supp Fig 1c | Tuned electrodes (p < 1e-5), uniR / uniL / biR / biL | RH-preferring in both contexts (counts only in the figure) | 83 / 50 / 87 / 28 ([figure](results/figures/supp_fig1_tuning_counts.png)) | ✅ qualitative match; check exact counts against the PDF figure in step 6.2 |
-| Supp Fig 1e | Electrodes tuned to 0 / 1 / 2 / 3 / 4 contexts | Pie chart (figure only) | 88 / 25 / 29 / 35 / 15 | Check against the PDF in step 6.2 |
+| Supp Fig 1c | Tuned electrodes (p < 1e-5), uniR / uniL / biR / biL | RH-preferring in both contexts (counts only in the figure) | 83 / 50 / 87 / 28 ([figure](results/figures/supp_fig1_tuning_counts.png)) | ✅ qualitative match (exact counts are figure-only; see paper_check) |
+| Supp Fig 1e | Electrodes tuned to 0 / 1 / 2 / 3 / 4 contexts | Pie chart (figure only) | 88 / 25 / 29 / 35 / 15 | Figure-only; see paper_check |
 | Fig 2b | RH tuning suppression, bimanual vs unimanual | 12% | 18.7% (CI 15.5–22.5%); all schemes 18–19% ([figure](results/figures/fig2bc_tuning_change_splithalf.png)) | ✅ direction and size similar; somewhat larger |
 | Fig 2b | LH tuning suppression, bimanual vs unimanual | 34% | 41.3% (CI 34–49%); all schemes 36–41% | ✅ LH ≫ RH; t-test p = 6e-6 (n = 22) |
 | Fig 2c | RH uni/bi tuning correlation, x / y | 0.87 / 0.84 | 0.86 / 0.86 | ✅ |
@@ -80,6 +109,9 @@ This is the full register. Each entry is also marked in the code with `# ASSUMPT
 ### Data quirks noted (no action yet)
 - "Unimanual only" open-loop blocks each contain about 1 bimanual trial.
 - One moving-hand trial in the whole dataset (day 1869, closed-loop) has the target at the cursor at the go cue. It gets a NaN quadrant (`min_dist` = 1). Checked in Phase 1: day 1750 is clean.
+
+## How to reproduce
+Install pixi, run `pixi install`, put the Dryad `.mat` files in `Data/`, then run the `pixi run …` commands in [README.md](README.md) (Replication section) in figure order. GPU steps (`fig3-decoding`, `fig3-sim`, `fig4-rnn`) are resumable.
 
 ## Open items for the user
 - [ ] **Check the paper against [docs/paper_check.md](docs/paper_check.md)** and report anything that contradicts our assumptions.

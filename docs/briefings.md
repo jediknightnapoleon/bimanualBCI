@@ -4,6 +4,21 @@ Written at the end of each phase while the user was away (see the 2026-11-21 ent
 
 ---
 
+## Phase 6: Final report. Done; replication complete.
+
+- **`REPLICATION.md`:** has a summary at the top, the full paper-vs-ours table (every figure and supplementary item), the decisions/assumptions register (#1–31) and how to reproduce.
+- **`docs/paper_check.md`:** Claude's PMC verification table, plus the items only you can check (values shown only in figures, e.g. the Supp Fig 1 counts and the Fig 5a TTA bars).
+- **`docs/methods_notes.md`:** maps every paper method to its code.
+- **README:** its "Replication" section lists every `pixi run` command.
+
+**Headline:** every qualitative claim reproduces, and most numbers are close. Read the summary at the top of `REPLICATION.md` first.
+
+**Open for you:**
+1. Go through `docs/paper_check.md`, especially the ❓ rows: the Fig 5a TTA bars (#30) and the Supp Fig 1 counts.
+2. **Tell Claude the next steps** (e.g. extensions, robustness checks, a write-up, a pull request to the authors).
+
+---
+
 ## Phase 5: Online performance re-scored from closed-loop logs (Fig 5a-c, Fig 4e). Done.
 
 ### 1. What was done

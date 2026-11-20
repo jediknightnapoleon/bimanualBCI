@@ -1,0 +1,2757 @@
+{
+  "06_02_2021": {
+    "file": "t5_06_02_2021.mat",
+    "trial_day": 1750,
+    "n_bins": 247997,
+    "n_trials": 1347,
+    "n_channels": 192,
+    "tx_max": 12,
+    "movetype_counts": {
+      "uniR": 307,
+      "uniL": 342,
+      "bi": 698
+    },
+    "delay_bins": [
+      73,
+      123
+    ],
+    "blocks": {
+      "12": {
+        "label": "OL",
+        "n_trials": 78,
+        "counts": [
+          24,
+          19,
+          35
+        ],
+        "n_bins": 14512
+      },
+      "13": {
+        "label": "OL",
+        "n_trials": 78,
+        "counts": [
+          13,
+          22,
+          43
+        ],
+        "n_bins": 14595
+      },
+      "14": {
+        "label": "OL",
+        "n_trials": 77,
+        "counts": [
+          16,
+          16,
+          45
+        ],
+        "n_bins": 14632
+      },
+      "15": {
+        "label": "OL",
+        "n_trials": 79,
+        "counts": [
+          17,
+          22,
+          40
+        ],
+        "n_bins": 14592
+      },
+      "16": {
+        "label": "OL",
+        "n_trials": 80,
+        "counts": [
+          15,
+          23,
+          42
+        ],
+        "n_bins": 14594
+      },
+      "17": {
+        "label": "OL",
+        "n_trials": 82,
+        "counts": [
+          20,
+          26,
+          36
+        ],
+        "n_bins": 14634
+      },
+      "18": {
+        "label": "OL",
+        "n_trials": 77,
+        "counts": [
+          17,
+          13,
+          47
+        ],
+        "n_bins": 14584
+      },
+      "19": {
+        "label": "OL",
+        "n_trials": 78,
+        "counts": [
+          12,
+          22,
+          44
+        ],
+        "n_bins": 14664
+      },
+      "20": {
+        "label": "OL",
+        "n_trials": 79,
+        "counts": [
+          26,
+          15,
+          38
+        ],
+        "n_bins": 14594
+      },
+      "21": {
+        "label": "OL",
+        "n_trials": 81,
+        "counts": [
+          21,
+          17,
+          43
+        ],
+        "n_bins": 14601
+      },
+      "22": {
+        "label": "OL",
+        "n_trials": 81,
+        "counts": [
+          15,
+          21,
+          45
+        ],
+        "n_bins": 14630
+      },
+      "23": {
+        "label": "OL",
+        "n_trials": 77,
+        "counts": [
+          18,
+          19,
+          40
+        ],
+        "n_bins": 14472
+      },
+      "24": {
+        "label": "OL",
+        "n_trials": 78,
+        "counts": [
+          14,
+          17,
+          47
+        ],
+        "n_bins": 14690
+      },
+      "25": {
+        "label": "OL",
+        "n_trials": 80,
+        "counts": [
+          20,
+          19,
+          41
+        ],
+        "n_bins": 14549
+      },
+      "26": {
+        "label": "OL",
+        "n_trials": 81,
+        "counts": [
+          22,
+          25,
+          34
+        ],
+        "n_bins": 14665
+      },
+      "27": {
+        "label": "OL",
+        "n_trials": 82,
+        "counts": [
+          23,
+          22,
+          37
+        ],
+        "n_bins": 14568
+      },
+      "28": {
+        "label": "OL",
+        "n_trials": 79,
+        "counts": [
+          14,
+          24,
+          41
+        ],
+        "n_bins": 14421
+      }
+    },
+    "readme_blocks_missing": [],
+    "data_blocks_unlabeled": [],
+    "target_layout": {
+      "R": {
+        "n": 1005,
+        "dist_min": 150.30005685503806,
+        "dist_med": 367.02032193972553,
+        "dist_max": 796.9465036701132,
+        "quadrant_counts": [
+          255,
+          247,
+          255,
+          248
+        ],
+        "n_unique_angles": 881
+      },
+      "L": {
+        "n": 1040,
+        "dist_min": 43.23131731585259,
+        "dist_med": 359.8153968482871,
+        "dist_max": 765.6566041146116,
+        "quadrant_counts": [
+          269,
+          268,
+          249,
+          254
+        ],
+        "n_unique_angles": 912
+      }
+    },
+    "cl_move_max": null,
+    "cl_n_at_max": 0,
+    "workspace": [
+      -299.8468017578125,
+      299.9361877441406
+    ]
+  },
+  "06_04_2021": {
+    "file": "t5_06_04_2021.mat",
+    "trial_day": 1752,
+    "n_bins": 96172,
+    "n_trials": 495,
+    "n_channels": 192,
+    "tx_max": 12,
+    "movetype_counts": {
+      "uniR": 111,
+      "uniL": 121,
+      "bi": 263
+    },
+    "delay_bins": [
+      73,
+      122
+    ],
+    "blocks": {
+      "2": {
+        "label": "OL",
+        "n_trials": 99,
+        "counts": [
+          21,
+          31,
+          47
+        ],
+        "n_bins": 19444
+      },
+      "3": {
+        "label": "OL",
+        "n_trials": 99,
+        "counts": [
+          21,
+          19,
+          59
+        ],
+        "n_bins": 19346
+      },
+      "4": {
+        "label": "OL",
+        "n_trials": 99,
+        "counts": [
+          16,
+          31,
+          52
+        ],
+        "n_bins": 19104
+      },
+      "5": {
+        "label": "OL",
+        "n_trials": 99,
+        "counts": [
+          26,
+          19,
+          54
+        ],
+        "n_bins": 19216
+      },
+      "6": {
+        "label": "OL",
+        "n_trials": 99,
+        "counts": [
+          27,
+          21,
+          51
+        ],
+        "n_bins": 19062
+      }
+    },
+    "readme_blocks_missing": [],
+    "data_blocks_unlabeled": [],
+    "target_layout": {
+      "R": {
+        "n": 374,
+        "dist_min": 200.64781746771874,
+        "dist_med": 369.76410228492347,
+        "dist_max": 731.7234415147827,
+        "quadrant_counts": [
+          98,
+          89,
+          99,
+          88
+        ],
+        "n_unique_angles": 363
+      },
+      "L": {
+        "n": 384,
+        "dist_min": 200.06180196528456,
+        "dist_med": 379.45356966563327,
+        "dist_max": 809.6887072880933,
+        "quadrant_counts": [
+          91,
+          100,
+          96,
+          97
+        ],
+        "n_unique_angles": 360
+      }
+    },
+    "cl_move_max": null,
+    "cl_n_at_max": 0,
+    "workspace": [
+      -299.6997375488281,
+      299.6893005371094
+    ]
+  },
+  "06_23_2021": {
+    "file": "t5_06_23_2021.mat",
+    "trial_day": 1771,
+    "n_bins": 68532,
+    "n_trials": 276,
+    "n_channels": 192,
+    "tx_max": 13,
+    "movetype_counts": {
+      "uniR": 65,
+      "uniL": 67,
+      "bi": 144
+    },
+    "delay_bins": [
+      48,
+      146
+    ],
+    "blocks": {
+      "6": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          23,
+          18,
+          28
+        ],
+        "n_bins": 17258
+      },
+      "7": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          16,
+          15,
+          38
+        ],
+        "n_bins": 17346
+      },
+      "8": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          10,
+          18,
+          41
+        ],
+        "n_bins": 17629
+      },
+      "9": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          16,
+          16,
+          37
+        ],
+        "n_bins": 16299
+      }
+    },
+    "readme_blocks_missing": [],
+    "data_blocks_unlabeled": [],
+    "target_layout": {
+      "R": {
+        "n": 209,
+        "dist_min": 198.79259213845083,
+        "dist_med": 385.3169382786651,
+        "dist_max": 794.0369257663596,
+        "quadrant_counts": [
+          53,
+          54,
+          48,
+          54
+        ],
+        "n_unique_angles": 204
+      },
+      "L": {
+        "n": 211,
+        "dist_min": 198.83047546910618,
+        "dist_med": 353.09164660710013,
+        "dist_max": 652.28567174631,
+        "quadrant_counts": [
+          55,
+          45,
+          59,
+          52
+        ],
+        "n_unique_angles": 205
+      }
+    },
+    "cl_move_max": null,
+    "cl_n_at_max": 0,
+    "workspace": [
+      -299.9070739746094,
+      299.4197692871094
+    ]
+  },
+  "06_28_2021": {
+    "file": "t5_06_28_2021.mat",
+    "trial_day": 1776,
+    "n_bins": 217498,
+    "n_trials": 834,
+    "n_channels": 192,
+    "tx_max": 12,
+    "movetype_counts": {
+      "uniR": 286,
+      "uniL": 274,
+      "bi": 274
+    },
+    "delay_bins": [
+      48,
+      147
+    ],
+    "blocks": {
+      "5": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          27,
+          26,
+          16
+        ],
+        "n_bins": 16314
+      },
+      "6": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          23,
+          20,
+          26
+        ],
+        "n_bins": 16674
+      },
+      "7": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          15,
+          27,
+          27
+        ],
+        "n_bins": 16827
+      },
+      "8": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          21,
+          25,
+          23
+        ],
+        "n_bins": 15691
+      },
+      "9": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          18,
+          22,
+          29
+        ],
+        "n_bins": 16981
+      },
+      "11": {
+        "label": "CLR \u00b7 RNN",
+        "n_trials": 48,
+        "counts": [
+          21,
+          16,
+          11
+        ],
+        "n_bins": 16120
+      },
+      "12": {
+        "label": "CLR \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          17,
+          20,
+          12
+        ],
+        "n_bins": 15296
+      },
+      "13": {
+        "label": "CLR \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          16,
+          18,
+          15
+        ],
+        "n_bins": 15946
+      },
+      "14": {
+        "label": "CLR \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          18,
+          13,
+          18
+        ],
+        "n_bins": 14171
+      },
+      "15": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          19,
+          17,
+          13
+        ],
+        "n_bins": 11694
+      },
+      "16": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          19,
+          13,
+          17
+        ],
+        "n_bins": 13324
+      },
+      "17": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          14,
+          19,
+          16
+        ],
+        "n_bins": 11839
+      },
+      "18": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          19,
+          14,
+          16
+        ],
+        "n_bins": 12219
+      },
+      "19": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          19,
+          15,
+          15
+        ],
+        "n_bins": 11967
+      },
+      "20": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          20,
+          9,
+          20
+        ],
+        "n_bins": 12435
+      }
+    },
+    "readme_blocks_missing": [],
+    "data_blocks_unlabeled": [],
+    "target_layout": {
+      "R": {
+        "n": 560,
+        "dist_min": 81.46297862739533,
+        "dist_med": 349.45349969452064,
+        "dist_max": 750.8523366600284,
+        "quadrant_counts": [
+          149,
+          140,
+          146,
+          125
+        ],
+        "n_unique_angles": 516
+      },
+      "L": {
+        "n": 548,
+        "dist_min": 31.103210080502446,
+        "dist_med": 365.2709078833751,
+        "dist_max": 737.9499391786486,
+        "quadrant_counts": [
+          140,
+          144,
+          131,
+          133
+        ],
+        "n_unique_angles": 503
+      }
+    },
+    "cl_move_max": 499,
+    "cl_n_at_max": 4,
+    "workspace": [
+      -299.8565673828125,
+      299.98040771484375
+    ]
+  },
+  "06_30_2021": {
+    "file": "t5_06_30_2021.mat",
+    "trial_day": 1778,
+    "n_bins": 246531,
+    "n_trials": 933,
+    "n_channels": 192,
+    "tx_max": 12,
+    "movetype_counts": {
+      "uniR": 295,
+      "uniL": 315,
+      "bi": 323
+    },
+    "delay_bins": [
+      48,
+      147
+    ],
+    "blocks": {
+      "9": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          24,
+          25,
+          20
+        ],
+        "n_bins": 16964
+      },
+      "10": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          24,
+          21,
+          24
+        ],
+        "n_bins": 17092
+      },
+      "11": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          22,
+          23,
+          24
+        ],
+        "n_bins": 17960
+      },
+      "12": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          21,
+          22,
+          26
+        ],
+        "n_bins": 17182
+      },
+      "13": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          19,
+          25,
+          25
+        ],
+        "n_bins": 17687
+      },
+      "15": {
+        "label": "CLR \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          10,
+          20,
+          19
+        ],
+        "n_bins": 15287
+      },
+      "16": {
+        "label": "CLR \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          19,
+          15,
+          15
+        ],
+        "n_bins": 15552
+      },
+      "17": {
+        "label": "CLR \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          15,
+          13,
+          21
+        ],
+        "n_bins": 17102
+      },
+      "18": {
+        "label": "CLR \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          13,
+          23,
+          13
+        ],
+        "n_bins": 13581
+      },
+      "20": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          19,
+          18,
+          12
+        ],
+        "n_bins": 10897
+      },
+      "21": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          18,
+          12,
+          19
+        ],
+        "n_bins": 11660
+      },
+      "22": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          13,
+          19,
+          17
+        ],
+        "n_bins": 11346
+      },
+      "23": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          19,
+          16,
+          14
+        ],
+        "n_bins": 11256
+      },
+      "24": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          17,
+          16,
+          16
+        ],
+        "n_bins": 12728
+      },
+      "25": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          12,
+          19,
+          18
+        ],
+        "n_bins": 13033
+      },
+      "26": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          15,
+          13,
+          21
+        ],
+        "n_bins": 14449
+      },
+      "27": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          15,
+          15,
+          19
+        ],
+        "n_bins": 12755
+      }
+    },
+    "readme_blocks_missing": [],
+    "data_blocks_unlabeled": [],
+    "target_layout": {
+      "R": {
+        "n": 618,
+        "dist_min": 111.78804587922298,
+        "dist_med": 362.28574360367026,
+        "dist_max": 762.2276895252397,
+        "quadrant_counts": [
+          149,
+          149,
+          163,
+          157
+        ],
+        "n_unique_angles": 574
+      },
+      "L": {
+        "n": 638,
+        "dist_min": 72.91717416428514,
+        "dist_med": 372.49821008048696,
+        "dist_max": 778.3841857798835,
+        "quadrant_counts": [
+          156,
+          165,
+          148,
+          169
+        ],
+        "n_unique_angles": 583
+      }
+    },
+    "cl_move_max": 499,
+    "cl_n_at_max": 13,
+    "workspace": [
+      -299.9516906738281,
+      299.92437744140625
+    ]
+  },
+  "07_12_2021": {
+    "file": "t5_07_12_2021.mat",
+    "trial_day": 1790,
+    "n_bins": 223300,
+    "n_trials": 724,
+    "n_channels": 192,
+    "tx_max": 11,
+    "movetype_counts": {
+      "uniR": 243,
+      "uniL": 241,
+      "bi": 240
+    },
+    "delay_bins": [
+      48,
+      147
+    ],
+    "blocks": {
+      "8": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          20,
+          22,
+          27
+        ],
+        "n_bins": 17331
+      },
+      "9": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          25,
+          19,
+          25
+        ],
+        "n_bins": 16886
+      },
+      "10": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          22,
+          23,
+          24
+        ],
+        "n_bins": 16983
+      },
+      "11": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          19,
+          25,
+          25
+        ],
+        "n_bins": 17144
+      },
+      "12": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          26,
+          18,
+          25
+        ],
+        "n_bins": 17170
+      },
+      "14": {
+        "label": "CLR \u00b7 RNN",
+        "n_trials": 47,
+        "counts": [
+          16,
+          15,
+          16
+        ],
+        "n_bins": 16474
+      },
+      "15": {
+        "label": "CLR \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          17,
+          19,
+          13
+        ],
+        "n_bins": 16389
+      },
+      "16": {
+        "label": "CLR \u00b7 RNN",
+        "n_trials": 48,
+        "counts": [
+          22,
+          18,
+          8
+        ],
+        "n_bins": 13856
+      },
+      "17": {
+        "label": "CLR \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          16,
+          16,
+          17
+        ],
+        "n_bins": 15463
+      },
+      "18": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          15,
+          16,
+          18
+        ],
+        "n_bins": 17014
+      },
+      "19": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          16,
+          19,
+          14
+        ],
+        "n_bins": 19034
+      },
+      "20": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          20,
+          12,
+          17
+        ],
+        "n_bins": 21544
+      },
+      "21": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 39,
+        "counts": [
+          9,
+          19,
+          11
+        ],
+        "n_bins": 18012
+      }
+    },
+    "readme_blocks_missing": [],
+    "data_blocks_unlabeled": [],
+    "target_layout": {
+      "R": {
+        "n": 483,
+        "dist_min": 11.510324001581926,
+        "dist_med": 345.5266224693864,
+        "dist_max": 706.262778274408,
+        "quadrant_counts": [
+          117,
+          117,
+          142,
+          107
+        ],
+        "n_unique_angles": 448
+      },
+      "L": {
+        "n": 481,
+        "dist_min": 10.457319105737605,
+        "dist_med": 350.57879673077747,
+        "dist_max": 723.4656807471694,
+        "quadrant_counts": [
+          125,
+          120,
+          109,
+          127
+        ],
+        "n_unique_angles": 450
+      }
+    },
+    "cl_move_max": 499,
+    "cl_n_at_max": 68,
+    "workspace": [
+      -299.74462890625,
+      299.9895935058594
+    ]
+  },
+  "07_14_2021": {
+    "file": "t5_07_14_2021.mat",
+    "trial_day": 1792,
+    "n_bins": 171414,
+    "n_trials": 510,
+    "n_channels": 192,
+    "tx_max": 12,
+    "movetype_counts": {
+      "uniR": 152,
+      "uniL": 193,
+      "bi": 165
+    },
+    "delay_bins": [
+      48,
+      147
+    ],
+    "blocks": {
+      "7": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          24,
+          26,
+          19
+        ],
+        "n_bins": 16719
+      },
+      "8": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          18,
+          23,
+          28
+        ],
+        "n_bins": 16203
+      },
+      "14": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          18,
+          25,
+          26
+        ],
+        "n_bins": 16732
+      },
+      "15": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          24,
+          29,
+          16
+        ],
+        "n_bins": 16049
+      },
+      "16": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          16,
+          19,
+          14
+        ],
+        "n_bins": 22133
+      },
+      "17": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 40,
+        "counts": [
+          9,
+          18,
+          13
+        ],
+        "n_bins": 19403
+      },
+      "18": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          9,
+          20,
+          20
+        ],
+        "n_bins": 20973
+      },
+      "20": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 47,
+        "counts": [
+          17,
+          19,
+          11
+        ],
+        "n_bins": 20151
+      },
+      "21": {
+        "label": "CL \u00b7 RNN",
+        "n_trials": 49,
+        "counts": [
+          17,
+          14,
+          18
+        ],
+        "n_bins": 23051
+      }
+    },
+    "readme_blocks_missing": [],
+    "data_blocks_unlabeled": [],
+    "target_layout": {
+      "R": {
+        "n": 317,
+        "dist_min": 43.901207145125134,
+        "dist_med": 329.2619501443169,
+        "dist_max": 712.7072053273779,
+        "quadrant_counts": [
+          72,
+          86,
+          90,
+          69
+        ],
+        "n_unique_angles": 303
+      },
+      "L": {
+        "n": 358,
+        "dist_min": 43.69020449203129,
+        "dist_med": 331.46614627035024,
+        "dist_max": 708.0121440076787,
+        "quadrant_counts": [
+          93,
+          86,
+          82,
+          97
+        ],
+        "n_unique_angles": 337
+      }
+    },
+    "cl_move_max": 499,
+    "cl_n_at_max": 134,
+    "workspace": [
+      -299.91815185546875,
+      299.7534484863281
+    ]
+  },
+  "09_13_2021": {
+    "file": "t5_09_13_2021.mat",
+    "trial_day": 1853,
+    "n_bins": 245930,
+    "n_trials": 762,
+    "n_channels": 192,
+    "tx_max": 13,
+    "movetype_counts": {
+      "uniR": 308,
+      "uniL": 355,
+      "bi": 99
+    },
+    "delay_bins": [
+      48,
+      146
+    ],
+    "blocks": {
+      "1": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          34,
+          34,
+          1
+        ],
+        "n_bins": 16013
+      },
+      "2": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          26,
+          42,
+          1
+        ],
+        "n_bins": 16832
+      },
+      "3": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          27,
+          41,
+          1
+        ],
+        "n_bins": 17225
+      },
+      "4": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          30,
+          38,
+          1
+        ],
+        "n_bins": 16555
+      },
+      "6": {
+        "label": "CLR \u00b7 linear \u00b7 uni only",
+        "n_trials": 49,
+        "counts": [
+          21,
+          28,
+          0
+        ],
+        "n_bins": 10819
+      },
+      "7": {
+        "label": "CLR \u00b7 RNN \u00b7 uni only",
+        "n_trials": 49,
+        "counts": [
+          21,
+          28,
+          0
+        ],
+        "n_bins": 11138
+      },
+      "8": {
+        "label": "CLR \u00b7 linear \u00b7 uni only",
+        "n_trials": 49,
+        "counts": [
+          22,
+          27,
+          0
+        ],
+        "n_bins": 10297
+      },
+      "9": {
+        "label": "CLR \u00b7 RNN \u00b7 uni only",
+        "n_trials": 49,
+        "counts": [
+          25,
+          24,
+          0
+        ],
+        "n_bins": 10380
+      },
+      "12": {
+        "label": "CL \u00b7 linear \u00b7 gain 0.5",
+        "n_trials": 29,
+        "counts": [
+          7,
+          14,
+          8
+        ],
+        "n_bins": 16266
+      },
+      "13": {
+        "label": "CL \u00b7 RNN \u00b7 gain 0.3",
+        "n_trials": 29,
+        "counts": [
+          10,
+          13,
+          6
+        ],
+        "n_bins": 12184
+      },
+      "14": {
+        "label": "CL \u00b7 linear \u00b7 gain 0.4",
+        "n_trials": 29,
+        "counts": [
+          11,
+          8,
+          10
+        ],
+        "n_bins": 16554
+      },
+      "15": {
+        "label": "CL \u00b7 RNN \u00b7 gain 0.4",
+        "n_trials": 29,
+        "counts": [
+          10,
+          8,
+          11
+        ],
+        "n_bins": 10629
+      },
+      "16": {
+        "label": "CL \u00b7 linear \u00b7 gain 0.3",
+        "n_trials": 29,
+        "counts": [
+          7,
+          14,
+          8
+        ],
+        "n_bins": 14296
+      },
+      "17": {
+        "label": "CL \u00b7 RNN \u00b7 gain 0.2",
+        "n_trials": 29,
+        "counts": [
+          10,
+          6,
+          13
+        ],
+        "n_bins": 10123
+      },
+      "18": {
+        "label": "CL \u00b7 linear \u00b7 gain 0.8",
+        "n_trials": 29,
+        "counts": [
+          16,
+          9,
+          4
+        ],
+        "n_bins": 14355
+      },
+      "19": {
+        "label": "CL \u00b7 RNN \u00b7 gain 0.5",
+        "n_trials": 29,
+        "counts": [
+          12,
+          4,
+          13
+        ],
+        "n_bins": 9562
+      },
+      "20": {
+        "label": "CL \u00b7 linear \u00b7 gain 1",
+        "n_trials": 29,
+        "counts": [
+          9,
+          9,
+          11
+        ],
+        "n_bins": 16191
+      },
+      "21": {
+        "label": "CL \u00b7 linear \u00b7 gain 1.4",
+        "n_trials": 29,
+        "counts": [
+          10,
+          8,
+          11
+        ],
+        "n_bins": 16511
+      }
+    },
+    "readme_blocks_missing": [],
+    "data_blocks_unlabeled": [],
+    "target_layout": {
+      "R": {
+        "n": 407,
+        "dist_min": 63.031510604393326,
+        "dist_med": 366.35751663611336,
+        "dist_max": 753.413007617036,
+        "quadrant_counts": [
+          85,
+          110,
+          126,
+          86
+        ],
+        "n_unique_angles": 384
+      },
+      "L": {
+        "n": 454,
+        "dist_min": 9.107836955281961,
+        "dist_med": 344.40758654312435,
+        "dist_max": 753.196892846054,
+        "quadrant_counts": [
+          115,
+          119,
+          89,
+          131
+        ],
+        "n_unique_angles": 431
+      }
+    },
+    "cl_move_max": 499,
+    "cl_n_at_max": 179,
+    "workspace": [
+      -299.9697570800781,
+      299.9696044921875
+    ]
+  },
+  "09_15_2021": {
+    "file": "t5_09_15_2021.mat",
+    "trial_day": 1855,
+    "n_bins": 275979,
+    "n_trials": 972,
+    "n_channels": 192,
+    "tx_max": 15,
+    "movetype_counts": {
+      "uniR": 419,
+      "uniL": 451,
+      "bi": 102
+    },
+    "delay_bins": [
+      48,
+      147
+    ],
+    "blocks": {
+      "1": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          30,
+          38,
+          1
+        ],
+        "n_bins": 16404
+      },
+      "2": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          33,
+          35,
+          1
+        ],
+        "n_bins": 16523
+      },
+      "3": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          34,
+          34,
+          1
+        ],
+        "n_bins": 16603
+      },
+      "5": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          34,
+          34,
+          1
+        ],
+        "n_bins": 16655
+      },
+      "6": {
+        "label": "CLR \u00b7 linear \u00b7 uni only",
+        "n_trials": 49,
+        "counts": [
+          22,
+          27,
+          0
+        ],
+        "n_bins": 12873
+      },
+      "7": {
+        "label": "CLR \u00b7 linear \u00b7 uni only",
+        "n_trials": 49,
+        "counts": [
+          25,
+          24,
+          0
+        ],
+        "n_bins": 13861
+      },
+      "8": {
+        "label": "CLR \u00b7 RNN \u00b7 uni only",
+        "n_trials": 49,
+        "counts": [
+          29,
+          20,
+          0
+        ],
+        "n_bins": 11874
+      },
+      "9": {
+        "label": "CLR \u00b7 RNN \u00b7 uni only",
+        "n_trials": 49,
+        "counts": [
+          25,
+          24,
+          0
+        ],
+        "n_bins": 13615
+      },
+      "16": {
+        "label": "CL \u00b7 RNN \u00b7 gain 0.5",
+        "n_trials": 29,
+        "counts": [
+          7,
+          9,
+          13
+        ],
+        "n_bins": 7706
+      },
+      "17": {
+        "label": "CL \u00b7 linear \u00b7 gain 1",
+        "n_trials": 29,
+        "counts": [
+          6,
+          12,
+          11
+        ],
+        "n_bins": 16521
+      },
+      "18": {
+        "label": "CL \u00b7 RNN \u00b7 gain 0.7",
+        "n_trials": 29,
+        "counts": [
+          7,
+          9,
+          13
+        ],
+        "n_bins": 9213
+      },
+      "19": {
+        "label": "CL \u00b7 linear \u00b7 gain 0.8",
+        "n_trials": 29,
+        "counts": [
+          8,
+          6,
+          15
+        ],
+        "n_bins": 16529
+      },
+      "20": {
+        "label": "CL \u00b7 RNN \u00b7 gain 0.4",
+        "n_trials": 29,
+        "counts": [
+          7,
+          13,
+          9
+        ],
+        "n_bins": 7563
+      },
+      "21": {
+        "label": "CL \u00b7 linear \u00b7 gain 1.1",
+        "n_trials": 29,
+        "counts": [
+          7,
+          12,
+          10
+        ],
+        "n_bins": 16674
+      },
+      "22": {
+        "label": "CL \u00b7 RNN \u00b7 gain 0.6",
+        "n_trials": 29,
+        "counts": [
+          7,
+          11,
+          11
+        ],
+        "n_bins": 8247
+      },
+      "23": {
+        "label": "CL \u00b7 linear \u00b7 gain 0.9",
+        "n_trials": 29,
+        "counts": [
+          8,
+          5,
+          16
+        ],
+        "n_bins": 16580
+      },
+      "24": {
+        "label": "CL \u00b7 RNN \u00b7 gain 0.7 \u00b7 uni only",
+        "n_trials": 36,
+        "counts": [
+          16,
+          20,
+          0
+        ],
+        "n_bins": 6892
+      },
+      "25": {
+        "label": "CL \u00b7 linear \u00b7 gain 1.1 \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          9,
+          20,
+          0
+        ],
+        "n_bins": 8193
+      },
+      "26": {
+        "label": "CL \u00b7 RNN \u00b7 gain 0.5 \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          18,
+          11,
+          0
+        ],
+        "n_bins": 5359
+      },
+      "27": {
+        "label": "CL \u00b7 linear \u00b7 gain 0.9 \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          16,
+          13,
+          0
+        ],
+        "n_bins": 7219
+      },
+      "28": {
+        "label": "CL \u00b7 RNN \u00b7 gain 0.6 \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          11,
+          18,
+          0
+        ],
+        "n_bins": 5112
+      },
+      "29": {
+        "label": "CL \u00b7 linear \u00b7 gain 0.8 \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          19,
+          10,
+          0
+        ],
+        "n_bins": 7117
+      },
+      "30": {
+        "label": "CL \u00b7 RNN \u00b7 gain 0.4 \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          15,
+          14,
+          0
+        ],
+        "n_bins": 5372
+      },
+      "31": {
+        "label": "CL \u00b7 linear \u00b7 gain 1.2 \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          11,
+          18,
+          0
+        ],
+        "n_bins": 7576
+      },
+      "32": {
+        "label": "CL \u00b7 RNN \u00b7 gain 0.8 \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          15,
+          14,
+          0
+        ],
+        "n_bins": 5698
+      }
+    },
+    "readme_blocks_missing": [],
+    "data_blocks_unlabeled": [],
+    "target_layout": {
+      "R": {
+        "n": 521,
+        "dist_min": 5.574632070908511,
+        "dist_med": 370.2109788006607,
+        "dist_max": 809.9686483834646,
+        "quadrant_counts": [
+          121,
+          131,
+          147,
+          122
+        ],
+        "n_unique_angles": 481
+      },
+      "L": {
+        "n": 553,
+        "dist_min": 24.703019802913797,
+        "dist_med": 362.6780928137746,
+        "dist_max": 813.0738676093822,
+        "quadrant_counts": [
+          158,
+          148,
+          113,
+          134
+        ],
+        "n_unique_angles": 511
+      }
+    },
+    "cl_move_max": 499,
+    "cl_n_at_max": 131,
+    "workspace": [
+      -299.88568115234375,
+      299.8500671386719
+    ]
+  },
+  "09_27_2021": {
+    "file": "t5_09_27_2021.mat",
+    "trial_day": 1867,
+    "n_bins": 369832,
+    "n_trials": 1439,
+    "n_channels": 192,
+    "tx_max": 14,
+    "movetype_counts": {
+      "uniR": 713,
+      "uniL": 710,
+      "bi": 16
+    },
+    "delay_bins": [
+      48,
+      148
+    ],
+    "blocks": {
+      "1": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          33,
+          35,
+          1
+        ],
+        "n_bins": 13223
+      },
+      "2": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          35,
+          33,
+          1
+        ],
+        "n_bins": 12721
+      },
+      "3": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          37,
+          31,
+          1
+        ],
+        "n_bins": 12775
+      },
+      "4": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          35,
+          33,
+          1
+        ],
+        "n_bins": 12618
+      },
+      "7": {
+        "label": "CL \u00b7 RNN \u00b7 augmented \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          16,
+          13,
+          0
+        ],
+        "n_bins": 10648
+      },
+      "8": {
+        "label": "CL \u00b7 RNN \u00b7 raw \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          14,
+          15,
+          0
+        ],
+        "n_bins": 16189
+      },
+      "9": {
+        "label": "CL \u00b7 RNN \u00b7 augmented \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          18,
+          11,
+          0
+        ],
+        "n_bins": 11562
+      },
+      "10": {
+        "label": "CL \u00b7 RNN \u00b7 raw \u00b7 uni only",
+        "n_trials": 28,
+        "counts": [
+          13,
+          15,
+          0
+        ],
+        "n_bins": 15612
+      },
+      "12": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          28,
+          40,
+          1
+        ],
+        "n_bins": 12880
+      },
+      "13": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          37,
+          31,
+          1
+        ],
+        "n_bins": 12592
+      },
+      "14": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          27,
+          41,
+          1
+        ],
+        "n_bins": 13123
+      },
+      "15": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          29,
+          39,
+          1
+        ],
+        "n_bins": 13182
+      },
+      "16": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          37,
+          31,
+          1
+        ],
+        "n_bins": 12894
+      },
+      "17": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          33,
+          35,
+          1
+        ],
+        "n_bins": 13046
+      },
+      "18": {
+        "label": "CL \u00b7 RNN \u00b7 raw \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          11,
+          18,
+          0
+        ],
+        "n_bins": 15582
+      },
+      "19": {
+        "label": "CL \u00b7 RNN \u00b7 augmented \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          12,
+          17,
+          0
+        ],
+        "n_bins": 13869
+      },
+      "20": {
+        "label": "CL \u00b7 RNN \u00b7 raw \u00b7 uni only",
+        "n_trials": 27,
+        "counts": [
+          16,
+          11,
+          0
+        ],
+        "n_bins": 14974
+      },
+      "21": {
+        "label": "CL \u00b7 RNN \u00b7 augmented \u00b7 uni only",
+        "n_trials": 20,
+        "counts": [
+          9,
+          11,
+          0
+        ],
+        "n_bins": 9758
+      },
+      "22": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          36,
+          32,
+          1
+        ],
+        "n_bins": 13143
+      },
+      "23": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          43,
+          25,
+          1
+        ],
+        "n_bins": 12698
+      },
+      "24": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          32,
+          36,
+          1
+        ],
+        "n_bins": 12567
+      },
+      "25": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          35,
+          33,
+          1
+        ],
+        "n_bins": 13040
+      },
+      "26": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          37,
+          31,
+          1
+        ],
+        "n_bins": 12757
+      },
+      "27": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          33,
+          35,
+          1
+        ],
+        "n_bins": 12913
+      },
+      "28": {
+        "label": "CL \u00b7 RNN \u00b7 raw \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          14,
+          15,
+          0
+        ],
+        "n_bins": 15930
+      },
+      "29": {
+        "label": "CL \u00b7 RNN \u00b7 augmented \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          15,
+          14,
+          0
+        ],
+        "n_bins": 12333
+      },
+      "30": {
+        "label": "CL \u00b7 RNN \u00b7 raw \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          14,
+          15,
+          0
+        ],
+        "n_bins": 16552
+      },
+      "31": {
+        "label": "CL \u00b7 RNN \u00b7 augmented \u00b7 uni only",
+        "n_trials": 28,
+        "counts": [
+          14,
+          14,
+          0
+        ],
+        "n_bins": 10651
+      }
+    },
+    "readme_blocks_missing": [],
+    "data_blocks_unlabeled": [],
+    "target_layout": {
+      "R": {
+        "n": 729,
+        "dist_min": 58.395854154095005,
+        "dist_med": 341.38274430130485,
+        "dist_max": 763.4179153390776,
+        "quadrant_counts": [
+          149,
+          213,
+          174,
+          193
+        ],
+        "n_unique_angles": 659
+      },
+      "L": {
+        "n": 726,
+        "dist_min": 52.82413302288686,
+        "dist_med": 358.6465689005498,
+        "dist_max": 801.1335339332421,
+        "quadrant_counts": [
+          206,
+          169,
+          153,
+          198
+        ],
+        "n_unique_angles": 652
+      }
+    },
+    "cl_move_max": 499,
+    "cl_n_at_max": 226,
+    "workspace": [
+      -299.99945068359375,
+      299.9706726074219
+    ]
+  },
+  "09_29_2021": {
+    "file": "t5_09_29_2021.mat",
+    "trial_day": 1869,
+    "n_bins": 242732,
+    "n_trials": 857,
+    "n_channels": 192,
+    "tx_max": 11,
+    "movetype_counts": {
+      "uniR": 419,
+      "uniL": 430,
+      "bi": 8
+    },
+    "delay_bins": [
+      48,
+      147
+    ],
+    "blocks": {
+      "1": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          31,
+          37,
+          1
+        ],
+        "n_bins": 13093
+      },
+      "2": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          37,
+          31,
+          1
+        ],
+        "n_bins": 12837
+      },
+      "3": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          44,
+          24,
+          1
+        ],
+        "n_bins": 13201
+      },
+      "4": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          35,
+          33,
+          1
+        ],
+        "n_bins": 12417
+      },
+      "5": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          39,
+          29,
+          1
+        ],
+        "n_bins": 12712
+      },
+      "6": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          32,
+          36,
+          1
+        ],
+        "n_bins": 12955
+      },
+      "7": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 99,
+        "counts": [
+          47,
+          51,
+          1
+        ],
+        "n_bins": 18362
+      },
+      "8": {
+        "label": "CL \u00b7 RNN \u00b7 raw \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          11,
+          18,
+          0
+        ],
+        "n_bins": 16220
+      },
+      "9": {
+        "label": "CL \u00b7 RNN \u00b7 augmented \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          14,
+          15,
+          0
+        ],
+        "n_bins": 9181
+      },
+      "12": {
+        "label": "CL \u00b7 RNN \u00b7 raw \u00b7 uni only",
+        "n_trials": 28,
+        "counts": [
+          11,
+          17,
+          0
+        ],
+        "n_bins": 14515
+      },
+      "13": {
+        "label": "CL \u00b7 RNN \u00b7 augmented \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          9,
+          20,
+          0
+        ],
+        "n_bins": 9209
+      },
+      "14": {
+        "label": "CL \u00b7 RNN \u00b7 raw \u00b7 uni only",
+        "n_trials": 28,
+        "counts": [
+          12,
+          16,
+          0
+        ],
+        "n_bins": 14243
+      },
+      "15": {
+        "label": "CL \u00b7 RNN \u00b7 augmented \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          14,
+          15,
+          0
+        ],
+        "n_bins": 8416
+      },
+      "16": {
+        "label": "CL \u00b7 RNN \u00b7 raw \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          13,
+          16,
+          0
+        ],
+        "n_bins": 15433
+      },
+      "17": {
+        "label": "CL \u00b7 RNN \u00b7 augmented \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          11,
+          18,
+          0
+        ],
+        "n_bins": 12886
+      },
+      "19": {
+        "label": "CL \u00b7 RNN \u00b7 augmented \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          11,
+          18,
+          0
+        ],
+        "n_bins": 9140
+      },
+      "20": {
+        "label": "CL \u00b7 RNN \u00b7 raw \u00b7 uni only",
+        "n_trials": 28,
+        "counts": [
+          16,
+          11,
+          1
+        ],
+        "n_bins": 15604
+      },
+      "21": {
+        "label": "CL \u00b7 RNN \u00b7 augmented \u00b7 uni only",
+        "n_trials": 29,
+        "counts": [
+          14,
+          15,
+          0
+        ],
+        "n_bins": 8114
+      },
+      "22": {
+        "label": "CL \u00b7 RNN \u00b7 raw \u00b7 uni only",
+        "n_trials": 28,
+        "counts": [
+          18,
+          10,
+          0
+        ],
+        "n_bins": 14194
+      }
+    },
+    "readme_blocks_missing": [],
+    "data_blocks_unlabeled": [],
+    "target_layout": {
+      "R": {
+        "n": 427,
+        "dist_min": 0.0,
+        "dist_med": 355.2873744807433,
+        "dist_max": 1003.3539871818855,
+        "quadrant_counts": [
+          103,
+          113,
+          122,
+          89
+        ],
+        "n_unique_angles": 402
+      },
+      "L": {
+        "n": 438,
+        "dist_min": 59.229929963408836,
+        "dist_med": 348.9488545854567,
+        "dist_max": 673.7338471023442,
+        "quadrant_counts": [
+          121,
+          99,
+          111,
+          107
+        ],
+        "n_unique_angles": 416
+      }
+    },
+    "cl_move_max": 499,
+    "cl_n_at_max": 167,
+    "workspace": [
+      -299.84088134765625,
+      299.95953369140625
+    ]
+  },
+  "10_11_2021": {
+    "file": "t5_10_11_2021.mat",
+    "trial_day": 1881,
+    "n_bins": 246218,
+    "n_trials": 944,
+    "n_channels": 192,
+    "tx_max": 12,
+    "movetype_counts": {
+      "uniR": 366,
+      "uniL": 333,
+      "bi": 245
+    },
+    "delay_bins": [
+      48,
+      147
+    ],
+    "blocks": {
+      "1": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          35,
+          33,
+          1
+        ],
+        "n_bins": 16662
+      },
+      "4": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          40,
+          28,
+          1
+        ],
+        "n_bins": 16805
+      },
+      "6": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          39,
+          29,
+          1
+        ],
+        "n_bins": 17347
+      },
+      "7": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          21,
+          21,
+          27
+        ],
+        "n_bins": 17832
+      },
+      "8": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          34,
+          34,
+          1
+        ],
+        "n_bins": 16334
+      },
+      "9": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          19,
+          25,
+          25
+        ],
+        "n_bins": 16926
+      },
+      "19": {
+        "label": "OL",
+        "n_trials": 119,
+        "counts": [
+          38,
+          34,
+          47
+        ],
+        "n_bins": 30006
+      },
+      "22": {
+        "label": "CL \u00b7 RNN \u00b7 sequential",
+        "n_trials": 49,
+        "counts": [
+          12,
+          16,
+          21
+        ],
+        "n_bins": 12813
+      },
+      "23": {
+        "label": "CL \u00b7 RNN \u00b7 simultaneous",
+        "n_trials": 49,
+        "counts": [
+          18,
+          16,
+          15
+        ],
+        "n_bins": 15896
+      },
+      "25": {
+        "label": "CL \u00b7 RNN \u00b7 sequential",
+        "n_trials": 49,
+        "counts": [
+          13,
+          19,
+          17
+        ],
+        "n_bins": 11613
+      },
+      "28": {
+        "label": "OL",
+        "n_trials": 119,
+        "counts": [
+          51,
+          33,
+          35
+        ],
+        "n_bins": 29292
+      },
+      "29": {
+        "label": "CL \u00b7 RNN \u00b7 simultaneous",
+        "n_trials": 29,
+        "counts": [
+          9,
+          8,
+          12
+        ],
+        "n_bins": 9806
+      },
+      "30": {
+        "label": "CL \u00b7 RNN \u00b7 sequential",
+        "n_trials": 29,
+        "counts": [
+          11,
+          8,
+          10
+        ],
+        "n_bins": 6887
+      },
+      "31": {
+        "label": "CL \u00b7 RNN \u00b7 simultaneous",
+        "n_trials": 29,
+        "counts": [
+          11,
+          11,
+          7
+        ],
+        "n_bins": 9936
+      },
+      "32": {
+        "label": "CL \u00b7 RNN \u00b7 sequential",
+        "n_trials": 29,
+        "counts": [
+          9,
+          9,
+          11
+        ],
+        "n_bins": 7349
+      },
+      "33": {
+        "label": "CL \u00b7 RNN \u00b7 simultaneous",
+        "n_trials": 29,
+        "counts": [
+          6,
+          9,
+          14
+        ],
+        "n_bins": 10714
+      }
+    },
+    "readme_blocks_missing": [],
+    "data_blocks_unlabeled": [],
+    "target_layout": {
+      "R": {
+        "n": 611,
+        "dist_min": 116.0900663463431,
+        "dist_med": 366.4498908426991,
+        "dist_max": 733.1405542174188,
+        "quadrant_counts": [
+          151,
+          146,
+          159,
+          155
+        ],
+        "n_unique_angles": 561
+      },
+      "L": {
+        "n": 578,
+        "dist_min": 30.530621742883586,
+        "dist_med": 350.6919279033789,
+        "dist_max": 728.3136653896087,
+        "quadrant_counts": [
+          151,
+          145,
+          136,
+          146
+        ],
+        "n_unique_angles": 527
+      }
+    },
+    "cl_move_max": 499,
+    "cl_n_at_max": 35,
+    "workspace": [
+      -299.7980041503906,
+      299.8948669433594
+    ]
+  },
+  "10_13_2021": {
+    "file": "t5_10_13_2021.mat",
+    "trial_day": 1883,
+    "n_bins": 244211,
+    "n_trials": 951,
+    "n_channels": 192,
+    "tx_max": 12,
+    "movetype_counts": {
+      "uniR": 351,
+      "uniL": 351,
+      "bi": 249
+    },
+    "delay_bins": [
+      48,
+      147
+    ],
+    "blocks": {
+      "2": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          38,
+          30,
+          1
+        ],
+        "n_bins": 16794
+      },
+      "4": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          39,
+          29,
+          1
+        ],
+        "n_bins": 16523
+      },
+      "5": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          21,
+          24,
+          24
+        ],
+        "n_bins": 17763
+      },
+      "6": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          33,
+          35,
+          1
+        ],
+        "n_bins": 15904
+      },
+      "7": {
+        "label": "OL",
+        "n_trials": 69,
+        "counts": [
+          13,
+          20,
+          36
+        ],
+        "n_bins": 16564
+      },
+      "8": {
+        "label": "OL \u00b7 uni only",
+        "n_trials": 69,
+        "counts": [
+          34,
+          34,
+          1
+        ],
+        "n_bins": 16845
+      },
+      "9": {
+        "label": "OL",
+        "n_trials": 119,
+        "counts": [
+          44,
+          37,
+          38
+        ],
+        "n_bins": 29236
+      },
+      "20": {
+        "label": "CL \u00b7 RNN \u00b7 simultaneous",
+        "n_trials": 49,
+        "counts": [
+          17,
+          15,
+          17
+        ],
+        "n_bins": 14616
+      },
+      "22": {
+        "label": "CL \u00b7 RNN \u00b7 sequential",
+        "n_trials": 49,
+        "counts": [
+          16,
+          22,
+          11
+        ],
+        "n_bins": 11372
+      },
+      "23": {
+        "label": "CL \u00b7 RNN \u00b7 simultaneous",
+        "n_trials": 29,
+        "counts": [
+          10,
+          10,
+          9
+        ],
+        "n_bins": 8282
+      },
+      "24": {
+        "label": "CL \u00b7 RNN \u00b7 sequential",
+        "n_trials": 29,
+        "counts": [
+          9,
+          11,
+          9
+        ],
+        "n_bins": 7479
+      },
+      "25": {
+        "label": "CL \u00b7 RNN \u00b7 simultaneous",
+        "n_trials": 28,
+        "counts": [
+          7,
+          10,
+          11
+        ],
+        "n_bins": 10040
+      },
+      "26": {
+        "label": "CL \u00b7 RNN \u00b7 sequential",
+        "n_trials": 29,
+        "counts": [
+          9,
+          8,
+          12
+        ],
+        "n_bins": 7557
+      },
+      "27": {
+        "label": "OL",
+        "n_trials": 89,
+        "counts": [
+          32,
+          28,
+          29
+        ],
+        "n_bins": 21219
+      },
+      "28": {
+        "label": "CL \u00b7 RNN \u00b7 simultaneous",
+        "n_trials": 29,
+        "counts": [
+          10,
+          9,
+          10
+        ],
+        "n_bins": 9334
+      },
+      "29": {
+        "label": "CL \u00b7 RNN \u00b7 sequential",
+        "n_trials": 29,
+        "counts": [
+          8,
+          12,
+          9
+        ],
+        "n_bins": 7052
+      },
+      "31": {
+        "label": "CL \u00b7 RNN \u00b7 simultaneous",
+        "n_trials": 29,
+        "counts": [
+          6,
+          10,
+          13
+        ],
+        "n_bins": 9443
+      },
+      "32": {
+        "label": "CL \u00b7 RNN \u00b7 sequential",
+        "n_trials": 29,
+        "counts": [
+          5,
+          7,
+          17
+        ],
+        "n_bins": 8188
+      }
+    },
+    "readme_blocks_missing": [],
+    "data_blocks_unlabeled": [],
+    "target_layout": {
+      "R": {
+        "n": 600,
+        "dist_min": 102.494677320766,
+        "dist_med": 358.89274104594074,
+        "dist_max": 750.260436391361,
+        "quadrant_counts": [
+          137,
+          160,
+          160,
+          143
+        ],
+        "n_unique_angles": 547
+      },
+      "L": {
+        "n": 600,
+        "dist_min": 99.70166667374838,
+        "dist_med": 360.7268166794867,
+        "dist_max": 744.132033975938,
+        "quadrant_counts": [
+          139,
+          157,
+          138,
+          166
+        ],
+        "n_unique_angles": 543
+      }
+    },
+    "cl_move_max": 499,
+    "cl_n_at_max": 17,
+    "workspace": [
+      -299.7801208496094,
+      299.9013366699219
+    ]
+  }
+}

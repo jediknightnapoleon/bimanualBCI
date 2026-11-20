@@ -1,0 +1,60 @@
+# =============================================================================
+# Python package and pixi environment for the replication of
+#   Deo et al. 2024, Sci Rep, "Brain control of bimanual movement enabled by
+#   recurrent neural networks" (doi:10.1038/s41598-024-51617-3).
+#
+# Usage:
+#   pixi install            # create/refresh the environment from pixi.lock
+#   pixi run test           # run unit tests
+#   pixi run <task>         # see [tool.pixi.tasks] below
+# =============================================================================
+
+[project]
+name = "bimanual"
+version = "0.1.0"
+description = "Python replication of Deo et al. 2024 bimanual BCI analyses"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["bimanual"]
+
+# --- pixi workspace ----------------------------------------------------------
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["win-64"]
+
+# The RTX 3050 driver reports CUDA 12.7; the torch wheels below use CUDA 12.6.
+[tool.pixi.system-requirements]
+cuda = "12"
+
+# Packages taken from conda-forge.
+[tool.pixi.dependencies]
+python = "3.12.*"
+numpy = "*"
+scipy = "*"
+scikit-learn = "*"
+pandas = "*"
+matplotlib = "*"
+h5py = "*"
+numba = "*"
+pytest = "*"
+
+# Packages taken from PyPI.
+[tool.pixi.pypi-dependencies]
+bimanual = { path = ".", editable = true }
+# CUDA build of PyTorch from the official PyTorch wheel index.
+torch = { version = "*", index = "https://download.pytorch.org/whl/cu126" }
+# Demixed PCA (Kobak et al. 2016), reference Python implementation.
+dPCA = { git = "https://github.com/machenslab/dPCA", subdirectory = "python" }
+
+# Named commands; more are added as each phase is implemented.
+[tool.pixi.tasks]
+test = "pytest -q tests"
+inventory = "python scripts/01_inventory.py"
+compare-reference = "python scripts/compare_reference.py"
+check-gpu = "python -c \"import torch; print('torch', torch.__version__, 'cuda', torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else '')\""

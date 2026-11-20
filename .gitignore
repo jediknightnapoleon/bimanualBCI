@@ -1,0 +1,18 @@
+# --- Data (public on Dryad; too large for git: the zip alone is 138 MB) ---
+Data/
+*.zip
+*.mat
+# ...except the small reference outputs from the MATLAB/Octave cross-check
+!results/reference/*.mat
+
+# --- Large or regenerable outputs ---
+results/cache/
+results/checkpoints/
+*.npz
+*.pt
+
+# --- Environment ---
+.pixi/
+__pycache__/
+*.egg-info/
+.pytest_cache/

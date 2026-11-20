@@ -1,0 +1,14 @@
+{
+  "octave": {
+    "conditions_equal": true,
+    "uniR_max_abs_diff": 2.842170943040401e-14,
+    "uniR_nan_pattern_equal": true,
+    "uniL_max_abs_diff": 7.105427357601002e-15,
+    "uniL_nan_pattern_equal": true,
+    "biR_max_abs_diff": 1.4210854715202004e-14,
+    "biR_nan_pattern_equal": true,
+    "biL_max_abs_diff": 1.0658141036401503e-14,
+    "biL_nan_pattern_equal": true,
+    "pass": true
+  }
+}

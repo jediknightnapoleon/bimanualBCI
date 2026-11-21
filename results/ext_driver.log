@@ -1,3 +1,750 @@
 Pixi task (ext-driver): python -u scripts/ext_lstm.py --stage search && python -u scripts/ext_arrays.py --stage run && python -u scripts/ext_arrays.py --stage zero
   generated 2000 augmented snippets in 5 s (17 strata)
   generated 2000 augmented snippets in 3 s (17 strata)
+smoke gru-512: 78 ms/step at batch 32, 1.126 M params
+smoke lstm-512: 76 ms/step at batch 32, 1.487 M params
+smoke lstm-433: 74 ms/step at batch 32, 1.126 M params
+estimated 3.5 GPU-h for everything (cap 3 h)
+proxy s00_raw: all r 0.365
+proxy s00_aug: all r 0.200
+proxy s01_raw: all r 0.267
+proxy s01_aug: all r 0.238
+proxy s02_raw: all r 0.325
+proxy s02_aug: all r 0.207
+proxy s03_raw: all r 0.301
+proxy s03_aug: all r 0.266
+proxy s04_raw: all r 0.314
+proxy s04_aug: all r 0.192
+proxy s05_raw: all r 0.350
+proxy s05_aug: all r 0.242
+proxy s06_raw: all r 0.324
+proxy s06_aug: all r 0.281
+proxy s07_raw: all r 0.346
+proxy s07_aug: all r 0.322
+proxy s08_raw: all r 0.307
+proxy s08_aug: all r 0.280
+proxy s09_raw: all r 0.327
+proxy s09_aug: all r 0.214
+proxy best_raw_seed101: all r 0.275
+proxy best_raw_seed102: all r 0.289
+proxy best_aug_seed101: all r 0.323
+proxy best_aug_seed102: all r 0.338
+proxy best_aug_longclip_seed0: all r 0.355
+proxy best_aug_longclip_seed101: all r 0.343
+proxy best_aug_longclip_seed102: all r 0.370
+[lstm_raw_s00] cell=lstm kind=raw HParams(lr=0.0017142299661372733, batch=32, steps=4000, l2=1.530826847078122e-05, noise_sd=0.2594208565682763, drift_sd=0.187822151366105, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.0442  mse 0.0051  ce 0.021
+  step 1000/4000  loss 0.0411  mse 0.0053  ce 0.015
+  step 1500/4000  loss 0.0260  mse 0.0027  ce 0.009
+  step 2000/4000  loss 0.0186  mse 0.0022  ce 0.005
+  step 2500/4000  loss 0.0206  mse 0.0031  ce 0.004
+  step 3000/4000  loss 0.0204  mse 0.0020  ce 0.005
+  step 3500/4000  loss 0.0166  mse 0.0013  ce 0.004
+  step 4000/4000  loss 0.0285  mse 0.0023  ce 0.006
+[lstm_raw_s00] val r R 0.949 L 0.911 | test r R 0.945 L 0.885 | rough 0.062 | 298 s
+[lstm_augL_s00] cell=lstm kind=aug HParams(lr=0.0017142299661372733, batch=32, steps=4000, l2=1.530826847078122e-05, noise_sd=0.2594208565682763, drift_sd=0.187822151366105, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.0858  mse 0.0083  ce 0.055
+  step 1000/4000  loss 0.0493  mse 0.0062  ce 0.019
+  step 1500/4000  loss 0.0641  mse 0.0116  ce 0.024
+  step 2000/4000  loss 0.0461  mse 0.0039  ce 0.014
+  step 2500/4000  loss 0.0536  mse 0.0060  ce 0.016
+  step 3000/4000  loss 0.0437  mse 0.0036  ce 0.006
+  step 3500/4000  loss 0.0332  mse 0.0039  ce 0.007
+  step 4000/4000  loss 0.0332  mse 0.0033  ce 0.004
+[lstm_augL_s00] val r R 0.914 L 0.913 | test r R 0.933 L 0.861 | rough 0.085 | 298 s
+[lstm_raw_s01] cell=lstm kind=raw HParams(lr=0.0003255630606793431, batch=16, steps=2000, l2=9.333130104642905e-06, noise_sd=0.25063344233891505, drift_sd=0.21658528286128934, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.0900  mse 0.0135  ce 0.067
+  step 1000/2000  loss 0.0473  mse 0.0046  ce 0.033
+  step 1500/2000  loss 0.0438  mse 0.0053  ce 0.029
+  step 2000/2000  loss 0.0361  mse 0.0039  ce 0.022
+[lstm_raw_s01] val r R 0.963 L 0.919 | test r R 0.955 L 0.875 | rough 0.073 | 116 s
+[lstm_augL_s01] cell=lstm kind=aug HParams(lr=0.0003255630606793431, batch=16, steps=2000, l2=9.333130104642905e-06, noise_sd=0.25063344233891505, drift_sd=0.21658528286128934, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.1321  mse 0.0147  ce 0.108
+  step 1000/2000  loss 0.1039  mse 0.0090  ce 0.084
+  step 1500/2000  loss 0.0726  mse 0.0097  ce 0.052
+  step 2000/2000  loss 0.0624  mse 0.0083  ce 0.043
+[lstm_augL_s01] val r R 0.946 L 0.913 | test r R 0.926 L 0.874 | rough 0.109 | 117 s
+[lstm_raw_s02] cell=lstm kind=raw HParams(lr=0.002552771328935784, batch=16, steps=4000, l2=1.4788261611855016e-06, noise_sd=0.23518308685732933, drift_sd=0.29150452682754746, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.0427  mse 0.0078  ce 0.030
+  step 1000/4000  loss 0.0527  mse 0.0040  ce 0.042
+  step 1500/4000  loss 0.0195  mse 0.0037  ce 0.008
+  step 2000/4000  loss 0.0332  mse 0.0030  ce 0.021
+  step 2500/4000  loss 0.0201  mse 0.0049  ce 0.006
+  step 3000/4000  loss 0.0508  mse 0.0042  ce 0.035
+  step 3500/4000  loss 0.0421  mse 0.0043  ce 0.021
+  step 4000/4000  loss 0.0307  mse 0.0030  ce 0.009
+[lstm_raw_s02] val r R 0.929 L 0.901 | test r R 0.938 L 0.841 | rough 0.067 | 231 s
+[lstm_augL_s02] cell=lstm kind=aug HParams(lr=0.002552771328935784, batch=16, steps=4000, l2=1.4788261611855016e-06, noise_sd=0.23518308685732933, drift_sd=0.29150452682754746, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.1131  mse 0.0134  ce 0.094
+  step 1000/4000  loss 0.0823  mse 0.0102  ce 0.064
+  step 1500/4000  loss 0.0423  mse 0.0070  ce 0.023
+  step 2000/4000  loss 0.0380  mse 0.0056  ce 0.017
+  step 2500/4000  loss 0.0546  mse 0.0104  ce 0.028
+  step 3000/4000  loss 0.0401  mse 0.0081  ce 0.013
+  step 3500/4000  loss 0.0538  mse 0.0063  ce 0.024
+  step 4000/4000  loss 0.0403  mse 0.0057  ce 0.010
+[lstm_augL_s02] val r R 0.910 L 0.848 | test r R 0.897 L 0.812 | rough 0.138 | 234 s
+[lstm_raw_s03] cell=lstm kind=raw HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.0935  mse 0.0079  ce 0.051
+  step 1000/4000  loss 0.0779  mse 0.0054  ce 0.044
+  step 1500/4000  loss 0.0493  mse 0.0035  ce 0.020
+  step 2000/4000  loss 0.0533  mse 0.0032  ce 0.028
+  step 2500/4000  loss 0.0382  mse 0.0038  ce 0.014
+  step 3000/4000  loss 0.0412  mse 0.0066  ce 0.015
+  step 3500/4000  loss 0.0404  mse 0.0029  ce 0.019
+  step 4000/4000  loss 0.0456  mse 0.0022  ce 0.025
+[lstm_raw_s03] val r R 0.963 L 0.940 | test r R 0.957 L 0.903 | rough 0.046 | 233 s
+[lstm_augL_s03] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.2301  mse 0.0154  ce 0.179
+  step 1000/4000  loss 0.0906  mse 0.0083  ce 0.049
+  step 1500/4000  loss 0.0941  mse 0.0065  ce 0.057
+  step 2000/4000  loss 0.0596  mse 0.0059  ce 0.024
+  step 2500/4000  loss 0.0711  mse 0.0055  ce 0.036
+  step 3000/4000  loss 0.0586  mse 0.0057  ce 0.024
+  step 3500/4000  loss 0.0461  mse 0.0040  ce 0.015
+  step 4000/4000  loss 0.0581  mse 0.0043  ce 0.026
+[lstm_augL_s03] val r R 0.945 L 0.915 | test r R 0.928 L 0.869 | rough 0.082 | 233 s
+[lstm_raw_s04] cell=lstm kind=raw HParams(lr=0.0005156255196127187, batch=48, steps=2000, l2=1.816447693826234e-06, noise_sd=0.16149203097139478, drift_sd=0.13622621705228732, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.0406  mse 0.0052  ce 0.033
+  step 1000/2000  loss 0.0171  mse 0.0027  ce 0.012
+  step 1500/2000  loss 0.0129  mse 0.0025  ce 0.008
+  step 2000/2000  loss 0.0121  mse 0.0021  ce 0.007
+[lstm_raw_s04] val r R 0.957 L 0.920 | test r R 0.960 L 0.878 | rough 0.068 | 174 s
+[lstm_augL_s04] cell=lstm kind=aug HParams(lr=0.0005156255196127187, batch=48, steps=2000, l2=1.816447693826234e-06, noise_sd=0.16149203097139478, drift_sd=0.13622621705228732, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.0547  mse 0.0073  ce 0.045
+  step 1000/2000  loss 0.0283  mse 0.0051  ce 0.020
+  step 1500/2000  loss 0.0208  mse 0.0043  ce 0.013
+  step 2000/2000  loss 0.0133  mse 0.0031  ce 0.007
+[lstm_augL_s04] val r R 0.922 L 0.907 | test r R 0.922 L 0.873 | rough 0.111 | 175 s
+[lstm_raw_s05] cell=lstm kind=raw HParams(lr=0.0009004641496985519, batch=16, steps=4000, l2=3.994425521784303e-05, noise_sd=0.31034910940222105, drift_sd=0.03433567646306794, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.0714  mse 0.0065  ce 0.037
+  step 1000/4000  loss 0.0434  mse 0.0034  ce 0.018
+  step 1500/4000  loss 0.0350  mse 0.0030  ce 0.015
+  step 2000/4000  loss 0.0277  mse 0.0017  ce 0.010
+  step 2500/4000  loss 0.0258  mse 0.0023  ce 0.007
+  step 3000/4000  loss 0.0195  mse 0.0014  ce 0.005
+  step 3500/4000  loss 0.0190  mse 0.0024  ce 0.003
+  step 4000/4000  loss 0.0237  mse 0.0037  ce 0.008
+[lstm_raw_s05] val r R 0.945 L 0.905 | test r R 0.951 L 0.876 | rough 0.051 | 232 s
+[lstm_augL_s05] cell=lstm kind=aug HParams(lr=0.0009004641496985519, batch=16, steps=4000, l2=3.994425521784303e-05, noise_sd=0.31034910940222105, drift_sd=0.03433567646306794, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.1129  mse 0.0093  ce 0.072
+  step 1000/4000  loss 0.0562  mse 0.0050  ce 0.025
+  step 1500/4000  loss 0.0460  mse 0.0063  ce 0.017
+  step 2000/4000  loss 0.0519  mse 0.0086  ce 0.022
+  step 2500/4000  loss 0.0327  mse 0.0035  ce 0.008
+  step 3000/4000  loss 0.0484  mse 0.0071  ce 0.018
+  step 3500/4000  loss 0.0311  mse 0.0033  ce 0.007
+  step 4000/4000  loss 0.0286  mse 0.0036  ce 0.008
+[lstm_augL_s05] val r R 0.924 L 0.902 | test r R 0.920 L 0.843 | rough 0.080 | 238 s
+[lstm_raw_s06] cell=lstm kind=raw HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0420  mse 0.0048  ce 0.036
+  step 1000/3000  loss 0.0205  mse 0.0034  ce 0.015
+  step 1500/3000  loss 0.0168  mse 0.0027  ce 0.012
+  step 2000/3000  loss 0.0115  mse 0.0018  ce 0.008
+  step 2500/3000  loss 0.0142  mse 0.0024  ce 0.010
+  step 3000/3000  loss 0.0087  mse 0.0019  ce 0.004
+[lstm_raw_s06] val r R 0.966 L 0.945 | test r R 0.961 L 0.897 | rough 0.052 | 224 s
+[lstm_augL_s06] cell=lstm kind=aug HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0652  mse 0.0076  ce 0.056
+  step 1000/3000  loss 0.0378  mse 0.0055  ce 0.030
+  step 1500/3000  loss 0.0200  mse 0.0038  ce 0.014
+  step 2000/3000  loss 0.0155  mse 0.0034  ce 0.009
+  step 2500/3000  loss 0.0143  mse 0.0029  ce 0.009
+  step 3000/3000  loss 0.0105  mse 0.0026  ce 0.005
+[lstm_augL_s06] val r R 0.947 L 0.907 | test r R 0.936 L 0.882 | rough 0.081 | 224 s
+[lstm_raw_s07] cell=lstm kind=raw HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0917  mse 0.0073  ce 0.045
+  step 1000/3000  loss 0.0795  mse 0.0048  ce 0.039
+  step 1500/3000  loss 0.0679  mse 0.0049  ce 0.029
+  step 2000/3000  loss 0.0648  mse 0.0049  ce 0.023
+  step 2500/3000  loss 0.0600  mse 0.0045  ce 0.023
+  step 3000/3000  loss 0.0581  mse 0.0047  ce 0.023
+[lstm_raw_s07] val r R 0.954 L 0.947 | test r R 0.954 L 0.904 | rough 0.053 | 174 s
+[lstm_augL_s07] cell=lstm kind=aug HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1749  mse 0.0150  ce 0.117
+  step 1000/3000  loss 0.1169  mse 0.0107  ce 0.060
+  step 1500/3000  loss 0.1136  mse 0.0112  ce 0.056
+  step 2000/3000  loss 0.1050  mse 0.0095  ce 0.050
+  step 2500/3000  loss 0.1005  mse 0.0075  ce 0.041
+  step 3000/3000  loss 0.0944  mse 0.0075  ce 0.038
+[lstm_augL_s07] val r R 0.943 L 0.897 | test r R 0.933 L 0.882 | rough 0.089 | 175 s
+[lstm_raw_s08] cell=lstm kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0302  mse 0.0035  ce 0.025
+  step 1000/3000  loss 0.0164  mse 0.0029  ce 0.012
+  step 1500/3000  loss 0.0111  mse 0.0020  ce 0.007
+  step 2000/3000  loss 0.0116  mse 0.0019  ce 0.007
+  step 2500/3000  loss 0.0098  mse 0.0017  ce 0.006
+  step 3000/3000  loss 0.0070  mse 0.0017  ce 0.003
+[lstm_raw_s08] val r R 0.967 L 0.939 | test r R 0.965 L 0.876 | rough 0.037 | 261 s
+[lstm_augL_s08] cell=lstm kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0442  mse 0.0067  ce 0.036
+  step 1000/3000  loss 0.0226  mse 0.0044  ce 0.016
+  step 1500/3000  loss 0.0167  mse 0.0035  ce 0.010
+  step 2000/3000  loss 0.0133  mse 0.0030  ce 0.007
+  step 2500/3000  loss 0.0155  mse 0.0035  ce 0.008
+  step 3000/3000  loss 0.0102  mse 0.0025  ce 0.004
+[lstm_augL_s08] val r R 0.947 L 0.912 | test r R 0.935 L 0.888 | rough 0.065 | 263 s
+[lstm_raw_s09] cell=lstm kind=raw HParams(lr=0.0004071026128937358, batch=16, steps=2000, l2=5.277428955828441e-06, noise_sd=0.21668842913161038, drift_sd=0.045693412135584574, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.0505  mse 0.0052  ce 0.040
+  step 1000/2000  loss 0.0357  mse 0.0041  ce 0.026
+  step 1500/2000  loss 0.0165  mse 0.0018  ce 0.009
+  step 2000/2000  loss 0.0165  mse 0.0025  ce 0.008
+[lstm_raw_s09] val r R 0.949 L 0.917 | test r R 0.954 L 0.874 | rough 0.073 | 116 s
+[lstm_augL_s09] cell=lstm kind=aug HParams(lr=0.0004071026128937358, batch=16, steps=2000, l2=5.277428955828441e-06, noise_sd=0.21668842913161038, drift_sd=0.045693412135584574, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.0688  mse 0.0103  ce 0.053
+  step 1000/2000  loss 0.0585  mse 0.0074  ce 0.045
+  step 1500/2000  loss 0.0337  mse 0.0064  ce 0.020
+  step 2000/2000  loss 0.0261  mse 0.0045  ce 0.015
+[lstm_augL_s09] val r R 0.913 L 0.868 | test r R 0.912 L 0.831 | rough 0.131 | 117 s
+[gru_augL_s00] cell=gru kind=aug HParams(lr=0.0017142299661372733, batch=32, steps=4000, l2=1.530826847078122e-05, noise_sd=0.2594208565682763, drift_sd=0.187822151366105, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.0719  mse 0.0091  ce 0.040
+  step 1000/4000  loss 0.0634  mse 0.0084  ce 0.034
+  step 1500/4000  loss 0.0408  mse 0.0061  ce 0.010
+  step 2000/4000  loss 0.0299  mse 0.0034  ce 0.008
+  step 2500/4000  loss 0.0354  mse 0.0038  ce 0.005
+  step 3000/4000  loss 0.0219  mse 0.0023  ce 0.003
+  step 3500/4000  loss 0.0297  mse 0.0034  ce 0.005
+  step 4000/4000  loss 0.0319  mse 0.0041  ce 0.010
+[gru_augL_s00] val r R 0.911 L 0.834 | test r R 0.895 L 0.772 | rough 0.086 | 253 s
+[gru_augL_s01] cell=gru kind=aug HParams(lr=0.0003255630606793431, batch=16, steps=2000, l2=9.333130104642905e-06, noise_sd=0.25063344233891505, drift_sd=0.21658528286128934, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.1487  mse 0.0156  ce 0.124
+  step 1000/2000  loss 0.1054  mse 0.0115  ce 0.084
+  step 1500/2000  loss 0.0886  mse 0.0127  ce 0.065
+  step 2000/2000  loss 0.0604  mse 0.0100  ce 0.039
+[gru_augL_s01] val r R 0.905 L 0.858 | test r R 0.889 L 0.847 | rough 0.213 | 103 s
+[gru_augL_s02] cell=gru kind=aug HParams(lr=0.002552771328935784, batch=16, steps=4000, l2=1.4788261611855016e-06, noise_sd=0.23518308685732933, drift_sd=0.29150452682754746, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.0784  mse 0.0148  ce 0.058
+  step 1000/4000  loss 0.0799  mse 0.0159  ce 0.056
+  step 1500/4000  loss 0.0382  mse 0.0086  ce 0.019
+  step 2000/4000  loss 0.0451  mse 0.0092  ce 0.020
+  step 2500/4000  loss 0.1599  mse 0.0215  ce 0.117
+  step 3000/4000  loss 0.0859  mse 0.0162  ce 0.042
+  step 3500/4000  loss 0.1036  mse 0.0154  ce 0.056
+  step 4000/4000  loss 0.0825  mse 0.0143  ce 0.031
+[gru_augL_s02] val r R 0.833 L 0.740 | test r R 0.790 L 0.701 | rough 0.202 | 206 s
+[gru_augL_s03] cell=gru kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.2181  mse 0.0184  ce 0.168
+  step 1000/4000  loss 0.0992  mse 0.0090  ce 0.058
+  step 1500/4000  loss 0.0854  mse 0.0081  ce 0.045
+  step 2000/4000  loss 0.0611  mse 0.0075  ce 0.022
+  step 2500/4000  loss 0.0799  mse 0.0101  ce 0.039
+  step 3000/4000  loss 0.0587  mse 0.0069  ce 0.022
+  step 3500/4000  loss 0.0505  mse 0.0059  ce 0.015
+  step 4000/4000  loss 0.0575  mse 0.0058  ce 0.024
+[gru_augL_s03] val r R 0.939 L 0.899 | test r R 0.922 L 0.857 | rough 0.107 | 205 s
+[gru_augL_s04] cell=gru kind=aug HParams(lr=0.0005156255196127187, batch=48, steps=2000, l2=1.816447693826234e-06, noise_sd=0.16149203097139478, drift_sd=0.13622621705228732, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.0557  mse 0.0101  ce 0.043
+  step 1000/2000  loss 0.0282  mse 0.0064  ce 0.019
+  step 1500/2000  loss 0.0181  mse 0.0047  ce 0.010
+  step 2000/2000  loss 0.0146  mse 0.0041  ce 0.007
+[gru_augL_s04] val r R 0.898 L 0.839 | test r R 0.888 L 0.816 | rough 0.194 | 164 s
+[gru_augL_s05] cell=gru kind=aug HParams(lr=0.0009004641496985519, batch=16, steps=4000, l2=3.994425521784303e-05, noise_sd=0.31034910940222105, drift_sd=0.03433567646306794, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.1432  mse 0.0128  ce 0.098
+  step 1000/4000  loss 0.0796  mse 0.0077  ce 0.042
+  step 1500/4000  loss 0.0674  mse 0.0090  ce 0.032
+  step 2000/4000  loss 0.0457  mse 0.0068  ce 0.012
+  step 2500/4000  loss 0.0478  mse 0.0056  ce 0.013
+  step 3000/4000  loss 0.0418  mse 0.0046  ce 0.012
+  step 3500/4000  loss 0.0378  mse 0.0053  ce 0.012
+  step 4000/4000  loss 0.0378  mse 0.0037  ce 0.008
+[gru_augL_s05] val r R 0.916 L 0.881 | test r R 0.903 L 0.820 | rough 0.113 | 206 s
+[gru_augL_s06] cell=gru kind=aug HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0810  mse 0.0104  ce 0.069
+  step 1000/3000  loss 0.0421  mse 0.0076  ce 0.032
+  step 1500/3000  loss 0.0281  mse 0.0060  ce 0.020
+  step 2000/3000  loss 0.0224  mse 0.0052  ce 0.014
+  step 2500/3000  loss 0.0329  mse 0.0054  ce 0.024
+  step 3000/3000  loss 0.0144  mse 0.0038  ce 0.007
+[gru_augL_s06] val r R 0.932 L 0.893 | test r R 0.923 L 0.872 | rough 0.136 | 190 s
+[gru_augL_s07] cell=gru kind=aug HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1686  mse 0.0159  ce 0.111
+  step 1000/3000  loss 0.1334  mse 0.0111  ce 0.073
+  step 1500/3000  loss 0.1109  mse 0.0130  ce 0.051
+  step 2000/3000  loss 0.1032  mse 0.0109  ce 0.041
+  step 2500/3000  loss 0.1150  mse 0.0096  ce 0.058
+  step 3000/3000  loss 0.1120  mse 0.0094  ce 0.056
+[gru_augL_s07] val r R 0.945 L 0.861 | test r R 0.920 L 0.831 | rough 0.087 | 154 s
+[gru_augL_s08] cell=gru kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0538  mse 0.0093  ce 0.043
+  step 1000/3000  loss 0.0268  mse 0.0064  ce 0.018
+  step 1500/3000  loss 0.0249  mse 0.0060  ce 0.016
+  step 2000/3000  loss 0.0191  mse 0.0053  ce 0.010
+  step 2500/3000  loss 0.0163  mse 0.0045  ce 0.008
+  step 3000/3000  loss 0.0239  mse 0.0053  ce 0.014
+[gru_augL_s08] val r R 0.936 L 0.908 | test r R 0.910 L 0.857 | rough 0.134 | 244 s
+[gru_augL_s09] cell=gru kind=aug HParams(lr=0.0004071026128937358, batch=16, steps=2000, l2=5.277428955828441e-06, noise_sd=0.21668842913161038, drift_sd=0.045693412135584574, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.0935  mse 0.0113  ce 0.077
+  step 1000/2000  loss 0.0691  mse 0.0095  ce 0.053
+  step 1500/2000  loss 0.0383  mse 0.0078  ce 0.024
+  step 2000/2000  loss 0.0285  mse 0.0051  ce 0.016
+[gru_augL_s09] val r R 0.886 L 0.822 | test r R 0.867 L 0.786 | rough 0.228 | 103 s
+[lstm_raw_best_seed101] cell=lstm kind=raw HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0495  mse 0.0055  ce 0.042
+  step 1000/3000  loss 0.0209  mse 0.0034  ce 0.016
+  step 1500/3000  loss 0.0188  mse 0.0031  ce 0.014
+  step 2000/3000  loss 0.0138  mse 0.0023  ce 0.009
+  step 2500/3000  loss 0.0125  mse 0.0026  ce 0.008
+  step 3000/3000  loss 0.0096  mse 0.0016  ce 0.006
+[lstm_raw_best_seed101] val r R 0.964 L 0.945 | test r R 0.964 L 0.883 | rough 0.050 | 224 s
+[lstm_raw_best_seed102] cell=lstm kind=raw HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0410  mse 0.0051  ce 0.034
+  step 1000/3000  loss 0.0206  mse 0.0025  ce 0.016
+  step 1500/3000  loss 0.0192  mse 0.0028  ce 0.014
+  step 2000/3000  loss 0.0145  mse 0.0026  ce 0.010
+  step 2500/3000  loss 0.0096  mse 0.0021  ce 0.005
+  step 3000/3000  loss 0.0170  mse 0.0029  ce 0.012
+[lstm_raw_best_seed102] val r R 0.960 L 0.931 | test r R 0.952 L 0.875 | rough 0.058 | 224 s
+[lstm_augL_best_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.1654  mse 0.0145  ce 0.115
+  step 1000/4000  loss 0.1240  mse 0.0114  ce 0.080
+  step 1500/4000  loss 0.1075  mse 0.0116  ce 0.065
+  step 2000/4000  loss 0.0754  mse 0.0098  ce 0.037
+  step 2500/4000  loss 0.0709  mse 0.0054  ce 0.034
+  step 3000/4000  loss 0.0567  mse 0.0044  ce 0.024
+  step 3500/4000  loss 0.0702  mse 0.0084  ce 0.035
+  step 4000/4000  loss 0.0556  mse 0.0054  ce 0.022
+[lstm_augL_best_seed101] val r R 0.938 L 0.910 | test r R 0.928 L 0.878 | rough 0.085 | 233 s
+[lstm_augL_best_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.1732  mse 0.0156  ce 0.122
+  step 1000/4000  loss 0.1180  mse 0.0122  ce 0.073
+  step 1500/4000  loss 0.0791  mse 0.0085  ce 0.040
+  step 2000/4000  loss 0.0604  mse 0.0053  ce 0.025
+  step 2500/4000  loss 0.0633  mse 0.0074  ce 0.027
+  step 3000/4000  loss 0.0622  mse 0.0068  ce 0.028
+  step 3500/4000  loss 0.0484  mse 0.0049  ce 0.014
+  step 4000/4000  loss 0.0478  mse 0.0045  ce 0.015
+[lstm_augL_best_seed102] val r R 0.943 L 0.917 | test r R 0.937 L 0.882 | rough 0.082 | 234 s
+[gru_augL_best_seed101] cell=gru kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0656  mse 0.0104  ce 0.053
+  step 1000/3000  loss 0.0344  mse 0.0069  ce 0.025
+  step 1500/3000  loss 0.0209  mse 0.0047  ce 0.013
+  step 2000/3000  loss 0.0474  mse 0.0077  ce 0.036
+  step 2500/3000  loss 0.0149  mse 0.0037  ce 0.007
+  step 3000/3000  loss 0.0130  mse 0.0030  ce 0.006
+[gru_augL_best_seed101] val r R 0.939 L 0.900 | test r R 0.925 L 0.857 | rough 0.094 | 243 s
+[gru_augL_best_seed102] cell=gru kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0615  mse 0.0109  ce 0.049
+  step 1000/3000  loss 0.0416  mse 0.0083  ce 0.031
+  step 1500/3000  loss 0.0252  mse 0.0062  ce 0.016
+  step 2000/3000  loss 0.0188  mse 0.0050  ce 0.011
+  step 2500/3000  loss 0.0155  mse 0.0042  ce 0.008
+  step 3000/3000  loss 0.0152  mse 0.0039  ce 0.008
+[gru_augL_best_seed102] val r R 0.941 L 0.901 | test r R 0.918 L 0.866 | rough 0.111 | 245 s
+[lstm_augS_s00] cell=lstm kind=aug HParams(lr=0.0017142299661372733, batch=32, steps=4000, l2=1.530826847078122e-05, noise_sd=0.2594208565682763, drift_sd=0.187822151366105, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.1139  mse 0.0221  ce 0.058
+  step 1000/4000  loss 0.0809  mse 0.0181  ce 0.030
+  step 1500/4000  loss 0.0585  mse 0.0143  ce 0.013
+  step 2000/4000  loss 0.0815  mse 0.0175  ce 0.025
+  step 2500/4000  loss 0.0574  mse 0.0133  ce 0.011
+  step 3000/4000  loss 0.0566  mse 0.0137  ce 0.013
+  step 3500/4000  loss 0.0698  mse 0.0161  ce 0.020
+  step 4000/4000  loss 0.0623  mse 0.0142  ce 0.013
+[lstm_augS_s00] val r R 0.768 L 0.612 | test r R 0.731 L 0.588 | rough 0.405 | 299 s
+[lstm_augS_s01] cell=lstm kind=aug HParams(lr=0.0003255630606793431, batch=16, steps=2000, l2=9.333130104642905e-06, noise_sd=0.25063344233891505, drift_sd=0.21658528286128934, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.3238  mse 0.0442  ce 0.268
+  step 1000/2000  loss 0.2311  mse 0.0376  ce 0.180
+  step 1500/2000  loss 0.1313  mse 0.0277  ce 0.088
+  step 2000/2000  loss 0.1239  mse 0.0277  ce 0.080
+[lstm_augS_s01] val r R 0.789 L 0.705 | test r R 0.767 L 0.700 | rough 0.359 | 117 s
+[lstm_augS_s02] cell=lstm kind=aug HParams(lr=0.002552771328935784, batch=16, steps=4000, l2=1.4788261611855016e-06, noise_sd=0.23518308685732933, drift_sd=0.29150452682754746, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.1684  mse 0.0322  ce 0.128
+  step 1000/4000  loss 0.0890  mse 0.0216  ce 0.054
+  step 1500/4000  loss 0.0729  mse 0.0223  ce 0.034
+  step 2000/4000  loss 0.0804  mse 0.0239  ce 0.037
+  step 2500/4000  loss 0.0790  mse 0.0213  ce 0.035
+  step 3000/4000  loss 0.0831  mse 0.0220  ce 0.035
+  step 3500/4000  loss 0.0702  mse 0.0204  ce 0.023
+  step 4000/4000  loss 0.0826  mse 0.0226  ce 0.031
+[lstm_augS_s02] val r R 0.740 L 0.650 | test r R 0.723 L 0.593 | rough 0.421 | 234 s
+[lstm_augS_s03] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.2934  mse 0.0513  ce 0.200
+  step 1000/4000  loss 0.1956  mse 0.0299  ce 0.120
+  step 1500/4000  loss 0.1746  mse 0.0309  ce 0.097
+  step 2000/4000  loss 0.1416  mse 0.0247  ce 0.070
+  step 2500/4000  loss 0.1290  mse 0.0226  ce 0.060
+  step 3000/4000  loss 0.1138  mse 0.0242  ce 0.044
+  step 3500/4000  loss 0.1141  mse 0.0228  ce 0.045
+  step 4000/4000  loss 0.1059  mse 0.0220  ce 0.038
+[lstm_augS_s03] val r R 0.794 L 0.711 | test r R 0.771 L 0.703 | rough 0.326 | 234 s
+[lstm_augS_s04] cell=lstm kind=aug HParams(lr=0.0005156255196127187, batch=48, steps=2000, l2=1.816447693826234e-06, noise_sd=0.16149203097139478, drift_sd=0.13622621705228732, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.1246  mse 0.0260  ce 0.095
+  step 1000/2000  loss 0.0691  mse 0.0206  ce 0.044
+  step 1500/2000  loss 0.0417  mse 0.0161  ce 0.021
+  step 2000/2000  loss 0.0322  mse 0.0138  ce 0.013
+[lstm_augS_s04] val r R 0.742 L 0.600 | test r R 0.720 L 0.571 | rough 0.459 | 175 s
+[lstm_augS_s05] cell=lstm kind=aug HParams(lr=0.0009004641496985519, batch=16, steps=4000, l2=3.994425521784303e-05, noise_sd=0.31034910940222105, drift_sd=0.03433567646306794, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.1732  mse 0.0280  ce 0.100
+  step 1000/4000  loss 0.1167  mse 0.0219  ce 0.051
+  step 1500/4000  loss 0.0944  mse 0.0212  ce 0.032
+  step 2000/4000  loss 0.0792  mse 0.0167  ce 0.023
+  step 2500/4000  loss 0.0739  mse 0.0154  ce 0.021
+  step 3000/4000  loss 0.0728  mse 0.0161  ce 0.020
+  step 3500/4000  loss 0.0679  mse 0.0147  ce 0.018
+  step 4000/4000  loss 0.0618  mse 0.0142  ce 0.013
+[lstm_augS_s05] val r R 0.760 L 0.650 | test r R 0.731 L 0.628 | rough 0.391 | 234 s
+[lstm_augS_s06] cell=lstm kind=aug HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1646  mse 0.0330  ce 0.129
+  step 1000/3000  loss 0.0995  mse 0.0246  ce 0.072
+  step 1500/3000  loss 0.0694  mse 0.0204  ce 0.045
+  step 2000/3000  loss 0.0555  mse 0.0198  ce 0.031
+  step 2500/3000  loss 0.0480  mse 0.0187  ce 0.024
+  step 3000/3000  loss 0.0419  mse 0.0176  ce 0.019
+[lstm_augS_s06] val r R 0.796 L 0.713 | test r R 0.783 L 0.677 | rough 0.343 | 225 s
+[lstm_augS_s07] cell=lstm kind=aug HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.2988  mse 0.0422  ce 0.200
+  step 1000/3000  loss 0.2182  mse 0.0321  ce 0.121
+  step 1500/3000  loss 0.1998  mse 0.0321  ce 0.099
+  step 2000/3000  loss 0.1793  mse 0.0315  ce 0.080
+  step 2500/3000  loss 0.1677  mse 0.0263  ce 0.072
+  step 3000/3000  loss 0.1624  mse 0.0275  ce 0.065
+[lstm_augS_s07] val r R 0.838 L 0.765 | test r R 0.817 L 0.746 | rough 0.284 | 176 s
+[lstm_augS_s08] cell=lstm kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1176  mse 0.0265  ce 0.088
+  step 1000/3000  loss 0.0735  mse 0.0222  ce 0.047
+  step 1500/3000  loss 0.0549  mse 0.0186  ce 0.031
+  step 2000/3000  loss 0.0498  mse 0.0190  ce 0.025
+  step 2500/3000  loss 0.0409  mse 0.0157  ce 0.019
+  step 3000/3000  loss 0.0446  mse 0.0171  ce 0.021
+[lstm_augS_s08] val r R 0.819 L 0.741 | test r R 0.803 L 0.742 | rough 0.291 | 262 s
+[lstm_augS_s09] cell=lstm kind=aug HParams(lr=0.0004071026128937358, batch=16, steps=2000, l2=5.277428955828441e-06, noise_sd=0.21668842913161038, drift_sd=0.045693412135584574, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/2000  loss 0.2192  mse 0.0310  ce 0.181
+  step 1000/2000  loss 0.1175  mse 0.0257  ce 0.083
+  step 1500/2000  loss 0.0722  mse 0.0190  ce 0.043
+  step 2000/2000  loss 0.0639  mse 0.0176  ce 0.035
+[lstm_augS_s09] val r R 0.748 L 0.643 | test r R 0.722 L 0.614 | rough 0.427 | 117 s
+[lstm_augS_best_seed101] cell=lstm kind=aug HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.3030  mse 0.0477  ce 0.199
+  step 1000/3000  loss 0.2196  mse 0.0343  ce 0.120
+  step 1500/3000  loss 0.1748  mse 0.0297  ce 0.078
+  step 2000/3000  loss 0.1789  mse 0.0314  ce 0.077
+  step 2500/3000  loss 0.1660  mse 0.0285  ce 0.068
+  step 3000/3000  loss 0.1695  mse 0.0254  ce 0.074
+[lstm_augS_best_seed101] val r R 0.831 L 0.754 | test r R 0.808 L 0.738 | rough 0.286 | 177 s
+[lstm_augS_best_seed102] cell=lstm kind=aug HParams(lr=0.0012226569842068945, batch=16, steps=3000, l2=4.477130023677487e-05, noise_sd=0.5431350091796895, drift_sd=0.2550678962922783, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.2863  mse 0.0373  ce 0.192
+  step 1000/3000  loss 0.2248  mse 0.0328  ce 0.128
+  step 1500/3000  loss 0.1779  mse 0.0311  ce 0.080
+  step 2000/3000  loss 0.1755  mse 0.0260  ce 0.081
+  step 2500/3000  loss 0.1730  mse 0.0277  ce 0.076
+  step 3000/3000  loss 0.1772  mse 0.0280  ce 0.078
+[lstm_augS_best_seed102] val r R 0.821 L 0.762 | test r R 0.799 L 0.747 | rough 0.293 | 176 s
+[lstm433_raw_seed6] cell=lstm kind=raw HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=433, grad_clip=1.0)
+  step 500/3000  loss 0.0378  mse 0.0046  ce 0.032
+  step 1000/3000  loss 0.0217  mse 0.0039  ce 0.016
+  step 1500/3000  loss 0.0181  mse 0.0029  ce 0.013
+  step 2000/3000  loss 0.0124  mse 0.0020  ce 0.008
+  step 2500/3000  loss 0.0142  mse 0.0023  ce 0.010
+  step 3000/3000  loss 0.0087  mse 0.0018  ce 0.005
+[lstm433_raw_seed6] val r R 0.964 L 0.929 | test r R 0.964 L 0.876 | rough 0.052 | 218 s
+[lstm433_raw_seed101] cell=lstm kind=raw HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=433, grad_clip=1.0)
+  step 500/3000  loss 0.0465  mse 0.0057  ce 0.039
+  step 1000/3000  loss 0.0244  mse 0.0034  ce 0.019
+  step 1500/3000  loss 0.0211  mse 0.0030  ce 0.016
+  step 2000/3000  loss 0.0147  mse 0.0026  ce 0.010
+  step 2500/3000  loss 0.0139  mse 0.0026  ce 0.009
+  step 3000/3000  loss 0.0103  mse 0.0017  ce 0.006
+[lstm433_raw_seed101] val r R 0.965 L 0.935 | test r R 0.962 L 0.887 | rough 0.052 | 219 s
+[lstm433_raw_seed102] cell=lstm kind=raw HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=433, grad_clip=1.0)
+  step 500/3000  loss 0.0764  mse 0.0060  ce 0.069
+  step 1000/3000  loss 0.0220  mse 0.0026  ce 0.018
+  step 1500/3000  loss 0.0186  mse 0.0030  ce 0.014
+  step 2000/3000  loss 0.0153  mse 0.0033  ce 0.010
+  step 2500/3000  loss 0.0096  mse 0.0019  ce 0.006
+  step 3000/3000  loss 0.0093  mse 0.0018  ce 0.005
+[lstm433_raw_seed102] val r R 0.964 L 0.934 | test r R 0.967 L 0.892 | rough 0.051 | 218 s
+[lstm433_augL_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=433, grad_clip=1.0)
+  step 500/4000  loss 0.2054  mse 0.0168  ce 0.156
+  step 1000/4000  loss 0.0837  mse 0.0086  ce 0.045
+  step 1500/4000  loss 0.0850  mse 0.0066  ce 0.049
+  step 2000/4000  loss 0.0610  mse 0.0060  ce 0.027
+  step 2500/4000  loss 0.0660  mse 0.0057  ce 0.033
+  step 3000/4000  loss 0.0632  mse 0.0061  ce 0.030
+  step 3500/4000  loss 0.0476  mse 0.0048  ce 0.016
+  step 4000/4000  loss 0.0428  mse 0.0036  ce 0.015
+[lstm433_augL_seed3] val r R 0.936 L 0.922 | test r R 0.929 L 0.887 | rough 0.081 | 236 s
+[lstm433_augL_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=433, grad_clip=1.0)
+  step 500/4000  loss 0.1616  mse 0.0131  ce 0.116
+  step 1000/4000  loss 0.1243  mse 0.0131  ce 0.081
+  step 1500/4000  loss 0.0994  mse 0.0115  ce 0.058
+  step 2000/4000  loss 0.0746  mse 0.0099  ce 0.037
+  step 2500/4000  loss 0.0691  mse 0.0060  ce 0.035
+  step 3000/4000  loss 0.0528  mse 0.0042  ce 0.022
+  step 3500/4000  loss 0.0517  mse 0.0043  ce 0.020
+  step 4000/4000  loss 0.0484  mse 0.0048  ce 0.018
+[lstm433_augL_seed101] val r R 0.947 L 0.917 | test r R 0.931 L 0.888 | rough 0.085 | 237 s
+search done: 3.03 GPU-h spent; skipped 1 runs ['lstm433_augL_seed102']
+  generated 2000 augmented snippets in 4 s (17 strata)
+  generated 2000 augmented snippets in 2 s (17 strata)
+[arrA_gru_raw_seed0] cell=gru kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0665  mse 0.0096  ce 0.056
+  step 1000/3000  loss 0.0398  mse 0.0063  ce 0.032
+  step 1500/3000  loss 0.0308  mse 0.0062  ce 0.023
+  step 2000/3000  loss 0.0353  mse 0.0062  ce 0.027
+  step 2500/3000  loss 0.0254  mse 0.0049  ce 0.018
+  step 3000/3000  loss 0.0188  mse 0.0029  ce 0.013
+[arrA_gru_raw_seed0] val r R 0.867 L 0.824 | test r R 0.867 L 0.771 | rough 0.053 | 223 s
+[arrA_gru_raw_seed101] cell=gru kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0601  mse 0.0092  ce 0.050
+  step 1000/3000  loss 0.0368  mse 0.0069  ce 0.028
+  step 1500/3000  loss 0.0301  mse 0.0058  ce 0.022
+  step 2000/3000  loss 0.0211  mse 0.0047  ce 0.014
+  step 2500/3000  loss 0.0197  mse 0.0045  ce 0.013
+  step 3000/3000  loss 0.0285  mse 0.0061  ce 0.020
+[arrA_gru_raw_seed101] val r R 0.889 L 0.802 | test r R 0.844 L 0.752 | rough 0.073 | 218 s
+[arrA_gru_raw_seed102] cell=gru kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0646  mse 0.0086  ce 0.055
+  step 1000/3000  loss 0.0387  mse 0.0057  ce 0.031
+  step 1500/3000  loss 0.0278  mse 0.0051  ce 0.021
+  step 2000/3000  loss 0.0255  mse 0.0056  ce 0.018
+  step 2500/3000  loss 0.0206  mse 0.0037  ce 0.015
+  step 3000/3000  loss 0.0205  mse 0.0048  ce 0.013
+[arrA_gru_raw_seed102] val r R 0.895 L 0.797 | test r R 0.865 L 0.772 | rough 0.049 | 218 s
+[arrA_gru_augL_seed0] cell=gru kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1259  mse 0.0131  ce 0.111
+  step 1000/3000  loss 0.0675  mse 0.0124  ce 0.053
+  step 1500/3000  loss 0.0660  mse 0.0100  ce 0.053
+  step 2000/3000  loss 0.0316  mse 0.0072  ce 0.021
+  step 2500/3000  loss 0.0380  mse 0.0074  ce 0.026
+  step 3000/3000  loss 0.0209  mse 0.0049  ce 0.012
+[arrA_gru_augL_seed0] val r R 0.915 L 0.817 | test r R 0.867 L 0.765 | rough 0.126 | 218 s
+[arrA_gru_augL_seed101] cell=gru kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1177  mse 0.0152  ce 0.101
+  step 1000/3000  loss 0.0550  mse 0.0093  ce 0.043
+  step 1500/3000  loss 0.0403  mse 0.0080  ce 0.029
+  step 2000/3000  loss 0.0402  mse 0.0085  ce 0.028
+  step 2500/3000  loss 0.0383  mse 0.0099  ce 0.024
+  step 3000/3000  loss 0.0247  mse 0.0054  ce 0.015
+[arrA_gru_augL_seed101] val r R 0.879 L 0.830 | test r R 0.874 L 0.780 | rough 0.121 | 218 s
+[arrA_gru_augL_seed102] cell=gru kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1076  mse 0.0156  ce 0.090
+  step 1000/3000  loss 0.0625  mse 0.0114  ce 0.049
+  step 1500/3000  loss 0.0456  mse 0.0106  ce 0.032
+  step 2000/3000  loss 0.0340  mse 0.0069  ce 0.024
+  step 2500/3000  loss 0.0355  mse 0.0071  ce 0.024
+  step 3000/3000  loss 0.0265  mse 0.0063  ce 0.016
+[arrA_gru_augL_seed102] val r R 0.904 L 0.793 | test r R 0.841 L 0.774 | rough 0.143 | 218 s
+[arrA_lstm_raw_seed0] cell=lstm kind=raw HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0755  mse 0.0084  ce 0.066
+  step 1000/3000  loss 0.0418  mse 0.0054  ce 0.035
+  step 1500/3000  loss 0.0446  mse 0.0055  ce 0.037
+  step 2000/3000  loss 0.0285  mse 0.0036  ce 0.023
+  step 2500/3000  loss 0.0242  mse 0.0036  ce 0.018
+  step 3000/3000  loss 0.0196  mse 0.0027  ce 0.015
+[arrA_lstm_raw_seed0] val r R 0.939 L 0.875 | test r R 0.869 L 0.846 | rough 0.063 | 207 s
+[arrA_lstm_raw_seed101] cell=lstm kind=raw HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0783  mse 0.0093  ce 0.068
+  step 1000/3000  loss 0.0454  mse 0.0056  ce 0.038
+  step 1500/3000  loss 0.0438  mse 0.0053  ce 0.037
+  step 2000/3000  loss 0.0300  mse 0.0044  ce 0.024
+  step 2500/3000  loss 0.0239  mse 0.0032  ce 0.018
+  step 3000/3000  loss 0.0158  mse 0.0024  ce 0.011
+[arrA_lstm_raw_seed101] val r R 0.941 L 0.892 | test r R 0.886 L 0.851 | rough 0.056 | 208 s
+[arrA_lstm_raw_seed102] cell=lstm kind=raw HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0714  mse 0.0080  ce 0.062
+  step 1000/3000  loss 0.0418  mse 0.0047  ce 0.035
+  step 1500/3000  loss 0.0426  mse 0.0047  ce 0.036
+  step 2000/3000  loss 0.0318  mse 0.0048  ce 0.025
+  step 2500/3000  loss 0.0216  mse 0.0028  ce 0.017
+  step 3000/3000  loss 0.0221  mse 0.0033  ce 0.016
+[arrA_lstm_raw_seed102] val r R 0.938 L 0.881 | test r R 0.853 L 0.809 | rough 0.057 | 207 s
+[arrA_lstm_augL_seed0] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.2531  mse 0.0202  ce 0.200
+  step 1000/4000  loss 0.1849  mse 0.0185  ce 0.133
+  step 1500/4000  loss 0.1693  mse 0.0124  ce 0.122
+  step 2000/4000  loss 0.1516  mse 0.0137  ce 0.102
+  step 2500/4000  loss 0.1140  mse 0.0075  ce 0.071
+  step 3000/4000  loss 0.0983  mse 0.0118  ce 0.051
+  step 3500/4000  loss 0.1153  mse 0.0108  ce 0.067
+  step 4000/4000  loss 0.1093  mse 0.0107  ce 0.062
+[arrA_lstm_augL_seed0] val r R 0.918 L 0.844 | test r R 0.866 L 0.788 | rough 0.097 | 228 s
+[arrA_lstm_augL_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.3150  mse 0.0240  ce 0.258
+  step 1000/4000  loss 0.2477  mse 0.0197  ce 0.195
+  step 1500/4000  loss 0.1991  mse 0.0194  ce 0.146
+  step 2000/4000  loss 0.1615  mse 0.0155  ce 0.111
+  step 2500/4000  loss 0.1219  mse 0.0099  ce 0.077
+  step 3000/4000  loss 0.0869  mse 0.0074  ce 0.043
+  step 3500/4000  loss 0.0779  mse 0.0073  ce 0.034
+  step 4000/4000  loss 0.0757  mse 0.0064  ce 0.033
+[arrA_lstm_augL_seed101] val r R 0.927 L 0.880 | test r R 0.905 L 0.833 | rough 0.097 | 228 s
+[arrA_lstm_augL_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.2789  mse 0.0274  ce 0.218
+  step 1000/4000  loss 0.2056  mse 0.0188  ce 0.153
+  step 1500/4000  loss 0.1610  mse 0.0146  ce 0.113
+  step 2000/4000  loss 0.1022  mse 0.0077  ce 0.059
+  step 2500/4000  loss 0.1341  mse 0.0119  ce 0.087
+  step 3000/4000  loss 0.1107  mse 0.0107  ce 0.063
+  step 3500/4000  loss 0.0917  mse 0.0082  ce 0.047
+  step 4000/4000  loss 0.0719  mse 0.0078  ce 0.026
+[arrA_lstm_augL_seed102] val r R 0.916 L 0.860 | test r R 0.862 L 0.811 | rough 0.102 | 228 s
+  generated 2000 augmented snippets in 4 s (17 strata)
+  generated 2000 augmented snippets in 2 s (17 strata)
+[arrB_gru_raw_seed0] cell=gru kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0574  mse 0.0078  ce 0.048
+  step 1000/3000  loss 0.0348  mse 0.0053  ce 0.028
+  step 1500/3000  loss 0.0289  mse 0.0057  ce 0.021
+  step 2000/3000  loss 0.0233  mse 0.0038  ce 0.017
+  step 2500/3000  loss 0.0195  mse 0.0042  ce 0.013
+  step 3000/3000  loss 0.0147  mse 0.0026  ce 0.010
+[arrB_gru_raw_seed0] val r R 0.949 L 0.911 | test r R 0.952 L 0.887 | rough 0.056 | 218 s
+[arrB_gru_raw_seed101] cell=gru kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0680  mse 0.0088  ce 0.058
+  step 1000/3000  loss 0.0355  mse 0.0060  ce 0.028
+  step 1500/3000  loss 0.0343  mse 0.0054  ce 0.027
+  step 2000/3000  loss 0.0260  mse 0.0045  ce 0.019
+  step 2500/3000  loss 0.0174  mse 0.0037  ce 0.011
+  step 3000/3000  loss 0.0165  mse 0.0040  ce 0.010
+[arrB_gru_raw_seed101] val r R 0.945 L 0.925 | test r R 0.950 L 0.902 | rough 0.056 | 218 s
+[arrB_gru_raw_seed102] cell=gru kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0661  mse 0.0085  ce 0.056
+  step 1000/3000  loss 0.0416  mse 0.0049  ce 0.035
+  step 1500/3000  loss 0.0283  mse 0.0052  ce 0.021
+  step 2000/3000  loss 0.0445  mse 0.0079  ce 0.035
+  step 2500/3000  loss 0.0154  mse 0.0033  ce 0.010
+  step 3000/3000  loss 0.0190  mse 0.0044  ce 0.012
+[arrB_gru_raw_seed102] val r R 0.945 L 0.920 | test r R 0.943 L 0.871 | rough 0.054 | 218 s
+[arrB_gru_augL_seed0] cell=gru kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1086  mse 0.0128  ce 0.094
+  step 1000/3000  loss 0.0554  mse 0.0108  ce 0.042
+  step 1500/3000  loss 0.0448  mse 0.0082  ce 0.034
+  step 2000/3000  loss 0.0252  mse 0.0053  ce 0.016
+  step 2500/3000  loss 0.0242  mse 0.0055  ce 0.015
+  step 3000/3000  loss 0.0219  mse 0.0051  ce 0.012
+[arrB_gru_augL_seed0] val r R 0.924 L 0.881 | test r R 0.917 L 0.858 | rough 0.123 | 218 s
+[arrB_gru_augL_seed101] cell=gru kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1040  mse 0.0138  ce 0.088
+  step 1000/3000  loss 0.0583  mse 0.0098  ce 0.046
+  step 1500/3000  loss 0.0412  mse 0.0072  ce 0.031
+  step 2000/3000  loss 0.0323  mse 0.0069  ce 0.022
+  step 2500/3000  loss 0.0241  mse 0.0054  ce 0.015
+  step 3000/3000  loss 0.0295  mse 0.0056  ce 0.020
+[arrB_gru_augL_seed101] val r R 0.933 L 0.893 | test r R 0.899 L 0.839 | rough 0.132 | 218 s
+[arrB_gru_augL_seed102] cell=gru kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1163  mse 0.0139  ce 0.101
+  step 1000/3000  loss 0.0562  mse 0.0099  ce 0.044
+  step 1500/3000  loss 0.0481  mse 0.0091  ce 0.036
+  step 2000/3000  loss 0.0319  mse 0.0068  ce 0.022
+  step 2500/3000  loss 0.0343  mse 0.0080  ce 0.022
+  step 3000/3000  loss 0.0313  mse 0.0070  ce 0.020
+[arrB_gru_augL_seed102] val r R 0.913 L 0.884 | test r R 0.896 L 0.836 | rough 0.134 | 218 s
+[arrB_lstm_raw_seed0] cell=lstm kind=raw HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0751  mse 0.0068  ce 0.067
+  step 1000/3000  loss 0.0458  mse 0.0044  ce 0.040
+  step 1500/3000  loss 0.0326  mse 0.0043  ce 0.026
+  step 2000/3000  loss 0.0237  mse 0.0034  ce 0.018
+  step 2500/3000  loss 0.0235  mse 0.0028  ce 0.019
+  step 3000/3000  loss 0.0200  mse 0.0023  ce 0.015
+[arrB_lstm_raw_seed0] val r R 0.958 L 0.922 | test r R 0.958 L 0.908 | rough 0.056 | 207 s
+[arrB_lstm_raw_seed101] cell=lstm kind=raw HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0740  mse 0.0092  ce 0.063
+  step 1000/3000  loss 0.0394  mse 0.0047  ce 0.033
+  step 1500/3000  loss 0.0381  mse 0.0046  ce 0.032
+  step 2000/3000  loss 0.0236  mse 0.0036  ce 0.018
+  step 2500/3000  loss 0.0208  mse 0.0031  ce 0.016
+  step 3000/3000  loss 0.0211  mse 0.0028  ce 0.016
+[arrB_lstm_raw_seed101] val r R 0.967 L 0.927 | test r R 0.960 L 0.912 | rough 0.055 | 207 s
+[arrB_lstm_raw_seed102] cell=lstm kind=raw HParams(lr=0.0005411280249253713, batch=32, steps=3000, l2=1.4810353186570764e-06, noise_sd=0.45838154852963486, drift_sd=0.09930113738122438, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0669  mse 0.0077  ce 0.058
+  step 1000/3000  loss 0.0360  mse 0.0044  ce 0.030
+  step 1500/3000  loss 0.0409  mse 0.0045  ce 0.035
+  step 2000/3000  loss 0.0264  mse 0.0046  ce 0.020
+  step 2500/3000  loss 0.0189  mse 0.0030  ce 0.014
+  step 3000/3000  loss 0.0185  mse 0.0034  ce 0.013
+[arrB_lstm_raw_seed102] val r R 0.951 L 0.936 | test r R 0.961 L 0.903 | rough 0.055 | 208 s
+[arrB_lstm_augL_seed0] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.2216  mse 0.0160  ce 0.172
+  step 1000/4000  loss 0.1682  mse 0.0145  ce 0.120
+  step 1500/4000  loss 0.1363  mse 0.0120  ce 0.091
+  step 2000/4000  loss 0.1405  mse 0.0120  ce 0.095
+  step 2500/4000  loss 0.0895  mse 0.0074  ce 0.049
+  step 3000/4000  loss 0.0833  mse 0.0104  ce 0.039
+  step 3500/4000  loss 0.1036  mse 0.0099  ce 0.059
+  step 4000/4000  loss 0.0831  mse 0.0086  ce 0.039
+[arrB_lstm_augL_seed0] val r R 0.931 L 0.921 | test r R 0.921 L 0.879 | rough 0.087 | 227 s
+[arrB_lstm_augL_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.2618  mse 0.0203  ce 0.208
+  step 1000/4000  loss 0.1875  mse 0.0143  ce 0.140
+  step 1500/4000  loss 0.1618  mse 0.0153  ce 0.113
+  step 2000/4000  loss 0.1227  mse 0.0121  ce 0.078
+  step 2500/4000  loss 0.1158  mse 0.0075  ce 0.075
+  step 3000/4000  loss 0.0885  mse 0.0064  ce 0.049
+  step 3500/4000  loss 0.0785  mse 0.0055  ce 0.040
+  step 4000/4000  loss 0.0738  mse 0.0073  ce 0.032
+[arrB_lstm_augL_seed101] val r R 0.928 L 0.913 | test r R 0.922 L 0.880 | rough 0.084 | 227 s
+[arrB_lstm_augL_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/4000  loss 0.3140  mse 0.0214  ce 0.259
+  step 1000/4000  loss 0.1932  mse 0.0152  ce 0.145
+  step 1500/4000  loss 0.1415  mse 0.0110  ce 0.097
+  step 2000/4000  loss 0.1019  mse 0.0089  ce 0.059
+  step 2500/4000  loss 0.1171  mse 0.0099  ce 0.073
+  step 3000/4000  loss 0.1079  mse 0.0091  ce 0.065
+  step 3500/4000  loss 0.0745  mse 0.0069  ce 0.034
+  step 4000/4000  loss 0.0628  mse 0.0055  ce 0.023
+[arrB_lstm_augL_seed102] val r R 0.940 L 0.918 | test r R 0.928 L 0.877 | rough 0.081 | 227 s
+  generated 2000 augmented snippets in 4 s (17 strata)
+  generated 2000 augmented snippets in 2 s (17 strata)
+[arrrand0_gru_raw_seed0] cell=gru kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0553  mse 0.0076  ce 0.046
+  step 1000/3000  loss 0.0380  mse 0.0057  ce 0.031
+  step 1500/3000  loss 0.0307  mse 0.0059  ce 0.023
+  step 2000/3000  loss 0.0242  mse 0.0043  ce 0.018
+  step 2500/3000  loss 0.0193  mse 0.0042  ce 0.013
+  step 3000/3000  loss 0.0152  mse 0.0025  ce 0.010
+[arrrand0_gru_raw_seed0] val r R 0.959 L 0.890 | test r R 0.938 L 0.852 | rough 0.057 | 218 s
+[arrrand0_gru_augL_seed0] cell=gru kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1127  mse 0.0141  ce 0.097
+  step 1000/3000  loss 0.0617  mse 0.0116  ce 0.048
+  step 1500/3000  loss 0.0510  mse 0.0086  ce 0.039
+  step 2000/3000  loss 0.0268  mse 0.0057  ce 0.018
+  step 2500/3000  loss 0.0295  mse 0.0066  ce 0.019
+  step 3000/3000  loss 0.0190  mse 0.0044  ce 0.011
+[arrrand0_gru_augL_seed0] val r R 0.933 L 0.870 | test r R 0.899 L 0.808 | rough 0.114 | 218 s
+  generated 2000 augmented snippets in 4 s (17 strata)
+  generated 2000 augmented snippets in 2 s (17 strata)
+[arrrand1_gru_raw_seed0] cell=gru kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0664  mse 0.0087  ce 0.056
+  step 1000/3000  loss 0.0396  mse 0.0056  ce 0.032
+  step 1500/3000  loss 0.0355  mse 0.0071  ce 0.027
+  step 2000/3000  loss 0.0204  mse 0.0039  ce 0.014
+  step 2500/3000  loss 0.0232  mse 0.0043  ce 0.017
+  step 3000/3000  loss 0.0157  mse 0.0027  ce 0.011
+[arrrand1_gru_raw_seed0] val r R 0.956 L 0.872 | test r R 0.928 L 0.852 | rough 0.055 | 218 s
+[arrrand1_gru_augL_seed0] cell=gru kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1055  mse 0.0127  ce 0.091
+  step 1000/3000  loss 0.0657  mse 0.0124  ce 0.051
+  step 1500/3000  loss 0.0499  mse 0.0088  ce 0.038
+  step 2000/3000  loss 0.0223  mse 0.0050  ce 0.014
+  step 2500/3000  loss 0.0355  mse 0.0058  ce 0.026
+  step 3000/3000  loss 0.0201  mse 0.0057  ce 0.010
+[arrrand1_gru_augL_seed0] val r R 0.908 L 0.886 | test r R 0.882 L 0.843 | rough 0.133 | 218 s
+  generated 2000 augmented snippets in 4 s (17 strata)
+  generated 2000 augmented snippets in 2 s (17 strata)
+[arrrand2_gru_raw_seed0] cell=gru kind=raw HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.0586  mse 0.0080  ce 0.049
+  step 1000/3000  loss 0.0337  mse 0.0058  ce 0.026
+  step 1500/3000  loss 0.0293  mse 0.0060  ce 0.021
+  step 2000/3000  loss 0.0208  mse 0.0044  ce 0.014
+  step 2500/3000  loss 0.0196  mse 0.0040  ce 0.013
+  step 3000/3000  loss 0.0209  mse 0.0043  ce 0.014
+[arrrand2_gru_raw_seed0] val r R 0.938 L 0.915 | test r R 0.945 L 0.859 | rough 0.071 | 218 s
+[arrrand2_gru_augL_seed0] cell=gru kind=aug HParams(lr=0.0010117564028983075, batch=48, steps=3000, l2=1.1202964632542048e-06, noise_sd=0.5674970645382252, drift_sd=0.10092170488458611, ce_weight=1.0, hidden=512, grad_clip=1.0)
+  step 500/3000  loss 0.1189  mse 0.0135  ce 0.104
+  step 1000/3000  loss 0.0616  mse 0.0125  ce 0.047
+  step 1500/3000  loss 0.0364  mse 0.0075  ce 0.026
+  step 2000/3000  loss 0.0278  mse 0.0060  ce 0.018
+  step 2500/3000  loss 0.0249  mse 0.0056  ce 0.015
+  step 3000/3000  loss 0.0242  mse 0.0048  ce 0.015
+[arrrand2_gru_augL_seed0] val r R 0.925 L 0.874 | test r R 0.922 L 0.817 | rough 0.120 | 218 s
+one-array runs done: 1.82 GPU-h; skipped []
+zero-out s08_raw: none 0.96/0.88  A off 0.82/0.76  B off 0.72/0.61
+zero-out best_raw_seed101: none 0.96/0.89  A off 0.78/0.77  B off 0.68/0.60
+zero-out best_raw_seed102: none 0.96/0.89  A off 0.76/0.76  B off 0.68/0.66
+zero-out gru_augL_s08: none 0.91/0.86  A off 0.74/0.73  B off 0.48/0.60
+zero-out gru_augL_best_seed101: none 0.93/0.86  A off 0.75/0.44  B off 0.46/0.38
+zero-out gru_augL_best_seed102: none 0.92/0.87  A off 0.75/0.62  B off 0.38/0.48
+zero-out lstm_raw_s06: none 0.96/0.90  A off 0.81/0.77  B off 0.67/0.55
+zero-out lstm_raw_best_seed101: none 0.96/0.88  A off 0.88/0.79  B off 0.64/0.55
+zero-out lstm_raw_best_seed102: none 0.95/0.88  A off 0.78/0.75  B off 0.62/0.53
+zero-out lstm_augL_s03: none 0.93/0.87  A off 0.77/0.75  B off 0.58/0.59
+zero-out lstm_augL_best_seed101: none 0.93/0.88  A off 0.76/0.78  B off 0.45/0.53
+zero-out lstm_augL_best_seed102: none 0.94/0.88  A off 0.74/0.78  B off 0.71/0.54

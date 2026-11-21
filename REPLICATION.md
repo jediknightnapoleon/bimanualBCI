@@ -151,6 +151,42 @@ All offline, day 1869, Fig 4 setup (train blocks 1–5 / select on 6 / test on 7
 - On the proxy, every LSTM scores at or above the best GRU, and the raw LSTM is close to the augmented GRU. That hints the LSTM might be less fragile in closed loop. It can only be tested online, and the proxy is weak (#35).
 - **Budget:** 3.03 GPU-h. One run was skipped (`lstm433_augL_seed102`), so that row has 2 seeds.
 
+### Phase 9: one array only ([figure](results/figures/ext_arrays.png), `results/ext_arrays/summary.json`)
+**Array split.** We assume channels 1–96 are array A and 97–192 are array B (#36). The data's correlation structure supports this split at moderate strength. Which array is medial and which is lateral is not known.
+
+**Setup.** Each model uses the Phase 8 best hyperparameters for its (cell, data kind) (#37). Each one-array model is trained with 3 seeds. The random-96 controls are 3 subsets drawn across both arrays, 1 seed each, GRU only.
+
+**Test r, RH / LH (% of the 192-channel r retained):**
+
+| Model | Both arrays | Array A only | Array B only | Random 96 |
+|---|---|---|---|---|
+| GRU raw | 0.959 / 0.887 | 0.859 / 0.765 (90% / 86%) | 0.948 / 0.887 (99% / 100%) | 0.937 / 0.854 (98% / 96%) |
+| GRU 2–8 s | 0.918 / 0.860 | 0.861 / 0.773 (94% / 90%) | 0.904 / 0.844 (99% / 98%) | 0.901 / 0.823 (98% / 96%) |
+| LSTM raw | 0.959 / 0.885 | 0.869 / 0.835 (91% / 94%) | 0.959 / 0.908 (100% / 103%) | not run |
+| LSTM 2–8 s | 0.931 / 0.876 | 0.877 / 0.811 (94% / 93%) | 0.924 / 0.878 (99% / 100%) | not run |
+
+**One array zeroed at test, no retraining (#38).** These are the 192-channel models, mean of 3 seeds.
+
+| Model | Nothing zeroed | Array A zeroed | Array B zeroed |
+|---|---|---|---|
+| GRU raw | 0.96 / 0.89 | 0.79 / 0.76 | 0.69 / 0.62 |
+| GRU 2–8 s | 0.92 / 0.86 | 0.75 / 0.60 | 0.44 / 0.49 |
+| LSTM raw | 0.96 / 0.89 | 0.82 / 0.77 | 0.65 / 0.54 |
+| LSTM 2–8 s | 0.93 / 0.88 | 0.76 / 0.77 | 0.58 / 0.55 |
+
+**Findings:**
+- **Array B alone keeps essentially all of the offline performance**: 98–103% of the 192-channel r, for both hands and both cells.
+- **Array A alone loses 6–14%.** The left hand loses more with the GRU (86–90% retained), less with the LSTM (93–94%).
+- **Random 96 channels from both arrays** retain 96–98%, between A and B. So the result depends on which array, not only on channel count. On this day, adding array A to B buys almost nothing offline.
+- **Retraining is essential.** A 192-channel decoder with one array silenced degrades badly (r 0.44–0.82), worst when B is lost and for the augmented models.
+- **The closed-loop proxy ranks the sets the same way**: A < B ≤ 192.
+- **Caveats:**
+  - one day (1869), offline only
+  - array identity is assumed (#36)
+  - no per-array hyperparameter search (#37), which may slightly favor the 192-channel models
+  - random-96 was GRU only
+- **Budget:** 1.82 GPU-h, nothing skipped.
+
 ## How to reproduce
 Install pixi, run `pixi install`, put the Dryad `.mat` files in `Data/`, then run the `pixi run …` commands in [README.md](README.md) (Replication section) in figure order. GPU steps (`fig3-decoding`, `fig3-sim`, `fig4-rnn`) are resumable.
 

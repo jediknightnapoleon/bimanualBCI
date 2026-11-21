@@ -26,8 +26,8 @@ Live status of the replication of Deo et al. 2024. The replication plan has phas
 | 8.4 | LSTM vs GRU summary, figure, docs | medium | done |
 | 9.1 | Array-split check (correlation structure) | medium | done |
 | 9.2 | `ext_arrays.py` (one-array, random-96, zero-out) | medium | done |
-| 9.3 | One-array runs (background GPU, chained after 8.2) | background | in progress |
-| 9.4 | One-array summary, figure, docs | medium | todo |
+| 9.3 | One-array runs (background GPU, chained after 8.2) | background | done |
+| 9.4 | One-array summary, figure, docs | medium | done |
 
 ## Log
 
@@ -234,3 +234,6 @@ Live status of the replication of Deo et al. 2024. The replication plan has phas
 - **8.2 done:** 53 models, 3.03 GPU-h; 1 run skipped (`lstm433_augL_seed102`).
 - **8.4 done:** `results/ext_lstm/summary.json`, figure `ext_lstm_vs_gru`, docs and briefing. LSTM ≥ GRU: raw +0.013 paired validation r; 2–8 s +0.033; 0.2–0.8 s +0.113.
   - **Resume:** Phase 9 runs in the same driver. Then: `cd scripts && pixi run python -c "import ext_arrays_plot as E; E.summarize_and_plot()"`, then the docs, commit and push.
+- **9.3 done:** 30 one-array models, 1.82 GPU-h, nothing skipped; zero-out run on 12 models.
+- **9.4 done:** `results/ext_arrays/summary.json`, figure `ext_arrays`, docs and final briefing. Array B alone retains 98–103% of the 192-channel r, A 86–94%, random 96 96–98%; zeroing an array without retraining drops r to 0.44–0.82.
+- **PHASES 7–9 COMPLETE (2026-11-21).** Waiting for the user's next steps.

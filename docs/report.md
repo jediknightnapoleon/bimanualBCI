@@ -118,6 +118,18 @@ Same data, splits, augmentation and the same 10 search settings, so each setting
 
 ![LSTM vs GRU](../results/figures/ext_lstm_vs_gru.png)
 
+### One array instead of two (Phase 9)
+We retrained the decoders on channels 1–96 ("array A") or 97–192 ("array B"). That the split falls there is an assumption, supported by the data's correlation structure (#36).
+
+- **Array B alone matches both arrays**: 98–103% of the 192-channel test r.
+- **Array A alone keeps 86–94%.** The left hand is hit hardest, less so with an LSTM.
+- **96 random channels drawn from both arrays keep 96–98%.** So which array matters, not just how many channels.
+- **Without retraining, losing an array is severe.** Zeroing it at test drops r to 0.44–0.82, worst for losing B and for augmented models.
+
+Practical reading: on this day, almost all the decodable information is on array B; a decoder must be retrained (or trained with array dropout) to survive losing an array.
+
+![One array](../results/figures/ext_arrays.png)
+
 ## Pointers
 - Results table and register: [REPLICATION.md](../REPLICATION.md)
 - What to check in the paper yourself: [paper_check.md](paper_check.md); the ❓ rows are Fig 5a TTA and the Supp Fig 1 counts

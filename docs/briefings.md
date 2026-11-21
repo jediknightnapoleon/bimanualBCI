@@ -4,6 +4,33 @@ Written at the end of each phase while the user was away (see the 2026-11-21 ent
 
 ---
 
+## Phase 9: decoding with one array (day 1869). Done. Final briefing for Phases 7–9.
+
+- **What:**
+  - 30 models (1.82 GPU-h, nothing skipped): array A only and array B only for GRU and LSTM, raw and 2–8 s clips, 3 seeds each, plus 6 random-96 GRU controls.
+  - A zero-out test on the 12 best 192-channel models.
+  - Array identity: channels 1–96 = A and 97–192 = B, supported at moderate strength by the correlation structure (#36).
+- **Result:**
+  - Array B alone keeps 98–103% of the 192-channel r; array A alone keeps 86–94% (LH worst, GRU raw LH 86%); random 96 keep 96–98%.
+  - Zeroing an array in a 192-channel decoder without retraining drops r to 0.44–0.82, worst when B is lost and for augmented models.
+  - The LSTM keeps more than the GRU on array A for the LH (93–94% vs 86–90%).
+- **Your input:** which physical array (medial/lateral, hand knob) channels 97–192 are. Supp Fig 1b may say; see `docs/paper_check.md`.
+
+### Overall (Phases 7–9)
+- **Phase 7:** write-up in [docs/report.md](report.md).
+- **Phase 8:**
+  - The LSTM ties the GRU on raw data and beats it under temporal fracturing (+0.03 validation r with 2–8 s clips, +0.11 with 0.2–0.8 s).
+  - The advantage is not from parameter count.
+  - The weak closed-loop proxy hints that an LSTM is less fragile.
+- **Phase 9:** almost all decodable information sits on one array on this day; robustness to array loss needs retraining.
+- **Possible next steps** (I'm asking you):
+  - Repeat Phase 9 on other days (1750, 1883) to see whether "array B dominates" holds.
+  - Train with array dropout, then test with one array zeroed.
+  - An LSTM-specific search, or other cores (e.g. a small transformer).
+  - Clean up, or open a PR to `main` of your fork.
+
+---
+
 ## Phase 8: LSTM vs GRU (day 1869, Fig 4 setup). Done.
 
 - **What:** 53 new models (3.03 GPU-h; skipped 1, `lstm433_augL_seed102`):

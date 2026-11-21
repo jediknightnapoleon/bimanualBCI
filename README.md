@@ -8,7 +8,7 @@ This repo is associated with this [paper](https://www.nature.com/articles/s41598
 To execute the analysis script (tuningAnalysis.m), change the dataPath variable to point at the [data](https://doi.org/10.5061/dryad.sn02v6xbb) directory and hit 'run'.
 
 # Replication (fork)
-This branch (`replication`) adds a Python replication of the paper's offline analyses. For a short narrative of the findings, read [docs/report.md](docs/report.md). See [REPLICATION.md](REPLICATION.md) for results, [docs/paper_check.md](docs/paper_check.md) for a reader's guide (paradigm, dPCA) and a list of paper details to verify, [PROGRESS.md](PROGRESS.md) for status, and [docs/](docs/) for the data inventory and method notes.
+This branch (`replication`) adds a Python replication of the paper's offline analyses. For a short narrative of the findings, read [docs/report.md](docs/report.md). It also covers two extensions: an LSTM vs GRU comparison (`pixi run ext-lstm`) and decoding with one array (`pixi run ext-arrays`). See [REPLICATION.md](REPLICATION.md) for results, [docs/paper_check.md](docs/paper_check.md) for a reader's guide (paradigm, dPCA) and a list of paper details to verify, [PROGRESS.md](PROGRESS.md) for status, and [docs/](docs/) for the data inventory and method notes.
 
 **Setup:** install [pixi](https://pixi.sh), then run `pixi install`. Download the Dryad data and extract the `.mat` files and `readme.txt` into `Data/`.
 

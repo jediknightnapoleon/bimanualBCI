@@ -4,6 +4,30 @@ Written at the end of each phase while the user was away (see the 2026-11-21 ent
 
 ---
 
+## Phase 8: LSTM vs GRU (day 1869, Fig 4 setup). Done.
+
+- **What:** 53 new models (3.03 GPU-h; skipped 1, `lstm433_augL_seed102`):
+  - the LSTM-512 paired search on raw data, 2–8-s clips and 200–800-ms clips
+  - the GRU search on 2–8-s clips (#34)
+  - 3 seeds of each best setting
+  - a parameter-matched LSTM-433
+- **Result:** the LSTM is better, mostly once temporal fracturing is used.
+  - Paired validation r, LSTM − GRU:
+    - raw +0.013 (9/10 settings, p = 0.006)
+    - 2–8 s +0.033 (10/10, p = 0.002)
+    - 0.2–0.8 s +0.113 (10/10, p = 0.002)
+  - Test r (RH / LH): raw ties at 0.96 / 0.89; 2–8 s LSTM 0.93 / 0.88 vs GRU 0.92 / 0.86, with smoother output (roughness 0.083 vs 0.113).
+  - LSTM-433 ≈ LSTM-512, so this is not parameter count.
+- **Proxy (weak, #35):** the raw LSTM scores about like the augmented GRU (r 0.34 vs 0.36; angle 47° vs 51°; raw GRU 0.29, 56°). It is only a hint about online robustness.
+- **Docs:**
+  - [figure](../results/figures/ext_lstm_vs_gru.png)
+  - the "Extensions" section of `REPLICATION.md`
+  - a section in `docs/report.md`
+  - rows in `docs/methods_notes.md`
+- **Next:** Phase 9 (one array) is already training in the background; then its summary and the final briefing.
+
+---
+
 ## Phase 7: Write-up. Done.
 
 - **What:** [docs/report.md](report.md), a short narrative of the replication written for you. It covers a TL;DR, each claim with numbers and figures, where we differ and why, how robust each result is, and the pitfalls. It is linked from the README and the top of `REPLICATION.md`. No new analysis.

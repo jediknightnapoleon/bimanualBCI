@@ -103,6 +103,21 @@ Smaller assumptions (target definitions, quadrants, analysis windows, FFN detail
 - **The augmentation sampler never placed a clip near a segment edge,** so it never sampled "rest". Fixed and covered by a unit test.
 - **Windows: conda-forge MKL's `libomp` clashes with PyTorch's `libiomp5md`** (OMP Error #15). Using OpenBLAS fixed it.
 
+## Extensions
+
+### LSTM instead of GRU (Phase 8)
+Same data, splits, augmentation and the same 10 search settings, so each setting is a paired comparison.
+
+- **Raw data:** the LSTM is better in 9 of 10 paired settings, but only by +0.013 validation r. On the test block it ties the GRU: 0.96 / 0.89.
+- **With temporal fracturing** the LSTM is clearly better:
+  - 2–8-s clips: +0.033 validation r in 10 of 10 settings. Test r 0.93 / 0.88 vs 0.92 / 0.86, and smoother output.
+  - 200–800-ms clips: +0.11 validation r.
+  - So the LSTM gives up less offline accuracy for the augmentation.
+- A parameter-matched LSTM (433 units, about 1.08M recurrent parameters, the same as GRU-512) does as well as LSTM-512.
+- **Closed-loop proxy** (weak, #35): even the raw LSTM scores about like the augmented GRU (r 0.34 vs 0.36, angle 47° vs 51°; raw GRU 0.29, 56°). This suggests, without proving, that an LSTM might be less fragile online.
+
+![LSTM vs GRU](../results/figures/ext_lstm_vs_gru.png)
+
 ## Pointers
 - Results table and register: [REPLICATION.md](../REPLICATION.md)
 - What to check in the paper yourself: [paper_check.md](paper_check.md); the ❓ rows are Fig 5a TTA and the Supp Fig 1 counts

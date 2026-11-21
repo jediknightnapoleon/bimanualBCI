@@ -20,13 +20,13 @@ Live status of the replication of Deo et al. 2024. The replication plan has phas
 | 5.1–5.2 | Fig 5 re-scored from closed-loop logs | medium | done |
 | 6.1–6.2 | Final report | medium | done |
 | 7.1 | Write-up `docs/report.md` | medium | done |
-| 8.1 | LSTM code (`rnn.py` cell option, `ext_lstm.py`, tests) | high | todo |
-| 8.2 | LSTM / GRU matched search (background GPU) | background | todo |
-| 8.3 | Closed-loop proxy metric (`proxy.py`) + validity check | high | todo |
-| 8.4 | LSTM vs GRU summary, figure, docs | medium | todo |
-| 9.1 | Array-split check (correlation structure) | medium | todo |
-| 9.2 | `ext_arrays.py` (one-array, random-96, zero-out) | medium | todo |
-| 9.3 | One-array runs (background GPU, chained after 8.2) | background | todo |
+| 8.1 | LSTM code (`rnn.py` cell option, `ext_lstm.py`, tests) | high | done |
+| 8.2 | LSTM / GRU matched search (background GPU) | background | done |
+| 8.3 | Closed-loop proxy metric (`proxy.py`) + validity check | high | done |
+| 8.4 | LSTM vs GRU summary, figure, docs | medium | done |
+| 9.1 | Array-split check (correlation structure) | medium | done |
+| 9.2 | `ext_arrays.py` (one-array, random-96, zero-out) | medium | done |
+| 9.3 | One-array runs (background GPU, chained after 8.2) | background | in progress |
 | 9.4 | One-array summary, figure, docs | medium | todo |
 
 ## Log
@@ -231,3 +231,6 @@ Live status of the replication of Deo et al. 2024. The replication plan has phas
   - **GPU driver started:** `pixi run ext-driver`, logging to `results/ext_driver.log`. It runs the LSTM/GRU search (cap 3 h), then the one-array runs (cap 2 h), then the zero-out evaluation.
   - **Resume:** rerun `pixi run ext-driver`; finished models are skipped.
   - **Next (block 3, medium):** write `scripts/ext_lstm_plot.py` and `scripts/ext_arrays_plot.py`, then the summaries and docs.
+- **8.2 done:** 53 models, 3.03 GPU-h; 1 run skipped (`lstm433_augL_seed102`).
+- **8.4 done:** `results/ext_lstm/summary.json`, figure `ext_lstm_vs_gru`, docs and briefing. LSTM ≥ GRU: raw +0.013 paired validation r; 2–8 s +0.033; 0.2–0.8 s +0.113.
+  - **Resume:** Phase 9 runs in the same driver. Then: `cd scripts && pixi run python -c "import ext_arrays_plot as E; E.summarize_and_plot()"`, then the docs, commit and push.

@@ -119,6 +119,38 @@ This is the full register. Each entry is also marked in the code with `# ASSUMPT
 - "Unimanual only" open-loop blocks each contain about 1 bimanual trial.
 - One moving-hand trial in the whole dataset (day 1869, closed-loop) has the target at the cursor at the go cue. It gets a NaN quadrant (`min_dist` = 1). Checked in Phase 1: day 1750 is clean.
 
+## Extensions (Phases 8–9, beyond the paper)
+All offline, day 1869, Fig 4 setup (train blocks 1–5 / select on 6 / test on 7). A closed-loop proxy (#35) scores each model on the 12 recorded closed-loop blocks. It is a weak metric: it ranks augmented above raw for the GRU, but by far less than online success does.
+
+### Phase 8: LSTM vs GRU ([figure](results/figures/ext_lstm_vs_gru.png), `results/ext_lstm/summary.json`)
+**Paired search** (same 10 settings and seeds, #33): LSTM − GRU validation r.
+
+| Data | Mean diff [95% CI] | Wilcoxon p | LSTM better |
+|---|---|---|---|
+| Raw | +0.013 [+0.008, +0.017] | 0.006 | 9/10 |
+| 2–8-s clips | +0.033 [+0.019, +0.049] | 0.002 | 10/10 |
+| 200–800-ms clips | +0.113 [+0.087, +0.138] | 0.002 | 10/10 |
+
+**Best setting × 3 seeds**, test block:
+
+| Model | r RH / LH | Roughness | Proxy r | Proxy angle |
+|---|---|---|---|---|
+| GRU raw | 0.959 / 0.887 | 0.038 | 0.29 | 56° |
+| GRU 2–8 s | 0.918 / 0.860 | 0.113 | 0.36 | 51° |
+| GRU 0.2–0.8 s | 0.764 / 0.667 | 0.313 | 0.33 | 48° |
+| LSTM raw | 0.959 / 0.885 | 0.054 | 0.34 | 47° |
+| LSTM 2–8 s | 0.931 / 0.876 | 0.083 | 0.37 | 44° |
+| LSTM 0.2–0.8 s | 0.808 / 0.744 | 0.288 | 0.36 | 46° |
+| LSTM-433 raw (parameter-matched) | 0.964 / 0.885 | 0.052 | 0.33 | 46° |
+| LSTM-433 2–8 s (2 seeds) | 0.930 / 0.887 | 0.083 | 0.37 | 41° |
+
+**Findings:**
+- On raw data the LSTM is no better on the test block. It wins the paired search by a small, consistent margin across settings.
+- With augmentation the LSTM loses less of the raw-data r than the GRU does. The gap grows as clips get shorter (short clips are where the GRU struggled, #14). Its decoded velocity is also smoother (2–8 s: roughness 0.083 vs 0.113).
+- The parameter-matched LSTM-433 does as well as LSTM-512, so the advantage isn't parameter count.
+- On the proxy, every LSTM scores at or above the best GRU, and the raw LSTM is close to the augmented GRU. That hints the LSTM might be less fragile in closed loop. It can only be tested online, and the proxy is weak (#35).
+- **Budget:** 3.03 GPU-h. One run was skipped (`lstm433_augL_seed102`), so that row has 2 seeds.
+
 ## How to reproduce
 Install pixi, run `pixi install`, put the Dryad `.mat` files in `Data/`, then run the `pixi run …` commands in [README.md](README.md) (Replication section) in figure order. GPU steps (`fig3-decoding`, `fig3-sim`, `fig4-rnn`) are resumable.
 

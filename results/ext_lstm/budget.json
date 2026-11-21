@@ -1,0 +1,25 @@
+{
+  "models": {
+    "gru512": {
+      "sec_per_step": 0.0784427801767985,
+      "n_params": 1125576,
+      "n_params_recurrent": 1084416
+    },
+    "lstm512": {
+      "sec_per_step": 0.07628959019978841,
+      "n_params": 1487048,
+      "n_params_recurrent": 1445888
+    },
+    "lstm433": {
+      "sec_per_step": 0.07436279853185018,
+      "n_params": 1126492,
+      "n_params_recurrent": 1085964
+    }
+  },
+  "est_hours_all": 3.4545634587605796,
+  "cap_hours": 3.0,
+  "spent_hours": 3.031950083507432,
+  "skipped": [
+    "lstm433_augL_seed102"
+  ]
+}

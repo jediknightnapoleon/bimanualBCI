@@ -4,6 +4,13 @@ Written at the end of each phase while the user was away (see the 2026-11-21 ent
 
 ---
 
+## Phase 7: Write-up. Done.
+
+- **What:** [docs/report.md](report.md), a short narrative of the replication written for you. It covers a TL;DR, each claim with numbers and figures, where we differ and why, how robust each result is, and the pitfalls. It is linked from the README and the top of `REPLICATION.md`. No new analysis.
+- **Next (block 2, high effort):** the LSTM code and the closed-loop proxy metric, the array-split check, and the one-array script. Then one background GPU job runs the LSTM/GRU search (cap 3 h) and the one-array runs (cap 2 h).
+
+---
+
 ## Phase 6: Final report. Done; replication complete.
 
 - **`REPLICATION.md`:** has a summary at the top, the full paper-vs-ours table (every figure and supplementary item), the decisions/assumptions register (#1–31) and how to reproduce.

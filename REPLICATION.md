@@ -4,6 +4,8 @@
 
 **Data:** Dryad, [doi:10.5061/dryad.sn02v6xbb](https://doi.org/10.5061/dryad.sn02v6xbb).
 
+**Short write-up:** [docs/report.md](docs/report.md).
+
 **Status (2026-11-21): complete.** Every result that can be reproduced offline was attempted. Phase-by-phase notes are in [docs/briefings.md](docs/briefings.md); the build log is [PROGRESS.md](PROGRESS.md).
 
 ## Summary
@@ -115,4 +117,4 @@ Install pixi, run `pixi install`, put the Dryad `.mat` files in `Data/`, then ru
 
 ## Open items for the user
 - [ ] **Check the paper against [docs/paper_check.md](docs/paper_check.md)** and report anything that contradicts our assumptions.
-- [ ] **After Phase 6, give Claude the next steps.**
+- [x] **After Phase 6, give Claude the next steps.** Given 2026-11-21: a write-up (Phase 7), LSTM vs GRU (Phase 8) and one-array decoding (Phase 9).

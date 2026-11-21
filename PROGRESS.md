@@ -1,6 +1,6 @@
 # Replication progress
 
-Live status of the replication of Deo et al. 2024. The full plan has phases 0–6 with numbered steps.
+Live status of the replication of Deo et al. 2024. The replication plan has phases 0–6. Extensions (approved 2026-11-21) are Phases 7–9: the write-up, LSTM vs GRU, and one-array decoding. The plan file is `C:\Users\10910\.claude\plans\i-have-just-cloned-modular-giraffe.md`.
 **To resume after an interruption:** find the first step that isn't `done` below and read the latest log entry.
 
 ## Status
@@ -19,6 +19,15 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
 | 4.1–4.4 | RNN + augmentation, Fig 4 | high/low/medium | done |
 | 5.1–5.2 | Fig 5 re-scored from closed-loop logs | medium | done |
 | 6.1–6.2 | Final report | medium | done |
+| 7.1 | Write-up `docs/report.md` | medium | done |
+| 8.1 | LSTM code (`rnn.py` cell option, `ext_lstm.py`, tests) | high | todo |
+| 8.2 | LSTM / GRU matched search (background GPU) | background | todo |
+| 8.3 | Closed-loop proxy metric (`proxy.py`) + validity check | high | todo |
+| 8.4 | LSTM vs GRU summary, figure, docs | medium | todo |
+| 9.1 | Array-split check (correlation structure) | medium | todo |
+| 9.2 | `ext_arrays.py` (one-array, random-96, zero-out) | medium | todo |
+| 9.3 | One-array runs (background GPU, chained after 8.2) | background | todo |
+| 9.4 | One-array summary, figure, docs | medium | todo |
 
 ## Log
 
@@ -208,3 +217,8 @@ Live status of the replication of Deo et al. 2024. The full plan has phases 0–
 - **Phase 4 complete:** committed and pushed.
 - **Phase 5 complete:** briefing written; committed and pushed.
 - **Phase 6 complete (2026-11-21):** `REPLICATION.md` has its summary; the briefings are written. REPLICATION DONE. Waiting for the user's next steps.
+
+### 2026-11-21: extensions (Phases 7–9)
+- **New plan approved.** Pause only when the effort level must change (two pauses: medium → high after Phase 7, and high → medium once the GPU driver is running). Briefings go into `docs/briefings.md`.
+- **7.1 done:** `docs/report.md`, a short narrative written for the user, is linked from the README and `REPLICATION.md`.
+  - Next: block 2 [high], steps 8.1, 8.3, 9.1 and 9.2; then start the GPU driver.

@@ -58,3 +58,62 @@ def test_checkpoint_resume_is_exact(tmp_path):
             assert torch.allclose(pa, pb, atol=1e-6), n
     finally:
         R.DEVICE = dev
+
+
+# ----------------------------------------------------------------------------- LSTM extension (Phase 8)
+def test_lstm_shapes_state_and_forget_bias():
+    m = R.RNNDecoder(n_in=8, n_days=2, hidden=16, cell="lstm")
+    v, c, (h, cs) = m(torch.randn(3, 5, 8), torch.tensor([0, 1, 1]))
+    assert v.shape == (3, 5, 4) and c.shape == (3, 5, 4) and h.shape == (1, 3, 16) and cs.shape == (1, 3, 16)
+    # forget-gate biases sum to 1 (b_ih + b_hh)
+    f = m.lstm.bias_ih_l0[16:32] + m.lstm.bias_hh_l0[16:32]
+    assert torch.allclose(f, torch.ones(16))
+    assert m.n_params(recurrent_only=True) == R.recurrent_params("lstm", 8, 16)
+
+
+def test_lstm_learns_and_chunked_decode_matches():
+    torch.manual_seed(0)
+    m = R.RNNDecoder(n_in=8, hidden=32, cell="lstm")
+    hp = R.HParams(lr=3e-3, batch=16, steps=300, noise_sd=0.0, drift_sd=0.0, hidden=32)
+    R.train(m, _toy_batch_fn(), hp, log=lambda *a: None)
+    X, V, _, _ = _toy_batch_fn(T=400)(np.random.default_rng(9), 1)
+    r, _, _ = R.evaluate(m, X[0], V[0])
+    assert r.mean() > 0.8
+    v1, _ = R.decode(m, X[0], chunk=37)  # the (h, c) tuple must be carried across chunks
+    v2, _ = R.decode(m, X[0], chunk=10_000)
+    np.testing.assert_allclose(v1, v2, atol=1e-5)
+
+
+def test_lstm_checkpoint_resume_is_exact(tmp_path):
+    dev = R.DEVICE
+    R.DEVICE = torch.device("cpu")
+    try:
+        hp = R.HParams(lr=1e-3, batch=4, steps=10, hidden=16)
+        mk = lambda: R.RNNDecoder(n_in=8, hidden=16, cell="lstm")  # noqa: E731
+        torch.manual_seed(0); a = mk()
+        R.train(a, _toy_batch_fn(), hp, seed=5, log=lambda *x: None)
+        ck = str(tmp_path / "ck.pt")
+        torch.manual_seed(0); b = mk()
+        R.train(b, _toy_batch_fn(), R.HParams(**{**hp.__dict__, "steps": 5}), ckpt_path=ck, ckpt_every=5,
+                seed=5, log=lambda *x: None)
+        torch.manual_seed(0); b2 = mk()
+        R.train(b2, _toy_batch_fn(), hp, ckpt_path=ck, ckpt_every=5, seed=5, log=lambda *x: None)
+        for (n, pa), (_, pb) in zip(a.named_parameters(), b2.named_parameters()):
+            assert torch.allclose(pa, pb, atol=1e-6), n
+    finally:
+        R.DEVICE = dev
+
+
+def test_old_gru_state_dict_and_records_load():
+    """GRU checkpoints written before Phase 8 (keys 'gru.*', records without 'cell') still load."""
+    old = R.GRUDecoder(n_in=8, hidden=16).state_dict()
+    assert any(k.startswith("gru.") for k in old)
+    m = R.build_from_record({"run_id": "x", "hp": {"hidden": 16}}, n_in=8)
+    assert m.cell == "gru"
+    m.load_state_dict(old)  # strict: raises if any key differs
+
+
+def test_matched_hidden_is_parameter_matched():
+    h = R.matched_hidden(192, "gru", 512, "lstm")
+    g, l_ = R.recurrent_params("gru", 192, 512), R.recurrent_params("lstm", 192, h)
+    assert abs(l_ - g) / g < 0.005 and 400 < h < 460

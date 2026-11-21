@@ -71,11 +71,20 @@ OUT_JSON = RESULTS_DIR / "fig4" / "summary.json"
 
 # ----------------------------------------------------------------------------- data
 class Data:
-    """Day-1869 OL data: z-scored inputs, targets, and block splits (built once per process)."""
+    """Day-1869 OL data: z-scored inputs, targets, and block splits (built once per process).
 
-    def __init__(self, sat_mode="clip"):
+    ``channels``: optional 0-based channel indices to keep (Phase 9, one-array decoding).
+    z-scoring is per channel, so taking the subset after z-scoring is exact.
+    ``self.session`` keeps the loaded session (used by the closed-loop proxy).
+    """
+
+    def __init__(self, sat_mode="clip", channels=None):
         s = load_session(DAY)
-        self.z = zscore_by_block(s.tx, s.block).astype(np.float32)
+        self.session = s
+        z = zscore_by_block(s.tx, s.block).astype(np.float32)
+        self.channels = None if channels is None else np.asarray(channels, int)
+        self.z = z if channels is None else np.ascontiguousarray(z[:, self.channels])
+        self.z_all = z  # all 192 channels (for the zero-one-array-at-test evaluation)
         t = s.trials
         mt = t.move_type.to_numpy()
         dirs = C.trial_directions(s.Tp, s.Cp, s.go, mt)
@@ -166,25 +175,37 @@ def sample_hp(rng, steps_scale=1.0):
     )
 
 
-def train_one(run_id, kind, hp, data, batch_fns, seed, sat_mode="clip", tag="search"):
-    """Train (or resume) one model, score it on val and test, and log one jsonl line."""
-    if any(r["run_id"] == run_id for r in read_jsonl(TRIALS)):
-        return
+def train_one(run_id, kind, hp, data, batch_fns, seed, sat_mode="clip", tag="search", cell="gru", trials=TRIALS,
+              extra=None, post_score=None):
+    """Train (or resume) one model, score it on val and test, and log one jsonl line.
+
+    Phase 8/9 additions: ``cell`` ("gru" | "lstm"), ``trials`` (the jsonl log to use), ``extra``
+    (fields added to the record, e.g. the channel set), and ``post_score(model) -> dict``
+    (extra metrics, e.g. the closed-loop proxy, stored under ``rec["extra_scores"]``).
+    Returns the record (None if it already existed).
+    """
+    if any(r["run_id"] == run_id for r in read_jsonl(trials)):
+        return None
     torch.manual_seed(seed)
-    model = R.GRUDecoder(n_in=data.z.shape[1], hidden=hp.hidden)
-    print(f"[{run_id}] kind={kind} {hp}")
+    model = R.RNNDecoder(n_in=data.z.shape[1], hidden=hp.hidden, cell=cell)
+    print(f"[{run_id}] cell={cell} kind={kind} {hp}")
     info = R.train(model, batch_fns[kind], hp, ckpt_path=str(CKPT_DIR / f"{run_id}.pt"), seed=seed, log_every=500)
     rec = dict(run_id=run_id, tag=tag, kind=kind, sat_mode=sat_mode, seed=seed, hp=hp.__dict__,
                train_seconds=info["seconds"], val=score(model, data, "val"), test=score(model, data, "test"))
-    append_jsonl(TRIALS, rec)
+    if cell != "gru" or trials != TRIALS or extra:  # keep the replication's records exactly as they were
+        rec.update(cell=cell, n_params=model.n_params(), n_in=int(data.z.shape[1]), **(extra or {}))
+    if post_score is not None:
+        rec["extra_scores"] = post_score(model)
+    append_jsonl(trials, rec)
     print(f"[{run_id}] val r R {rec['val']['r_R']:.3f} L {rec['val']['r_L']:.3f} | test r R {rec['test']['r_R']:.3f} "
           f"L {rec['test']['r_L']:.3f} | rough {rec['test']['roughness']:.3f} | {info['seconds']:.0f} s")
+    return rec
 
 
-def smoke_seconds_per_step(data, batch_fns):
+def smoke_seconds_per_step(data, batch_fns, cell="gru", hidden=512):
     """Time 60 steps at batch 32 on augmented data (used to fit the search into the GPU budget)."""
-    model = R.GRUDecoder(n_in=data.z.shape[1])
-    hp = R.HParams(batch=32, steps=60)
+    model = R.RNNDecoder(n_in=data.z.shape[1], hidden=hidden, cell=cell)
+    hp = R.HParams(batch=32, steps=60, hidden=hidden)
     info = R.train(model, batch_fns["aug"], hp, log=lambda *a: None)
     return info["seconds"] / hp.steps
 
@@ -327,9 +348,7 @@ def summarize_and_plot(data):
             runs.append((longclip[0], P.SERIES[3], "Augmented, 2–8-s clips (main)", 1.0))
         runs.append((best["aug"], P.SERIES[1], "Augmented, 200–800-ms clips", 0.4))
         for rec, col, lab, alpha in runs:
-            m = R.GRUDecoder(n_in=X.shape[1], hidden=rec["hp"]["hidden"]).to(R.DEVICE)
-            m.load_state_dict(torch.load(CKPT_DIR / f"{rec['run_id']}.pt", map_location=R.DEVICE,
-                                         weights_only=False)["model"])
+            m = R.load_from_record(rec, X.shape[1], CKPT_DIR)
             v, _ = R.decode(m, X)
             ax.plot(tt, v[sl, dim], color=col, lw=1, alpha=alpha, label=lab)
         ax.set_title(f"{name}, test block (30 s excerpt)", fontsize=9); ax.set_xlabel("time (s)")

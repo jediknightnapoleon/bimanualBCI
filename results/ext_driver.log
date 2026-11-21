@@ -1,0 +1,3 @@
+Pixi task (ext-driver): python -u scripts/ext_lstm.py --stage search && python -u scripts/ext_arrays.py --stage run && python -u scripts/ext_arrays.py --stage zero
+  generated 2000 augmented snippets in 5 s (17 strata)
+  generated 2000 augmented snippets in 3 s (17 strata)

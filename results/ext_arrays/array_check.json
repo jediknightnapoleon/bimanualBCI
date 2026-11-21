@@ -1,0 +1,43 @@
+{
+  "days": {
+    "1869": {
+      "within_A": 0.009912574156333308,
+      "within_B": 0.010587838542475933,
+      "across": 0.007007689416604542,
+      "contrast": 0.0032425169328000793,
+      "null_contrast_max": 0.000783095962118608,
+      "own_gt_other": 0.921875,
+      "shift_rank": 2,
+      "n_shifts": 96,
+      "n_silent": 0,
+      "passes": true
+    },
+    "1750": {
+      "within_A": 0.013254198978860736,
+      "within_B": 0.01210675983759454,
+      "across": 0.008136271355021645,
+      "contrast": 0.004544208053205993,
+      "null_contrast_max": 0.0009475972701158911,
+      "own_gt_other": 0.9322916666666666,
+      "shift_rank": 1,
+      "n_shifts": 96,
+      "n_silent": 0,
+      "passes": true
+    },
+    "1883": {
+      "within_A": 0.010492417025913222,
+      "within_B": 0.00931079022860388,
+      "across": 0.007179352879231594,
+      "contrast": 0.002722250748026956,
+      "null_contrast_max": 0.0007754493522879012,
+      "own_gt_other": 0.9010416666666666,
+      "shift_rank": 40,
+      "n_shifts": 96,
+      "n_silent": 0,
+      "passes": true
+    }
+  },
+  "passes": true,
+  "strength": "moderate",
+  "note": "Consistent with (not proof of) channels 1-96 / 97-192 being separate arrays; see register #36."
+}

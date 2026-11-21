@@ -62,6 +62,12 @@ Tick each box once checked, and note what the paper actually says. Anything that
 - [ ] **Augmentation velocity scaling (#15).** When a clip is stretched or compressed in time, is the velocity target rescaled? We assume not.
 - [ ] **RNN hyperparameters.** Any values for learning rate, batch size, number of steps, input noise, mean drift or L2 weight, even in a table or supplement.
 
+### Extensions (Phases 8–9)
+
+- [ ] **Which channels belong to which array (#36). NEW.** The one-array analysis assumes channels 1–96 are one array and 97–192 the other. The data supports this only moderately ([check figure](../results/figures/ext_arrays_check.png)). Check the paper (Supp Fig 1b array layout, Methods) or other T5 datasets for:
+  - the channel → array mapping;
+  - which array is medial and which lateral.
+
 ### Low priority: details and sanity checks
 
 - [ ] **Supp Fig 1 counts.** Read off the bar heights and pie values. Ours:

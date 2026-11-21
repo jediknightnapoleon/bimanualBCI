@@ -69,4 +69,8 @@ fig3-decoding = "python scripts/fig3_decoding.py"
 fig3-sim = "python scripts/fig3_simulations.py"
 fig4-rnn = "python -u scripts/fig4_rnn.py"
 fig5-behavior = "python scripts/fig5_behavior.py"
+ext-lstm = "python -u scripts/ext_lstm.py"
+ext-arrays = "python -u scripts/ext_arrays.py"
+# Phases 8 + 9 GPU work in one background job: LSTM/GRU search, then the one-array runs and the zero-out evaluation
+ext-driver = "python -u scripts/ext_lstm.py --stage search && python -u scripts/ext_arrays.py --stage run && python -u scripts/ext_arrays.py --stage zero"
 check-gpu = "python -c \"import torch; print('torch', torch.__version__, 'cuda', torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else '')\""

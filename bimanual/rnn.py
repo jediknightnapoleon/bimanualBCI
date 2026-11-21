@@ -1,4 +1,4 @@
-"""GRU decoder for two-cursor control, with checkpoint/resume (Fig 4; Supp Fig 3).
+"""GRU (paper) and LSTM (extension) decoders for two-cursor control, with checkpoint/resume (Fig 4; Supp Fig 3).
 
 Reproduces
 ----------
@@ -22,6 +22,10 @@ Training-time noise (as in Willett 2021; the paper lists "input noise" and
 DEVIATION (register #28): PyTorch instead of TensorFlow v1; the optimizer
 is Adam with gradient clipping; there is no "inference step" detail (20-ms
 steps here).
+
+Extension (Phase 8): ``RNNDecoder(cell="lstm")`` swaps the GRU core for an LSTM and keeps
+everything else the same. ``GRUDecoder(...)`` still builds the paper's model, and old
+checkpoints load unchanged.
 
 Checkpoint / resume
 -------------------
@@ -60,28 +64,97 @@ class HParams:
     grad_clip: float = 1.0
 
 
-class GRUDecoder(nn.Module):
-    """Day-affine -> GRU(hidden) -> velocity (4) + context logits (4)."""
+CELLS = ("gru", "lstm")
 
-    def __init__(self, n_in: int = 192, n_days: int = 1, hidden: int = 512, n_vel: int = 4, n_ctx: int = 4):
+
+class RNNDecoder(nn.Module):
+    """Day-affine -> recurrent core (GRU or LSTM, ``hidden`` units) -> velocity (4) + context logits (4).
+
+    ``cell="gru"`` is the paper's decoder. ``cell="lstm"`` is the Phase 8 extension: the same
+    architecture with an LSTM core. The core is stored under the attribute named after the cell
+    (``self.gru`` / ``self.lstm``), so the state-dict keys of GRU checkpoints saved before the
+    extension (``gru.weight_ih_l0`` ...) are unchanged and still load.
+
+    DECISION (register #32): LSTM forget-gate biases start at 1 (PyTorch's default is 0), the
+    usual choice for LSTMs (Gers et al. 2000; Jozefowicz et al. 2015). It helps the cell keep its
+    memory early in training. PyTorch keeps two bias vectors (b_ih, b_hh), each ordered as
+    gates [i, f, g, o]; we set f = 0.5 in each, so they sum to 1.
+    """
+
+    def __init__(self, n_in: int = 192, n_days: int = 1, hidden: int = 512, n_vel: int = 4, n_ctx: int = 4,
+                 cell: str = "gru"):
         super().__init__()
+        if cell not in CELLS:
+            raise ValueError(f"cell must be one of {CELLS}, got {cell!r}")
+        self.cell, self.hidden = cell, hidden
         # one affine input layer per day, initialized to identity
         self.day_W = nn.Parameter(torch.eye(n_in).repeat(n_days, 1, 1))
         self.day_b = nn.Parameter(torch.zeros(n_days, n_in))
-        self.gru = nn.GRU(n_in, hidden, batch_first=True)
+        if cell == "gru":
+            self.gru = nn.GRU(n_in, hidden, batch_first=True)
+        else:
+            self.lstm = nn.LSTM(n_in, hidden, batch_first=True)
+            with torch.no_grad():
+                for name, p in self.lstm.named_parameters():
+                    if name.startswith("bias"):
+                        p[hidden:2 * hidden].fill_(0.5)  # forget gate; b_ih + b_hh = 1
         self.vel = nn.Linear(hidden, n_vel)
         self.ctx = nn.Linear(hidden, n_ctx)
 
+    @property
+    def core(self) -> nn.Module:
+        return self.gru if self.cell == "gru" else self.lstm
+
     def forward(self, x, day_idx, h0=None):
-        """x: (B, T, n_in); day_idx: (B,) long. Returns vel (B, T, 4), ctx logits (B, T, 4), h."""
+        """x: (B, T, n_in); day_idx: (B,) long.
+
+        Returns vel (B, T, 4), ctx logits (B, T, 4), and the final state: a tensor for the GRU, an
+        (h, c) tuple for the LSTM. Either can be passed back as ``h0``.
+        """
         W, b = self.day_W[day_idx], self.day_b[day_idx]  # (B, n, n), (B, n)
         x = torch.einsum("btn,bmn->btm", x, W) + b[:, None, :]
-        h, hT = self.gru(x, h0)
+        h, hT = self.core(x, h0)
         return self.vel(h), self.ctx(h), hT
 
     def l2_penalty(self):
         """Sum of squared weights (biases and the identity-initialized day transform excluded)."""
         return sum((p**2).sum() for n, p in self.named_parameters() if "weight" in n)
+
+    def n_params(self, recurrent_only: bool = False) -> int:
+        """Number of trainable parameters (``recurrent_only``: the GRU/LSTM core alone)."""
+        mod = self.core if recurrent_only else self
+        return int(sum(p.numel() for p in mod.parameters()))
+
+
+def GRUDecoder(n_in: int = 192, n_days: int = 1, hidden: int = 512, n_vel: int = 4, n_ctx: int = 4) -> RNNDecoder:
+    """Backward-compatible constructor: the paper's GRU decoder."""
+    return RNNDecoder(n_in, n_days, hidden, n_vel, n_ctx, cell="gru")
+
+
+def recurrent_params(cell: str, n_in: int, hidden: int) -> int:
+    """Closed-form parameter count of a PyTorch GRU/LSTM core (weights + both bias vectors)."""
+    gates = 3 if cell == "gru" else 4
+    return gates * (n_in * hidden + hidden * hidden + 2 * hidden)
+
+
+def matched_hidden(n_in: int = 192, ref_cell: str = "gru", ref_hidden: int = 512, cell: str = "lstm") -> int:
+    """Width of ``cell`` whose recurrent parameter count is closest to ``ref_cell`` at ``ref_hidden``."""
+    target = recurrent_params(ref_cell, n_in, ref_hidden)
+    return min(range(16, 2 * ref_hidden), key=lambda h: abs(recurrent_params(cell, n_in, h) - target))
+
+
+def build_from_record(rec: dict, n_in: int) -> RNNDecoder:
+    """Rebuild the model of one ``trials.jsonl`` record (records written before Phase 8 have no
+    ``cell`` field; they are GRUs)."""
+    return RNNDecoder(n_in=n_in, hidden=rec["hp"]["hidden"], cell=rec.get("cell", "gru"))
+
+
+def load_from_record(rec: dict, n_in: int, ckpt_dir) -> RNNDecoder:
+    """Build the model of a record and load its trained weights from ``ckpt_dir/<run_id>.pt``."""
+    m = build_from_record(rec, n_in).to(DEVICE)
+    ck = torch.load(os.path.join(str(ckpt_dir), f"{rec['run_id']}.pt"), map_location=DEVICE, weights_only=False)
+    m.load_state_dict(ck["model"])
+    return m
 
 
 def _atomic_torch_save(obj, path):
@@ -91,7 +164,7 @@ def _atomic_torch_save(obj, path):
 
 
 def train(
-    model: GRUDecoder,
+    model: RNNDecoder,
     batch_fn,
     hp: HParams,
     ckpt_path: str | None = None,
@@ -103,7 +176,7 @@ def train(
     """Train with per-batch data from ``batch_fn(rng, batch_size)``.
 
     Args:
-        model: a GRUDecoder (moved to DEVICE here).
+        model: an RNNDecoder (moved to DEVICE here).
         batch_fn: callable(np.random.Generator, B) -> (X (B,T,N), vel (B,T,4),
             ctx (B,T) int, day (B,) int), all numpy.
         hp: hyperparameters.
@@ -155,7 +228,7 @@ def train(
 
 
 @torch.no_grad()
-def decode(model: GRUDecoder, X: np.ndarray, day: int = 0, chunk: int = 5000):
+def decode(model: RNNDecoder, X: np.ndarray, day: int = 0, chunk: int = 5000):
     """Run the RNN causally over one continuous recording X (T, N) from a zero state.
 
     Long recordings are processed in chunks, carrying the hidden state over,

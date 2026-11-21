@@ -222,3 +222,12 @@ Live status of the replication of Deo et al. 2024. The replication plan has phas
 - **New plan approved.** Pause only when the effort level must change (two pauses: medium → high after Phase 7, and high → medium once the GPU driver is running). Briefings go into `docs/briefings.md`.
 - **7.1 done:** `docs/report.md`, a short narrative written for the user, is linked from the README and `REPLICATION.md`.
   - Next: block 2 [high], steps 8.1, 8.3, 9.1 and 9.2; then start the GPU driver.
+- **Block 2 (high) done:**
+  - **8.1:** `rnn.RNNDecoder(cell="gru"|"lstm")`; `GRUDecoder` is kept as an alias and old checkpoints load. `fig4_rnn.py` now takes `cell`, `channels`, a trials path and a proxy hook. Retraining s07_raw through the new code reproduces its test r exactly, and `fig4-rnn --stage plot` reproduces `summary.json` byte for byte.
+  - **8.3:** `bimanual/proxy.py` with tests. Validity check on the existing GRU models: augmented beats raw on r (0.33–0.35 vs 0.29) and angular error (43–52° vs 55–58°), but far less than online, and "sustain" doesn't separate them. A weak, secondary metric (#35).
+  - **9.1:** array check PASSES at moderate strength (#36). Within-half correlation > across-half beyond the random null on 3 days; 92% of channels prefer their own half; the 1–96 split ranks 2 / 1 / 40 of 96 contiguous shifts.
+  - **9.2:** `scripts/ext_arrays.py` (check / run / zero / plot). Tests: 93 pass.
+  - A dry run with a stub trainer confirmed the run order: 54 Phase 8 models, then 30 Phase 9 models.
+  - **GPU driver started:** `pixi run ext-driver`, logging to `results/ext_driver.log`. It runs the LSTM/GRU search (cap 3 h), then the one-array runs (cap 2 h), then the zero-out evaluation.
+  - **Resume:** rerun `pixi run ext-driver`; finished models are skipped.
+  - **Next (block 3, medium):** write `scripts/ext_lstm_plot.py` and `scripts/ext_arrays_plot.py`, then the summaries and docs.

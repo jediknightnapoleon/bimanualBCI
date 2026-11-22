@@ -1,6 +1,6 @@
 # Write-up: replicating Deo et al. 2024 from the Dryad data
 
-*Personal notes, 2026-11-21. The full record is in [REPLICATION.md](../REPLICATION.md): a results table with CIs and the numbered register of decisions (#1–31). The per-phase notes are in [briefings.md](briefings.md).*
+*Personal notes, 2026-11-21. The full record is in [REPLICATION.md](../REPLICATION.md): a results table with CIs and the numbered register of decisions (#1–31 for the replication, #32–46 for the extensions). The per-phase notes are in [briefings.md](briefings.md).*
 
 **Paper:** Deo et al., "Brain control of bimanual movement enabled by recurrent neural networks", *Sci Rep* 14:1598 (2024).
 
@@ -129,6 +129,42 @@ We retrained the decoders on channels 1–96 ("array A") or 97–192 ("array B")
 Practical reading: on this day, almost all the decodable information is on array B; a decoder must be retrained (or trained with array dropout) to survive losing an array.
 
 ![One array](../results/figures/ext_arrays.png)
+
+### Feasibility for a smaller, SBP-only implant (Phases 10–11)
+The question: could this method work on an implant with 8 flexible shanks × 32 electrodes over about one Utah array's area, in one hemisphere, recording SBP only? We can't test that implant, but we can test the parts of the question the T5 data can answer. Full numbers: REPLICATION.md, Phases 10–11.
+
+**Channels (Phase 10).**
+- **The best few channels carry most of the signal.** 8 well-chosen channels of array B keep 96–97% of the 192-channel r; 16 keep 98–100%. On the weaker array A, 8 chosen channels keep 86–92%.
+- **Random small subsets are much worse and unpredictable** (8 random channels: r 0.11–0.61). With 256 electrodes the target system should have plenty of good ones, but it needs a way to find them.
+- **Greedy forward selection with swaps**, on a fast linear stand-in for the decoder, picked sets as good as or better than group lasso or LSTM ablation. The stand-in ranks channel sets the same way the LSTM does (r = 0.94).
+
+**Bad channels (Phase 10).**
+- **Training with random channel dropout** makes the LSTM robust when bad channels are detected and zeroed, or merely noisy. With half the channels zeroed it keeps 94–95% of its r, vs 67–71% without dropout training, and it costs almost nothing when nothing is muted.
+- **Undetected dead channels break every decoder.** A silent channel looks like a huge negative z-score. Online bad-channel detection is a must.
+
+**Data and days (Phase 10).**
+- **One 4-minute block of training data** already gives 95–96% of the r from 21 minutes, offline.
+- **"One array is enough" depends on the day.** It holds on day 1867. On day 1750, a harder mixed one- and two-hand day, array B keeps the right hand but loses 23% on the left hand. Two-hand trials decode about as well as all trials.
+
+**SBP instead of threshold crossings (Phase 11).** Public T5 data with both signals on 48 electrodes:
+- **All 48 electrodes:** SBP is 4–9% behind threshold crossings.
+- **4–16 electrodes:** SBP equals or beats crossings; on array B it is equal or better at every count.
+- **Muting:** SBP degrades about as much as crossings.
+- **The caveats are serious and mostly favour crossings.** These electrodes were selected for their crossings; the data is acausally smoothed; the task is open-loop and one-handed; and it is one session. See [ext_sbp_notes.md](ext_sbp_notes.md).
+
+**What this means for the 8 × 32 system.** Nothing here rules it out:
+- One array's area with good channels decoded both hands well offline on two of three days.
+- SBP seems roughly as informative as crossings.
+- Dropout training plus bad-channel detection handles lost channels.
+
+The open questions need data from that system:
+- whether its SBP carries the hand-specific (laterality) signal;
+- how many of its 256 electrodes are good;
+- how it behaves in closed loop.
+
+![Feasibility](../results/figures/ext_feasibility.png)
+
+![SBP vs TX](../results/figures/ext_sbp.png)
 
 ## Pointers
 - Results table and register: [REPLICATION.md](../REPLICATION.md)

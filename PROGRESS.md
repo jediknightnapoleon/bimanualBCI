@@ -1,6 +1,6 @@
 # Replication progress
 
-Live status of the replication of Deo et al. 2024. The replication plan has phases 0–6. Extensions (approved 2026-11-21) are Phases 7–9: the write-up, LSTM vs GRU, and one-array decoding. The plan file is `C:\Users\10910\.claude\plans\i-have-just-cloned-modular-giraffe.md`.
+Live status of the replication of Deo et al. 2024. The replication plan has phases 0–6. Extensions: Phases 7–9 (approved 2026-11-21: the write-up, LSTM vs GRU, one-array decoding) and Phases 10–11 (approved 2026-11-22: feasibility for an 8 × 32 SBP-only implant; crossings vs SBP). The plan file is `C:\Users\10910\.claude\plans\i-have-just-cloned-modular-giraffe.md`.
 **To resume after an interruption:** find the first step that isn't `done` below and read the latest log entry.
 
 ## Status
@@ -28,6 +28,14 @@ Live status of the replication of Deo et al. 2024. The replication plan has phas
 | 9.2 | `ext_arrays.py` (one-array, random-96, zero-out) | medium | done |
 | 9.3 | One-array runs (background GPU, chained after 8.2) | background | done |
 | 9.4 | One-array summary, figure, docs | medium | done |
+| 10.1 | Feasibility code: `Data(day, blocks)`, `chan_dropout`, job queue, `ext_feasibility.py` | high | done |
+| 10.1s | Best-n selection: greedy + swap, group lasso, random baseline, ablation (Fork A) | high | done |
+| 10.2 | Concurrency smoke test + Phase 10 GPU queue (1 worker; 85 runs, 5.57 h) | background | done |
+| 10.3 | Tests: dropout, queue, day-1750 split | high | done |
+| 10.4 | Feasibility summary, figure, docs | medium | done |
+| 11.1–11.3 | SBP check on the Rigotti-Thompson T5 files: TX vs SBP (Fork C, CPU only, 8 min of compute) | medium | done |
+| 11.4 | SBP GPU runs | — | dropped: the T5 files are smoothed and trial-aligned, so no LSTM or stand-in |
+| 11.5 | SBP summary, docs, final briefing | medium | done |
 
 ## Log
 
@@ -237,3 +245,71 @@ Live status of the replication of Deo et al. 2024. The replication plan has phas
 - **9.3 done:** 30 one-array models, 1.82 GPU-h, nothing skipped; zero-out run on 12 models.
 - **9.4 done:** `results/ext_arrays/summary.json`, figure `ext_arrays`, docs and final briefing. Array B alone retains 98–103% of the 192-channel r, A 86–94%, random 96 96–98%; zeroing an array without retraining drops r to 0.44–0.82.
 - **PHASES 7–9 COMPLETE (2026-11-21).** Waiting for the user's next steps.
+
+### 2026-11-22: feasibility tests for an 8×32 shank system (Phase 10) and an optional SBP check (Phase 11)
+- **Plan approved** (same plan file). Time limit: 12 h of wall clock from about 19:18 (ends about 07:15 on 11-23). LSTM only. Parallel agents: Fork A (best-n selection), Fork B (Phase 11 prep, CPU only).
+- **Downloads BLOCKED:** Dryad now returns 401 ("must have current bearer token") for every scripted download. The user was sent the links for a manual download into `Data/ext/`.
+- **10.1 / 10.3 done:**
+  - `fig4_rnn.Data(day, blocks)`: `fig4-rnn --stage plot` still reproduces `results/fig4/summary.json` byte for byte.
+  - `HParams.chan_dropout`, `bimanual/jobs.py` and `scripts/ext_feasibility.py`.
+  - Tests: 106 + 6 new pass.
+  - Day 1750 split: train 12–24, validate 25–26, test 27–28. (The readme range "12 to 28" makes the last block 28; the plan said 28–29.) Day 1867: train 1–4, 12–17, 22–23; validate 24–25; test 26–27.
+- **Smoke test (timing):** 1 worker 63 ms/step = 16.0 steps/s; 2 workers 12.3; 3 workers 14.4 steps/s in total. RAM ran out (each process needs about 2 GB) and the GPU is near saturation, so **1 worker**. About 281 s per run (4000 steps, batch 16).
+- **Timing adjustment 1:** the full list of 85 runs is about 6.6 h. 17 extra seeds moved to a last "extras" tier (priority 20), after any Phase 11 runs (priority 10), so they're dropped first if time runs short.
+- **GPU queue started at 19:40:** `pixi run ext-feas-driver`, logging to `results/ext_feas/driver.log` and `worker0.log`. `timing.json` holds the measured throughput and ETA.
+  - **Resume:** rerun `pixi run ext-feas-driver`; finished runs are skipped.
+- **10.1s done (Fork A, 44 min):** `bimanual/select.py`, `scripts/ext_select.py` and `results/ext_feas/selection.json`; 6 tests.
+  - **DEVIATION (#43): surrogate features.** The plan's 10 raw 20-ms lags decode poorly (all-96 validation r 0.35). The surrogate uses each channel's raw bin plus causal exponential smoothings (τ 2, 5, 12, 30, 75 bins): all-96 validation r 0.61 (A) and 0.72 (B).
+  - **Surrogate validation r at n = 8** (A / B):
+    - greedy + swap 0.556 / 0.638
+    - group lasso 0.474 / 0.570
+    - ablation 0.427 / 0.560
+    - median of 1,000 random sets 0.233 / 0.324
+  - **Search methods:**
+    - Swaps help only at n = 8 (+0.01).
+    - Group lasso is worse than greedy + swap at every n.
+    - Every method lies above the 99.7th percentile of the random sets.
+  - **Caveat:** the best subsets beat all 96 channels on block 6, so selection overfits block 6. The LSTM test r on block 7 is the fair measure.
+- **22:05 status:** 34 of 85 runs done, none failed. About 236 s per run, 14.8 runs/h, so the ETA is about 01:20 (planned 6.6 h, now about 5.7 h).
+- **Phase 11 data option (user: the MINDFUL zip is unlikely to arrive soon):** the Rigotti-Thompson 2026 Dryad dataset (doi:10.5061/dryad.brv15dvr9) has both features, crossings (`spike_data_all`) and SBP (`sbp_data_all`), on the same channels. Its README:
+  - Files: `fig1_T5_{delay,move}.h5`, about 87 MB in total, and `fig1_T11_*`, about 82 MB.
+  - Format: binned at 10–20 ms, smoothed acausally (Gaussian, σ 100 ms) and trial-aligned.
+  - Task: open-loop radial-8 attempted wrist movements.
+  - Fallback if the user provides only these files: compare crossings vs SBP decoding on T5 itself (ridge/FFN; channel count and muting with crossings vs SBP), and fit a smoothed-level conversion on T5 channels. A raw-bin stand-in and LSTM runs aren't possible from smoothed, trial-aligned data.
+- **23:20 T5 files arrived** (`Data/ext/fig1_T5_{delay,move}.h5`, sizes match Dryad). Contents:
+  - 342 trials in blocks 7–9 (about 114 each), radial-8 targets, no no-go trials.
+  - 20-ms bins; delay file −1000 to 1980 ms, move file −1000 to 2480 ms.
+  - **Only 48 of 192 channels** (`keep_chans_all`; channels under 2 Hz dropped): 20 on array A, 28 on B.
+  - TX (`spike_data_all`, smoothed counts) and SBP (`sbp_data_all`, a.u. 62–3940) on the same channels; cursor data included.
+  - Quick check, ridge with leave-one-block-out on the move file (scratchpad script):
+    - per-channel TX–SBP correlation: median 0.63;
+    - per-bin velocity r 0.31 with TX vs 0.33 with SBP (both together 0.33);
+    - 8-target classification 0.63 with TX vs 0.55 with SBP.
+  - Caveats:
+    - the firing-rate cut keeps channels chosen for good crossings, which favours TX;
+    - acausal smoothing;
+    - open-loop one-hand task;
+    - a channel-count curve can only reach n = 20/28 per array.
+- **23:30 Phase 11 = GO (user), T5 files only.** Fork C runs it on the CPU (4 threads, no GPU) alongside the queue. The T11/MINDFUL path is dropped. Plan:
+  - TX vs SBP vs both vs SBP residual with ridge and FFN, leave-one-block-out;
+  - paired channel-count curves; muting; TX–SBP overlap.
+  - The caveats go in `docs/ext_sbp_notes.md`.
+  - No Phase 11 GPU runs, so no stand-in or LSTM.
+- **23:36 Phase 11 analysis done (Fork C).** Files: `docs/ext_sbp_notes.md` (caveats first), `results/ext_sbp/summary.json`, `results/figures/ext_sbp.png`; `tests/test_sbp.py` 8 passed.
+  - On all 48 channels SBP is slightly worse than TX:
+    - velocity r, ridge 0.61 vs 0.66 (−0.049 [−0.070, −0.031]);
+    - velocity r, FFN 0.67 vs 0.70;
+    - 8-target accuracy 0.74 vs 0.81.
+  - With 4–16 random channels SBP is equal or slightly better, and on array B it is equal or better at every n.
+  - Muting: SBP keeps about the same fraction of performance as TX. A flat SBP channel badly hurts classification.
+  - TX + SBP is best (+0.02).
+  - TX explains a median 35% of its own electrode's SBP.
+  - Register #44–46 text is in Fork C's report; I merge it at the write-up.
+  - Removed: Fork B's MINDFUL code.
+  - Softened one claim in the notes ("upper bound" → "probably an overestimate").
+- **01:24 GPU queue done:** 85 / 85 runs, 0 failed, 5.57 h (planned 6.63 h; 230 s per run). The muting stage ran automatically.
+- **10.4 / 11.5 done (about 02:00):**
+  - Fixed a NameError in `ext_feasibility_plot.summarize` (mute aggregation) and moved the legend of panel (g).
+  - Docs: `REPLICATION.md` (register #39–46, Phase 10 and 11 sections), `docs/report.md`, `docs/methods_notes.md`, `docs/paper_check.md` (the SBP item), `README.md`, a briefing.
+  - Full test suite: 114 passed.
+  - Whole investigation: 19:18 → about 02:00 (about 6.7 h of the 12-h limit).

@@ -1,0 +1,25 @@
+[    0.3s] move: (337, 175, 48) (5 dropped); delay: (337, 150, 48); blocks [7, 8, 9]; A 20 / B 28 channels
+[   13.2s] item1 velocity_ridge: TX 0.662  SBP 0.625  logSBP 0.613  both 0.681  resid 0.546
+[   23.7s] item1 velocity_ridge_lags: TX 0.663  SBP 0.634  logSBP 0.619  both 0.685  resid 0.520
+[   25.0s] item1 class8_ridge: TX 0.810  SBP 0.766  logSBP 0.736  both 0.843  resid 0.576
+[   25.7s] item1 delay8_ridge: TX 0.617  SBP 0.590  logSBP 0.568  both 0.639  resid 0.525
+[   69.8s] item1 velocity_ffn: TX 0.700  SBP 0.676  logSBP 0.673  both 0.713  resid 0.547
+[   72.5s] item4: corr(TX,logSBP) median 0.62; held-out R2 own-TX 0.35, all-TX 0.56
+[   72.5s] done -> C:\Users\10910\Downloads\bimanual_bci_test\bimanualBCI\results\ext_sbp\summary.json
+[    0.5s] move: (337, 175, 48) (5 dropped); delay: (337, 150, 48); blocks [7, 8, 9]; A 20 / B 28 channels
+[  109.3s] item2 velocity all: n4 TX 0.256 SBP 0.273  n8 TX 0.380 SBP 0.396  n16 TX 0.510 SBP 0.507  n32 TX 0.622 SBP 0.581  n48 TX 0.662 SBP 0.613
+[  179.4s] item2 velocity A: n4 TX 0.265 SBP 0.300  n8 TX 0.396 SBP 0.405  n16 TX 0.510 SBP 0.498  n20 TX 0.543 SBP 0.524
+[  250.9s] item2 velocity B: n4 TX 0.252 SBP 0.288  n8 TX 0.369 SBP 0.411  n16 TX 0.520 SBP 0.537  n28 TX 0.618 SBP 0.624
+[  266.4s] item2 greedy all: TX 0.483,0.607,0.643,0.660,0.662  logSBP 0.493,0.543,0.598,0.627,0.613  SBP 0.504,0.575,0.609,0.639,0.625
+[  268.6s] item2 greedy A: TX 0.466,0.526,0.551,0.543  logSBP 0.464,0.498,0.523,0.524  SBP 0.472,0.503,0.527,0.526
+[  272.9s] item2 greedy B: TX 0.519,0.587,0.609,0.618  logSBP 0.462,0.536,0.583,0.624  SBP 0.472,0.513,0.597,0.641
+[  293.3s] item2 class8 all: n4 TX 0.312 SBP 0.320  n8 TX 0.442 SBP 0.432  n16 TX 0.588 SBP 0.585  n32 TX 0.726 SBP 0.703  n48 TX 0.810 SBP 0.736
+[  306.7s] item2 class8 A: n4 TX 0.320 SBP 0.316  n8 TX 0.470 SBP 0.433  n16 TX 0.644 SBP 0.543  n20 TX 0.688 SBP 0.564
+[  320.9s] item2 class8 B: n4 TX 0.306 SBP 0.350  n8 TX 0.421 SBP 0.488  n16 TX 0.555 SBP 0.650  n28 TX 0.656 SBP 0.777
+[  333.8s] item3 velocity TX: normal/zero f0.3 0.600  normal/dead f0.3 0.590  normal/noisy f0.3 0.543  dropout/zero f0.3 0.602  dropout/dead f0.3 0.598  dropout/noisy f0.3 0.542
+[  346.8s] item3 velocity logSBP: normal/zero f0.3 0.546  normal/dead f0.3 0.526  normal/noisy f0.3 0.481  dropout/zero f0.3 0.548  dropout/dead f0.3 0.529  dropout/noisy f0.3 0.488
+[  359.6s] item3 velocity SBP: normal/zero f0.3 0.556  normal/dead f0.3 0.541  normal/noisy f0.3 0.495  dropout/zero f0.3 0.558  dropout/dead f0.3 0.544  dropout/noisy f0.3 0.502
+[  369.8s] item3 class8 TX: normal/zero f0.3 0.670  normal/dead f0.3 0.538  normal/noisy f0.3 0.662  dropout/zero f0.3 0.668  dropout/dead f0.3 0.528  dropout/noisy f0.3 0.662
+[  379.9s] item3 class8 logSBP: normal/zero f0.3 0.635  normal/dead f0.3 0.367  normal/noisy f0.3 0.632  dropout/zero f0.3 0.635  dropout/dead f0.3 0.359  dropout/noisy f0.3 0.632
+[  389.9s] item3 class8 SBP: normal/zero f0.3 0.650  normal/dead f0.3 0.403  normal/noisy f0.3 0.651  dropout/zero f0.3 0.652  dropout/dead f0.3 0.408  dropout/noisy f0.3 0.650
+[  389.9s] done -> C:\Users\10910\Downloads\bimanual_bci_test\bimanualBCI\results\ext_sbp\summary.json

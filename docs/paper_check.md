@@ -62,7 +62,9 @@ Tick each box once checked, and note what the paper actually says. Anything that
 - [ ] **Augmentation velocity scaling (#15).** When a clip is stretched or compressed in time, is the velocity target rescaled? We assume not.
 - [ ] **RNN hyperparameters.** Any values for learning rate, batch size, number of steps, input noise, mean drift or L2 weight, even in a table or supplement.
 
-### Extensions (Phases 8–9)
+### Extensions (Phases 8–11)
+
+- [ ] **Did the online decoder use SBP as well as threshold crossings? NEW (Phase 11).** The Dryad data has threshold crossings only. Check the Methods ("Neural signal processing" or similar) for spike-band power, and if it was used, how it was computed (band, bin). If the online RNN used SBP too, our offline crossings-only results may understate it. Phase 11's T5 comparison suggests SBP alone is roughly as informative ([ext_sbp_notes.md](ext_sbp_notes.md)).
 
 - [ ] **Which channels belong to which array (#36). NEW.** The one-array analysis assumes channels 1–96 are one array and 97–192 the other. The data supports this only moderately ([check figure](../results/figures/ext_arrays_check.png)). Check the paper (Supp Fig 1b array layout, Methods) or other T5 datasets for:
   - the channel → array mapping;

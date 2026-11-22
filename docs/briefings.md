@@ -4,6 +4,43 @@ Written at the end of each phase while the user was away (see the 2026-11-21 ent
 
 ---
 
+## Phases 10–11: feasibility for an 8 × 32 SBP-only implant. Done. Final briefing.
+
+- **What:**
+  - Phase 10: 85 LSTM runs on T5 threshold crossings (5.57 GPU-h, no failures):
+    - random channel dropout plus test-time muting (3 failure modes);
+    - random vs best-chosen 8/16/32/64 channels within each array;
+    - training-data amount;
+    - days 1750 and 1867, with both arrays and with each array alone.
+
+    Channel selection: greedy + swap, group lasso and LSTM ablation on a fast surrogate (CPU agent, 44 min).
+  - Phase 11: crossings vs SBP on public T5 files with both signals (CPU agent, about 8 min). The planned T11 / MINDFUL comparison and the SBP stand-in were dropped: that download was blocked, and the T5 files are smoothed and trial-aligned (#44).
+- **Results:**
+  - **Channel selection matters more than channel count.**
+    - 8 chosen channels of array B keep 96–97% of the 192-channel r; 16 keep 98–100%; on array A, 8 chosen channels keep 86–92%.
+    - 8 random channels: r 0.11–0.61.
+    - Greedy + swap is the best or tied method. The surrogate tracks the LSTM (r = 0.94).
+  - **Dropout training works.** With 50% of channels zeroed it keeps 94–95% of its r (normal 67–71%), and it costs about 0.01 when nothing is muted.
+  - **Undetected dead channels break every decoder** (r 0.47 / 0.32 at 30%). Online detection is needed.
+  - **Training data:** one 4-min block gives 95–96% of the 21-min r.
+  - **Days:** on 1867 either array keeps 95–99%. On 1750 array B loses 23% for the LH; two-hand trials score like all trials.
+  - **SBP vs crossings (Phase 11):**
+    - All 48 electrodes: SBP is 4–9% behind.
+    - 4–16 electrodes: SBP is equal or ahead; on array B it is equal or better at every count.
+    - Muting: SBP degrades about the same as crossings.
+    - The caveats ([ext_sbp_notes.md](ext_sbp_notes.md)) mostly favour crossings.
+- **Timing (predicted vs actual):**
+  - GPU queue 6.63 h planned vs 5.57 h actual (230 s per run vs 281 s from the smoke test).
+  - Adjustment 1: 17 extra seeds demoted to the last tier; they all ran anyway.
+  - The concurrency test showed 2–3 parallel workers were slower and ran out of RAM, so 1 worker.
+  - Whole investigation 19:18 → about 02:00, inside the 12-h limit.
+- **Your input:**
+  - next steps;
+  - whether the 8 × 32 team can provide bimanual or both-hand SBP data and their exact SBP processing;
+  - the new paper-check item: did the online decoder use SBP?
+
+---
+
 ## Phase 9: decoding with one array (day 1869). Done. Final briefing for Phases 7–9.
 
 - **What:**

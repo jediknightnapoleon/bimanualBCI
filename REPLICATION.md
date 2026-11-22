@@ -113,14 +113,22 @@ This is the full register. Each entry is also marked in the code with `# ASSUMPT
 | 36 | A | Which channels belong to which array | Channels 1–96 = array A, 97–192 = array B (contiguous; usual BrainGate layout). Which one is medial and which lateral is unknown. | Data check (`ext-arrays --stage check`, days 1869 / 1750 / 1883): within-half correlation exceeds across-half beyond every one of 200 random 96/96 splits, and about 92% of channels correlate more with their own half. Among the 96 contiguous shifted splits, 1–96 ranks 2 / 1 / 40, so the boundary location is supported only moderately. Clustering is uninformative (r ≈ 0.01), and there is no firing-rate step at 96. Verdict: consistent with the split, not proof. | Extension; on the paper-check list |
 | 37 | V | One-array hyperparameters | The one-array and random-96 models reuse the best 192-channel setting of their (cell, kind); there is no separate search. | Budget. This may slightly favour the 192-channel models; the random-96 control uses the same settings, so the array-vs-random comparison is fair. | Extension |
 | 38 | D | Zeroing one array at test | Set that array's z-scored inputs to 0, i.e. its block mean (a silent / disconnected array after re-centring). | The simplest failure model; no retraining. | Extension |
+| 39 | D | Channel-dropout training (Phase 10) | `HParams.chan_dropout` = 0.5: each training sample draws p ~ U(0, 0.5) and sets that fraction of its channels to 0 (z-units) after the noise and drift augmentation; no rescaling. At 0, no extra RNG draws are made, so old runs reproduce bit for bit. | Simulates channels lost to bad signal, which cannot be predicted. | Extension; tested (`tests/test_rnn.py`) |
+| 40 | D | Training-data amount (Phase 10) | Train on the last k of blocks 1–5 (k = 1–4; k = 5 is the Phase 8 model); validation 6 / test 7 unchanged; 3 seeds. | The newest blocks are closest to the test block, as in a real recalibration. | Extension |
+| 41 | D | Splits for days 1750 and 1867 (Phase 10) | The last 2 open-loop blocks are test, the 2 before them validation, the rest training. 1750: train 12–24, val 25–26, test 27–28 (the plan said 28–29, but the readme's range ends at 28). 1867: train 1–4, 12–17, 22–23; val 24–25; test 26–27. Two-hand r is scored on bins of two-hand trials (> 500 bins). | Same rule as day 1869 (train early, test late). | Extension; the 1750 test blocks contain two-hand trials (asserted) |
+| 42 | A | Muting modes (Phase 10) | At test only, f ∈ {0, 0.1, …, 0.6} of the 192 channels, 20 masks per f (`default_rng(7000 + 100f)`). Modes: **zero** (detected and re-centred: 0 in z-units); **dead** (undetected silent electrode: the z-value of 0 counts under training-block statistics, −μ/σ); **noisy** (undetected noise: N(0, 1) per bin). Proxy r at f = 0, 0.3, 0.5. | Three plausible failure types for a chronic implant. | Extension; f = 0 reproduces the logged test r (asserted) |
+| 43 | V | Best-n channel selection (Phase 10) | Greedy forward selection with swap refinement on a fast surrogate: ridge from each channel's raw bin plus causal exponential smoothings (τ = 2, 5, 12, 30, 75 bins) to the 4 velocity targets; train 1–5, score validation block 6; α chosen once per array (1e-3 A, 1e-4 B). Joint benchmark: group lasso (one group per channel, FISTA, λ path, ridge refit). Baseline: 1,000 random subsets per n. Cross-check: LSTM ablation ranking on block 6. Block 7 is never used (asserted). | DEVIATION from the plan's 10 raw lags, which decoded poorly (all-96 val r 0.35 vs 0.61 / 0.72 with smoothings). The surrogate tracks the LSTM across random subsets (r = 0.94 with LSTM test r). | Extension |
+| 44 | V | Phase 11 data | The Rigotti-Thompson 2026 T5 files (Dryad doi:10.5061/dryad.brv15dvr9, `fig1_T5_{move,delay}.h5`): TX and SBP from the same 48 electrodes (TX rate > 2 Hz), acausal Gaussian smoothing σ = 100 ms, 20-ms bins, trial-aligned, open-loop radial-8 wrist task. Replaces the planned T11 (MINDFUL) comparison and the TX→SBP stand-in for the bimanual sessions. Ridge and FFN only, no LSTM. | The MINDFUL download was blocked and the user could fetch only the T5 files. A raw-bin stand-in cannot be fitted from smoothed, trial-aligned data. | Extension; caveats in [docs/ext_sbp_notes.md](docs/ext_sbp_notes.md) |
+| 45 | D | Phase 11 splits and windows | Leave-one-block-out over blocks 7 / 8 / 9; ridge α by an inner leave-one-block-out on the training blocks; z-scoring with training-block statistics. Velocity: cursor velocity −200 to 500 ms after go. Classification: 0–400 ms (movement); 200–700 ms of the delay period for trials with delay ≥ 1 s (183 trials). Paired bootstrap (2,000 trial resamples). | Only 3 blocks / 337 usable trials. | Extension |
+| 46 | A | Phase 11 feature and muting details | log SBP is the main SBP feature (chosen in advance; raw SBP, slightly better, reported alongside). Dead SBP channel = its training 1st percentile; dead TX channel = 0 counts; noisy = N(0, 1) per bin (unsmoothed). Masks as #42. SBP residual = log SBP minus a ridge prediction from the same electrode's TX at shifts −4, −2, 0, 2, 4 bins. | The dead-SBP value is a guess; real failed SBP channels might sit at amplifier noise or rail high. | Extension |
 | 20 | D | Fig 1 curve centring and CIs | Curves are centred on their 8-direction mean, as in `tuningAnalysis.m`. CIs come from a 10k bootstrap over trials. | Follows the authors' script; the paper's CI method is 10k bootstrap. | Phase 1 |
 
 ### Data quirks noted (no action yet)
 - "Unimanual only" open-loop blocks each contain about 1 bimanual trial.
 - One moving-hand trial in the whole dataset (day 1869, closed-loop) has the target at the cursor at the go cue. It gets a NaN quadrant (`min_dist` = 1). Checked in Phase 1: day 1750 is clean.
 
-## Extensions (Phases 8–9, beyond the paper)
-All offline, day 1869, Fig 4 setup (train blocks 1–5 / select on 6 / test on 7). A closed-loop proxy (#35) scores each model on the 12 recorded closed-loop blocks. It is a weak metric: it ranks augmented above raw for the GRU, but by far less than online success does.
+## Extensions (Phases 8–11, beyond the paper)
+Phases 8–10: all offline, day 1869 unless stated, Fig 4 setup (train blocks 1–5 / select on 6 / test on 7). A closed-loop proxy (#35) scores each model on the 12 recorded closed-loop blocks. It is a weak metric: it ranks augmented above raw for the GRU, but by far less than online success does.
 
 ### Phase 8: LSTM vs GRU ([figure](results/figures/ext_lstm_vs_gru.png), `results/ext_lstm/summary.json`)
 **Paired search** (same 10 settings and seeds, #33): LSTM − GRU validation r.
@@ -186,6 +194,75 @@ All offline, day 1869, Fig 4 setup (train blocks 1–5 / select on 6 / test on 7
   - no per-array hyperparameter search (#37), which may slightly favor the 192-channel models
   - random-96 was GRU only
 - **Budget:** 1.82 GPU-h, nothing skipped.
+
+### Phase 10: feasibility for a smaller implant ([figure](results/figures/ext_feasibility.png), `results/ext_feas/summary.json`)
+**Why.** The user is considering a different implant: 8 flexible shanks × 32 electrodes, about one Utah array's area in one hemisphere, SBP only. These tests ask how far the paper's decoder survives fewer channels, bad channels, less data and other days.
+
+**Setup.** LSTM-512 on 2–8-s clips with the Phase 8 best setting; day 1869 unless stated; test block 7, mean of the runs shown; RH / LH test r. Reference: 192 channels 0.931 / 0.876. 85 runs, 5.57 GPU-h, none failed.
+
+**Channel count within one array** (random: 3 subsets × 1 seed; greedy + swap: 2 seeds; group lasso and LSTM ablation: 1 seed):
+
+| Array, n | Random (mean) | Greedy + swap | Group lasso | LSTM ablation |
+|---|---|---|---|---|
+| A, 8 | 0.42 / 0.30 | 0.80 / 0.80 | 0.79 / 0.69 | 0.83 / 0.70 |
+| A, 16 | 0.64 / 0.57 | 0.88 / 0.82 | 0.86 / 0.83 | 0.90 / 0.76 |
+| A, 32 | 0.73 / 0.59 | 0.87 / 0.83 | 0.90 / 0.83 | — |
+| A, 64 | 0.87 / 0.77 | 0.89 / 0.83 | 0.88 / 0.84 | — |
+| A, 96 (Phase 9) | 0.88 / 0.81 | | | |
+| B, 8 | 0.45 / 0.29 | 0.89 / 0.85 | 0.87 / 0.80 | 0.91 / 0.83 |
+| B, 16 | 0.78 / 0.63 | 0.92 / 0.87 | 0.92 / 0.87 | 0.92 / 0.89 |
+| B, 32 | 0.85 / 0.74 | 0.93 / 0.88 | 0.94 / 0.89 | — |
+| B, 64 | 0.91 / 0.85 | 0.93 / 0.90 | 0.92 / 0.90 | — |
+| B, 96 (Phase 9) | 0.92 / 0.88 | | | |
+
+On the surrogate (validation block 6), every selection method scores at or above the 99.7th percentile of 1,000 random sets. Swaps help only at n = 8 (+0.01), and group lasso is below greedy + swap at every n. The sets differ: at n = 8, greedy and group lasso share 4–5 channels, greedy and ablation 4–5.
+
+**Muted channels at test** (192 channels, mean of 3 models × 20 masks):
+
+| Model | Mode | 30% muted | 50% muted |
+|---|---|---|---|
+| Normal | zero (detected) | 0.87 / 0.84 | 0.62 / 0.62 |
+| Normal | noisy | 0.85 / 0.80 | 0.60 / 0.53 |
+| Normal | dead (undetected) | 0.47 / 0.32 | 0.13 / −0.01 |
+| Dropout-trained | zero (detected) | 0.91 / 0.87 | 0.87 / 0.83 |
+| Dropout-trained | noisy | 0.89 / 0.85 | 0.78 / 0.72 |
+| Dropout-trained | dead (undetected) | 0.54 / 0.32 | 0.11 / −0.03 |
+
+Dropout-trained, nothing muted: 0.917 / 0.883 (normal 0.931 / 0.876). Proxy r (#35): dropout 0.43 / 0.37 / 0.29 at 0 / 30 / 50% vs normal 0.37 / 0.25 / 0.11.
+
+**Training data** (last k blocks, 3 seeds): 1 block (4.2 min) 0.884 / 0.840; 2 (8.4 min) 0.909 / 0.863; 3 (12.8 min) 0.921 / 0.867; 4 (17.1 min) 0.924 / 0.867; 5 (21.4 min) 0.931 / 0.876.
+
+**Other days** (3 seeds; all trials, then two-hand trials only):
+
+| Day | Both arrays | Array A | Array B |
+|---|---|---|---|
+| 1750 (one- and two-hand trials) | 0.736 / 0.618; two-hand 0.734 / 0.600 | 0.664 / 0.514; two-hand 0.670 / 0.549 | 0.733 / 0.475; two-hand 0.736 / 0.457 |
+| 1867 (one-hand) | 0.906 / 0.891 | 0.893 / 0.844 | 0.896 / 0.862 |
+
+**Findings:**
+- **A few well-chosen channels go a long way.** 8 chosen channels of array B keep 96% / 97% of the 192-channel r; 16 keep 98–100%. On array A, 8 chosen channels keep 86% / 92%. Random small subsets are far worse and highly variable (8 random: r 0.11–0.61). So the implant's *best* channels matter far more than the channel count.
+- **Selection method:** greedy + swap is best or tied for both hands. LSTM ablation matches it for the RH but is weaker for the LH, and group lasso is slightly weaker at n = 8. Selection used block 6 only, so the test-block numbers are fair, but the chosen sets fit day 1869; their value on other days is untested.
+- **Channel dropout training makes the decoder robust to detected or noisy channel loss** at almost no cost: with 50% of channels zeroed it keeps 95% / 94% of its r, vs 67% / 71% for the normal decoder. It also scores higher on the closed-loop proxy at every f.
+- **Undetected dead channels are catastrophic for every decoder**, dropout-trained or not (r 0.47 / 0.32 at 30%). A silent channel's z-value (−μ/σ) is far outside the training range. Bad-channel detection and re-zeroing is essential.
+- **Little data suffices offline.** One block (4.2 min) keeps 95% / 96% of the r of 21 min.
+- **"One array is enough" depends on the day.** On 1867 either array keeps 95–99%. On 1750 (harder; both arrays only 0.74 / 0.62) array B keeps the RH (100%) but loses the LH (77%), and array A keeps 90% / 83%. Two-hand trials score about like all trials.
+
+### Phase 11: crossings vs SBP in T5 ([figure](results/figures/ext_sbp.png), `results/ext_sbp/summary.json`, **caveats: [docs/ext_sbp_notes.md](docs/ext_sbp_notes.md)**)
+**Setup.** Public T5 data with both features on the same 48 electrodes (#44): one session, 337 open-loop wrist trials, acausally smoothed. Ridge and FFN, leave-one-block-out (#45). CPU only, about 8 min.
+
+| Analysis (all 48 channels) | TX | log SBP | SBP − TX [95% CI] | TX + SBP |
+|---|---|---|---|---|
+| Velocity r, ridge | 0.662 | 0.613 | −0.049 [−0.070, −0.031] | 0.681 |
+| Velocity r, FFN | 0.700 | 0.673 | −0.027 [−0.047, −0.009] | 0.713 |
+| 8-target accuracy, movement | 0.810 | 0.736 | −0.074 [−0.128, −0.018] | 0.843 |
+| 8-target accuracy, delay period | 0.617 | 0.568 | −0.049 [−0.131, +0.033] | 0.639 |
+
+**Findings:**
+- On all 48 channels SBP is 4–9% behind TX; raw SBP is slightly better than log SBP (velocity 0.625 / 0.676, accuracy 0.766).
+- With 4–16 random channels SBP equals or beats TX; within array B it is equal or better at every n, and much better for classification (n = 28: 0.78 vs 0.66). Chosen (greedy) channels favour TX slightly.
+- Under muting SBP keeps about the same fraction as TX (50% zeroed: 77% vs 80%). A flat, undetected SBP channel hurts classification badly (the floor value is an assumption, #46).
+- An electrode's TX explains a median 35% of its SBP variance; TX + SBP beats either.
+- **The main caveats:** the 48 electrodes were kept for their TX rate (favours TX); acausal smoothing; open-loop one-hand task; one session; a different SBP band from the target system's; no LSTM; no bimanual data.
 
 ## How to reproduce
 Install pixi, run `pixi install`, put the Dryad `.mat` files in `Data/`, then run the `pixi run …` commands in [README.md](README.md) (Replication section) in figure order. GPU steps (`fig3-decoding`, `fig3-sim`, `fig4-rnn`) are resumable.

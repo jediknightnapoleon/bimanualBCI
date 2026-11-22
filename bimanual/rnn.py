@@ -62,6 +62,11 @@ class HParams:
     ce_weight: float = 1.0
     hidden: int = 512
     grad_clip: float = 1.0
+    # Phase 10 (register #39): random channel dropout. Each training sample gets a rate
+    # p ~ U(0, chan_dropout), and each channel is set to 0 (its mean in z-units) with probability p
+    # for the whole snippet, imitating channels muted for bad signal quality. 0 = off (no extra
+    # random numbers are drawn, so older runs reproduce exactly).
+    chan_dropout: float = 0.0
 
 
 CELLS = ("gru", "lstm")
@@ -146,7 +151,8 @@ def matched_hidden(n_in: int = 192, ref_cell: str = "gru", ref_hidden: int = 512
 def build_from_record(rec: dict, n_in: int) -> RNNDecoder:
     """Rebuild the model of one ``trials.jsonl`` record (records written before Phase 8 have no
     ``cell`` field; they are GRUs)."""
-    return RNNDecoder(n_in=n_in, hidden=rec["hp"]["hidden"], cell=rec.get("cell", "gru"))
+    return RNNDecoder(n_in=n_in, hidden=rec["hp"]["hidden"], cell=rec.get("cell", "gru"),
+                      n_vel=rec.get("n_vel", 4), n_ctx=rec.get("n_ctx", 4))
 
 
 def load_from_record(rec: dict, n_in: int, ckpt_dir) -> RNNDecoder:
@@ -208,6 +214,13 @@ def train(
         # training noise: white + per-snippet constant mean drift
         X = X + hp.noise_sd * torch.randn(X.shape, generator=gen, device=DEVICE)
         X = X + hp.drift_sd * torch.randn((X.shape[0], 1, X.shape[2]), generator=gen, device=DEVICE)
+        if hp.chan_dropout > 0:
+            # ASSUMPTION (#39): a muted channel reads exactly 0 after the noise (a detected bad
+            # channel is zeroed, not left noisy); no rescaling of the kept channels, because at
+            # test time the surviving channels are not rescaled either.
+            p = hp.chan_dropout * torch.rand((X.shape[0], 1, 1), generator=gen, device=DEVICE)
+            keep = torch.rand((X.shape[0], 1, X.shape[2]), generator=gen, device=DEVICE) >= p
+            X = X * keep
         model.train()
         v_hat, c_hat, _ = model(X, day)
         mse = nn.functional.mse_loss(v_hat, V)

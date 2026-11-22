@@ -1,0 +1,24 @@
+{
+  "updated": 1795367478.535185,
+  "workers": 1,
+  "runs_done": 85,
+  "runs_done_this_drive": 85,
+  "runs_remaining": 0,
+  "remaining_by_priority": {},
+  "mean_wall_s_per_run": 230.00901313669542,
+  "mean_train_s_per_run": 228.52054137903102,
+  "throughput_runs_per_hour": 15.268020552084991,
+  "eta_hours": 0.0,
+  "elapsed_hours": 5.567191877298885,
+  "planned_queue_hours": 6.627250318174008,
+  "wall_s_by_group": {
+    "dropout": 264.1763051350911,
+    "random_n": 238.6852035522461,
+    "greedy_swap": 217.66143986582756,
+    "data_amount": 230.7629026969274,
+    "day1750": 228.81507306628757,
+    "group_lasso": 224.20432597398758,
+    "ablation": 213.44347500801086,
+    "day1867": 230.14558670255872
+  }
+}

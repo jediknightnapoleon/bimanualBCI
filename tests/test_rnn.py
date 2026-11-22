@@ -117,3 +117,40 @@ def test_matched_hidden_is_parameter_matched():
     h = R.matched_hidden(192, "gru", 512, "lstm")
     g, l_ = R.recurrent_params("gru", 192, 512), R.recurrent_params("lstm", 192, h)
     assert abs(l_ - g) / g < 0.005 and 400 < h < 460
+
+
+# ----------------------------------------------------------------------------- Phase 10: channel dropout
+def test_chan_dropout_zero_is_bit_identical_to_default():
+    """chan_dropout=0 draws no extra random numbers: weights equal a run without the field set."""
+    fn = _toy_batch_fn()
+    out = []
+    for hp in (R.HParams(batch=8, steps=15, hidden=16), R.HParams(batch=8, steps=15, hidden=16, chan_dropout=0.0)):
+        torch.manual_seed(0)
+        m = R.RNNDecoder(n_in=8, hidden=16, cell="lstm")
+        R.train(m, fn, hp, seed=3, log=lambda *a: None)
+        out.append(torch.cat([p.detach().flatten().cpu() for p in m.parameters()]))
+    assert torch.equal(out[0], out[1])
+
+
+def test_chan_dropout_zeroes_whole_channels(monkeypatch):
+    """With dropout on, the model sees inputs whose muted channels are exactly 0 for the whole snippet,
+    and the muted fraction averages chan_dropout / 2 (p ~ U(0, chan_dropout))."""
+    seen = []
+    orig = R.RNNDecoder.forward
+
+    def spy(self, x, day_idx, h0=None):
+        if self.training:
+            seen.append(x.detach().cpu())
+        return orig(self, x, day_idx, h0)
+
+    monkeypatch.setattr(R.RNNDecoder, "forward", spy)
+    # identity day transform at init: zero inputs stay zero through the first forward pass
+    m = R.RNNDecoder(n_in=64, hidden=8, cell="lstm")
+    hp = R.HParams(batch=64, steps=1, hidden=8, noise_sd=0.1, drift_sd=0.1, chan_dropout=0.6)
+    R.train(m, _toy_batch_fn(N=64, T=20), hp, seed=0, log=lambda *a: None)
+    x = seen[0]  # (B, T, N) after noise + dropout (day transform not yet applied in the spy)
+    muted = (x == 0).all(dim=1)  # (B, N): a channel is 0 at every time step
+    assert muted.any(dim=1).float().mean() > 0.5  # most samples have some muted channels
+    frac = muted.float().mean().item()
+    assert 0.2 < frac < 0.4, frac  # E = 0.6 / 2
+    assert not ((x == 0) & ~muted[:, None, :]).any()  # zeros only on fully muted channels

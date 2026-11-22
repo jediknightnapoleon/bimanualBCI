@@ -55,6 +55,7 @@ from bimanual import plotting as P
 from bimanual import rnn as R
 from bimanual import targets as T
 from bimanual.cache import RESULTS_DIR, append_jsonl, atomic_write_json, read_jsonl
+from bimanual.decoders import pearson_per_dim
 from bimanual.io import load_session, zscore_by_block
 
 DAY = 1869
@@ -76,10 +77,20 @@ class Data:
     ``channels``: optional 0-based channel indices to keep (Phase 9, one-array decoding).
     z-scoring is per channel, so taking the subset after z-scoring is exact.
     ``self.session`` keeps the loaded session (used by the closed-loop proxy).
+
+    Phase 10 additions (defaults reproduce the day-1869 setup exactly):
+    ``day``: trial day of the session to load. ``blocks``: (train, val, test) tuples of block
+    numbers. ``self.move_type_bin`` gives, per bin, the moveType (1 uni-R, 2 uni-L, 3 bimanual)
+    of the open-loop trial covering it (0 outside OL trials), to score two-hand trials alone.
+    ``n_vel`` / ``n_ctx`` are the head sizes (4 / 4 for T5; other datasets may differ).
     """
 
-    def __init__(self, sat_mode="clip", channels=None):
-        s = load_session(DAY)
+    n_vel, n_ctx = 4, 4
+
+    def __init__(self, sat_mode="clip", channels=None, day=DAY, blocks=None):
+        s = load_session(day)
+        self.day = day
+        self.blocks = blocks or (TRAIN_BLOCKS, VAL_BLOCKS, TEST_BLOCKS)
         self.session = s
         z = zscore_by_block(s.tx, s.block).astype(np.float32)
         self.channels = None if channels is None else np.asarray(channels, int)
@@ -98,9 +109,12 @@ class Data:
                  for i, r in enumerate(t.itertuples()) if ol[i]]
         self.vel, self.ctx, self.stratum = T.build_targets(
             len(self.z), specs, sat=0.5, hold_to_end=(sat_mode == "hold"))
+        self.move_type_bin = np.zeros(len(self.z), np.int8)
+        for sp in specs:
+            self.move_type_bin[sp.start_bin:sp.end_bin] = sp.move_type  # end_bin is exclusive
         self.block = s.block
         self.seg = {name: [self._block_range(b) for b in blocks]
-                    for name, blocks in (("train", TRAIN_BLOCKS), ("val", VAL_BLOCKS), ("test", TEST_BLOCKS))}
+                    for name, blocks in zip(("train", "val", "test"), self.blocks)}
 
     def _block_range(self, b):
         idx = np.where(self.block == b)[0]
@@ -155,11 +169,34 @@ def roughness(v):
     return float(np.mean(np.abs(np.diff(v, axis=0)).mean(0) / (v.std(0) + 1e-9)))
 
 
-def score(model, data, split):
-    X, V = data.eval_arrays(split)
-    r, vhat, _ = R.evaluate(model, X, V)
-    return dict(r=r.tolist(), r_R=float(np.mean(r[:2])), r_L=float(np.mean(r[2:])), r_mean=float(np.mean(r)),
-                roughness=roughness(vhat))
+def decode_split(model, data, split, X_all=None):
+    """Decode every block of ``split`` from a zero state (blocks aren't contiguous in time) and
+    concatenate. ``X_all``: optional replacement input (T, n_in), e.g. with channels muted.
+    Returns (targets, decoded velocity, move_type per bin)."""
+    X_all = data.z if X_all is None else X_all
+    V, Vh, M = [], [], []
+    for a, b in data.seg[split]:
+        V.append(data.vel[a:b]); Vh.append(R.decode(model, X_all[a:b])[0])
+        M.append(getattr(data, "move_type_bin", np.zeros(len(data.vel), np.int8))[a:b])
+    return np.concatenate(V), np.concatenate(Vh), np.concatenate(M)
+
+
+def score(model, data, split, X_all=None):
+    """Pearson r per velocity dim on the split's blocks (each decoded from a zero state).
+
+    With one block per split (the day-1869 setup) this equals the original ``R.evaluate`` call.
+    If the data has two-hand trials in the split, ``r_bi`` adds the r over two-hand-trial bins.
+    """
+    V, vhat, mt = decode_split(model, data, split, X_all)
+    r = pearson_per_dim(V, vhat)
+    out = dict(r=r.tolist(), r_R=float(np.mean(r[:2])), r_L=float(np.mean(r[2:])) if len(r) > 2 else None,
+               r_mean=float(np.mean(r)), roughness=roughness(vhat))
+    bi = mt == 3
+    if bi.sum() > 500:  # at least 10 s of two-hand-trial bins
+        rb = pearson_per_dim(V[bi], vhat[bi])
+        out.update(r_bi=rb.tolist(), r_bi_R=float(np.mean(rb[:2])), r_bi_L=float(np.mean(rb[2:])),
+                   n_bi_bins=int(bi.sum()))
+    return out
 
 
 # ----------------------------------------------------------------------------- search
@@ -187,13 +224,19 @@ def train_one(run_id, kind, hp, data, batch_fns, seed, sat_mode="clip", tag="sea
     if any(r["run_id"] == run_id for r in read_jsonl(trials)):
         return None
     torch.manual_seed(seed)
-    model = R.RNNDecoder(n_in=data.z.shape[1], hidden=hp.hidden, cell=cell)
+    n_vel, n_ctx = getattr(data, "n_vel", 4), getattr(data, "n_ctx", 4)
+    model = R.RNNDecoder(n_in=data.z.shape[1], hidden=hp.hidden, cell=cell, n_vel=n_vel, n_ctx=n_ctx)
     print(f"[{run_id}] cell={cell} kind={kind} {hp}")
+    t_start = time.time()
     info = R.train(model, batch_fns[kind], hp, ckpt_path=str(CKPT_DIR / f"{run_id}.pt"), seed=seed, log_every=500)
     rec = dict(run_id=run_id, tag=tag, kind=kind, sat_mode=sat_mode, seed=seed, hp=hp.__dict__,
                train_seconds=info["seconds"], val=score(model, data, "val"), test=score(model, data, "test"))
     if cell != "gru" or trials != TRIALS or extra:  # keep the replication's records exactly as they were
         rec.update(cell=cell, n_params=model.n_params(), n_in=int(data.z.shape[1]), **(extra or {}))
+        if (n_vel, n_ctx) != (4, 4):
+            rec.update(n_vel=n_vel, n_ctx=n_ctx)
+        if extra and "worker" in extra:  # Phase 10 timing record (wall clock incl. scoring)
+            rec.update(t_start=t_start, t_end=time.time())
     if post_score is not None:
         rec["extra_scores"] = post_score(model)
     append_jsonl(trials, rec)

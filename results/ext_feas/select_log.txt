@@ -1,0 +1,26 @@
+[   15.3 s] array A: alpha 0.001, all-96 surrogate val r 0.6122
+[  278.3 s]   greedy done: r at n=8/16/32/64 = 0.5469 / 0.6150 / 0.6464 / 0.6464
+[  279.0 s]   swap n=8: 2 swaps, gain +0.0093 -> 0.5562
+[  282.1 s]   swap n=16: 3 swaps, gain +0.0024 -> 0.6174
+[  782.2 s]   swap n=32: 2 swaps, gain +0.0005 -> 0.6469
+[ 1264.4 s]   swap n=64: 1 swaps, gain +0.0000 -> 0.6464
+[ 1267.1 s] array B: alpha 0.0001, all-96 surrogate val r 0.7165
+[ 1348.7 s]   greedy done: r at n=8/16/32/64 = 0.6267 / 0.7096 / 0.7363 / 0.7455
+[ 1349.6 s]   swap n=8: 4 swaps, gain +0.0113 -> 0.6380
+[ 1350.3 s]   swap n=16: 0 swaps, gain +0.0000 -> 0.7096
+[ 1383.7 s]   swap n=32: 0 swaps, gain +0.0000 -> 0.7363
+[ 1696.2 s]   swap n=64: 2 swaps, gain +0.0004 -> 0.7459
+[ 1696.3 s] wrote selection.json with the final greedy_swap sets
+[ 1761.4 s]   group lasso: n=8 r 0.4736  n=16 r 0.5930  n=32 r 0.6260  n=64 r 0.6205
+[ 1826.0 s]   random: n=8 median 0.2326  n=16 median 0.3396  n=32 median 0.4540  n=64 median 0.5606
+[ 1938.3 s]   ablation arrA_lstm_augL_seed0: intact val r 0.8810, max drop 0.0137
+[ 2050.2 s]   ablation arrA_lstm_augL_seed101: intact val r 0.9039, max drop 0.0241
+[ 2162.0 s]   ablation arrA_lstm_augL_seed102: intact val r 0.8881, max drop 0.0421
+[ 2162.1 s] array A complete
+[ 2250.1 s]   group lasso: n=8 r 0.5699  n=16 r 0.6797  n=32 r 0.7059  n=64 r 0.7232
+[ 2323.1 s]   random: n=8 median 0.3237  n=16 median 0.4396  n=32 median 0.5668  n=64 median 0.6705
+[ 2434.9 s]   ablation arrB_lstm_augL_seed0: intact val r 0.9257, max drop 0.0097
+[ 2546.9 s]   ablation arrB_lstm_augL_seed101: intact val r 0.9202, max drop 0.0147
+[ 2658.5 s]   ablation arrB_lstm_augL_seed102: intact val r 0.9288, max drop 0.0162
+[ 2658.8 s] array B complete
+[ 2658.8 s] done

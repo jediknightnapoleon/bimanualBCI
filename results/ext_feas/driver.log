@@ -1,0 +1,11 @@
+Pixi task (ext-feas-driver): python -u scripts/ext_feasibility.py --stage drive --workers 1
+cleared 0 stale claims
+85 jobs (85 to run); planned 6.63 h with 1 workers
+queue finished: 85 runs this drive in 5.57 h (planned 6.63 h)
+mute lstm_augL_s03 (normal): f=0.0: 0.93/0.87  f=0.1: 0.92/0.86  f=0.2: 0.90/0.84  f=0.3: 0.87/0.83  f=0.4: 0.82/0.80  f=0.5: 0.64/0.62  f=0.6: 0.54/0.48
+mute lstm_augL_best_seed101 (normal): f=0.0: 0.93/0.88  f=0.1: 0.92/0.87  f=0.2: 0.90/0.86  f=0.3: 0.85/0.83  f=0.4: 0.79/0.80  f=0.5: 0.57/0.62  f=0.6: 0.42/0.48
+mute lstm_augL_best_seed102 (normal): f=0.0: 0.94/0.88  f=0.1: 0.93/0.87  f=0.2: 0.92/0.87  f=0.3: 0.88/0.84  f=0.4: 0.83/0.80  f=0.5: 0.65/0.62  f=0.6: 0.55/0.49
+mute drop_seed3 (dropout): f=0.0: 0.92/0.89  f=0.1: 0.91/0.88  f=0.2: 0.92/0.88  f=0.3: 0.91/0.87  f=0.4: 0.91/0.86  f=0.5: 0.87/0.83  f=0.6: 0.87/0.80
+mute drop_seed101 (dropout): f=0.0: 0.92/0.89  f=0.1: 0.92/0.88  f=0.2: 0.92/0.88  f=0.3: 0.91/0.87  f=0.4: 0.91/0.87  f=0.5: 0.87/0.84  f=0.6: 0.86/0.82
+mute drop_seed102 (dropout): f=0.0: 0.91/0.87  f=0.1: 0.91/0.87  f=0.2: 0.91/0.87  f=0.3: 0.90/0.86  f=0.4: 0.90/0.85  f=0.5: 0.86/0.83  f=0.6: 0.85/0.81
+drive done

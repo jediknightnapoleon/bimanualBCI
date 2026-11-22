@@ -1,0 +1,951 @@
+worker 0 started (pid 35380)
+  generated 2000 augmented snippets in 9 s (17 strata)
+[drop_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.5)
+  step 500/4000  loss 0.3126  mse 0.0280  ce 0.247
+  step 1000/4000  loss 0.1497  mse 0.0142  ce 0.098
+  step 1500/4000  loss 0.2091  mse 0.0133  ce 0.159
+  step 2000/4000  loss 0.1206  mse 0.0109  ce 0.073
+  step 2500/4000  loss 0.1268  mse 0.0095  ce 0.080
+  step 3000/4000  loss 0.1048  mse 0.0098  ce 0.056
+  step 3500/4000  loss 0.1102  mse 0.0086  ce 0.063
+  step 4000/4000  loss 0.1127  mse 0.0087  ce 0.065
+[drop_seed3] val r R 0.928 L 0.912 | test r R 0.915 L 0.887 | rough 0.104 | 272 s
+[timing] done 1 this drive, 84 left, 10.6 runs/h, ETA 7.91 h (planned queue 6.627250318174008)
+[drop_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.5)
+  step 500/4000  loss 0.2751  mse 0.0230  ce 0.214
+  step 1000/4000  loss 0.2797  mse 0.0196  ce 0.223
+  step 1500/4000  loss 0.1738  mse 0.0164  ce 0.121
+  step 2000/4000  loss 0.1560  mse 0.0160  ce 0.103
+  step 2500/4000  loss 0.1220  mse 0.0118  ce 0.073
+  step 3000/4000  loss 0.1228  mse 0.0109  ce 0.073
+  step 3500/4000  loss 0.1067  mse 0.0084  ce 0.060
+  step 4000/4000  loss 0.0950  mse 0.0078  ce 0.048
+[drop_seed101] val r R 0.938 L 0.916 | test r R 0.922 L 0.886 | rough 0.097 | 249 s
+[timing] done 2 this drive, 83 left, 12.1 runs/h, ETA 6.85 h (planned queue 6.627250318174008)
+[drop_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.5)
+  step 500/4000  loss 0.2569  mse 0.0247  ce 0.194
+  step 1000/4000  loss 0.1919  mse 0.0146  ce 0.140
+  step 1500/4000  loss 0.1585  mse 0.0144  ce 0.107
+  step 2000/4000  loss 0.1247  mse 0.0108  ce 0.077
+  step 2500/4000  loss 0.1634  mse 0.0127  ce 0.113
+  step 3000/4000  loss 0.1206  mse 0.0125  ce 0.070
+  step 3500/4000  loss 0.1140  mse 0.0104  ce 0.064
+  step 4000/4000  loss 0.1274  mse 0.0117  ce 0.076
+[drop_seed102] val r R 0.923 L 0.911 | test r R 0.914 L 0.874 | rough 0.107 | 252 s
+[timing] done 3 this drive, 82 left, 12.7 runs/h, ETA 6.48 h (planned queue 6.627250318174008)
+[rand8A0] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.8405  mse 0.0673  ce 0.749
+  step 1000/4000  loss 0.6603  mse 0.0496  ce 0.583
+  step 1500/4000  loss 0.6460  mse 0.0477  ce 0.566
+  step 2000/4000  loss 0.4770  mse 0.0389  ce 0.399
+  step 2500/4000  loss 0.4702  mse 0.0418  ce 0.383
+  step 3000/4000  loss 0.5187  mse 0.0526  ce 0.416
+  step 3500/4000  loss 0.3350  mse 0.0436  ce 0.236
+  step 4000/4000  loss 0.3033  mse 0.0388  ce 0.205
+[rand8A0] val r R 0.133 L 0.235 | test r R 0.202 L 0.110 | rough 0.181 | 245 s
+[timing] done 4 this drive, 81 left, 13.0 runs/h, ETA 6.22 h (planned queue 6.627250318174008)
+[rand8A1] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.9251  mse 0.0652  ce 0.835
+  step 1000/4000  loss 0.5958  mse 0.0433  ce 0.525
+  step 1500/4000  loss 0.6202  mse 0.0429  ce 0.547
+  step 2000/4000  loss 0.4614  mse 0.0348  ce 0.391
+  step 2500/4000  loss 0.3925  mse 0.0418  ce 0.309
+  step 3000/4000  loss 0.4289  mse 0.0382  ce 0.344
+  step 3500/4000  loss 0.3504  mse 0.0316  ce 0.267
+  step 4000/4000  loss 0.3117  mse 0.0273  ce 0.229
+[rand8A1] val r R 0.481 L 0.297 | test r R 0.439 L 0.304 | rough 0.146 | 230 s
+[timing] done 5 this drive, 80 left, 13.4 runs/h, ETA 5.96 h (planned queue 6.627250318174008)
+[rand8A2] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.7513  mse 0.0635  ce 0.662
+  step 1000/4000  loss 0.5207  mse 0.0416  ce 0.449
+  step 1500/4000  loss 0.4794  mse 0.0385  ce 0.408
+  step 2000/4000  loss 0.4528  mse 0.0350  ce 0.380
+  step 2500/4000  loss 0.4190  mse 0.0369  ce 0.340
+  step 3000/4000  loss 0.4214  mse 0.0369  ce 0.338
+  step 3500/4000  loss 0.3329  mse 0.0294  ce 0.253
+  step 4000/4000  loss 0.2846  mse 0.0285  ce 0.202
+[rand8A2] val r R 0.641 L 0.396 | test r R 0.610 L 0.479 | rough 0.115 | 279 s
+[timing] done 6 this drive, 79 left, 13.2 runs/h, ETA 5.98 h (planned queue 6.627250318174008)
+[rand8B0] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 1.0230  mse 0.0709  ce 0.928
+  step 1000/4000  loss 0.6177  mse 0.0503  ce 0.539
+  step 1500/4000  loss 0.5953  mse 0.0457  ce 0.516
+  step 2000/4000  loss 0.5002  mse 0.0376  ce 0.424
+  step 2500/4000  loss 0.4131  mse 0.0436  ce 0.325
+  step 3000/4000  loss 0.4468  mse 0.0463  ce 0.351
+  step 3500/4000  loss 0.3712  mse 0.0322  ce 0.284
+  step 4000/4000  loss 0.3780  mse 0.0384  ce 0.281
+[rand8B0] val r R 0.376 L 0.200 | test r R 0.334 L 0.145 | rough 0.185 | 363 s
+[timing] done 7 this drive, 78 left, 12.6 runs/h, ETA 6.21 h (planned queue 6.627250318174008)
+[rand8B1] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.8291  mse 0.0618  ce 0.741
+  step 1000/4000  loss 0.5693  mse 0.0462  ce 0.493
+  step 1500/4000  loss 0.5813  mse 0.0453  ce 0.502
+  step 2000/4000  loss 0.4849  mse 0.0344  ce 0.412
+  step 2500/4000  loss 0.4045  mse 0.0380  ce 0.323
+  step 3000/4000  loss 0.4114  mse 0.0380  ce 0.325
+  step 3500/4000  loss 0.3703  mse 0.0282  ce 0.289
+  step 4000/4000  loss 0.3408  mse 0.0231  ce 0.262
+[rand8B1] val r R 0.592 L 0.368 | test r R 0.586 L 0.351 | rough 0.130 | 423 s
+[timing] done 8 this drive, 77 left, 11.8 runs/h, ETA 6.51 h (planned queue 6.627250318174008)
+[rand8B2] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.8354  mse 0.0600  ce 0.750
+  step 1000/4000  loss 0.6158  mse 0.0477  ce 0.539
+  step 1500/4000  loss 0.5608  mse 0.0444  ce 0.483
+  step 2000/4000  loss 0.4149  mse 0.0333  ce 0.343
+  step 2500/4000  loss 0.4711  mse 0.0411  ce 0.387
+  step 3000/4000  loss 0.4214  mse 0.0405  ce 0.333
+  step 3500/4000  loss 0.2939  mse 0.0279  ce 0.214
+  step 4000/4000  loss 0.3657  mse 0.0264  ce 0.284
+[rand8B2] val r R 0.474 L 0.360 | test r R 0.418 L 0.363 | rough 0.146 | 214 s
+[timing] done 9 this drive, 76 left, 12.2 runs/h, ETA 6.23 h (planned queue 6.627250318174008)
+[rand16A0] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.7367  mse 0.0558  ce 0.653
+  step 1000/4000  loss 0.4321  mse 0.0358  ce 0.365
+  step 1500/4000  loss 0.5272  mse 0.0398  ce 0.451
+  step 2000/4000  loss 0.3461  mse 0.0241  ce 0.281
+  step 2500/4000  loss 0.3077  mse 0.0292  ce 0.232
+  step 3000/4000  loss 0.3506  mse 0.0312  ce 0.269
+  step 3500/4000  loss 0.2221  mse 0.0187  ce 0.149
+  step 4000/4000  loss 0.3094  mse 0.0235  ce 0.229
+[rand16A0] val r R 0.603 L 0.463 | test r R 0.573 L 0.439 | rough 0.169 | 214 s
+[timing] done 10 this drive, 75 left, 12.5 runs/h, ETA 5.99 h (planned queue 6.627250318174008)
+[rand16A1] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.6686  mse 0.0517  ce 0.589
+  step 1000/4000  loss 0.4248  mse 0.0345  ce 0.360
+  step 1500/4000  loss 0.5157  mse 0.0349  ce 0.447
+  step 2000/4000  loss 0.3621  mse 0.0241  ce 0.301
+  step 2500/4000  loss 0.2918  mse 0.0355  ce 0.216
+  step 3000/4000  loss 0.3086  mse 0.0281  ce 0.237
+  step 3500/4000  loss 0.2233  mse 0.0205  ce 0.156
+  step 4000/4000  loss 0.2027  mse 0.0154  ce 0.138
+[rand16A1] val r R 0.677 L 0.618 | test r R 0.666 L 0.649 | rough 0.107 | 217 s
+[timing] done 11 this drive, 74 left, 12.8 runs/h, ETA 5.79 h (planned queue 6.627250318174008)
+[rand16A2] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.6951  mse 0.0515  ce 0.616
+  step 1000/4000  loss 0.4014  mse 0.0307  ce 0.340
+  step 1500/4000  loss 0.4884  mse 0.0344  ce 0.420
+  step 2000/4000  loss 0.3498  mse 0.0243  ce 0.288
+  step 2500/4000  loss 0.3217  mse 0.0255  ce 0.254
+  step 3000/4000  loss 0.2985  mse 0.0273  ce 0.226
+  step 3500/4000  loss 0.2488  mse 0.0278  ce 0.172
+  step 4000/4000  loss 0.2276  mse 0.0213  ce 0.154
+[rand16A2] val r R 0.697 L 0.707 | test r R 0.669 L 0.618 | rough 0.116 | 216 s
+[timing] done 12 this drive, 73 left, 13.0 runs/h, ETA 5.61 h (planned queue 6.627250318174008)
+[rand16B0] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.6157  mse 0.0508  ce 0.536
+  step 1000/4000  loss 0.4020  mse 0.0379  ce 0.332
+  step 1500/4000  loss 0.3568  mse 0.0265  ce 0.295
+  step 2000/4000  loss 0.3459  mse 0.0194  ce 0.288
+  step 2500/4000  loss 0.3027  mse 0.0213  ce 0.240
+  step 3000/4000  loss 0.2548  mse 0.0184  ce 0.192
+  step 3500/4000  loss 0.2326  mse 0.0188  ce 0.166
+  step 4000/4000  loss 0.2176  mse 0.0132  ce 0.155
+[rand16B0] val r R 0.815 L 0.753 | test r R 0.821 L 0.728 | rough 0.103 | 217 s
+[timing] done 13 this drive, 72 left, 13.2 runs/h, ETA 5.45 h (planned queue 6.627250318174008)
+[rand16B1] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.6865  mse 0.0452  ce 0.612
+  step 1000/4000  loss 0.3626  mse 0.0293  ce 0.300
+  step 1500/4000  loss 0.3484  mse 0.0246  ce 0.287
+  step 2000/4000  loss 0.3025  mse 0.0174  ce 0.246
+  step 2500/4000  loss 0.2899  mse 0.0176  ce 0.230
+  step 3000/4000  loss 0.2714  mse 0.0202  ce 0.206
+  step 3500/4000  loss 0.2156  mse 0.0176  ce 0.151
+  step 4000/4000  loss 0.2774  mse 0.0171  ce 0.211
+[rand16B1] val r R 0.886 L 0.843 | test r R 0.871 L 0.843 | rough 0.087 | 217 s
+[timing] done 14 this drive, 71 left, 13.4 runs/h, ETA 5.31 h (planned queue 6.627250318174008)
+[rand16B2] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.8119  mse 0.0532  ce 0.730
+  step 1000/4000  loss 0.4566  mse 0.0384  ce 0.386
+  step 1500/4000  loss 0.4794  mse 0.0381  ce 0.405
+  step 2000/4000  loss 0.3507  mse 0.0224  ce 0.288
+  step 2500/4000  loss 0.3260  mse 0.0325  ce 0.248
+  step 3000/4000  loss 0.3363  mse 0.0267  ce 0.260
+  step 3500/4000  loss 0.2511  mse 0.0192  ce 0.179
+  step 4000/4000  loss 0.3118  mse 0.0218  ce 0.234
+[rand16B2] val r R 0.760 L 0.385 | test r R 0.657 L 0.315 | rough 0.174 | 216 s
+[timing] done 15 this drive, 70 left, 13.5 runs/h, ETA 5.17 h (planned queue 6.627250318174008)
+[rand32A0] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.5884  mse 0.0490  ce 0.510
+  step 1000/4000  loss 0.3649  mse 0.0347  ce 0.298
+  step 1500/4000  loss 0.3585  mse 0.0286  ce 0.294
+  step 2000/4000  loss 0.2590  mse 0.0211  ce 0.199
+  step 2500/4000  loss 0.2447  mse 0.0209  ce 0.181
+  step 3000/4000  loss 0.1932  mse 0.0200  ce 0.127
+  step 3500/4000  loss 0.1658  mse 0.0158  ce 0.101
+  step 4000/4000  loss 0.1977  mse 0.0161  ce 0.131
+[rand32A0] val r R 0.748 L 0.556 | test r R 0.737 L 0.534 | rough 0.136 | 218 s
+[timing] done 16 this drive, 69 left, 13.7 runs/h, ETA 5.05 h (planned queue 6.627250318174008)
+[rand32A1] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.6244  mse 0.0472  ce 0.547
+  step 1000/4000  loss 0.3141  mse 0.0266  ce 0.253
+  step 1500/4000  loss 0.3087  mse 0.0233  ce 0.248
+  step 2000/4000  loss 0.2662  mse 0.0170  ce 0.208
+  step 2500/4000  loss 0.2156  mse 0.0177  ce 0.154
+  step 3000/4000  loss 0.2104  mse 0.0175  ce 0.145
+  step 3500/4000  loss 0.1731  mse 0.0152  ce 0.108
+  step 4000/4000  loss 0.2162  mse 0.0207  ce 0.142
+[rand32A1] val r R 0.763 L 0.658 | test r R 0.685 L 0.647 | rough 0.136 | 217 s
+[timing] done 17 this drive, 68 left, 13.8 runs/h, ETA 4.93 h (planned queue 6.627250318174008)
+[rand32A2] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.6211  mse 0.0410  ce 0.550
+  step 1000/4000  loss 0.2503  mse 0.0231  ce 0.196
+  step 1500/4000  loss 0.2768  mse 0.0245  ce 0.218
+  step 2000/4000  loss 0.2637  mse 0.0197  ce 0.207
+  step 2500/4000  loss 0.2358  mse 0.0196  ce 0.176
+  step 3000/4000  loss 0.2194  mse 0.0204  ce 0.157
+  step 3500/4000  loss 0.1833  mse 0.0178  ce 0.120
+  step 4000/4000  loss 0.1649  mse 0.0124  ce 0.105
+[rand32A2] val r R 0.838 L 0.691 | test r R 0.757 L 0.599 | rough 0.108 | 218 s
+[timing] done 18 this drive, 67 left, 13.9 runs/h, ETA 4.82 h (planned queue 6.627250318174008)
+[rand32B0] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.6008  mse 0.0407  ce 0.530
+  step 1000/4000  loss 0.3215  mse 0.0243  ce 0.264
+  step 1500/4000  loss 0.2773  mse 0.0227  ce 0.219
+  step 2000/4000  loss 0.2272  mse 0.0180  ce 0.170
+  step 2500/4000  loss 0.2043  mse 0.0171  ce 0.146
+  step 3000/4000  loss 0.2198  mse 0.0195  ce 0.157
+  step 3500/4000  loss 0.1919  mse 0.0152  ce 0.131
+  step 4000/4000  loss 0.1763  mse 0.0121  ce 0.116
+[rand32B0] val r R 0.909 L 0.664 | test r R 0.869 L 0.680 | rough 0.107 | 217 s
+[timing] done 19 this drive, 66 left, 14.0 runs/h, ETA 4.72 h (planned queue 6.627250318174008)
+[rand32B1] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.4284  mse 0.0298  ce 0.367
+  step 1000/4000  loss 0.1991  mse 0.0131  ce 0.152
+  step 1500/4000  loss 0.2184  mse 0.0173  ce 0.166
+  step 2000/4000  loss 0.1606  mse 0.0129  ce 0.111
+  step 2500/4000  loss 0.1760  mse 0.0099  ce 0.128
+  step 3000/4000  loss 0.1690  mse 0.0130  ce 0.116
+  step 3500/4000  loss 0.1366  mse 0.0103  ce 0.085
+  step 4000/4000  loss 0.1544  mse 0.0132  ce 0.099
+[rand32B1] val r R 0.911 L 0.868 | test r R 0.884 L 0.794 | rough 0.099 | 218 s
+[timing] done 20 this drive, 65 left, 14.1 runs/h, ETA 4.61 h (planned queue 6.627250318174008)
+[rand32B2] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.5687  mse 0.0411  ce 0.497
+  step 1000/4000  loss 0.3303  mse 0.0267  ce 0.269
+  step 1500/4000  loss 0.3173  mse 0.0225  ce 0.257
+  step 2000/4000  loss 0.2299  mse 0.0174  ce 0.172
+  step 2500/4000  loss 0.2321  mse 0.0218  ce 0.166
+  step 3000/4000  loss 0.2224  mse 0.0174  ce 0.158
+  step 3500/4000  loss 0.1527  mse 0.0129  ce 0.091
+  step 4000/4000  loss 0.2416  mse 0.0144  ce 0.176
+[rand32B2] val r R 0.872 L 0.691 | test r R 0.799 L 0.734 | rough 0.112 | 221 s
+[timing] done 21 this drive, 64 left, 14.2 runs/h, ETA 4.52 h (planned queue 6.627250318174008)
+[rand64A0] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3340  mse 0.0256  ce 0.277
+  step 1000/4000  loss 0.1768  mse 0.0135  ce 0.130
+  step 1500/4000  loss 0.1812  mse 0.0144  ce 0.132
+  step 2000/4000  loss 0.1403  mse 0.0125  ce 0.092
+  step 2500/4000  loss 0.1634  mse 0.0122  ce 0.114
+  step 3000/4000  loss 0.1260  mse 0.0111  ce 0.076
+  step 3500/4000  loss 0.1069  mse 0.0093  ce 0.058
+  step 4000/4000  loss 0.1381  mse 0.0133  ce 0.085
+[rand64A0] val r R 0.887 L 0.805 | test r R 0.873 L 0.742 | rough 0.103 | 224 s
+[timing] done 22 this drive, 63 left, 14.2 runs/h, ETA 4.43 h (planned queue 6.627250318174008)
+[rand64A1] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.4404  mse 0.0329  ce 0.376
+  step 1000/4000  loss 0.1853  mse 0.0135  ce 0.139
+  step 1500/4000  loss 0.1715  mse 0.0123  ce 0.126
+  step 2000/4000  loss 0.1346  mse 0.0122  ce 0.088
+  step 2500/4000  loss 0.1313  mse 0.0110  ce 0.084
+  step 3000/4000  loss 0.1148  mse 0.0126  ce 0.065
+  step 3500/4000  loss 0.1074  mse 0.0092  ce 0.060
+  step 4000/4000  loss 0.0928  mse 0.0083  ce 0.046
+[rand64A1] val r R 0.927 L 0.867 | test r R 0.870 L 0.807 | rough 0.093 | 223 s
+[timing] done 23 this drive, 62 left, 14.3 runs/h, ETA 4.34 h (planned queue 6.627250318174008)
+[rand64A2] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3700  mse 0.0298  ce 0.308
+  step 1000/4000  loss 0.1859  mse 0.0133  ce 0.140
+  step 1500/4000  loss 0.2150  mse 0.0144  ce 0.167
+  step 2000/4000  loss 0.1466  mse 0.0131  ce 0.099
+  step 2500/4000  loss 0.1411  mse 0.0111  ce 0.093
+  step 3000/4000  loss 0.1186  mse 0.0140  ce 0.066
+  step 3500/4000  loss 0.1138  mse 0.0096  ce 0.064
+  step 4000/4000  loss 0.1022  mse 0.0103  ce 0.051
+[rand64A2] val r R 0.878 L 0.749 | test r R 0.856 L 0.762 | rough 0.108 | 224 s
+[timing] done 24 this drive, 61 left, 14.3 runs/h, ETA 4.26 h (planned queue 6.627250318174008)
+[rand64B0] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3581  mse 0.0243  ce 0.301
+  step 1000/4000  loss 0.1574  mse 0.0132  ce 0.110
+  step 1500/4000  loss 0.2029  mse 0.0143  ce 0.154
+  step 2000/4000  loss 0.1225  mse 0.0105  ce 0.077
+  step 2500/4000  loss 0.1307  mse 0.0115  ce 0.083
+  step 3000/4000  loss 0.1118  mse 0.0105  ce 0.063
+  step 3500/4000  loss 0.1022  mse 0.0080  ce 0.055
+  step 4000/4000  loss 0.1124  mse 0.0075  ce 0.066
+[rand64B0] val r R 0.926 L 0.894 | test r R 0.915 L 0.867 | rough 0.090 | 224 s
+[timing] done 25 this drive, 60 left, 14.4 runs/h, ETA 4.17 h (planned queue 6.627250318174008)
+[rand64B1] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3534  mse 0.0240  ce 0.297
+  step 1000/4000  loss 0.1878  mse 0.0148  ce 0.139
+  step 1500/4000  loss 0.1534  mse 0.0139  ce 0.105
+  step 2000/4000  loss 0.1438  mse 0.0097  ce 0.098
+  step 2500/4000  loss 0.1287  mse 0.0092  ce 0.084
+  step 3000/4000  loss 0.1172  mse 0.0101  ce 0.070
+  step 3500/4000  loss 0.1012  mse 0.0083  ce 0.054
+  step 4000/4000  loss 0.0985  mse 0.0078  ce 0.052
+[rand64B1] val r R 0.928 L 0.866 | test r R 0.901 L 0.850 | rough 0.092 | 224 s
+[timing] done 26 this drive, 59 left, 14.4 runs/h, ETA 4.09 h (planned queue 6.627250318174008)
+[rand64B2] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3448  mse 0.0263  ce 0.286
+  step 1000/4000  loss 0.1718  mse 0.0135  ce 0.125
+  step 1500/4000  loss 0.1834  mse 0.0120  ce 0.137
+  step 2000/4000  loss 0.1364  mse 0.0107  ce 0.090
+  step 2500/4000  loss 0.1231  mse 0.0095  ce 0.077
+  step 3000/4000  loss 0.1243  mse 0.0109  ce 0.077
+  step 3500/4000  loss 0.1104  mse 0.0089  ce 0.063
+  step 4000/4000  loss 0.1088  mse 0.0099  ce 0.060
+[rand64B2] val r R 0.920 L 0.910 | test r R 0.919 L 0.843 | rough 0.089 | 220 s
+[timing] done 27 this drive, 58 left, 14.5 runs/h, ETA 4.01 h (planned queue 6.627250318174008)
+[greedy8A_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.5950  mse 0.0490  ce 0.518
+  step 1000/4000  loss 0.3126  mse 0.0234  ce 0.259
+  step 1500/4000  loss 0.3976  mse 0.0247  ce 0.341
+  step 2000/4000  loss 0.3081  mse 0.0226  ce 0.251
+  step 2500/4000  loss 0.2878  mse 0.0216  ce 0.230
+  step 3000/4000  loss 0.3541  mse 0.0267  ce 0.289
+  step 3500/4000  loss 0.2287  mse 0.0165  ce 0.172
+  step 4000/4000  loss 0.2213  mse 0.0139  ce 0.165
+[greedy8A_seed3] val r R 0.872 L 0.826 | test r R 0.800 L 0.809 | rough 0.076 | 214 s
+[timing] done 28 this drive, 57 left, 14.5 runs/h, ETA 3.92 h (planned queue 6.627250318174008)
+[greedy8A_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.5532  mse 0.0433  ce 0.482
+  step 1000/4000  loss 0.4659  mse 0.0310  ce 0.404
+  step 1500/4000  loss 0.4749  mse 0.0332  ce 0.409
+  step 2000/4000  loss 0.3683  mse 0.0285  ce 0.305
+  step 2500/4000  loss 0.2927  mse 0.0219  ce 0.234
+  step 3000/4000  loss 0.2402  mse 0.0162  ce 0.185
+  step 3500/4000  loss 0.2110  mse 0.0162  ce 0.154
+  step 4000/4000  loss 0.2005  mse 0.0124  ce 0.146
+[greedy8A_seed101] val r R 0.889 L 0.800 | test r R 0.801 L 0.796 | rough 0.080 | 215 s
+[timing] done 29 this drive, 56 left, 14.6 runs/h, ETA 3.84 h (planned queue 6.627250318174008)
+[greedy8B_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.5219  mse 0.0395  ce 0.454
+  step 1000/4000  loss 0.3688  mse 0.0249  ce 0.312
+  step 1500/4000  loss 0.3514  mse 0.0213  ce 0.296
+  step 2000/4000  loss 0.3144  mse 0.0163  ce 0.262
+  step 2500/4000  loss 0.2876  mse 0.0162  ce 0.234
+  step 3000/4000  loss 0.2491  mse 0.0171  ce 0.192
+  step 3500/4000  loss 0.2435  mse 0.0164  ce 0.186
+  step 4000/4000  loss 0.2342  mse 0.0118  ce 0.179
+[greedy8B_seed3] val r R 0.929 L 0.848 | test r R 0.895 L 0.845 | rough 0.071 | 215 s
+[timing] done 30 this drive, 55 left, 14.6 runs/h, ETA 3.76 h (planned queue 6.627250318174008)
+[greedy8B_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.6080  mse 0.0414  ce 0.538
+  step 1000/4000  loss 0.4685  mse 0.0387  ce 0.398
+  step 1500/4000  loss 0.4015  mse 0.0296  ce 0.338
+  step 2000/4000  loss 0.3214  mse 0.0212  ce 0.264
+  step 2500/4000  loss 0.2982  mse 0.0167  ce 0.243
+  step 3000/4000  loss 0.2322  mse 0.0147  ce 0.178
+  step 3500/4000  loss 0.2276  mse 0.0153  ce 0.170
+  step 4000/4000  loss 0.2400  mse 0.0139  ce 0.183
+[greedy8B_seed101] val r R 0.908 L 0.857 | test r R 0.890 L 0.847 | rough 0.068 | 214 s
+[timing] done 31 this drive, 54 left, 14.7 runs/h, ETA 3.68 h (planned queue 6.627250318174008)
+[greedy16A_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3874  mse 0.0299  ce 0.328
+  step 1000/4000  loss 0.2270  mse 0.0152  ce 0.181
+  step 1500/4000  loss 0.2538  mse 0.0174  ce 0.204
+  step 2000/4000  loss 0.2061  mse 0.0146  ce 0.158
+  step 2500/4000  loss 0.2450  mse 0.0182  ce 0.192
+  step 3000/4000  loss 0.2099  mse 0.0180  ce 0.156
+  step 3500/4000  loss 0.1890  mse 0.0154  ce 0.136
+  step 4000/4000  loss 0.1528  mse 0.0104  ce 0.103
+[greedy16A_seed3] val r R 0.895 L 0.861 | test r R 0.872 L 0.809 | rough 0.080 | 214 s
+[timing] done 32 this drive, 53 left, 14.7 runs/h, ETA 3.60 h (planned queue 6.627250318174008)
+[greedy16A_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.4192  mse 0.0316  ce 0.358
+  step 1000/4000  loss 0.3017  mse 0.0225  ce 0.248
+  step 1500/4000  loss 0.3217  mse 0.0245  ce 0.266
+  step 2000/4000  loss 0.2486  mse 0.0206  ce 0.195
+  step 2500/4000  loss 0.2253  mse 0.0142  ce 0.177
+  step 3000/4000  loss 0.1763  mse 0.0129  ce 0.127
+  step 3500/4000  loss 0.1378  mse 0.0118  ce 0.088
+  step 4000/4000  loss 0.1440  mse 0.0093  ce 0.095
+[greedy16A_seed101] val r R 0.888 L 0.853 | test r R 0.878 L 0.826 | rough 0.077 | 213 s
+[timing] done 33 this drive, 52 left, 14.8 runs/h, ETA 3.52 h (planned queue 6.627250318174008)
+[greedy16B_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3839  mse 0.0290  ce 0.325
+  step 1000/4000  loss 0.2510  mse 0.0172  ce 0.202
+  step 1500/4000  loss 0.2561  mse 0.0156  ce 0.208
+  step 2000/4000  loss 0.2024  mse 0.0154  ce 0.153
+  step 2500/4000  loss 0.2157  mse 0.0141  ce 0.166
+  step 3000/4000  loss 0.1949  mse 0.0142  ce 0.144
+  step 3500/4000  loss 0.1504  mse 0.0095  ce 0.103
+  step 4000/4000  loss 0.1757  mse 0.0109  ce 0.126
+[greedy16B_seed3] val r R 0.920 L 0.892 | test r R 0.922 L 0.865 | rough 0.071 | 213 s
+[timing] done 34 this drive, 51 left, 14.8 runs/h, ETA 3.44 h (planned queue 6.627250318174008)
+[greedy16B_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3686  mse 0.0260  ce 0.312
+  step 1000/4000  loss 0.3655  mse 0.0230  ce 0.310
+  step 1500/4000  loss 0.2760  mse 0.0251  ce 0.218
+  step 2000/4000  loss 0.2626  mse 0.0170  ce 0.212
+  step 2500/4000  loss 0.1901  mse 0.0131  ce 0.142
+  step 3000/4000  loss 0.1630  mse 0.0126  ce 0.114
+  step 3500/4000  loss 0.1613  mse 0.0107  ce 0.113
+  step 4000/4000  loss 0.1455  mse 0.0087  ce 0.098
+[greedy16B_seed101] val r R 0.919 L 0.896 | test r R 0.911 L 0.882 | rough 0.068 | 219 s
+[timing] done 35 this drive, 50 left, 14.8 runs/h, ETA 3.37 h (planned queue 6.627250318174008)
+[greedy32A_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3567  mse 0.0293  ce 0.297
+  step 1000/4000  loss 0.1958  mse 0.0147  ce 0.150
+  step 1500/4000  loss 0.2393  mse 0.0155  ce 0.192
+  step 2000/4000  loss 0.1602  mse 0.0136  ce 0.114
+  step 2500/4000  loss 0.1958  mse 0.0161  ce 0.145
+  step 3000/4000  loss 0.1749  mse 0.0192  ce 0.120
+  step 3500/4000  loss 0.1318  mse 0.0128  ce 0.081
+  step 4000/4000  loss 0.1220  mse 0.0084  ce 0.074
+[greedy32A_seed3] val r R 0.909 L 0.870 | test r R 0.880 L 0.831 | rough 0.092 | 218 s
+[timing] done 36 this drive, 49 left, 14.9 runs/h, ETA 3.29 h (planned queue 6.627250318174008)
+[greedy32B_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3871  mse 0.0296  ce 0.327
+  step 1000/4000  loss 0.1889  mse 0.0147  ce 0.143
+  step 1500/4000  loss 0.1917  mse 0.0128  ce 0.147
+  step 2000/4000  loss 0.1576  mse 0.0116  ce 0.113
+  step 2500/4000  loss 0.1528  mse 0.0110  ce 0.108
+  step 3000/4000  loss 0.1401  mse 0.0115  ce 0.094
+  step 3500/4000  loss 0.1258  mse 0.0081  ce 0.082
+  step 4000/4000  loss 0.1437  mse 0.0093  ce 0.097
+[greedy32B_seed3] val r R 0.924 L 0.908 | test r R 0.931 L 0.883 | rough 0.076 | 218 s
+[timing] done 37 this drive, 48 left, 14.9 runs/h, ETA 3.22 h (planned queue 6.627250318174008)
+[greedy64A_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3405  mse 0.0291  ce 0.279
+  step 1000/4000  loss 0.1857  mse 0.0114  ce 0.142
+  step 1500/4000  loss 0.1851  mse 0.0122  ce 0.140
+  step 2000/4000  loss 0.1230  mse 0.0113  ce 0.077
+  step 2500/4000  loss 0.1457  mse 0.0104  ce 0.099
+  step 3000/4000  loss 0.1249  mse 0.0136  ce 0.075
+  step 3500/4000  loss 0.1015  mse 0.0089  ce 0.054
+  step 4000/4000  loss 0.0961  mse 0.0108  ce 0.047
+[greedy64A_seed3] val r R 0.913 L 0.863 | test r R 0.888 L 0.819 | rough 0.095 | 220 s
+[timing] done 38 this drive, 47 left, 14.9 runs/h, ETA 3.15 h (planned queue 6.627250318174008)
+[greedy64B_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.2864  mse 0.0194  ce 0.235
+  step 1000/4000  loss 0.1639  mse 0.0128  ce 0.118
+  step 1500/4000  loss 0.1609  mse 0.0112  ce 0.117
+  step 2000/4000  loss 0.1140  mse 0.0092  ce 0.071
+  step 2500/4000  loss 0.1363  mse 0.0106  ce 0.091
+  step 3000/4000  loss 0.1041  mse 0.0103  ce 0.058
+  step 3500/4000  loss 0.0908  mse 0.0071  ce 0.048
+  step 4000/4000  loss 0.0921  mse 0.0076  ce 0.048
+[greedy64B_seed3] val r R 0.933 L 0.906 | test r R 0.931 L 0.890 | rough 0.083 | 220 s
+[timing] done 39 this drive, 46 left, 15.0 runs/h, ETA 3.08 h (planned queue 6.627250318174008)
+  generated 2000 augmented snippets in 3 s (13 strata)
+[data1_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.0872  mse 0.0080  ce 0.044
+  step 1000/4000  loss 0.0701  mse 0.0048  ce 0.035
+  step 1500/4000  loss 0.0477  mse 0.0046  ce 0.017
+  step 2000/4000  loss 0.0458  mse 0.0048  ce 0.018
+  step 2500/4000  loss 0.0404  mse 0.0047  ce 0.016
+  step 3000/4000  loss 0.0344  mse 0.0032  ce 0.012
+  step 3500/4000  loss 0.0319  mse 0.0025  ce 0.010
+  step 4000/4000  loss 0.0266  mse 0.0031  ce 0.007
+[data1_seed3] val r R 0.892 L 0.866 | test r R 0.882 L 0.829 | rough 0.094 | 230 s
+[timing] done 40 this drive, 45 left, 15.0 runs/h, ETA 3.01 h (planned queue 6.627250318174008)
+[data1_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.0955  mse 0.0080  ce 0.052
+  step 1000/4000  loss 0.0741  mse 0.0069  ce 0.037
+  step 1500/4000  loss 0.0505  mse 0.0062  ce 0.019
+  step 2000/4000  loss 0.0439  mse 0.0039  ce 0.018
+  step 2500/4000  loss 0.0334  mse 0.0030  ce 0.011
+  step 3000/4000  loss 0.0554  mse 0.0071  ce 0.028
+  step 3500/4000  loss 0.0354  mse 0.0033  ce 0.013
+  step 4000/4000  loss 0.0272  mse 0.0024  ce 0.008
+[data1_seed101] val r R 0.906 L 0.866 | test r R 0.886 L 0.846 | rough 0.093 | 232 s
+[timing] done 41 this drive, 44 left, 15.0 runs/h, ETA 2.94 h (planned queue 6.627250318174008)
+  generated 2000 augmented snippets in 3 s (14 strata)
+[data2_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.1164  mse 0.0080  ce 0.073
+  step 1000/4000  loss 0.0757  mse 0.0060  ce 0.038
+  step 1500/4000  loss 0.0627  mse 0.0060  ce 0.028
+  step 2000/4000  loss 0.0626  mse 0.0045  ce 0.031
+  step 2500/4000  loss 0.0439  mse 0.0037  ce 0.015
+  step 3000/4000  loss 0.0392  mse 0.0035  ce 0.012
+  step 3500/4000  loss 0.0399  mse 0.0038  ce 0.013
+  step 4000/4000  loss 0.0493  mse 0.0063  ce 0.018
+[data2_seed3] val r R 0.929 L 0.880 | test r R 0.916 L 0.847 | rough 0.099 | 229 s
+[timing] done 42 this drive, 43 left, 15.0 runs/h, ETA 2.87 h (planned queue 6.627250318174008)
+[data2_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.1442  mse 0.0122  ce 0.096
+  step 1000/4000  loss 0.0768  mse 0.0067  ce 0.038
+  step 1500/4000  loss 0.0704  mse 0.0072  ce 0.034
+  step 2000/4000  loss 0.0567  mse 0.0055  ce 0.024
+  step 2500/4000  loss 0.0487  mse 0.0062  ce 0.018
+  step 3000/4000  loss 0.0674  mse 0.0086  ce 0.033
+  step 3500/4000  loss 0.0413  mse 0.0040  ce 0.011
+  step 4000/4000  loss 0.0366  mse 0.0034  ce 0.011
+[data2_seed101] val r R 0.930 L 0.904 | test r R 0.915 L 0.870 | rough 0.082 | 227 s
+[timing] done 43 this drive, 42 left, 15.0 runs/h, ETA 2.81 h (planned queue 6.627250318174008)
+  generated 2000 augmented snippets in 3 s (15 strata)
+[data3_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.1403  mse 0.0138  ce 0.091
+  step 1000/4000  loss 0.0819  mse 0.0078  ce 0.041
+  step 1500/4000  loss 0.0668  mse 0.0063  ce 0.031
+  step 2000/4000  loss 0.0626  mse 0.0073  ce 0.026
+  step 2500/4000  loss 0.0536  mse 0.0043  ce 0.021
+  step 3000/4000  loss 0.0528  mse 0.0043  ce 0.022
+  step 3500/4000  loss 0.0421  mse 0.0037  ce 0.012
+  step 4000/4000  loss 0.0480  mse 0.0072  ce 0.015
+[data3_seed3] val r R 0.945 L 0.909 | test r R 0.928 L 0.892 | rough 0.082 | 227 s
+[timing] done 44 this drive, 41 left, 15.0 runs/h, ETA 2.74 h (planned queue 6.627250318174008)
+[data3_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.1580  mse 0.0157  ce 0.106
+  step 1000/4000  loss 0.0940  mse 0.0079  ce 0.052
+  step 1500/4000  loss 0.0795  mse 0.0080  ce 0.041
+  step 2000/4000  loss 0.0745  mse 0.0070  ce 0.039
+  step 2500/4000  loss 0.0517  mse 0.0049  ce 0.018
+  step 3000/4000  loss 0.0504  mse 0.0050  ce 0.019
+  step 3500/4000  loss 0.0472  mse 0.0054  ce 0.016
+  step 4000/4000  loss 0.0485  mse 0.0058  ce 0.017
+[data3_seed101] val r R 0.935 L 0.918 | test r R 0.909 L 0.890 | rough 0.091 | 227 s
+[timing] done 45 this drive, 40 left, 15.0 runs/h, ETA 2.67 h (planned queue 6.627250318174008)
+  generated 2000 augmented snippets in 3 s (16 strata)
+[data4_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.1835  mse 0.0127  ce 0.136
+  step 1000/4000  loss 0.1017  mse 0.0086  ce 0.060
+  step 1500/4000  loss 0.0836  mse 0.0088  ce 0.044
+  step 2000/4000  loss 0.0618  mse 0.0058  ce 0.027
+  step 2500/4000  loss 0.0594  mse 0.0052  ce 0.027
+  step 3000/4000  loss 0.0520  mse 0.0057  ce 0.019
+  step 3500/4000  loss 0.0450  mse 0.0050  ce 0.014
+  step 4000/4000  loss 0.0481  mse 0.0052  ce 0.016
+[data4_seed3] val r R 0.951 L 0.922 | test r R 0.930 L 0.897 | rough 0.084 | 227 s
+[timing] done 46 this drive, 39 left, 15.0 runs/h, ETA 2.60 h (planned queue 6.627250318174008)
+[data4_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.1615  mse 0.0117  ce 0.114
+  step 1000/4000  loss 0.0983  mse 0.0080  ce 0.058
+  step 1500/4000  loss 0.0881  mse 0.0096  ce 0.047
+  step 2000/4000  loss 0.0811  mse 0.0078  ce 0.044
+  step 2500/4000  loss 0.0555  mse 0.0057  ce 0.021
+  step 3000/4000  loss 0.0594  mse 0.0055  ce 0.028
+  step 3500/4000  loss 0.0484  mse 0.0047  ce 0.017
+  step 4000/4000  loss 0.0532  mse 0.0056  ce 0.022
+[data4_seed101] val r R 0.933 L 0.925 | test r R 0.925 L 0.884 | rough 0.077 | 227 s
+[timing] done 47 this drive, 38 left, 15.0 runs/h, ETA 2.54 h (planned queue 6.627250318174008)
+  generated 2000 augmented snippets in 3 s (28 strata)
+[d1750_all_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.2783  mse 0.0319  ce 0.210
+  step 1000/4000  loss 0.2559  mse 0.0322  ce 0.184
+  step 1500/4000  loss 0.2079  mse 0.0222  ce 0.143
+  step 2000/4000  loss 0.1441  mse 0.0197  ce 0.081
+  step 2500/4000  loss 0.1304  mse 0.0166  ce 0.068
+  step 3000/4000  loss 0.1199  mse 0.0164  ce 0.057
+  step 3500/4000  loss 0.1029  mse 0.0168  ce 0.040
+  step 4000/4000  loss 0.1126  mse 0.0172  ce 0.048
+[d1750_all_seed3] val r R 0.751 L 0.638 | test r R 0.752 L 0.649 | rough 0.141 | 227 s
+[timing] done 48 this drive, 37 left, 15.0 runs/h, ETA 2.47 h (planned queue 6.627250318174008)
+[d1750_all_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.2993  mse 0.0360  ce 0.227
+  step 1000/4000  loss 0.2068  mse 0.0314  ce 0.136
+  step 1500/4000  loss 0.1573  mse 0.0243  ce 0.091
+  step 2000/4000  loss 0.1519  mse 0.0192  ce 0.089
+  step 2500/4000  loss 0.1191  mse 0.0162  ce 0.058
+  step 3000/4000  loss 0.1175  mse 0.0181  ce 0.054
+  step 3500/4000  loss 0.1244  mse 0.0159  ce 0.062
+  step 4000/4000  loss 0.1717  mse 0.0150  ce 0.109
+[d1750_all_seed101] val r R 0.754 L 0.652 | test r R 0.717 L 0.582 | rough 0.152 | 228 s
+[timing] done 49 this drive, 36 left, 15.0 runs/h, ETA 2.40 h (planned queue 6.627250318174008)
+[d1750_A_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.4666  mse 0.0520  ce 0.384
+  step 1000/4000  loss 0.4101  mse 0.0575  ce 0.319
+  step 1500/4000  loss 0.3444  mse 0.0383  ce 0.267
+  step 2000/4000  loss 0.2841  mse 0.0319  ce 0.208
+  step 2500/4000  loss 0.1960  mse 0.0276  ce 0.120
+  step 3000/4000  loss 0.2151  mse 0.0299  ce 0.134
+  step 3500/4000  loss 0.1703  mse 0.0240  ce 0.093
+  step 4000/4000  loss 0.1970  mse 0.0288  ce 0.113
+[d1750_A_seed3] val r R 0.662 L 0.472 | test r R 0.662 L 0.505 | rough 0.174 | 225 s
+[timing] done 50 this drive, 35 left, 15.0 runs/h, ETA 2.33 h (planned queue 6.627250318174008)
+[d1750_A_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.5011  mse 0.0563  ce 0.414
+  step 1000/4000  loss 0.4122  mse 0.0493  ce 0.329
+  step 1500/4000  loss 0.3027  mse 0.0386  ce 0.226
+  step 2000/4000  loss 0.2462  mse 0.0367  ce 0.166
+  step 2500/4000  loss 0.1963  mse 0.0236  ce 0.125
+  step 3000/4000  loss 0.2214  mse 0.0317  ce 0.139
+  step 3500/4000  loss 0.2194  mse 0.0282  ce 0.138
+  step 4000/4000  loss 0.2043  mse 0.0268  ce 0.123
+[d1750_A_seed101] val r R 0.646 L 0.482 | test r R 0.664 L 0.539 | rough 0.166 | 222 s
+[timing] done 51 this drive, 34 left, 15.0 runs/h, ETA 2.26 h (planned queue 6.627250318174008)
+[d1750_B_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3998  mse 0.0437  ce 0.324
+  step 1000/4000  loss 0.4166  mse 0.0464  ce 0.335
+  step 1500/4000  loss 0.3120  mse 0.0337  ce 0.239
+  step 2000/4000  loss 0.2493  mse 0.0329  ce 0.174
+  step 2500/4000  loss 0.2224  mse 0.0269  ce 0.149
+  step 3000/4000  loss 0.1753  mse 0.0228  ce 0.104
+  step 3500/4000  loss 0.1825  mse 0.0210  ce 0.111
+  step 4000/4000  loss 0.1612  mse 0.0252  ce 0.085
+[d1750_B_seed3] val r R 0.743 L 0.530 | test r R 0.720 L 0.451 | rough 0.162 | 230 s
+[timing] done 52 this drive, 33 left, 15.1 runs/h, ETA 2.19 h (planned queue 6.627250318174008)
+[d1750_B_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.4373  mse 0.0448  ce 0.360
+  step 1000/4000  loss 0.3568  mse 0.0472  ce 0.275
+  step 1500/4000  loss 0.2430  mse 0.0295  ce 0.175
+  step 2000/4000  loss 0.2070  mse 0.0271  ce 0.137
+  step 2500/4000  loss 0.1852  mse 0.0219  ce 0.117
+  step 3000/4000  loss 0.1819  mse 0.0316  ce 0.102
+  step 3500/4000  loss 0.2026  mse 0.0249  ce 0.127
+  step 4000/4000  loss 0.1683  mse 0.0208  ce 0.095
+[d1750_B_seed101] val r R 0.749 L 0.549 | test r R 0.738 L 0.492 | rough 0.158 | 223 s
+[timing] done 53 this drive, 32 left, 15.1 runs/h, ETA 2.12 h (planned queue 6.627250318174008)
+  generated 2000 augmented snippets in 3 s (17 strata)
+[glasso8A_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.6869  mse 0.0489  ce 0.610
+  step 1000/4000  loss 0.3750  mse 0.0262  ce 0.318
+  step 1500/4000  loss 0.3986  mse 0.0299  ce 0.335
+  step 2000/4000  loss 0.3558  mse 0.0225  ce 0.298
+  step 2500/4000  loss 0.3277  mse 0.0268  ce 0.263
+  step 3000/4000  loss 0.3188  mse 0.0262  ce 0.252
+  step 3500/4000  loss 0.2332  mse 0.0187  ce 0.171
+  step 4000/4000  loss 0.2254  mse 0.0155  ce 0.165
+[glasso8A_seed3] val r R 0.858 L 0.709 | test r R 0.789 L 0.692 | rough 0.081 | 216 s
+[timing] done 54 this drive, 31 left, 15.1 runs/h, ETA 2.06 h (planned queue 6.627250318174008)
+[glasso8B_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.6211  mse 0.0392  ce 0.553
+  step 1000/4000  loss 0.3460  mse 0.0245  ce 0.290
+  step 1500/4000  loss 0.4095  mse 0.0247  ce 0.351
+  step 2000/4000  loss 0.3392  mse 0.0172  ce 0.286
+  step 2500/4000  loss 0.2581  mse 0.0177  ce 0.202
+  step 3000/4000  loss 0.2870  mse 0.0190  ce 0.228
+  step 3500/4000  loss 0.2405  mse 0.0150  ce 0.184
+  step 4000/4000  loss 0.2580  mse 0.0175  ce 0.197
+[glasso8B_seed3] val r R 0.876 L 0.845 | test r R 0.869 L 0.802 | rough 0.066 | 216 s
+[timing] done 55 this drive, 30 left, 15.1 runs/h, ETA 1.99 h (planned queue 6.627250318174008)
+[glasso16A_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.4316  mse 0.0314  ce 0.371
+  step 1000/4000  loss 0.2576  mse 0.0181  ce 0.209
+  step 1500/4000  loss 0.3118  mse 0.0183  ce 0.261
+  step 2000/4000  loss 0.2123  mse 0.0142  ce 0.164
+  step 2500/4000  loss 0.1996  mse 0.0156  ce 0.148
+  step 3000/4000  loss 0.2302  mse 0.0158  ce 0.177
+  step 3500/4000  loss 0.1695  mse 0.0124  ce 0.118
+  step 4000/4000  loss 0.1781  mse 0.0116  ce 0.126
+[glasso16A_seed3] val r R 0.908 L 0.840 | test r R 0.858 L 0.831 | rough 0.082 | 219 s
+[timing] done 56 this drive, 29 left, 15.1 runs/h, ETA 1.92 h (planned queue 6.627250318174008)
+[glasso16B_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.4178  mse 0.0296  ce 0.358
+  step 1000/4000  loss 0.2120  mse 0.0136  ce 0.167
+  step 1500/4000  loss 0.2572  mse 0.0134  ce 0.211
+  step 2000/4000  loss 0.1809  mse 0.0123  ce 0.135
+  step 2500/4000  loss 0.1856  mse 0.0121  ce 0.139
+  step 3000/4000  loss 0.2285  mse 0.0136  ce 0.179
+  step 3500/4000  loss 0.1707  mse 0.0114  ce 0.122
+  step 4000/4000  loss 0.1705  mse 0.0095  ce 0.123
+[glasso16B_seed3] val r R 0.935 L 0.906 | test r R 0.915 L 0.866 | rough 0.075 | 225 s
+[timing] done 57 this drive, 28 left, 15.1 runs/h, ETA 1.85 h (planned queue 6.627250318174008)
+[glasso32A_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.4403  mse 0.0336  ce 0.377
+  step 1000/4000  loss 0.1955  mse 0.0132  ce 0.152
+  step 1500/4000  loss 0.2442  mse 0.0168  ce 0.196
+  step 2000/4000  loss 0.1413  mse 0.0126  ce 0.096
+  step 2500/4000  loss 0.1761  mse 0.0158  ce 0.127
+  step 3000/4000  loss 0.1424  mse 0.0127  ce 0.095
+  step 3500/4000  loss 0.1144  mse 0.0094  ce 0.069
+  step 4000/4000  loss 0.1081  mse 0.0082  ce 0.063
+[glasso32A_seed3] val r R 0.919 L 0.868 | test r R 0.896 L 0.833 | rough 0.085 | 229 s
+[timing] done 58 this drive, 27 left, 15.1 runs/h, ETA 1.79 h (planned queue 6.627250318174008)
+[glasso32B_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3015  mse 0.0208  ce 0.250
+  step 1000/4000  loss 0.1612  mse 0.0126  ce 0.118
+  step 1500/4000  loss 0.1572  mse 0.0112  ce 0.115
+  step 2000/4000  loss 0.1530  mse 0.0116  ce 0.110
+  step 2500/4000  loss 0.1393  mse 0.0102  ce 0.096
+  step 3000/4000  loss 0.1318  mse 0.0104  ce 0.088
+  step 3500/4000  loss 0.1051  mse 0.0088  ce 0.062
+  step 4000/4000  loss 0.1319  mse 0.0074  ce 0.089
+[glasso32B_seed3] val r R 0.931 L 0.919 | test r R 0.936 L 0.889 | rough 0.075 | 233 s
+[timing] done 59 this drive, 26 left, 15.1 runs/h, ETA 1.72 h (planned queue 6.627250318174008)
+[glasso64A_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3161  mse 0.0238  ce 0.261
+  step 1000/4000  loss 0.1895  mse 0.0135  ce 0.145
+  step 1500/4000  loss 0.1784  mse 0.0117  ce 0.135
+  step 2000/4000  loss 0.1305  mse 0.0109  ce 0.087
+  step 2500/4000  loss 0.1310  mse 0.0106  ce 0.086
+  step 3000/4000  loss 0.1094  mse 0.0112  ce 0.063
+  step 3500/4000  loss 0.0977  mse 0.0088  ce 0.053
+  step 4000/4000  loss 0.0909  mse 0.0076  ce 0.047
+[glasso64A_seed3] val r R 0.910 L 0.861 | test r R 0.882 L 0.839 | rough 0.094 | 230 s
+[timing] done 60 this drive, 25 left, 15.1 runs/h, ETA 1.65 h (planned queue 6.627250318174008)
+[glasso64B_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.2649  mse 0.0179  ce 0.215
+  step 1000/4000  loss 0.1561  mse 0.0113  ce 0.113
+  step 1500/4000  loss 0.1349  mse 0.0092  ce 0.095
+  step 2000/4000  loss 0.1300  mse 0.0111  ce 0.087
+  step 2500/4000  loss 0.1042  mse 0.0079  ce 0.064
+  step 3000/4000  loss 0.1081  mse 0.0091  ce 0.066
+  step 3500/4000  loss 0.0975  mse 0.0066  ce 0.058
+  step 4000/4000  loss 0.0862  mse 0.0071  ce 0.045
+[glasso64B_seed3] val r R 0.940 L 0.925 | test r R 0.921 L 0.895 | rough 0.083 | 217 s
+[timing] done 61 this drive, 24 left, 15.1 runs/h, ETA 1.59 h (planned queue 6.627250318174008)
+[ablat8A_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.6170  mse 0.0548  ce 0.534
+  step 1000/4000  loss 0.3455  mse 0.0278  ce 0.287
+  step 1500/4000  loss 0.4343  mse 0.0276  ce 0.373
+  step 2000/4000  loss 0.3148  mse 0.0213  ce 0.257
+  step 2500/4000  loss 0.2709  mse 0.0216  ce 0.211
+  step 3000/4000  loss 0.3467  mse 0.0244  ce 0.282
+  step 3500/4000  loss 0.2385  mse 0.0166  ce 0.179
+  step 4000/4000  loss 0.2484  mse 0.0156  ce 0.188
+[ablat8A_seed3] val r R 0.858 L 0.736 | test r R 0.833 L 0.699 | rough 0.085 | 210 s
+[timing] done 62 this drive, 23 left, 15.2 runs/h, ETA 1.52 h (planned queue 6.627250318174008)
+[ablat8B_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.6332  mse 0.0506  ce 0.554
+  step 1000/4000  loss 0.3244  mse 0.0230  ce 0.270
+  step 1500/4000  loss 0.3407  mse 0.0199  ce 0.287
+  step 2000/4000  loss 0.2976  mse 0.0157  ce 0.247
+  step 2500/4000  loss 0.3061  mse 0.0188  ce 0.250
+  step 3000/4000  loss 0.2664  mse 0.0188  ce 0.208
+  step 3500/4000  loss 0.2426  mse 0.0168  ce 0.185
+  step 4000/4000  loss 0.2534  mse 0.0137  ce 0.197
+[ablat8B_seed3] val r R 0.931 L 0.843 | test r R 0.908 L 0.825 | rough 0.067 | 210 s
+[timing] done 63 this drive, 22 left, 15.2 runs/h, ETA 1.45 h (planned queue 6.627250318174008)
+[ablat16A_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3864  mse 0.0355  ce 0.322
+  step 1000/4000  loss 0.2393  mse 0.0184  ce 0.191
+  step 1500/4000  loss 0.2794  mse 0.0199  ce 0.228
+  step 2000/4000  loss 0.2304  mse 0.0163  ce 0.181
+  step 2500/4000  loss 0.1973  mse 0.0195  ce 0.143
+  step 3000/4000  loss 0.2512  mse 0.0169  ce 0.198
+  step 3500/4000  loss 0.1713  mse 0.0137  ce 0.120
+  step 4000/4000  loss 0.1657  mse 0.0100  ce 0.117
+[ablat16A_seed3] val r R 0.925 L 0.860 | test r R 0.897 L 0.764 | rough 0.083 | 210 s
+[timing] done 64 this drive, 21 left, 15.2 runs/h, ETA 1.38 h (planned queue 6.627250318174008)
+[ablat16B_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.4125  mse 0.0294  ce 0.353
+  step 1000/4000  loss 0.2279  mse 0.0169  ce 0.179
+  step 1500/4000  loss 0.2546  mse 0.0140  ce 0.208
+  step 2000/4000  loss 0.2262  mse 0.0132  ce 0.179
+  step 2500/4000  loss 0.1823  mse 0.0121  ce 0.135
+  step 3000/4000  loss 0.2080  mse 0.0139  ce 0.158
+  step 3500/4000  loss 0.1896  mse 0.0127  ce 0.140
+  step 4000/4000  loss 0.1686  mse 0.0094  ce 0.121
+[ablat16B_seed3] val r R 0.941 L 0.902 | test r R 0.923 L 0.890 | rough 0.070 | 219 s
+[timing] done 65 this drive, 20 left, 15.2 runs/h, ETA 1.31 h (planned queue 6.627250318174008)
+  generated 2000 augmented snippets in 3 s (17 strata)
+[d1867_all_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.2230  mse 0.0166  ce 0.170
+  step 1000/4000  loss 0.1208  mse 0.0120  ce 0.074
+  step 1500/4000  loss 0.0894  mse 0.0092  ce 0.047
+  step 2000/4000  loss 0.1059  mse 0.0080  ce 0.065
+  step 2500/4000  loss 0.0808  mse 0.0088  ce 0.038
+  step 3000/4000  loss 0.0752  mse 0.0077  ce 0.032
+  step 3500/4000  loss 0.0778  mse 0.0088  ce 0.033
+  step 4000/4000  loss 0.0653  mse 0.0069  ce 0.026
+[d1867_all_seed3] val r R 0.916 L 0.906 | test r R 0.907 L 0.897 | rough 0.083 | 232 s
+[timing] done 66 this drive, 19 left, 15.2 runs/h, ETA 1.25 h (planned queue 6.627250318174008)
+[d1867_A_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3100  mse 0.0227  ce 0.254
+  step 1000/4000  loss 0.2082  mse 0.0187  ce 0.156
+  step 1500/4000  loss 0.1665  mse 0.0134  ce 0.118
+  step 2000/4000  loss 0.1597  mse 0.0136  ce 0.109
+  step 2500/4000  loss 0.1479  mse 0.0130  ce 0.097
+  step 3000/4000  loss 0.1348  mse 0.0133  ce 0.081
+  step 3500/4000  loss 0.1304  mse 0.0156  ce 0.074
+  step 4000/4000  loss 0.1237  mse 0.0114  ce 0.071
+[d1867_A_seed3] val r R 0.918 L 0.854 | test r R 0.902 L 0.841 | rough 0.102 | 225 s
+[timing] done 67 this drive, 18 left, 15.2 runs/h, ETA 1.18 h (planned queue 6.627250318174008)
+[d1867_B_seed3] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3882  mse 0.0268  ce 0.327
+  step 1000/4000  loss 0.1780  mse 0.0143  ce 0.129
+  step 1500/4000  loss 0.1517  mse 0.0136  ce 0.103
+  step 2000/4000  loss 0.1687  mse 0.0128  ce 0.120
+  step 2500/4000  loss 0.1425  mse 0.0121  ce 0.092
+  step 3000/4000  loss 0.1459  mse 0.0145  ce 0.092
+  step 3500/4000  loss 0.1164  mse 0.0110  ce 0.065
+  step 4000/4000  loss 0.1056  mse 0.0092  ce 0.055
+[d1867_B_seed3] val r R 0.923 L 0.897 | test r R 0.904 L 0.864 | rough 0.095 | 224 s
+[timing] done 68 this drive, 17 left, 15.2 runs/h, ETA 1.12 h (planned queue 6.627250318174008)
+[greedy32A_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3828  mse 0.0312  ce 0.322
+  step 1000/4000  loss 0.2869  mse 0.0231  ce 0.233
+  step 1500/4000  loss 0.2702  mse 0.0222  ce 0.217
+  step 2000/4000  loss 0.2163  mse 0.0196  ce 0.164
+  step 2500/4000  loss 0.1674  mse 0.0119  ce 0.121
+  step 3000/4000  loss 0.1698  mse 0.0149  ce 0.119
+  step 3500/4000  loss 0.1274  mse 0.0113  ce 0.079
+  step 4000/4000  loss 0.1579  mse 0.0110  ce 0.107
+[greedy32A_seed101] val r R 0.904 L 0.857 | test r R 0.864 L 0.829 | rough 0.095 | 218 s
+[timing] done 69 this drive, 16 left, 15.2 runs/h, ETA 1.05 h (planned queue 6.627250318174008)
+[greedy32B_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.2889  mse 0.0235  ce 0.235
+  step 1000/4000  loss 0.2578  mse 0.0198  ce 0.206
+  step 1500/4000  loss 0.2242  mse 0.0200  ce 0.172
+  step 2000/4000  loss 0.2065  mse 0.0159  ce 0.158
+  step 2500/4000  loss 0.1650  mse 0.0105  ce 0.121
+  step 3000/4000  loss 0.1452  mse 0.0088  ce 0.101
+  step 3500/4000  loss 0.1135  mse 0.0082  ce 0.069
+  step 4000/4000  loss 0.1038  mse 0.0085  ce 0.058
+[greedy32B_seed101] val r R 0.918 L 0.917 | test r R 0.930 L 0.884 | rough 0.077 | 218 s
+[timing] done 70 this drive, 15 left, 15.3 runs/h, ETA 0.98 h (planned queue 6.627250318174008)
+[greedy64A_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3468  mse 0.0296  ce 0.285
+  step 1000/4000  loss 0.2937  mse 0.0198  ce 0.242
+  step 1500/4000  loss 0.2444  mse 0.0190  ce 0.192
+  step 2000/4000  loss 0.1702  mse 0.0178  ce 0.118
+  step 2500/4000  loss 0.1378  mse 0.0106  ce 0.091
+  step 3000/4000  loss 0.1224  mse 0.0091  ce 0.077
+  step 3500/4000  loss 0.0956  mse 0.0093  ce 0.048
+  step 4000/4000  loss 0.1276  mse 0.0084  ce 0.080
+[greedy64A_seed101] val r R 0.917 L 0.863 | test r R 0.882 L 0.837 | rough 0.097 | 219 s
+[timing] done 71 this drive, 14 left, 15.3 runs/h, ETA 0.92 h (planned queue 6.627250318174008)
+[greedy64B_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.2467  mse 0.0211  ce 0.193
+  step 1000/4000  loss 0.2189  mse 0.0158  ce 0.170
+  step 1500/4000  loss 0.1828  mse 0.0147  ce 0.135
+  step 2000/4000  loss 0.1582  mse 0.0139  ce 0.111
+  step 2500/4000  loss 0.1274  mse 0.0075  ce 0.085
+  step 3000/4000  loss 0.1020  mse 0.0071  ce 0.060
+  step 3500/4000  loss 0.1267  mse 0.0084  ce 0.082
+  step 4000/4000  loss 0.1049  mse 0.0094  ce 0.059
+[greedy64B_seed101] val r R 0.926 L 0.914 | test r R 0.921 L 0.906 | rough 0.086 | 217 s
+[timing] done 72 this drive, 13 left, 15.3 runs/h, ETA 0.85 h (planned queue 6.627250318174008)
+  generated 2000 augmented snippets in 3 s (13 strata)
+[data1_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.1081  mse 0.0082  ce 0.065
+  step 1000/4000  loss 0.0687  mse 0.0062  ce 0.033
+  step 1500/4000  loss 0.0475  mse 0.0038  ce 0.018
+  step 2000/4000  loss 0.0466  mse 0.0043  ce 0.020
+  step 2500/4000  loss 0.0429  mse 0.0036  ce 0.019
+  step 3000/4000  loss 0.0335  mse 0.0035  ce 0.011
+  step 3500/4000  loss 0.0273  mse 0.0024  ce 0.007
+  step 4000/4000  loss 0.0256  mse 0.0026  ce 0.006
+[data1_seed102] val r R 0.895 L 0.854 | test r R 0.883 L 0.844 | rough 0.098 | 231 s
+[timing] done 73 this drive, 12 left, 15.3 runs/h, ETA 0.79 h (planned queue 6.627250318174008)
+  generated 2000 augmented snippets in 4 s (14 strata)
+[data2_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.1463  mse 0.0123  ce 0.098
+  step 1000/4000  loss 0.0879  mse 0.0069  ce 0.049
+  step 1500/4000  loss 0.0544  mse 0.0061  ce 0.019
+  step 2000/4000  loss 0.0495  mse 0.0049  ce 0.018
+  step 2500/4000  loss 0.0487  mse 0.0060  ce 0.017
+  step 3000/4000  loss 0.0429  mse 0.0047  ce 0.016
+  step 3500/4000  loss 0.0376  mse 0.0035  ce 0.010
+  step 4000/4000  loss 0.0467  mse 0.0052  ce 0.016
+[data2_seed102] val r R 0.892 L 0.905 | test r R 0.896 L 0.871 | rough 0.096 | 233 s
+[timing] done 74 this drive, 11 left, 15.3 runs/h, ETA 0.72 h (planned queue 6.627250318174008)
+  generated 2000 augmented snippets in 3 s (15 strata)
+[data3_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.1424  mse 0.0109  ce 0.096
+  step 1000/4000  loss 0.0988  mse 0.0072  ce 0.059
+  step 1500/4000  loss 0.0803  mse 0.0069  ce 0.043
+  step 2000/4000  loss 0.0609  mse 0.0064  ce 0.025
+  step 2500/4000  loss 0.0723  mse 0.0065  ce 0.037
+  step 3000/4000  loss 0.0627  mse 0.0063  ce 0.029
+  step 3500/4000  loss 0.0363  mse 0.0030  ce 0.009
+  step 4000/4000  loss 0.0513  mse 0.0055  ce 0.018
+[data3_seed102] val r R 0.928 L 0.885 | test r R 0.926 L 0.818 | rough 0.099 | 232 s
+[timing] done 75 this drive, 10 left, 15.3 runs/h, ETA 0.66 h (planned queue 6.627250318174008)
+  generated 2000 augmented snippets in 3 s (16 strata)
+[data4_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.1983  mse 0.0173  ce 0.145
+  step 1000/4000  loss 0.0852  mse 0.0095  ce 0.043
+  step 1500/4000  loss 0.0891  mse 0.0093  ce 0.049
+  step 2000/4000  loss 0.0553  mse 0.0046  ce 0.023
+  step 2500/4000  loss 0.0498  mse 0.0045  ce 0.018
+  step 3000/4000  loss 0.0509  mse 0.0055  ce 0.019
+  step 3500/4000  loss 0.0478  mse 0.0038  ce 0.018
+  step 4000/4000  loss 0.0682  mse 0.0059  ce 0.036
+[data4_seed102] val r R 0.931 L 0.878 | test r R 0.919 L 0.820 | rough 0.096 | 232 s
+[timing] done 76 this drive, 9 left, 15.2 runs/h, ETA 0.59 h (planned queue 6.627250318174008)
+  generated 2000 augmented snippets in 4 s (28 strata)
+[d1750_all_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3747  mse 0.0429  ce 0.295
+  step 1000/4000  loss 0.2193  mse 0.0286  ce 0.152
+  step 1500/4000  loss 0.1907  mse 0.0222  ce 0.127
+  step 2000/4000  loss 0.1380  mse 0.0197  ce 0.074
+  step 2500/4000  loss 0.1239  mse 0.0169  ce 0.062
+  step 3000/4000  loss 0.1239  mse 0.0167  ce 0.061
+  step 3500/4000  loss 0.1006  mse 0.0125  ce 0.041
+  step 4000/4000  loss 0.0874  mse 0.0117  ce 0.029
+[d1750_all_seed102] val r R 0.756 L 0.604 | test r R 0.740 L 0.624 | rough 0.146 | 232 s
+[timing] done 77 this drive, 8 left, 15.2 runs/h, ETA 0.52 h (planned queue 6.627250318174008)
+[d1750_A_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.5447  mse 0.0591  ce 0.455
+  step 1000/4000  loss 0.3234  mse 0.0414  ce 0.248
+  step 1500/4000  loss 0.3056  mse 0.0375  ce 0.229
+  step 2000/4000  loss 0.2525  mse 0.0314  ce 0.177
+  step 2500/4000  loss 0.1871  mse 0.0264  ce 0.113
+  step 3000/4000  loss 0.1930  mse 0.0249  ce 0.117
+  step 3500/4000  loss 0.1749  mse 0.0258  ce 0.096
+  step 4000/4000  loss 0.1534  mse 0.0238  ce 0.074
+[d1750_A_seed102] val r R 0.663 L 0.492 | test r R 0.666 L 0.498 | rough 0.179 | 227 s
+[timing] done 78 this drive, 7 left, 15.2 runs/h, ETA 0.46 h (planned queue 6.627250318174008)
+[d1750_B_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.5661  mse 0.0516  ce 0.483
+  step 1000/4000  loss 0.3216  mse 0.0401  ce 0.247
+  step 1500/4000  loss 0.2676  mse 0.0331  ce 0.196
+  step 2000/4000  loss 0.2094  mse 0.0297  ce 0.138
+  step 2500/4000  loss 0.1967  mse 0.0205  ce 0.130
+  step 3000/4000  loss 0.1944  mse 0.0247  ce 0.121
+  step 3500/4000  loss 0.1320  mse 0.0170  ce 0.064
+  step 4000/4000  loss 0.1620  mse 0.0197  ce 0.090
+[d1750_B_seed102] val r R 0.766 L 0.559 | test r R 0.741 L 0.483 | rough 0.148 | 227 s
+[timing] done 79 this drive, 6 left, 15.3 runs/h, ETA 0.39 h (planned queue 6.627250318174008)
+  generated 2000 augmented snippets in 3 s (17 strata)
+[d1867_all_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.2101  mse 0.0155  ce 0.158
+  step 1000/4000  loss 0.1398  mse 0.0097  ce 0.095
+  step 1500/4000  loss 0.1479  mse 0.0131  ce 0.101
+  step 2000/4000  loss 0.0931  mse 0.0092  ce 0.050
+  step 2500/4000  loss 0.0812  mse 0.0088  ce 0.039
+  step 3000/4000  loss 0.0710  mse 0.0064  ce 0.031
+  step 3500/4000  loss 0.0698  mse 0.0059  ce 0.030
+  step 4000/4000  loss 0.0619  mse 0.0066  ce 0.021
+[d1867_all_seed101] val r R 0.932 L 0.905 | test r R 0.902 L 0.874 | rough 0.084 | 233 s
+[timing] done 80 this drive, 5 left, 15.2 runs/h, ETA 0.33 h (planned queue 6.627250318174008)
+[d1867_all_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.2015  mse 0.0227  ce 0.143
+  step 1000/4000  loss 0.1761  mse 0.0135  ce 0.128
+  step 1500/4000  loss 0.1060  mse 0.0106  ce 0.062
+  step 2000/4000  loss 0.0898  mse 0.0080  ce 0.048
+  step 2500/4000  loss 0.0859  mse 0.0078  ce 0.045
+  step 3000/4000  loss 0.0838  mse 0.0074  ce 0.041
+  step 3500/4000  loss 0.0566  mse 0.0050  ce 0.018
+  step 4000/4000  loss 0.0645  mse 0.0049  ce 0.025
+[d1867_all_seed102] val r R 0.926 L 0.908 | test r R 0.910 L 0.901 | rough 0.089 | 233 s
+[timing] done 81 this drive, 4 left, 15.2 runs/h, ETA 0.26 h (planned queue 6.627250318174008)
+[d1867_A_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3178  mse 0.0282  ce 0.256
+  step 1000/4000  loss 0.2256  mse 0.0170  ce 0.175
+  step 1500/4000  loss 0.2102  mse 0.0174  ce 0.157
+  step 2000/4000  loss 0.1854  mse 0.0175  ce 0.131
+  step 2500/4000  loss 0.1515  mse 0.0145  ce 0.099
+  step 3000/4000  loss 0.1146  mse 0.0094  ce 0.065
+  step 3500/4000  loss 0.1214  mse 0.0098  ce 0.071
+  step 4000/4000  loss 0.1173  mse 0.0100  ce 0.065
+[d1867_A_seed101] val r R 0.916 L 0.858 | test r R 0.896 L 0.840 | rough 0.100 | 227 s
+[timing] done 82 this drive, 3 left, 15.3 runs/h, ETA 0.20 h (planned queue 6.627250318174008)
+[d1867_A_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3027  mse 0.0283  ce 0.241
+  step 1000/4000  loss 0.2562  mse 0.0195  ce 0.203
+  step 1500/4000  loss 0.1775  mse 0.0156  ce 0.127
+  step 2000/4000  loss 0.1221  mse 0.0101  ce 0.076
+  step 2500/4000  loss 0.1640  mse 0.0141  ce 0.112
+  step 3000/4000  loss 0.1411  mse 0.0126  ce 0.089
+  step 3500/4000  loss 0.0942  mse 0.0098  ce 0.044
+  step 4000/4000  loss 0.0912  mse 0.0065  ce 0.043
+[d1867_A_seed102] val r R 0.910 L 0.863 | test r R 0.880 L 0.851 | rough 0.097 | 227 s
+[timing] done 83 this drive, 2 left, 15.3 runs/h, ETA 0.13 h (planned queue 6.627250318174008)
+[d1867_B_seed101] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.2838  mse 0.0277  ce 0.222
+  step 1000/4000  loss 0.2367  mse 0.0148  ce 0.187
+  step 1500/4000  loss 0.2270  mse 0.0193  ce 0.172
+  step 2000/4000  loss 0.1657  mse 0.0151  ce 0.114
+  step 2500/4000  loss 0.1413  mse 0.0119  ce 0.092
+  step 3000/4000  loss 0.1218  mse 0.0093  ce 0.074
+  step 3500/4000  loss 0.1051  mse 0.0088  ce 0.056
+  step 4000/4000  loss 0.1070  mse 0.0097  ce 0.057
+[d1867_B_seed101] val r R 0.925 L 0.902 | test r R 0.895 L 0.865 | rough 0.091 | 228 s
+[timing] done 84 this drive, 1 left, 15.3 runs/h, ETA 0.07 h (planned queue 6.627250318174008)
+[d1867_B_seed102] cell=lstm kind=aug HParams(lr=0.0005460989227064038, batch=16, steps=4000, l2=3.9496380289150454e-05, noise_sd=0.42128460087261765, drift_sd=0.20042059339572524, ce_weight=1.0, hidden=512, grad_clip=1.0, chan_dropout=0.0)
+  step 500/4000  loss 0.3199  mse 0.0245  ce 0.261
+  step 1000/4000  loss 0.2776  mse 0.0216  ce 0.221
+  step 1500/4000  loss 0.1754  mse 0.0120  ce 0.128
+  step 2000/4000  loss 0.1228  mse 0.0120  ce 0.075
+  step 2500/4000  loss 0.1494  mse 0.0125  ce 0.100
+  step 3000/4000  loss 0.1498  mse 0.0127  ce 0.098
+  step 3500/4000  loss 0.0976  mse 0.0088  ce 0.049
+  step 4000/4000  loss 0.0910  mse 0.0075  ce 0.043
+[d1867_B_seed102] val r R 0.930 L 0.889 | test r R 0.890 L 0.856 | rough 0.095 | 229 s
+[timing] done 85 this drive, 0 left, 15.3 runs/h, ETA 0.00 h (planned queue 6.627250318174008)
+worker 0 finished

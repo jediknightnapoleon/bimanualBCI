@@ -337,3 +337,8 @@ Live status of the replication of Deo et al. 2024. The replication plan has phas
   - **Partly open:** Fig 2b ratios; Supp Fig 1c counts (threshold-sensitive).
   - **Open:** FFN jitter and laterality reliance (training settings ruled out).
   - Tests 114 passed; HTML rebuilt.
+- **2026-11-24 cursor replays:** `scripts/make_replays.py` builds `docs/html/replays.html` (`pixi run replays`), 14 replays:
+  - 7 logged online blocks (Fig 4e raw vs fractured RNN, Fig 5a, Fig 5b sequential vs simultaneous, Fig 5c linear vs RNN);
+  - 6 offline comparisons on day 1869 block 7 (Phases 4, 8, 9, 10), every re-run model matching its logged test r within 2e-3;
+  - Fig 3 idle-hand jitter (ridge, FFN, FFN without laterality).
+  - Measured for the notes: linear decoder's idle cursor travels 0.94 of the active path on one-hand trials (RNN 0.01); sequential blocks never move both cursors at once (simultaneous 41%).

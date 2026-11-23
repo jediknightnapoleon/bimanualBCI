@@ -1,0 +1,560 @@
+<title>T5 Cursor Replays</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: an instrument console. Scenario rail on the left; a stage with the two hand workspaces;
+   the neural heat map and velocity strips below share one time axis with a playhead. */
+:root {
+  --bg: #f2f3f1; --panel: #fbfbfa; --ink: #1c1f1e; --ink-2: #4b524f; --muted: #737a76; --line: #d5d9d5;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a;
+  --hm-neg: #2a78d6; --hm-mid: #f0efec; --hm-pos: #e34948;
+  --font-ui: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --radius: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121413; --panel: #1a1d1c; --ink: #eceeec; --ink-2: #b8bfbb; --muted: #8a928e; --line: #313634;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+    --hm-neg: #3987e5; --hm-mid: #383835; --hm-pos: #e66767; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121413; --panel: #1a1d1c; --ink: #eceeec; --ink-2: #b8bfbb; --muted: #8a928e; --line: #313634;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+  --hm-neg: #3987e5; --hm-mid: #383835; --hm-pos: #e66767; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 var(--font-ui); }
+.app { max-width: 1320px; margin: 0 auto; padding-block: 20px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin-bottom: 16px; }
+h1 { font-size: 22px; font-weight: 600; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+header p { margin: 0; color: var(--ink-2); max-width: 70ch; }
+.layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 20px; align-items: start; }
+nav.rail { display: flex; flex-direction: column; gap: 14px; position: sticky; top: max(12px, env(safe-area-inset-top, 0px)); }
+.rail h2 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 6px; }
+.rail ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.rail button { width: 100%; text-align: left; background: none; border: 1px solid transparent; border-radius: var(--radius);
+  padding: 6px 10px; color: var(--ink); font: inherit; cursor: pointer; display: grid; gap: 0; }
+.rail button small { font-family: var(--font-data); font-size: 11px; color: var(--muted); }
+.rail button:hover { border-color: var(--line); }
+.rail button[aria-current="true"] { background: var(--ink); color: var(--panel); }
+.rail button[aria-current="true"] small { color: var(--panel); opacity: 0.75; }
+.picker { display: none; }
+main { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.stage { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.eyebrow { font-family: var(--font-data); font-size: 12px; color: var(--muted); }
+.stage h3 { margin: 2px 0 0; font-size: 18px; font-weight: 600; text-wrap: balance; }
+.source { margin: 2px 0 0; color: var(--ink-2); font-size: 13px; }
+.workspaces { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ws { position: relative; min-width: 0; }
+.ws canvas { width: 100%; aspect-ratio: 1 / 1; display: block; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); }
+.ws .label { position: absolute; left: 10px; top: 8px; font-size: 12px; font-weight: 500; color: var(--ink-2); pointer-events: none; }
+.ws .state { position: absolute; right: 10px; top: 8px; font-family: var(--font-data); font-size: 11px; color: var(--muted); pointer-events: none; }
+.trialbar { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-family: var(--font-data); font-size: 12.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.chip { border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; color: var(--ink); }
+.chip.ok::before { content: "\2713  "; }
+.chip.fail::before { content: "\2715  "; }
+.transport { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.transport button, .transport select { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 5px 12px; cursor: pointer; }
+.transport button.primary { background: var(--ink); color: var(--panel); border-color: var(--ink); min-width: 76px; }
+.transport input[type=range] { flex: 1 1 220px; min-width: 0; accent-color: var(--ink); }
+.time { font-family: var(--font-data); font-size: 12.5px; color: var(--ink-2); min-width: 9ch; font-variant-numeric: tabular-nums; }
+.transport label { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); }
+:focus-visible { outline: 2px solid var(--s1); outline-offset: 2px; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px; }
+.legend .item { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: var(--radius); padding: 6px 10px; background: var(--panel); color: var(--ink); font: inherit; cursor: pointer; text-align: left; }
+.legend .item[aria-pressed="false"] { opacity: 0.45; }
+.legend .item.focus { border-color: var(--ink); }
+.legend .sw { width: 10px; height: 10px; border-radius: 50%; flex: none; box-shadow: 0 0 0 2px var(--panel), 0 0 0 3px var(--line); }
+.legend .sw.ref { background: var(--ink); }
+.legend .meta { font-family: var(--font-data); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.legend .txt { display: grid; }
+.hint { font-size: 12px; color: var(--muted); margin: 0; }
+.signals { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px 14px; display: flex; flex-direction: column; gap: 8px; position: relative; }
+.signals h4 { margin: 0; font-size: 13px; font-weight: 600; }
+.signals .sub { color: var(--muted); font-size: 12px; font-weight: 400; }
+.signals canvas { width: 100%; display: block; }
+#hm { height: 220px; cursor: crosshair; }
+#vel { height: 210px; cursor: crosshair; }
+.readout { font-family: var(--font-data); font-size: 12px; color: var(--ink-2); min-height: 1.5em; margin: 0; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--panel); font-family: var(--font-data); font-size: 11.5px; padding: 4px 8px; border-radius: 4px; white-space: nowrap; transform: translate(-50%, -130%); }
+.note { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.note section { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; }
+.note h4 { margin: 0 0 4px; font-size: 13px; font-weight: 600; }
+.note p { margin: 0; color: var(--ink-2); max-width: 68ch; }
+.error { color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; }
+@media (max-width: 860px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  nav.rail { display: none; }
+  .picker { display: block; }
+  .picker select { width: 100%; font: inherit; padding: 8px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--panel); color: var(--ink); }
+  .note { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px) { .workspaces { gap: 8px; } .stage { padding: 12px; } #hm { height: 170px; } }
+</style>
+
+<div class="app">
+  <header>
+    <h1>T5 cursor replays</h1>
+    <p>Recorded neural activity from participant T5 (192 electrodes, threshold crossings in 20-ms bins), the cursors it moved, and what our decoders made of it.</p>
+  </header>
+  <div class="layout">
+    <nav class="rail" id="rail" aria-label="Replays"></nav>
+    <main>
+      <div class="picker"><label for="picker" class="hint">Replay</label><select id="picker"></select></div>
+      <section class="stage" aria-live="off">
+        <div>
+          <div class="eyebrow" id="eyebrow"></div>
+          <h3 id="title">Loading replay…</h3>
+          <p class="source" id="source"></p>
+        </div>
+        <div class="workspaces">
+          <div class="ws"><canvas id="wsL" aria-label="Left-hand workspace"></canvas><span class="label">Left hand</span><span class="state" id="stateL"></span></div>
+          <div class="ws"><canvas id="wsR" aria-label="Right-hand workspace"></canvas><span class="label">Right hand</span><span class="state" id="stateR"></span></div>
+        </div>
+        <div class="trialbar" id="trialbar"></div>
+        <div class="transport">
+          <button class="primary" id="play" type="button">Play</button>
+          <button id="prev" type="button" aria-label="Previous trial">&#8592; Trial</button>
+          <button id="next" type="button" aria-label="Next trial">Trial &#8594;</button>
+          <input id="scrub" type="range" min="0" max="1" step="1" value="0" aria-label="Time">
+          <span class="time" id="time"></span>
+          <label for="speed">Speed <select id="speed"><option value="0.25">0.25&times;</option><option value="0.5">0.5&times;</option><option value="1" selected>1&times;</option><option value="2">2&times;</option><option value="4">4&times;</option></select></label>
+        </div>
+        <div class="legend" id="legend"></div>
+        <p class="hint" id="legendhint"></p>
+      </section>
+      <section class="signals">
+        <h4>Neural activity <span class="sub" id="hmsub">z-scored threshold crossings, channels 1–192 top to bottom; blue below the block mean, red above</span></h4>
+        <canvas id="hm"></canvas>
+        <div class="tip" id="tip" hidden></div>
+        <div id="velwrap">
+          <h4>Velocity <span class="sub">cued (grey) vs decoded, same time axis</span></h4>
+          <canvas id="vel"></canvas>
+          <p class="readout" id="readout"></p>
+        </div>
+      </section>
+      <div class="note">
+        <section><h4>What to look for</h4><p id="note"></p></section>
+        <section><h4>How to read it</h4><p id="caveat"></p></section>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+  const $ = (s) => document.querySelector(s);
+  const INDEX = window.REPLAY_INDEX || [];
+  const EMBED = window.REPLAY_DATA || null;
+  const KIND_GROUP = { online: "Online: logged closed-loop control", offline: "Offline: our decoders re-run", fig3: "Single-bin decoders" };
+  const MT = { 1: "right hand only", 2: "left hand only", 3: "both hands" };
+  const VIEW = 480;           // workspace half-range, cursor units
+  const TRAIL_S = 1.5;        // seconds of trail behind each cursor
+  const WIN_BEFORE = 8, WIN_AFTER = 2;   // heat map / velocity window, seconds
+  const F3_HOLD = 25;         // bins to hold at the end of each Fig 3 trial window
+  const st = { scen: null, rec: null, t: 0, total: 1, playing: false, speed: 1, focus: 0, hidden: new Set(), raf: 0, last: 0, token: 0 };
+  const cache = new Map();
+
+  // ------------------------------------------------------------------ data
+  function load(name) {
+    if (EMBED) {
+      const v = EMBED.recordings[name] || EMBED.scenarios[name];
+      return v ? Promise.resolve(v) : Promise.reject(new Error("missing " + name));
+    }
+    if (!cache.has(name)) cache.set(name, fetch("data/" + name + ".json").then((r) => {
+      if (!r.ok) throw new Error("Could not load data/" + name + ".json (HTTP " + r.status + ").");
+      return r.json();
+    }));
+    return cache.get(name);
+  }
+  function bytes(b64) { const s = atob(b64); const u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; }
+  function i16(b64, scale) { const u = bytes(b64); const a = new Int16Array(u.buffer, 0, u.length >> 1); const f = new Float32Array(a.length); for (let i = 0; i < a.length; i++) f[i] = a[i] / scale; return f; }
+
+  function prepRec(r) {
+    if (r._p) return r._p;
+    const p = { raw: r, kind: r.kind, trials: r.trials, hm: bytes(r.hm), hmStep: r.hm_step, clip: r.hm_clip, dt: r.dt };
+    if (r.kind === "fig3") { p.W = r.W; p.n = r.trials.length * (r.W + F3_HOLD); p.hmCols = r.trials.length * r.W; }
+    else { p.n = r.n; p.cp = i16(r.cp, 1); p.tp = i16(r.tp, 1); p.hmCols = Math.floor(r.n / r.hm_step); p.gain = r.gain; if (r.vel) p.vel = i16(r.vel, 1000); }
+    p.starts = p.trials.map((t) => t.s);
+    r._p = p; return p;
+  }
+  function prepScen(sc, rec) {
+    if (sc._p) return sc._p;
+    const decs = sc.decoders.map((d, i) => {
+      const o = Object.assign({}, d, { slot: i + 1, v: i16(d.vel, 1000) });
+      if (sc.kind === "offline") o.pos = integrate(rec, o.v);
+      return o;
+    });
+    sc._p = { decs }; return sc._p;
+  }
+  // decoded cursor: integrate decoded velocity, reset to the cued cursor at every trial start
+  function integrate(rec, v) {
+    const n = rec.n, pos = new Float32Array(n * 4), reset = new Uint8Array(n);
+    rec.trials.forEach((t) => { if (t.s >= 0 && t.s < n) reset[t.s] = 1; });
+    for (let t = 0; t < n; t++) for (let h = 0; h < 2; h++) for (let d = 0; d < 2; d++) {
+      const k = t * 4 + h * 2 + d;
+      pos[k] = (t === 0 || reset[t]) ? rec.cp[k] : pos[k - 4] + rec.gain[h] * v[k];
+    }
+    return pos;
+  }
+
+  // ------------------------------------------------------------------ theme
+  let C = {};
+  function readTheme() {
+    const cs = getComputedStyle(document.documentElement);
+    const g = (n) => cs.getPropertyValue(n).trim();
+    C = { panel: g("--panel"), ink: g("--ink"), ink2: g("--ink-2"), muted: g("--muted"), line: g("--line"), s: [null, g("--s1"), g("--s2"), g("--s3")], neg: g("--hm-neg"), mid: g("--hm-mid"), pos: g("--hm-pos") };
+    lut = buildLut();
+    hmCanvas = null;
+  }
+  function hex(h) { const x = h.replace("#", ""); return [parseInt(x.slice(0, 2), 16), parseInt(x.slice(2, 4), 16), parseInt(x.slice(4, 6), 16)]; }
+  let lut = null;
+  function buildLut() {
+    const n = hex(C.neg), m = hex(C.mid), p = hex(C.pos), out = new Uint8ClampedArray(256 * 4);
+    for (let i = 0; i < 256; i++) {
+      const x = i / 255 * 2 - 1, a = Math.min(1, Math.abs(x) / 0.85), e = x < 0 ? n : p;   // full colour at |z| = 2.55
+      for (let c = 0; c < 3; c++) out[i * 4 + c] = Math.round(m[c] + (e[c] - m[c]) * a);
+      out[i * 4 + 3] = 255;
+    }
+    return out;
+  }
+  function alpha(col, a) { const [r, g, b] = hex(col); return `rgba(${r},${g},${b},${a})`; }
+
+  // ------------------------------------------------------------------ canvases
+  function fit(cv) {
+    const r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    const w = Math.max(1, Math.round(r.width * dpr)), h = Math.max(1, Math.round(r.height * dpr));
+    if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+    const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx, w: r.width, h: r.height };
+  }
+
+  // ------------------------------------------------------------------ timeline helpers
+  function trialAt(t) {
+    const s = st.rec.starts; let lo = 0, hi = s.length - 1, k = -1;
+    while (lo <= hi) { const m = (lo + hi) >> 1; if (s[m] <= t) { k = m; lo = m + 1; } else hi = m - 1; }
+    if (k < 0) return { k: -1, tr: null, phase: "iti" };
+    const tr = st.rec.trials[k];
+    return { k, tr, phase: t < tr.g ? "delay" : t < tr.e ? "move" : "iti" };
+  }
+  const active = (mt, h) => mt === 3 || (h === 0 ? mt === 1 : mt === 2);   // h: 0 right, 1 left
+
+  // ------------------------------------------------------------------ workspace drawing
+  function drawWS(cv, h) {
+    const { ctx, w } = fit(cv), sc = w / (2 * VIEW), cx = w / 2, cy = w / 2;
+    const X = (x) => cx + Math.max(-VIEW, Math.min(VIEW, x)) * sc, Y = (y) => cy - Math.max(-VIEW, Math.min(VIEW, y)) * sc;
+    ctx.clearRect(0, 0, w, w);
+    ctx.strokeStyle = C.line; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, w); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, 300 * sc, 0, 2 * Math.PI); ctx.setLineDash([2, 4]); ctx.stroke(); ctx.setLineDash([]);
+    if (st.rec.kind === "fig3") return drawF3(ctx, h, X, Y, sc);
+    const t = Math.floor(st.t), rec = st.rec, info = trialAt(t);
+    const isActive = info.tr && info.phase !== "iti" && active(info.tr.mt, h);
+    if (isActive) {   // target
+      const tx = rec.tp[t * 4 + h * 2], ty = rec.tp[t * 4 + h * 2 + 1];
+      ctx.beginPath(); ctx.arc(X(tx), Y(ty), 45 * sc, 0, 2 * Math.PI);
+      ctx.fillStyle = alpha(C.ink, info.phase === "move" ? 0.10 : 0.03); ctx.fill();
+      ctx.strokeStyle = C.ink2; ctx.lineWidth = 1.5; ctx.setLineDash(info.phase === "move" ? [] : [4, 4]); ctx.stroke(); ctx.setLineDash([]);
+    }
+    const trailN = Math.round(TRAIL_S / rec.dt), t0 = Math.max(0, t - trailN);
+    const path = (arr, col) => {    // fading trail, then the cursor dot with a surface ring
+      const seg = 6;
+      for (let s = 0; s < seg; s++) {
+        const a = t0 + Math.floor((t - t0) * s / seg), b = t0 + Math.floor((t - t0) * (s + 1) / seg);
+        if (b <= a) continue;
+        ctx.beginPath(); ctx.moveTo(X(arr[a * 4 + h * 2]), Y(arr[a * 4 + h * 2 + 1]));
+        for (let i = a + 1; i <= b; i++) ctx.lineTo(X(arr[i * 4 + h * 2]), Y(arr[i * 4 + h * 2 + 1]));
+        ctx.strokeStyle = alpha(col, 0.15 + 0.7 * (s + 1) / seg); ctx.lineWidth = 2; ctx.stroke();
+      }
+      const x = X(arr[t * 4 + h * 2]), y = Y(arr[t * 4 + h * 2 + 1]);
+      ctx.beginPath(); ctx.arc(x, y, 6, 0, 2 * Math.PI); ctx.fillStyle = col; ctx.fill();
+      ctx.lineWidth = 2; ctx.strokeStyle = C.panel; ctx.stroke();
+    };
+    path(rec.cp, C.ink);
+    for (const d of st.dec) if (!st.hidden.has(d.key)) path(d.pos, C.s[d.slot]);
+    $(h === 0 ? "#stateR" : "#stateL").textContent = !info.tr || info.phase === "iti" ? "between trials" : isActive ? (info.phase === "delay" ? "target shown, wait" : "move") : "idle";
+  }
+
+  function drawF3(ctx, h, X, Y) {
+    const W = st.rec.W, per = W + F3_HOLD, k = Math.min(st.rec.trials.length - 1, Math.floor(st.t / per));
+    const b = Math.min(W - 1, Math.floor(st.t - k * per)), tr = st.rec.trials[k], act = active(tr.mt, h), S = 300 / W;
+    if (act) {   // intended direction
+      ctx.strokeStyle = C.ink2; ctx.lineWidth = 1.5; ctx.setLineDash([5, 4]);
+      ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(tr.dir[h * 2] * 300), Y(tr.dir[h * 2 + 1] * 300)); ctx.stroke(); ctx.setLineDash([]);
+      ctx.beginPath(); ctx.arc(X(tr.dir[h * 2] * 300), Y(tr.dir[h * 2 + 1] * 300), 45 * (ctx.canvas.getBoundingClientRect().width / (2 * VIEW)), 0, 2 * Math.PI);
+      ctx.fillStyle = alpha(C.ink, 0.08); ctx.fill();
+    } else {
+      ctx.beginPath(); ctx.arc(X(0), Y(0), 30 * (ctx.canvas.getBoundingClientRect().width / (2 * VIEW)), 0, 2 * Math.PI);
+      ctx.strokeStyle = C.muted; ctx.lineWidth = 1; ctx.setLineDash([2, 3]); ctx.stroke(); ctx.setLineDash([]);
+    }
+    for (const d of st.dec) {
+      if (st.hidden.has(d.key)) continue;
+      let x = 0, y = 0; ctx.beginPath(); ctx.moveTo(X(0), Y(0));
+      for (let i = 0; i <= b; i++) { const o = ((k * W) + i) * 4 + h * 2; x += d.v[o] * S; y += d.v[o + 1] * S; ctx.lineTo(X(x), Y(y)); }
+      ctx.strokeStyle = C.s[d.slot]; ctx.lineWidth = 2; ctx.stroke();
+      ctx.beginPath(); ctx.arc(X(x), Y(y), 6, 0, 2 * Math.PI); ctx.fillStyle = C.s[d.slot]; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = C.panel; ctx.stroke();
+    }
+    $(h === 0 ? "#stateR" : "#stateL").textContent = act ? "moving: should follow the dashed line" : "idle: should stay at the centre";
+  }
+
+  // ------------------------------------------------------------------ heat map
+  let hmCanvas = null;
+  function hmImage() {
+    if (hmCanvas) return hmCanvas;
+    const rec = st.rec, cols = rec.hmCols, oc = document.createElement("canvas");
+    oc.width = cols; oc.height = 192;
+    const ctx = oc.getContext("2d"), img = ctx.createImageData(cols, 192), px = img.data;
+    for (let c = 0; c < cols; c++) for (let ch = 0; ch < 192; ch++) {
+      const v = rec.hm[c * 192 + ch], o = (ch * cols + c) * 4;
+      px[o] = lut[v * 4]; px[o + 1] = lut[v * 4 + 1]; px[o + 2] = lut[v * 4 + 2]; px[o + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0); hmCanvas = oc; return oc;
+  }
+  const GUT = 40;   // left gutter for channel labels
+  function timeWindow() {   // [first bin, last bin) of the strip window
+    if (st.rec.kind === "fig3") { const per = st.rec.W + F3_HOLD, k = Math.min(st.rec.trials.length - 1, Math.floor(st.t / per)); return [k, 0, st.rec.W]; }
+    const a = st.t - WIN_BEFORE / st.rec.dt, b = st.t + WIN_AFTER / st.rec.dt; return [null, a, b];
+  }
+  function drawHM() {
+    const cv = $("#hm"), { ctx, w, h } = fit(cv), rec = st.rec, img = hmImage(), pw = w - GUT;
+    ctx.clearRect(0, 0, w, h); ctx.imageSmoothingEnabled = false;
+    const [k, a, b] = timeWindow();
+    if (rec.kind === "fig3") {
+      ctx.drawImage(img, k * rec.W, 0, rec.W, 192, GUT, 0, pw, h);
+    } else {   // draw the visible column range, leaving blanks outside the recording
+      const s = rec.hmStep, ca = a / s, cb = b / s, c0 = Math.max(0, Math.floor(ca)), c1 = Math.min(rec.hmCols, Math.ceil(cb));
+      ctx.fillStyle = C.panel; ctx.fillRect(GUT, 0, pw, h);
+      if (c1 > c0) ctx.drawImage(img, c0, 0, c1 - c0, 192, GUT + (c0 - ca) / (cb - ca) * pw, 0, (c1 - c0) / (cb - ca) * pw, h);
+      ctx.strokeStyle = alpha(C.ink, 0.55); ctx.lineWidth = 1;   // go cues
+      for (const tr of rec.trials) if (tr.g >= a && tr.g <= b) { const x = GUT + (tr.g - a) / (b - a) * pw; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+      ctx.setLineDash([]);
+    }
+    const focus = st.dec[st.focus];
+    if (focus && focus.muted && focus.muted.length) {   // muted rows
+      ctx.fillStyle = alpha(C.panel, 0.78);
+      for (const c of focus.muted) ctx.fillRect(GUT, c / 192 * h, pw, Math.max(1, h / 192));
+    }
+    ctx.fillStyle = C.panel; ctx.fillRect(0, 0, GUT, h);
+    ctx.strokeStyle = C.ink2; ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(GUT, h / 2); ctx.lineTo(w, h / 2); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = C.ink2; ctx.font = "11px " + getComputedStyle(document.body).getPropertyValue("--font-data");
+    ctx.fillText("A", 4, 14); ctx.fillText("1–96", 4, 28); ctx.fillText("B", 4, h / 2 + 14); ctx.fillText("97–", 4, h / 2 + 28);
+    if (focus && focus.channels) {   // channels the focused decoder uses
+      ctx.fillStyle = C.s[focus.slot];
+      for (const c of focus.channels) ctx.fillRect(GUT - 8, c / 192 * h, 6, Math.max(1.5, h / 192));
+    }
+    const px = rec.kind === "fig3" ? GUT + (Math.min(rec.W - 1, st.t - k * (rec.W + F3_HOLD)) + 0.5) / rec.W * pw : GUT + (st.t - a) / (b - a) * pw;
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(px, 0); ctx.lineTo(px, h); ctx.stroke();
+  }
+
+  // ------------------------------------------------------------------ velocity strips (offline)
+  const DIMS = ["R x", "R y", "L x", "L y"], VMAX = 1.5;
+  function drawVel() {
+    const rec = st.rec; if (!rec.vel) return;
+    const cv = $("#vel"), { ctx, w, h } = fit(cv), pw = w - GUT, rh = h / 4, [, a, b] = timeWindow();
+    ctx.clearRect(0, 0, w, h);
+    const X = (t) => GUT + (t - a) / (b - a) * pw;
+    const i0 = Math.max(0, Math.floor(a)), i1 = Math.min(rec.n - 1, Math.ceil(b));
+    ctx.font = "11px " + getComputedStyle(document.body).getPropertyValue("--font-data");
+    for (let d = 0; d < 4; d++) {
+      const y0 = d * rh + rh / 2, Y = (v) => y0 - Math.max(-VMAX, Math.min(VMAX, v)) / VMAX * (rh / 2 - 3);
+      ctx.strokeStyle = C.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(GUT, y0); ctx.lineTo(w, y0); ctx.stroke();
+      ctx.fillStyle = C.ink2; ctx.fillText(DIMS[d], 4, y0 + 4);
+      const line = (arr, col, lw) => { ctx.beginPath(); for (let i = i0; i <= i1; i++) { const x = X(i), y = Y(arr[i * 4 + d]); i === i0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); } ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.stroke(); };
+      line(rec.vel, C.muted, 1.5);
+      for (const dc of st.dec) if (!st.hidden.has(dc.key)) line(dc.v, C.s[dc.slot], 1.5);
+    }
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 2; const px = X(st.t); ctx.beginPath(); ctx.moveTo(px, 0); ctx.lineTo(px, h); ctx.stroke();
+    if (hoverT !== null) { ctx.strokeStyle = C.ink2; ctx.lineWidth = 1; ctx.setLineDash([2, 2]); const hx = X(hoverT); ctx.beginPath(); ctx.moveTo(hx, 0); ctx.lineTo(hx, h); ctx.stroke(); ctx.setLineDash([]); }
+  }
+
+  // ------------------------------------------------------------------ text
+  function fmtT() {
+    if (st.rec.kind === "fig3") {
+      const per = st.rec.W + F3_HOLD, k = Math.min(st.rec.trials.length - 1, Math.floor(st.t / per)), b = Math.min(st.rec.W - 1, Math.floor(st.t - k * per));
+      return (st.rec.raw.window_ms[0] + (b + 1) * 20) + " ms";
+    }
+    return (st.t * st.rec.dt).toFixed(1) + " s";
+  }
+  function drawText() {
+    $("#time").textContent = fmtT();
+    $("#scrub").value = Math.floor(st.t);
+    const bar = $("#trialbar"); bar.textContent = "";
+    const add = (txt, cls) => { const s = document.createElement("span"); if (cls) s.className = cls; s.textContent = txt; bar.appendChild(s); };
+    if (st.rec.kind === "fig3") {
+      const per = st.rec.W + F3_HOLD, k = Math.min(st.rec.trials.length - 1, Math.floor(st.t / per)), tr = st.rec.trials[k];
+      add(`Trial ${k + 1} of ${st.rec.trials.length}`, "chip"); add(MT[tr.mt]); add(`decoding window ${st.rec.raw.window_ms[0]}–${st.rec.raw.window_ms[1]} ms after the go cue`);
+      return;
+    }
+    const info = trialAt(Math.floor(st.t));
+    if (!info.tr) { add("Before the first trial"); return; }
+    add(`Trial ${info.k + 1} of ${st.rec.trials.length}`, "chip"); add(MT[info.tr.mt]);
+    add(info.phase === "delay" ? "delay: target shown" : info.phase === "move" ? "go: moving" : "between trials");
+    if (st.scen.kind === "online") add(info.tr.ok ? `acquired in ${info.tr.tta.toFixed(2)} s` : "timed out at 10 s", "chip " + (info.tr.ok ? "ok" : "fail"));
+  }
+  function render() { if (!st.rec) return; drawWS($("#wsL"), 1); drawWS($("#wsR"), 0); drawHM(); drawVel(); drawText(); }
+
+  // ------------------------------------------------------------------ scenario setup
+  const CAVEAT = {
+    online: "This is the cursor T5 actually controlled, with the authors' decoder running live; nothing is re-decoded. Targets are drawn at a fixed size because the logs don't store it. The heat map is the activity that drove the decoder.",
+    offline: "Open loop: T5 attempted to follow the grey cued cursor. Each coloured cursor integrates one of our decoders' velocity from the trial's start, with no feedback, so errors build up within a trial; the strips below show the velocity itself. r is the decoder's test r over the whole block (right / left hand), re-computed here and matching the logged value.",
+    fig3: "Cross-validated predictions of single 20-ms bins, one 400-ms window per trial. The paths add up the decoded direction bin by bin, so a perfect decoder draws a straight line along the dashed arrow for the moving hand and stays at the centre for the idle hand."
+  };
+  function legend() {
+    const box = $("#legend"); box.textContent = "";
+    if (st.scen.kind !== "fig3") {
+      const ref = document.createElement("div"); ref.className = "item"; ref.style.cursor = "default";
+      ref.innerHTML = '<span class="sw ref"></span><span class="txt"><span></span><span class="meta"></span></span>';
+      ref.querySelector(".txt span").textContent = st.scen.kind === "online" ? "Recorded cursor (live control)" : "Cued cursor T5 followed";
+      ref.querySelector(".meta").textContent = st.scen.kind === "online" ? "authors' decoder" : "reference";
+      box.appendChild(ref);
+    }
+    st.dec.forEach((d, i) => {
+      const b = document.createElement("button"); b.type = "button"; b.className = "item" + (i === st.focus ? " focus" : "");
+      b.setAttribute("aria-pressed", String(!st.hidden.has(d.key)));
+      b.innerHTML = '<span class="sw"></span><span class="txt"><span></span><span class="meta"></span></span>';
+      b.querySelector(".sw").style.background = C.s[d.slot];
+      b.querySelector(".txt span").textContent = d.label;
+      b.querySelector(".meta").textContent = d.jitter ? `r ${d.r[0].toFixed(2)} / ${d.r[1].toFixed(2)} · idle jitter ${d.jitter[0].toFixed(2)} / ${d.jitter[1].toFixed(2)}`
+        : `test r ${d.r[0].toFixed(2)} / ${d.r[1].toFixed(2)}` + (d.channels ? ` · ${d.channels.length} ch` : "") + (d.muted && d.muted.length ? ` · ${d.muted.length} muted` : "");
+      b.addEventListener("click", (e) => {
+        if (st.focus !== i) { st.focus = i; st.hidden.delete(d.key); }
+        else if (st.hidden.has(d.key)) st.hidden.delete(d.key); else st.hidden.add(d.key);
+        legend(); render();
+      });
+      box.appendChild(b);
+    });
+    $("#legendhint").textContent = st.dec.length ? "Click a decoder to mark its channels on the heat map; click it again to hide or show it. Numbers are right hand / left hand." : "";
+  }
+  async function select(id) {
+    const token = ++st.token; pause();
+    try {
+      const sc = await load(id), rr = await load(sc.rec);
+      if (token !== st.token) return;
+      st.scen = sc; st.rec = prepRec(rr); st.dec = prepScen(sc, st.rec).decs; st.hidden = new Set();
+      st.focus = Math.max(0, st.dec.length - 1); hmCanvas = null;
+      $("#eyebrow").textContent = sc.group; $("#title").textContent = sc.title; $("#source").textContent = sc.source;
+      $("#note").textContent = sc.note; $("#caveat").textContent = CAVEAT[sc.kind];
+      $("#velwrap").hidden = !st.rec.vel;
+      $("#hmsub").textContent = sc.kind === "fig3" ? "the 400-ms window of this trial; channels 1–192 top to bottom; blue below the block mean, red above"
+        : "z-scored threshold crossings, channels 1–192 top to bottom; blue below the block mean, red above; dashed lines = go cues";
+      st.total = st.rec.n; const sc_ = $("#scrub"); sc_.max = st.total - 1;
+      const firstMove = st.rec.trials.find((t) => t.mt === 1 || t.mt === 2 || t.mt === 3);
+      st.t = sc.kind === "fig3" ? st.rec.W - 1 : Math.min(st.total - 1, (firstMove ? firstMove.g : 0) + (sc.kind === "online" ? 60 : 40));
+      document.querySelectorAll(".rail button").forEach((b) => b.setAttribute("aria-current", String(b.dataset.id === id)));
+      $("#picker").value = id;
+      try { localStorage.setItem("t5-replay", id); } catch (e) { /* storage unavailable */ }
+      if (location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
+      legend(); render();
+    } catch (err) {
+      $("#title").textContent = "This replay could not be loaded";
+      $("#source").textContent = String(err.message || err) + " Reload the page to try again.";
+    }
+  }
+
+  // ------------------------------------------------------------------ playback
+  function frame(ts) {
+    if (!st.playing) return;
+    const dt = Math.min(0.1, (ts - st.last) / 1000); st.last = ts;
+    st.t += dt * st.speed / st.rec.dt;
+    if (st.t >= st.total - 1) { st.t = st.total - 1; pause(); }
+    render(); st.raf = requestAnimationFrame(frame);
+  }
+  function play() { if (!st.rec) return; if (st.t >= st.total - 1) st.t = 0; st.playing = true; $("#play").textContent = "Pause"; st.last = performance.now(); st.raf = requestAnimationFrame(frame); }
+  function pause() { st.playing = false; cancelAnimationFrame(st.raf); $("#play").textContent = "Play"; }
+  function jump(dir) {
+    if (!st.rec) return;
+    if (st.rec.kind === "fig3") { const per = st.rec.W + F3_HOLD, k = Math.floor(st.t / per) + dir; st.t = Math.max(0, Math.min(st.rec.trials.length - 1, k)) * per + st.rec.W - 1; render(); return; }
+    const info = trialAt(Math.floor(st.t)), k = Math.max(0, Math.min(st.rec.trials.length - 1, info.k + dir)), tr = st.rec.trials[k];
+    st.t = Math.max(0, Math.min(st.total - 1, tr.g + 40)); render();
+  }
+
+  // ------------------------------------------------------------------ hover
+  let hoverT = null;
+  function tAtX(cv, ev) {
+    const r = cv.getBoundingClientRect(), x = ev.clientX - r.left, [, a, b] = timeWindow();
+    if (x < GUT) return null;
+    return a + (x - GUT) / (r.width - GUT) * (b - a);
+  }
+  $("#hm").addEventListener("mousemove", (ev) => {
+    if (!st.rec) return;
+    const cv = $("#hm"), r = cv.getBoundingClientRect(), y = ev.clientY - r.top, x = ev.clientX - r.left, tip = $("#tip");
+    const ch = Math.min(191, Math.max(0, Math.floor(y / r.height * 192)));
+    let col, label;
+    if (x < GUT) { tip.hidden = true; return; }
+    if (st.rec.kind === "fig3") {
+      const [k] = timeWindow(), b = Math.min(st.rec.W - 1, Math.floor((x - GUT) / (r.width - GUT) * st.rec.W));
+      col = k * st.rec.W + b; label = `${st.rec.raw.window_ms[0] + b * 20} ms`;
+    } else {
+      const t = tAtX(cv, ev); col = Math.floor(t / st.rec.hmStep); label = `${(t * st.rec.dt).toFixed(2)} s`;
+      if (col < 0 || col >= st.rec.hmCols) { tip.hidden = true; return; }
+    }
+    const z = (st.rec.hm[col * 192 + ch] / 255 * 2 - 1) * st.rec.clip, f = st.dec[st.focus];
+    const extra = f && f.muted && f.muted.includes(ch) ? " · muted" : f && f.channels && f.channels.includes(ch) ? " · used" : "";
+    tip.textContent = `ch ${ch + 1} (array ${ch < 96 ? "A" : "B"}) · ${label} · z ${z >= 0 ? "+" : ""}${z.toFixed(1)}${extra}`;
+    const sr = cv.parentElement.getBoundingClientRect();
+    tip.style.left = (ev.clientX - sr.left) + "px"; tip.style.top = (ev.clientY - sr.top) + "px"; tip.hidden = false;
+  });
+  $("#hm").addEventListener("mouseleave", () => { $("#tip").hidden = true; });
+  $("#vel").addEventListener("mousemove", (ev) => {
+    if (!st.rec || !st.rec.vel) return;
+    const t = tAtX($("#vel"), ev); if (t === null) return;
+    hoverT = t; const i = Math.round(t);
+    if (i < 0 || i >= st.rec.n) { $("#readout").textContent = ""; drawVel(); return; }
+    const r = $("#vel").getBoundingClientRect(), d = Math.min(3, Math.max(0, Math.floor((ev.clientY - r.top) / r.height * 4)));
+    const parts = [`${DIMS[d]} at ${(i * st.rec.dt).toFixed(2)} s`, `cued ${st.rec.vel[i * 4 + d].toFixed(2)}`];
+    for (const dc of st.dec) if (!st.hidden.has(dc.key)) parts.push(`${dc.label.split(",")[0]} ${dc.v[i * 4 + d].toFixed(2)}`);
+    $("#readout").textContent = parts.join(" · "); drawVel();
+  });
+  $("#vel").addEventListener("mouseleave", () => { hoverT = null; $("#readout").textContent = ""; drawVel(); });
+
+  // ------------------------------------------------------------------ controls
+  $("#play").addEventListener("click", () => (st.playing ? pause() : play()));
+  $("#prev").addEventListener("click", () => jump(-1));
+  $("#next").addEventListener("click", () => jump(1));
+  $("#scrub").addEventListener("input", (e) => { st.t = +e.target.value; render(); });
+  $("#speed").addEventListener("change", (e) => { st.speed = +e.target.value; });
+  $("#picker").addEventListener("change", (e) => select(e.target.value));
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest && e.target.closest("input, select, textarea")) return;
+    if (e.key === " ") { e.preventDefault(); st.playing ? pause() : play(); }
+    else if (e.key === "ArrowRight") jump(1);
+    else if (e.key === "ArrowLeft") jump(-1);
+  });
+
+  // scenario rail and picker
+  const rail = $("#rail"), picker = $("#picker");
+  for (const kind of ["online", "offline", "fig3"]) {
+    const items = INDEX.filter((x) => x.kind === kind); if (!items.length) continue;
+    const sec = document.createElement("div"), h = document.createElement("h2"), ul = document.createElement("ul");
+    h.textContent = KIND_GROUP[kind]; sec.append(h, ul);
+    const og = document.createElement("optgroup"); og.label = KIND_GROUP[kind];
+    for (const it of items) {
+      const li = document.createElement("li"), b = document.createElement("button");
+      b.type = "button"; b.dataset.id = it.id; b.innerHTML = "<small></small><span></span>";
+      b.querySelector("small").textContent = it.group; b.querySelector("span").textContent = it.title;
+      b.addEventListener("click", () => select(it.id)); li.appendChild(b); ul.appendChild(li);
+      const o = document.createElement("option"); o.value = it.id; o.textContent = it.title + " (" + it.group + ")"; og.appendChild(o);
+    }
+    rail.appendChild(sec); picker.appendChild(og);
+  }
+
+  readTheme();
+  const mq = window.matchMedia("(prefers-color-scheme: dark)");
+  const retheme = () => { readTheme(); if (st.scen) legend(); render(); };
+  if (mq.addEventListener) mq.addEventListener("change", retheme);
+  new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  new ResizeObserver(() => render()).observe(document.querySelector("main"));
+  window.addEventListener("hashchange", () => { const id = location.hash.slice(1); if (INDEX.some((x) => x.id === id) && (!st.scen || st.scen.id !== id)) select(id); });
+
+  let startId = location.hash.slice(1);
+  if (!INDEX.some((x) => x.id === startId)) { try { startId = localStorage.getItem("t5-replay") || ""; } catch (e) { startId = ""; } }
+  if (!INDEX.some((x) => x.id === startId)) startId = INDEX.length ? INDEX[0].id : "";
+  if (startId) select(startId); else $("#title").textContent = "No replays found in this build.";
+})();
+</script>

@@ -13,7 +13,8 @@
   - A nonlinear decoder beats a linear one *because* it uses the laterality signal; removing that signal erases the gain.
   - Simulations reproduce the mechanism.
   - RNNs decode well offline. Training on time-warped, shuffled clips costs a little offline but is what made online control work.
-- **Main disagreement:** bimanual time to target is about 2× unimanual in the logs, where the paper says "only slightly longer" (#30). Other gaps are small, such as right-hand (RH) suppression of 19% vs 12%.
+- **Bimanual time to target** is about 2× unimanual in the logs, where the paper's text says "only slightly longer" (#30). The paper's own Fig 5a shows the same 2× ([figure comparison](figure_comparison.md)), so only the wording disagrees.
+- **Remaining gaps are small:** right-hand (RH) suppression of 19% vs 12%; fewer single-electrode-tuned channels than in Supp Fig 1 (bimanual LH 28 vs 52); higher online angular errors (definition, #8).
 - **Two of the paper's methods had to change to work at all:**
   - 5-fold cross-validated regression → split-half (#23)
   - raw position-difference regressors → unit direction (#21)
@@ -167,6 +168,7 @@ The open questions need data from that system:
 ![SBP vs TX](../results/figures/ext_sbp.png)
 
 ## Pointers
+- Paper figures next to ours, panel by panel: [figure_comparison.md](figure_comparison.md)
 - Results table and register: [REPLICATION.md](../REPLICATION.md)
 - What to check in the paper yourself: [paper_check.md](paper_check.md); the ❓ rows are Fig 5a TTA and the Supp Fig 1 counts
 - Method → code map: [methods_notes.md](methods_notes.md)

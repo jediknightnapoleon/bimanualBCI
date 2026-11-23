@@ -313,3 +313,11 @@ Live status of the replication of Deo et al. 2024. The replication plan has phas
   - Docs: `REPLICATION.md` (register #39–46, Phase 10 and 11 sections), `docs/report.md`, `docs/methods_notes.md`, `docs/paper_check.md` (the SBP item), `README.md`, a briefing.
   - Full test suite: 114 passed.
   - Whole investigation: 19:18 → about 02:00 (about 6.7 h of the 12-h limit).
+- **2026-11-23 figure comparison:** `docs/figure_comparison.md` places each paper panel (cropped from the CC BY 4.0 article and Supplementary PDF, in `docs/figure_comparison/`) next to ours, in the paper's order, with values read off the figures. New findings:
+  - Fig 5a itself shows bimanual TTA about 2× unimanual (resolves #30);
+  - the Fig 4d augmented r of 0.82 / 0.82 supports 2–8-s clips (#14);
+  - the dPCA matches in all 4 terms (0–1000 ms);
+  - Supp Fig 1 counts are lower in ours (biL 28 vs 52);
+  - on bimanual trials (Supp Fig 2c), ridge ≥ FFN in ours.
+
+  `REPLICATION.md` results rows and `paper_check.md` items updated.

@@ -17,7 +17,10 @@ This branch (`replication`) adds an independent Python replication of the paper'
   - The left hand's tuning is suppressed about 2× more than the right hand's during bimanual movement, and laterality dominates the neural variance.
   - Nonlinear decoders win because they use the laterality signal.
   - Time-warp augmentation costs a little offline accuracy.
-- **Main disagreement:** in the logs, bimanual time to target is about 2× unimanual, not "only slightly longer".
+- **Remaining differences are small:**
+  - The paper's text calls bimanual time to target "only slightly longer". The logs show about 2× unimanual, and so does the paper's own Fig 5a.
+  - We find fewer single-electrode-tuned channels than Supp Fig 1.
+  - See [docs/figure_comparison.md](docs/figure_comparison.md).
 - **Extensions:**
   1. **LSTM vs GRU** (Phase 8): the LSTM ties the GRU on raw data and loses less under augmentation.
   2. **One array** (Phase 9): on day 1869, array B alone (channels 97–192) keeps 98–103% of the two-array performance.
@@ -28,6 +31,7 @@ This branch (`replication`) adds an independent Python replication of the paper'
 | File | Contents |
 |---|---|
 | [docs/report.md](docs/report.md) | Narrative write-up, claim by claim, plus the extensions |
+| [docs/figure_comparison.md](docs/figure_comparison.md) | Side-by-side: each published figure panel next to our replication, with the numbers |
 | [REPLICATION.md](REPLICATION.md) | Results tables with CIs, and the numbered register of every decision, deviation and assumption (#1–46) |
 | [docs/paper_check.md](docs/paper_check.md) | A reader's guide (paradigm, dPCA) and a list of paper details to verify |
 | [docs/ext_sbp_notes.md](docs/ext_sbp_notes.md) | Crossings vs SBP: results and caveats |

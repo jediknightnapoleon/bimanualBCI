@@ -13,6 +13,10 @@ Three kinds of scenario, each tied to a reported result:
                # drawing scale; the same gain is used for every decoder.
                This is an open-loop replay: no feedback, so errors accumulate within a trial. It is a
                view of the decoded velocity, not a simulation of closed-loop control.
+               # DEVIATION (display only): by default the viewer puts each decoded cursor back onto the
+               # cued cursor at every trial start, so drift doesn't carry over between trials. The jump
+               # is drawn as a dashed line and can be switched off in the page. r is computed from the
+               # velocity here in Python and does not depend on it.
 * **fig3**    Day 1883 single-bin decoders (ridge, FFN, FFN without laterality): their cross-validated
                per-bin direction outputs in the 400-ms window, from results/cache.
 

@@ -35,6 +35,7 @@
   --hm-neg: #3987e5; --hm-mid: #383835; --hm-pos: #e66767; color-scheme: dark;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 var(--font-ui); }
 .app { max-width: 1320px; margin: 0 auto; padding-block: 20px 48px;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
@@ -131,6 +132,7 @@ main { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
           <button id="next" type="button" aria-label="Next trial">Trial &#8594;</button>
           <input id="scrub" type="range" min="0" max="1" step="1" value="0" aria-label="Time">
           <span class="time" id="time"></span>
+          <label for="realign" id="realignwrap"><input type="checkbox" id="realign" checked> Re-align decoded cursors at each trial start</label>
           <label for="speed">Speed <select id="speed"><option value="0.25">0.25&times;</option><option value="0.5">0.5&times;</option><option value="1" selected>1&times;</option><option value="2">2&times;</option><option value="4">4&times;</option></select></label>
         </div>
         <div class="legend" id="legend"></div>
@@ -166,7 +168,8 @@ main { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
   const TRAIL_S = 1.5;        // seconds of trail behind each cursor
   const WIN_BEFORE = 8, WIN_AFTER = 2;   // heat map / velocity window, seconds
   const F3_HOLD = 25;         // bins to hold at the end of each Fig 3 trial window
-  const st = { scen: null, rec: null, t: 0, total: 1, playing: false, speed: 1, focus: 0, hidden: new Set(), raf: 0, last: 0, token: 0 };
+  const JUMP_BINS = 40;       // how long (0.8 s) a re-alignment jump stays drawn
+  const st = { scen: null, rec: null, t: 0, total: 1, playing: false, speed: 1, focus: 0, hidden: new Set(), raf: 0, last: 0, token: 0, realign: true };
   const cache = new Map();
 
   // ------------------------------------------------------------------ data
@@ -190,26 +193,33 @@ main { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
     if (r.kind === "fig3") { p.W = r.W; p.n = r.trials.length * (r.W + F3_HOLD); p.hmCols = r.trials.length * r.W; }
     else { p.n = r.n; p.cp = i16(r.cp, 1); p.tp = i16(r.tp, 1); p.hmCols = Math.floor(r.n / r.hm_step); p.gain = r.gain; if (r.vel) p.vel = i16(r.vel, 1000); }
     p.starts = p.trials.map((t) => t.s);
+    if (r.kind !== "fig3") { p.reset = new Uint8Array(p.n); p.trials.forEach((t) => { if (t.s > 0 && t.s < p.n) p.reset[t.s] = 1; }); }
     r._p = p; return p;
   }
   function prepScen(sc, rec) {
     if (sc._p) return sc._p;
     const decs = sc.decoders.map((d, i) => {
       const o = Object.assign({}, d, { slot: i + 1, v: i16(d.vel, 1000) });
-      if (sc.kind === "offline") o.pos = integrate(rec, o.v);
+      if (sc.kind === "offline") { o.pos = integrate(rec, o.v, true); o.posFree = integrate(rec, o.v, false); }
       return o;
     });
     sc._p = { decs }; return sc._p;
   }
-  // decoded cursor: integrate decoded velocity, reset to the cued cursor at every trial start
-  function integrate(rec, v) {
-    const n = rec.n, pos = new Float32Array(n * 4), reset = new Uint8Array(n);
-    rec.trials.forEach((t) => { if (t.s >= 0 && t.s < n) reset[t.s] = 1; });
+  // Decoded cursor: integrate the decoded velocity. With realign = true it is snapped back onto the
+  // cued cursor at every trial start (a display choice, so drift doesn't carry over between trials;
+  // the viewer draws the jump). With realign = false it integrates on from the first bin.
+  function integrate(rec, v, realign) {
+    const n = rec.n, pos = new Float32Array(n * 4);
     for (let t = 0; t < n; t++) for (let h = 0; h < 2; h++) for (let d = 0; d < 2; d++) {
       const k = t * 4 + h * 2 + d;
-      pos[k] = (t === 0 || reset[t]) ? rec.cp[k] : pos[k - 4] + rec.gain[h] * v[k];
+      pos[k] = (t === 0 || (realign && rec.reset[t])) ? rec.cp[k] : pos[k - 4] + rec.gain[h] * v[k];
     }
     return pos;
+  }
+  function lastReset(t) {   // most recent re-alignment bin at or before t, or -1
+    const s = st.rec.starts; let lo = 0, hi = s.length - 1, k = -1;
+    while (lo <= hi) { const m = (lo + hi) >> 1; if (s[m] <= t) { k = m; lo = m + 1; } else hi = m - 1; }
+    return k < 0 || s[k] <= 0 ? -1 : s[k];
   }
 
   // ------------------------------------------------------------------ theme
@@ -271,21 +281,35 @@ main { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
       ctx.strokeStyle = C.ink2; ctx.lineWidth = 1.5; ctx.setLineDash(info.phase === "move" ? [] : [4, 4]); ctx.stroke(); ctx.setLineDash([]);
     }
     const trailN = Math.round(TRAIL_S / rec.dt), t0 = Math.max(0, t - trailN);
-    const path = (arr, col) => {    // fading trail, then the cursor dot with a surface ring
+    const path = (arr, col, breaks) => {    // fading trail (broken at re-alignments), then the cursor dot
       const seg = 6;
       for (let s = 0; s < seg; s++) {
         const a = t0 + Math.floor((t - t0) * s / seg), b = t0 + Math.floor((t - t0) * (s + 1) / seg);
         if (b <= a) continue;
         ctx.beginPath(); ctx.moveTo(X(arr[a * 4 + h * 2]), Y(arr[a * 4 + h * 2 + 1]));
-        for (let i = a + 1; i <= b; i++) ctx.lineTo(X(arr[i * 4 + h * 2]), Y(arr[i * 4 + h * 2 + 1]));
+        for (let i = a + 1; i <= b; i++) {
+          const x = X(arr[i * 4 + h * 2]), y = Y(arr[i * 4 + h * 2 + 1]);
+          if (breaks && rec.reset[i]) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
         ctx.strokeStyle = alpha(col, 0.15 + 0.7 * (s + 1) / seg); ctx.lineWidth = 2; ctx.stroke();
       }
       const x = X(arr[t * 4 + h * 2]), y = Y(arr[t * 4 + h * 2 + 1]);
       ctx.beginPath(); ctx.arc(x, y, 6, 0, 2 * Math.PI); ctx.fillStyle = col; ctx.fill();
       ctx.lineWidth = 2; ctx.strokeStyle = C.panel; ctx.stroke();
     };
-    path(rec.cp, C.ink);
-    for (const d of st.dec) if (!st.hidden.has(d.key)) path(d.pos, C.s[d.slot]);
+    path(rec.cp, C.ink, false);
+    const rs = st.realign ? lastReset(t) : -1, showJump = rs > 0 && t - rs < JUMP_BINS;
+    for (const d of st.dec) {
+      if (st.hidden.has(d.key)) continue;
+      const arr = st.realign ? d.pos : d.posFree;
+      if (showJump) {   // the re-alignment, drawn as a jump: hollow ring where the cursor was, dashed line to where it was put
+        const a = 1 - (t - rs) / JUMP_BINS, px = X(d.pos[(rs - 1) * 4 + h * 2]), py = Y(d.pos[(rs - 1) * 4 + h * 2 + 1]);
+        ctx.strokeStyle = alpha(C.s[d.slot], 0.9 * a); ctx.lineWidth = 1.5; ctx.setLineDash([3, 3]);
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(X(d.pos[rs * 4 + h * 2]), Y(d.pos[rs * 4 + h * 2 + 1])); ctx.stroke(); ctx.setLineDash([]);
+        ctx.beginPath(); ctx.arc(px, py, 6, 0, 2 * Math.PI); ctx.stroke();
+      }
+      path(arr, C.s[d.slot], st.realign);
+    }
     $(h === 0 ? "#stateR" : "#stateL").textContent = !info.tr || info.phase === "iti" ? "between trials" : isActive ? (info.phase === "delay" ? "target shown, wait" : "move") : "idle";
   }
 
@@ -403,6 +427,7 @@ main { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
     if (!info.tr) { add("Before the first trial"); return; }
     add(`Trial ${info.k + 1} of ${st.rec.trials.length}`, "chip"); add(MT[info.tr.mt]);
     add(info.phase === "delay" ? "delay: target shown" : info.phase === "move" ? "go: moving" : "between trials");
+    if (st.scen.kind === "offline" && st.realign) { const rs = lastReset(Math.floor(st.t)); if (rs > 0 && st.t - rs < JUMP_BINS) add("decoded cursors re-aligned to the cued cursor (display reset, not data)", "chip"); }
     if (st.scen.kind === "online") add(info.tr.ok ? `acquired in ${info.tr.tta.toFixed(2)} s` : "timed out at 10 s", "chip " + (info.tr.ok ? "ok" : "fail"));
   }
   function render() { if (!st.rec) return; drawWS($("#wsL"), 1); drawWS($("#wsR"), 0); drawHM(); drawVel(); drawText(); }
@@ -410,7 +435,7 @@ main { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
   // ------------------------------------------------------------------ scenario setup
   const CAVEAT = {
     online: "This is the cursor T5 actually controlled, with the authors' decoder running live; nothing is re-decoded. Targets are drawn at a fixed size because the logs don't store it. The heat map is the activity that drove the decoder.",
-    offline: "Open loop: T5 attempted to follow the grey cued cursor. Each coloured cursor integrates one of our decoders' velocity from the trial's start, with no feedback, so errors build up within a trial; the strips below show the velocity itself. r is the decoder's test r over the whole block (right / left hand), re-computed here and matching the logged value.",
+    offline: "Open loop: T5 attempted to follow the grey cued cursor. Each coloured cursor adds up one of our decoders' velocity outputs with no feedback, so errors build up. By default the coloured cursors are put back onto the grey cursor at the start of every trial, so one trial's drift doesn't carry into the next. This is a display choice, not data: the jump is drawn as a dashed line, and unticking the box shows the uncorrected path. The strips below show the velocity itself, and r (right / left hand, whole block) is computed from velocity, so neither depends on this choice.",
     fig3: "Cross-validated predictions of single 20-ms bins, one 400-ms window per trial. The paths add up the decoded direction bin by bin, so a perfect decoder draws a straight line along the dashed arrow for the moving hand and stays at the centre for the idle hand."
   };
   function legend() {
@@ -449,6 +474,7 @@ main { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
       $("#eyebrow").textContent = sc.group; $("#title").textContent = sc.title; $("#source").textContent = sc.source;
       $("#note").textContent = sc.note; $("#caveat").textContent = CAVEAT[sc.kind];
       $("#velwrap").hidden = !st.rec.vel;
+      $("#realignwrap").hidden = sc.kind !== "offline";
       $("#hmsub").textContent = sc.kind === "fig3" ? "the 400-ms window of this trial; channels 1–192 top to bottom; blue below the block mean, red above"
         : "z-scored threshold crossings, channels 1–192 top to bottom; blue below the block mean, red above; dashed lines = go cues";
       st.total = st.rec.n; const sc_ = $("#scrub"); sc_.max = st.total - 1;
@@ -527,6 +553,7 @@ main { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
   $("#next").addEventListener("click", () => jump(1));
   $("#scrub").addEventListener("input", (e) => { st.t = +e.target.value; render(); });
   $("#speed").addEventListener("change", (e) => { st.speed = +e.target.value; });
+  $("#realign").addEventListener("change", (e) => { st.realign = e.target.checked; render(); });
   $("#picker").addEventListener("change", (e) => select(e.target.value));
   document.addEventListener("keydown", (e) => {
     if (e.target.closest && e.target.closest("input, select, textarea")) return;

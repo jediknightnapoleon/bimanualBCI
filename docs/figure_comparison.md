@@ -4,7 +4,7 @@
 
 ## Sources and caveats
 - **Paper figures:** Deo, Willett, Avansino, Hochberg, Henderson & Shenoy, "Brain control of bimanual movement enabled by recurrent neural networks", *Sci Rep* 14:1598 (2024), [doi:10.1038/s41598-024-51617-3](https://doi.org/10.1038/s41598-024-51617-3). Published under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The panels shown here are cropped from the published main figures and the Supplementary Information, with no other changes.
-- **Our figures:** `results/figures/`. Some are cropped into panels to line up with the paper.
+- **Our figures:** copies (`ours_*.png`) of `results/figures/`, kept next to this document so every Markdown previewer can load them. Some are cropped into panels to line up with the paper. If a figure is regenerated, copy it here again.
 - **How the paper's numbers were read:** values printed on the paper's figures are quoted exactly. Values read off plotted points are approximate (marked ≈, about ±0.02 or ±0.3 s). Before this comparison, several of these were listed as "figure only" in [REPLICATION.md](../REPLICATION.md). They are now filled in, and the new information is marked **NEW**.
 - **Layout and colours** differ from the paper. Our figures use our own palette and often add CIs or extra conditions. Compare what the panels show, not how they look.
 - **Online figures (4e, 5):** the online experiments can't be re-run. Our panels re-score the logged closed-loop trials from the Dryad data, so they can only be as close as the logs allow.
@@ -38,7 +38,7 @@
 <tr><th width="50%">Paper</th><th width="50%">Replication</th></tr>
 <tr>
 <td><img src="figure_comparison/paper_fig1c.png" alt="Paper Fig 1c"></td>
-<td><img src="../results/figures/fig1_tuning_curves.png" alt="Our Fig 1c"></td>
+<td><img src="figure_comparison/ours_fig1_tuning_curves.png" alt="Our Fig 1c"></td>
 </tr>
 </table>
 
@@ -60,7 +60,7 @@
 <tr><th width="50%">Paper</th><th width="50%">Replication</th></tr>
 <tr>
 <td><img src="figure_comparison/paper_fig2bc.png" alt="Paper Fig 2b-c"></td>
-<td><img src="../results/figures/fig2bc_tuning_change_splithalf.png" alt="Our Fig 2b-c"></td>
+<td><img src="figure_comparison/ours_fig2bc_tuning_change_splithalf.png" alt="Our Fig 2b-c"></td>
 </tr>
 </table>
 
@@ -86,11 +86,11 @@
 <tr><th width="50%">Paper</th><th width="50%">Replication</th></tr>
 <tr>
 <td><img src="figure_comparison/paper_fig2d_pca.png" alt="Paper Fig 2d PCA"></td>
-<td><img src="../results/figures/fig2_pca.png" alt="Our Fig 2 PCA"></td>
+<td><img src="figure_comparison/ours_fig2_pca.png" alt="Our Fig 2 PCA"></td>
 </tr>
 <tr>
 <td><img src="figure_comparison/paper_fig2d_dpca.png" alt="Paper Fig 2d dPCA"></td>
-<td><img src="../results/figures/fig2_dpca.png" alt="Our Fig 2 dPCA"></td>
+<td><img src="figure_comparison/ours_fig2_dpca.png" alt="Our Fig 2 dPCA"></td>
 </tr>
 </table>
 
@@ -148,7 +148,7 @@
 <tr><th width="50%">Paper</th><th width="50%">Replication</th></tr>
 <tr>
 <td><img src="figure_comparison/paper_fig3de.png" alt="Paper Fig 3d-e"></td>
-<td><img src="../results/figures/fig3_simulations.png" alt="Our Fig 3 simulations"></td>
+<td><img src="figure_comparison/ours_fig3_simulations.png" alt="Our Fig 3 simulations"></td>
 </tr>
 </table>
 
@@ -168,7 +168,7 @@
 <tr><th width="50%">Paper</th><th width="50%">Replication</th></tr>
 <tr>
 <td><img src="figure_comparison/paper_fig4b.png" alt="Paper Fig 4b"><br><img src="figure_comparison/paper_fig4d.png" alt="Paper Fig 4d"></td>
-<td><img src="../results/figures/fig4_rnn.png" alt="Our Fig 4"></td>
+<td><img src="figure_comparison/ours_fig4_rnn.png" alt="Our Fig 4"></td>
 </tr>
 </table>
 
@@ -191,7 +191,7 @@
 <tr><th width="50%">Paper</th><th width="50%">Replication</th></tr>
 <tr>
 <td><img src="figure_comparison/paper_fig4e.png" alt="Paper Fig 4e"></td>
-<td><img src="../results/figures/fig4e_online_speed.png" alt="Our Fig 4e speeds"><br><img src="figure_comparison/ours_fig4e_success.png" alt="Our Fig 4e success"></td>
+<td><img src="figure_comparison/ours_fig4e_online_speed.png" alt="Our Fig 4e speeds"><br><img src="figure_comparison/ours_fig4e_success.png" alt="Our Fig 4e success"></td>
 </tr>
 </table>
 
@@ -269,7 +269,7 @@
 <tr><th width="50%">Paper</th><th width="50%">Replication</th></tr>
 <tr>
 <td><img src="figure_comparison/paper_supp1b.png" alt="Paper Supp Fig 1b"><br><img src="figure_comparison/paper_supp1cde.png" alt="Paper Supp Fig 1c-e"></td>
-<td><img src="../results/figures/supp_fig1_tuning_counts.png" alt="Our Supp Fig 1"></td>
+<td><img src="figure_comparison/ours_supp_fig1_tuning_counts.png" alt="Our Supp Fig 1"></td>
 </tr>
 </table>
 
@@ -313,7 +313,7 @@
 <tr><th width="50%">Paper</th><th width="50%">Replication</th></tr>
 <tr>
 <td><img src="figure_comparison/paper_supp4a.png" alt="Paper Supp Fig 4a"></td>
-<td><img src="../results/figures/supp_fig4_fsnr.png" alt="Our Supp Fig 4"></td>
+<td><img src="figure_comparison/ours_supp_fig4_fsnr.png" alt="Our Supp Fig 4"></td>
 </tr>
 </table>
 

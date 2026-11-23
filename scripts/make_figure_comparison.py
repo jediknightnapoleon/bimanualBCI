@@ -19,6 +19,8 @@ from pathlib import Path
 
 from PIL import Image
 
+from bimanual.pngio import to_plain_rgb
+
 ROOT = Path(__file__).resolve().parents[1]
 FIGS = ROOT / "results" / "figures"
 OUT = ROOT / "docs" / "figure_comparison"
@@ -46,14 +48,7 @@ PAPER = {
 
 def save_rgb(src: Path, box, dst: Path) -> None:
     """Flatten onto white (in case of transparency), crop, and save as metadata-free RGB PNG."""
-    im = Image.open(src)
-    if im.mode in ("RGBA", "LA", "P"):
-        im = im.convert("RGBA")
-        bg = Image.new("RGB", im.size, "white")
-        bg.paste(im, mask=im.split()[-1])
-        im = bg
-    else:
-        im = im.convert("RGB")
+    im = to_plain_rgb(Image.open(src))
     if box is not None:
         im = im.crop(box)
     im.save(dst, format="PNG", optimize=True)  # no pnginfo -> no tEXt/pHYs chunks

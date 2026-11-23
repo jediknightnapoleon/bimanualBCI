@@ -46,6 +46,7 @@ from bimanual import behavior as B  # noqa: E402
 from bimanual.cache import RESULTS_DIR, atomic_write_json, read_jsonl  # noqa: E402
 from bimanual.epochs import extract_windows  # noqa: E402
 from bimanual.io import load_session, zscore_by_block  # noqa: E402
+from bimanual.pngio import save_png_rgb  # noqa: E402
 from bimanual.stats import bootstrap_ci  # noqa: E402
 from bimanual.tuning import DEFAULT_WINDOW  # noqa: E402
 
@@ -74,7 +75,8 @@ VALS: dict = {}  # every number drawn, for the comparison document
 
 def save(fig, name):
     OUT.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT / f"{name}.png", dpi=180, facecolor="white", bbox_inches="tight", pad_inches=0.15)
+    # plain RGB, no metadata: some Markdown previewers don't show matplotlib's RGBA PNGs
+    save_png_rgb(fig, OUT / f"{name}.png", dpi=180, facecolor="white", bbox_inches="tight", pad_inches=0.15)
     fig.savefig(OUT / f"{name}.svg", facecolor="white", bbox_inches="tight", pad_inches=0.15)
     plt.close(fig)
     print("wrote", OUT / f"{name}.png")

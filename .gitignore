@@ -16,3 +16,6 @@ results/checkpoints/
 __pycache__/
 *.egg-info/
 .pytest_cache/
+
+# --- Smoke-test barrier markers written by scripts/ext_feasibility.py --stage smoke ---
+results/ext_feas/smoke/*/ready*

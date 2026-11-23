@@ -21,6 +21,7 @@ matplotlib.use("Agg")  # headless: figures are only saved to files
 import matplotlib.pyplot as plt
 
 from bimanual.cache import RESULTS_DIR
+from bimanual.pngio import save_png_rgb
 
 FIG_DIR = RESULTS_DIR / "figures"
 
@@ -49,10 +50,10 @@ plt.rcParams.update({
 
 
 def save(fig, name: str) -> Path:
-    """Save to results/figures/<name>.png and .svg; returns the PNG path."""
+    """Save to results/figures/<name>.png (plain RGB) and .svg; returns the PNG path."""
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     png = FIG_DIR / f"{name}.png"
-    fig.savefig(png, bbox_inches="tight")
+    save_png_rgb(fig, png, bbox_inches="tight")
     fig.savefig(FIG_DIR / f"{name}.svg", bbox_inches="tight")
     plt.close(fig)
     return png

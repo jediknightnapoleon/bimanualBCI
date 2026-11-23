@@ -342,3 +342,4 @@ Live status of the replication of Deo et al. 2024. The replication plan has phas
   - 6 offline comparisons on day 1869 block 7 (Phases 4, 8, 9, 10), every re-run model matching its logged test r within 2e-3;
   - Fig 3 idle-hand jitter (ridge, FFN, FFN without laterality).
   - Measured for the notes: linear decoder's idle cursor travels 0.94 of the active path on one-hand trials (RNN 0.01); sequential blocks never move both cursors at once (simultaneous 41%).
+- **2026-11-24 working-with-AI guide:** `WORKING_WITH_AI.md` at the repo root (linked from the top of the README and in the HTML build): how the AI-assisted work was checked, with tips for understanding and presenting it. README gained a "Viewing the replays" section (open locally, GitHub Pages, and the inputs needed to rebuild).

@@ -62,9 +62,9 @@ table:has(img) td { background: transparent; }
 </style>
 </head>
 <body>
-<nav><a href="README.html" class=current>README</a> <a href="report.html">Report</a> <a href="figure_comparison.html">Figure comparison</a> <a href="REPLICATION.html">Results &amp; register</a> <a href="ext_sbp_notes.html">SBP notes</a> <a href="paper_check.html">Paper check</a> <a href="methods_notes.html">Methods notes</a> <a href="briefings.html">Briefings</a></nav>
+<nav><a href="README.html" class=current>README</a> <a href="report.html">Report</a> <a href="WORKING_WITH_AI.html">Working with AI</a> <a href="figure_comparison.html">Figure comparison</a> <a href="REPLICATION.html">Results &amp; register</a> <a href="ext_sbp_notes.html">SBP notes</a> <a href="paper_check.html">Paper check</a> <a href="methods_notes.html">Methods notes</a> <a href="briefings.html">Briefings</a></nav>
 <main>
-<p class="source-note">HTML copy of <code>README.md</code>, built 2026-11-23 by <code>pixi run docs-html</code>.
+<p class="source-note">HTML copy of <code>README.md</code>, built 2026-11-24 by <code>pixi run docs-html</code>.
 The Markdown file is the source: edit it, then rebuild.</p>
 <h1 id="brain-control-of-bimanual-movement-enabled-by-recurrent-neural-networks">Brain control of bimanual movement enabled by recurrent neural networks</h1>
 <p><img src="https://github.com/d-r-deo/bimanualBCI/assets/153785714/379b8a81-07f6-4cd1-a7c5-7ade4a6018c3" alt="gitbimanual" /></p>
@@ -74,6 +74,7 @@ The Markdown file is the source: edit it, then rebuild.</p>
 <h1 id="replication-fork">Replication (fork)</h1>
 <p>This branch (<code>replication</code>) adds an independent Python replication of the paper's offline analyses, plus four extensions that go beyond the paper. Everything runs from the public Dryad data. The online experiments can't be re-run, so Fig 5 is re-scored from the logged closed-loop trials.</p>
 <p><strong>Start here:</strong> <a href="report.html">docs/report.md</a> is a short narrative of all findings.</p>
+<p><strong>How this was built:</strong> most of the code was written with an AI coding assistant. <a href="WORKING_WITH_AI.html">WORKING_WITH_AI.md</a> explains how the science was kept checkable, with tips for presenting work like this.</p>
 <h2 id="findings-in-brief">Findings in brief</h2>
 <ul>
 <li><strong>The replication holds.</strong> Every qualitative claim of the paper replicates, and most headline numbers fall within a few points:
@@ -113,8 +114,16 @@ The Markdown file is the source: edit it, then rebuild.</p>
 <td>Narrative write-up, claim by claim, plus the extensions</td>
 </tr>
 <tr>
+<td><a href="WORKING_WITH_AI.html">WORKING_WITH_AI.md</a></td>
+<td>How the AI-assisted work was checked, and tips for understanding and presenting it</td>
+</tr>
+<tr>
 <td><a href=".">docs/html/</a></td>
 <td>Standalone HTML copies of the documents below, with images embedded; open them in any browser. Rebuild with <code>pixi run docs-html</code></td>
+</tr>
+<tr>
+<td><a href="replays.html">docs/html/replays.html</a></td>
+<td>Cursor replays: logged online blocks and our decoders re-run on held-out data, with the neural activity, one replay per reported result. See <a href="#viewing-the-replays">Viewing the replays</a></td>
 </tr>
 <tr>
 <td><a href="figure_comparison.html">docs/figure_comparison.md</a></td>
@@ -150,6 +159,24 @@ The Markdown file is the source: edit it, then rebuild.</p>
 </tr>
 </tbody>
 </table></div>
+<h3 id="viewing-the-replays">Viewing the replays</h3>
+<ul>
+<li>
+<p><strong>Open it in any browser.</strong> <a href="replays.html">docs/html/replays.html</a> is self-contained (about 10 MB, data embedded), so it needs no server and no Python. Only the fonts come from the internet; offline it uses system fonts.</p>
+</li>
+<li>
+<p><strong>From GitHub</strong>, an HTML file shows as source code. Either download it (open the file, then <em>Download raw file</em>), or serve it with GitHub Pages: <em>Settings → Pages → Deploy from a branch</em>, branch <code>replication</code>, folder <code>/docs</code>. The page is then at <code>https://&lt;user&gt;.github.io/bimanualBCI/html/replays.html</code>. Pages makes that folder public, and private repositories need a paid plan for it.</p>
+</li>
+<li>
+<p><strong>Rebuilding</strong> (<code>pixi run replays</code>) needs inputs that are not in git, about 220 MB in total:</p>
+<ul>
+<li>the Dryad files for days 1778, 1855, 1869, 1881 and 1883 in <code>Data/</code>;</li>
+<li>11 model checkpoints in <code>results/checkpoints/</code>;</li>
+<li>three Fig 3 caches in <code>results/cache/</code>.</li>
+</ul>
+<p>Keep a backup of these if you may want to change the replays. Without them, the caches come back with <code>pixi run fig3-decoding --force</code>, but the checkpoints need retraining (<code>fig4-rnn</code>, <code>ext-lstm</code>, <code>ext-arrays</code>, <code>ext-feas</code>: several GPU-hours). The script refuses any model that doesn't reproduce its logged test r.</p>
+</li>
+</ul>
 <h2 id="setup">Setup</h2>
 <ol>
 <li>Install <a href="https://pixi.sh">pixi</a>, then run <code>pixi install</code>.</li>

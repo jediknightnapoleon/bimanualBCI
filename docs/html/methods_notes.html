@@ -62,9 +62,9 @@ table:has(img) td { background: transparent; }
 </style>
 </head>
 <body>
-<nav><a href="README.html">README</a> <a href="report.html">Report</a> <a href="figure_comparison.html">Figure comparison</a> <a href="REPLICATION.html">Results &amp; register</a> <a href="ext_sbp_notes.html">SBP notes</a> <a href="paper_check.html">Paper check</a> <a href="methods_notes.html" class=current>Methods notes</a> <a href="briefings.html">Briefings</a></nav>
+<nav><a href="README.html">README</a> <a href="report.html">Report</a> <a href="WORKING_WITH_AI.html">Working with AI</a> <a href="figure_comparison.html">Figure comparison</a> <a href="REPLICATION.html">Results &amp; register</a> <a href="ext_sbp_notes.html">SBP notes</a> <a href="paper_check.html">Paper check</a> <a href="methods_notes.html" class=current>Methods notes</a> <a href="briefings.html">Briefings</a></nav>
 <main>
-<p class="source-note">HTML copy of <code>docs/methods_notes.md</code>, built 2026-11-23 by <code>pixi run docs-html</code>.
+<p class="source-note">HTML copy of <code>docs/methods_notes.md</code>, built 2026-11-24 by <code>pixi run docs-html</code>.
 The Markdown file is the source: edit it, then rebuild.</p>
 <h1 id="methods-notes-paper-methods--code">Methods notes: paper methods → code</h1>
 <p>This file maps each method in the paper to the code that implements it. Each section is filled in when the corresponding code is written.</p>
@@ -291,6 +291,11 @@ The Markdown file is the source: edit it, then rebuild.</p>
 <td>Diagnostics of paper-vs-ours differences</td>
 <td><code>scripts/diagnose_differences.py</code></td>
 <td>D1 Supp Fig 1 threshold / grouping / window; D2 angular-error definition; D3 FFN training variants; D4 cvOLS estimator × regressors (Eq. 2 per-step)</td>
+</tr>
+<tr>
+<td>Cursor replays (visual inspection)</td>
+<td><code>scripts/make_replays.py</code>, <code>scripts/replay_viewer.html</code></td>
+<td>Logged closed-loop blocks (Figs 4e, 5a-c) as recorded; saved RNNs re-run on day-1869 block 7 with a check that each reproduces its logged test r; decoded velocity integrated from each trial start (ASSUMPTION: display gain fitted from the cued cursor); Fig 3 cross-validated single-bin outputs from <code>results/cache</code></td>
 </tr>
 </tbody>
 </table></div>

@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Working with AI on a science project</title>
+<style>
+:root {
+  --bg: #ffffff; --fg: #1f2328; --muted: #59636e; --border: #d1d9e0; --soft: #f6f8fa;
+  --link: #0969da; --accent: #0969da; --code-bg: #eff1f3;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --border: #3d444d; --soft: #151b23;
+    --link: #4493f8; --accent: #4493f8; --code-bg: #262c36;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --border: #3d444d; --soft: #151b23;
+  --link: #4493f8; --accent: #4493f8; --code-bg: #262c36;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+}
+nav {
+  position: sticky; top: 0; z-index: 1; background: var(--soft); border-bottom: 1px solid var(--border);
+  padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 14px;
+}
+nav a { color: var(--muted); text-decoration: none; }
+nav a:hover { color: var(--link); }
+nav a.current { color: var(--fg); font-weight: 600; }
+main { max-width: 1180px; margin: 0 auto; padding: 24px 16px 64px; }
+.source-note { color: var(--muted); font-size: 13px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 16px; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 1.6em 0 0.6em; }
+h1 { font-size: 2em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; margin-top: 0.4em; }
+h2 { font-size: 1.5em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+h3 { font-size: 1.25em; }
+a { color: var(--link); }
+p, ul, ol, table, pre, blockquote { margin: 0 0 1em; }
+ul, ol { padding-left: 2em; }
+li + li { margin-top: 0.25em; }
+li.task-list-item { list-style: none; }
+li.task-list-item input { margin: 0 0.4em 0 -1.4em; vertical-align: middle; }
+code { background: var(--code-bg); border-radius: 4px; padding: 0.15em 0.35em; font-size: 0.88em;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; }
+pre { background: var(--code-bg); border-radius: 6px; padding: 12px 16px; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+blockquote { color: var(--muted); border-left: 4px solid var(--border); margin-left: 0; padding: 0 1em; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
+img { max-width: 100%; height: auto; background: #fff; }
+.table-wrap { overflow-x: auto; margin: 0 0 1em; }
+table { border-collapse: collapse; font-size: 14px; }
+th, td { border: 1px solid var(--border); padding: 6px 10px; vertical-align: top; text-align: left; }
+th { background: var(--soft); }
+tr:nth-child(2n) td { background: color-mix(in srgb, var(--soft) 60%, transparent); }
+/* side-by-side figure tables (raw HTML <table> with <img>) span the page in two equal columns */
+table:has(img) { width: 100%; table-layout: fixed; }
+table:has(img) td { background: transparent; }
+</style>
+</head>
+<body>
+<nav><a href="README.html">README</a> <a href="report.html">Report</a> <a href="WORKING_WITH_AI.html" class=current>Working with AI</a> <a href="figure_comparison.html">Figure comparison</a> <a href="REPLICATION.html">Results &amp; register</a> <a href="ext_sbp_notes.html">SBP notes</a> <a href="paper_check.html">Paper check</a> <a href="methods_notes.html">Methods notes</a> <a href="briefings.html">Briefings</a></nav>
+<main>
+<p class="source-note">HTML copy of <code>WORKING_WITH_AI.md</code>, built 2026-11-24 by <code>pixi run docs-html</code>.
+The Markdown file is the source: edit it, then rebuild.</p>
+<h1 id="working-with-ai-on-a-science-project">Working with AI on a science project</h1>
+<p>Most of the code in this branch was written by an AI coding assistant (Claude Code) under the direction of one researcher. Every commit it co-wrote carries a <code>Co-Authored-By</code> line.</p>
+<p>This page collects what kept the science understandable and defensible while the AI did most of the typing. Each tip comes with an example from this project, so you can check it against the repository.</p>
+<p>The short version:</p>
+<ul>
+<li><strong>Decide what the result should be before the code runs.</strong></li>
+<li><strong>Read the code that produces numbers.</strong></li>
+<li><strong>Make every claim point to evidence you can open.</strong></li>
+<li><strong>Look at the data.</strong></li>
+<li><strong>Explain each result in your own words before you present it.</strong></li>
+</ul>
+<h2 id="before-anything-runs">Before anything runs</h2>
+<p><strong>Write down the claim, the expected result and what would count as failure.</strong></p>
+<ul>
+<li>The numbered register in <a href="REPLICATION.html">REPLICATION.md</a> (#1–46) records every decision, deviation and assumption, with the reason, before or as the results came in.</li>
+<li>The dPCA window (#24) was fixed at 300–700 ms in advance. A longer window turned out to match the paper better, but because both are reported, nobody can say the window was chosen to fit.</li>
+</ul>
+<p><strong>Pin down the facts about the data first, before any analysis.</strong></p>
+<ul>
+<li><a href="../data_inventory.md">docs/data_inventory.md</a> and <code>bimanual/sessions.py</code> list every session and block label, checked against the files.</li>
+<li>The go-cue index in the <code>.mat</code> files is 1-based, and it is converted to 0-based in exactly one place (<code>bimanual/io.py</code>). Off-by-one errors in trial alignment silently shift every result.</li>
+</ul>
+<h2 id="while-the-ai-writes-code">While the AI writes code</h2>
+<p><strong>Read closely the code that decides a number; skim the rest.</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Read closely</th>
+<th>Skim</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data loading and trial alignment</td>
+<td>Plotting</td>
+</tr>
+<tr>
+<td>Train / validation / test splits (leakage)</td>
+<td>File handling, caching, job queues</td>
+</tr>
+<tr>
+<td>Targets and labels</td>
+<td>Command-line options</td>
+</tr>
+<tr>
+<td>Metrics and statistics (what is averaged over what, and what is resampled)</td>
+<td>Formatting of tables and documents</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Work in small steps, with a checkpoint at each.</strong></p>
+<ul>
+<li>This project ran in phases. Each phase ended with a briefing (<a href="briefings.html">docs/briefings.md</a>), a commit, and a log entry in <a href="../../PROGRESS.md">PROGRESS.md</a>.</li>
+<li>Large changes nobody has reviewed are where misunderstandings pile up.</li>
+</ul>
+<p><strong>Make assumptions visible in the code.</strong></p>
+<ul>
+<li>Comments marked <code># ASSUMPTION:</code> and <code># DEVIATION:</code> sit at the exact line where a choice was made, and each links to a register entry.</li>
+<li><code>grep -rn &quot;ASSUMPTION\|DEVIATION&quot; bimanual scripts</code> lists every one of them.</li>
+</ul>
+<h2 id="checking-the-results">Checking the results</h2>
+<p><strong>Use checks with a known answer.</strong> Whenever possible, compare against something whose answer you already know.</p>
+<ul>
+<li><strong>The authors' own code:</strong> our port of their tuning analysis matches their MATLAB code run in Octave to 3 × 10⁻¹⁴ (<code>pixi run compare-reference</code>).</li>
+<li><strong>Synthetic data with a planted answer:</strong> for example, channel selection must recover the planted channels and skip a duplicate (<code>tests/test_select.py</code>).</li>
+<li><strong>Re-running saved models:</strong> a re-run must reproduce the logged test r within 0.002. The muting analysis and the replays both assert this.</li>
+<li><strong>Assertions on what must never happen:</strong> for example, channel selection never sees the test block.</li>
+<li><strong>Controls:</strong> shuffled labels or random channel sets should give chance-level or baseline results.</li>
+</ul>
+<p><strong>Ask for evidence, not reassurance.</strong></p>
+<ul>
+<li>Every claim should point to a file and line, or a saved number in <code>results/</code>. &quot;The tests pass&quot; is not evidence about the science.</li>
+<li>Useful questions to ask:
+<ul>
+<li>&quot;How could this be wrong?&quot;</li>
+<li>&quot;What else would explain this result?&quot;</li>
+<li>&quot;Which number would change if this assumption were false?&quot;</li>
+</ul>
+</li>
+<li>A fresh AI session, given only the code and the claim, makes a good critic because it doesn't share the first session's assumptions.</li>
+</ul>
+<p><strong>Redraw your results in the paper's exact format.</strong> This caught two definition mismatches that summary tables had hidden:</p>
+<ul>
+<li><strong>Time to target (#29, #30):</strong> the paper plots the <em>median</em>, with failures counted as 10 s. We had used the <em>mean of successful trials</em>. With the paper's statistic, all 18 points match.</li>
+<li><strong>Angular error (#8):</strong> the paper uses the angle of the net displacement. We had averaged noisy per-bin angles, which inflated the error by 10–25°.</li>
+</ul>
+<p>Both are in <a href="figure_comparison.html">docs/figure_comparison.md</a>.</p>
+<p><strong>Look at the data, not only at summary numbers.</strong> <a href="replays.html">docs/html/replays.html</a> replays the logged cursors and our decoders' outputs next to the neural activity. A result you have watched happen is much easier to explain and defend.</p>
+<p><strong>Reproduce one key number yourself.</strong> In a blank notebook, recompute one headline value from the raw data without the project's helper functions. For example, take the ridge decoding r on day 1883. If you can't, you don't yet understand the pipeline.</p>
+<p><strong>Check the paper yourself.</strong> AI summaries of papers can be wrong or partial.</p>
+<ul>
+<li>In this project, all of the paper's numbers were re-checked against the full text (<a href="paper_check.html">docs/paper_check.md</a>).</li>
+<li>Details read from a web summary, such as some figures for the Willsey et al. paper, are marked as unverified until read in the original.</li>
+</ul>
+<h2 id="understanding-it-well-enough-to-present">Understanding it well enough to present</h2>
+<p><strong>Teach it back after every phase.</strong> Explain the result aloud in two minutes, without notes: what was computed, from which data, compared with what, and what result would have contradicted it. Wherever you hesitate, there is a question to ask before someone else does.</p>
+<p><strong>Keep a one-page sheet of claims, evidence and limits.</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Evidence (file, number)</th>
+<th>What would contradict it</th>
+<th>Limits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The left hand's tuning is suppressed more than the right hand's in bimanual movement</td>
+<td>Fig 2b; 41% vs 19%, p = 6 × 10⁻⁶; holds in every estimator variant</td>
+<td>RH ≥ LH in some block-pairing scheme</td>
+<td>The magnitudes depend on the estimator (#23)</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Know where you differ from the paper, and why.</strong></p>
+<ul>
+<li><a href="figure_comparison.html">docs/figure_comparison.md</a> lists 12 differences, each with its tested cause or marked as open.</li>
+<li>Open items, such as our FFN being jitterier at rest than the paper's, are stated plainly rather than explained away.</li>
+</ul>
+<p><strong>Know what the data cannot show.</strong></p>
+<ul>
+<li>Nothing offline can test live closed-loop control.</li>
+<li>Offline r does not predict online success. In the logs, raw and fractured RNNs are within 0.03 r offline but more than 50 percentage points apart online.</li>
+</ul>
+<p><strong>Know the statistics you are using.</strong></p>
+<ul>
+<li>Resample trials, not time bins: neighbouring bins are not independent.</li>
+<li>Report confidence intervals, and say when several tests were run.</li>
+<li>Keep separate the numbers that come from cross-validated data and those that don't. Without cross-validation, the dPCA variance shares even reverse order.</li>
+</ul>
+<h2 id="questions-to-expect-and-where-the-answers-are">Questions to expect, and where the answers are</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Did you just run the authors' code?</td>
+<td>No. The pipeline is an independent Python implementation written from the Methods. The authors' MATLAB tuning code was used only as a cross-check (3 × 10⁻¹⁴).</td>
+</tr>
+<tr>
+<td>How do you know there is no train/test leakage?</td>
+<td>Splits are by trial or block, and laterality removal is fitted on training folds only (<a href="methods_notes.html">methods_notes.md</a>). Channel selection never sees the test block (asserted).</td>
+</tr>
+<tr>
+<td>Why do your numbers differ from the paper's?</td>
+<td><a href="figure_comparison.html">figure_comparison.md</a>: 12 differences, each with its cause or marked as open.</td>
+</tr>
+<tr>
+<td>How much did the AI do, and how did you check it?</td>
+<td>This page, the tests (<code>pixi run test</code>), the register, and the known-answer checks above.</td>
+</tr>
+<tr>
+<td>Would this work online, or on another implant?</td>
+<td>It can't be tested offline. See the feasibility phases and their caveats in <a href="REPLICATION.html">REPLICATION.md</a> and <a href="ext_sbp_notes.html">docs/ext_sbp_notes.md</a>.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="warning-signs">Warning signs</h2>
+<ul>
+<li><strong>A result much better than the paper's.</strong> Look for leakage or a different metric before celebrating. Our raw RNN scores 0.06 higher than the paper's, which is probably because we train and test on the same day (#28); that is not tested.</li>
+<li><strong>A number nobody can trace to a file.</strong></li>
+<li><strong>A test changed so that it passes, rather than the code fixed.</strong></li>
+<li><strong>Code that silently falls back to something else.</strong> For example, a missing file replaced by a default, or a failed fit replaced by zeros.</li>
+<li><strong>An explanation that sounds right but was never tested.</strong> Mark it &quot;likely, untested&quot; until it is tested.</li>
+<li><strong>Problems found only by running the code.</strong> These were found by testing, not by reading:
+<ul>
+<li>The augmentation sampler never placed a clip at the edge of a segment, so the decoder never saw rest periods. It is now fixed and covered by a test.</li>
+<li>5-fold cross-validated regression blew up on small sets (#23).</li>
+</ul>
+</li>
+</ul>
+
+</main>
+</body>
+</html>

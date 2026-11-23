@@ -35,6 +35,7 @@ OUT = ROOT / "docs" / "html"
 DOCS = [
     ("README.md", "README"),
     ("docs/report.md", "Report"),
+    ("WORKING_WITH_AI.md", "Working with AI"),
     ("docs/figure_comparison.md", "Figure comparison"),
     ("REPLICATION.md", "Results & register"),
     ("docs/ext_sbp_notes.md", "SBP notes"),

@@ -12,6 +12,8 @@ This branch (`replication`) adds an independent Python replication of the paper'
 
 **Start here:** [docs/report.md](docs/report.md) is a short narrative of all findings.
 
+**How this was built:** most of the code was written with an AI coding assistant. [WORKING_WITH_AI.md](WORKING_WITH_AI.md) explains how the science was kept checkable, with tips for presenting work like this.
+
 ## Findings in brief
 - **The replication holds.** Every qualitative claim of the paper replicates, and most headline numbers fall within a few points:
   - The left hand's tuning is suppressed about 2× more than the right hand's during bimanual movement, and laterality dominates the neural variance.
@@ -31,8 +33,9 @@ This branch (`replication`) adds an independent Python replication of the paper'
 | File | Contents |
 |---|---|
 | [docs/report.md](docs/report.md) | Narrative write-up, claim by claim, plus the extensions |
+| [WORKING_WITH_AI.md](WORKING_WITH_AI.md) | How the AI-assisted work was checked, and tips for understanding and presenting it |
 | [docs/html/](docs/html/) | Standalone HTML copies of the documents below, with images embedded; open them in any browser. Rebuild with `pixi run docs-html` |
-| [docs/html/replays.html](docs/html/replays.html) | Cursor replays: logged online blocks and our decoders re-run on held-out data, with the neural activity, one replay per reported result. Open in a browser; rebuild with `pixi run replays` |
+| [docs/html/replays.html](docs/html/replays.html) | Cursor replays: logged online blocks and our decoders re-run on held-out data, with the neural activity, one replay per reported result. See [Viewing the replays](#viewing-the-replays) |
 | [docs/figure_comparison.md](docs/figure_comparison.md) | Side-by-side: each published figure panel next to our replication, with the numbers |
 | [REPLICATION.md](REPLICATION.md) | Results tables with CIs, and the numbered register of every decision, deviation and assumption (#1–46) |
 | [docs/paper_check.md](docs/paper_check.md) | A reader's guide (paradigm, dPCA) and a list of paper details to verify |
@@ -41,6 +44,16 @@ This branch (`replication`) adds an independent Python replication of the paper'
 | [docs/briefings.md](docs/briefings.md) | Per-phase briefings |
 | [PROGRESS.md](PROGRESS.md) | Status and log |
 | `results/figures/` | All figures (PNG and SVG) |
+
+### Viewing the replays
+- **Open it in any browser.** [docs/html/replays.html](docs/html/replays.html) is self-contained (about 10 MB, data embedded), so it needs no server and no Python. Only the fonts come from the internet; offline it uses system fonts.
+- **From GitHub**, an HTML file shows as source code. Either download it (open the file, then *Download raw file*), or serve it with GitHub Pages: *Settings → Pages → Deploy from a branch*, branch `replication`, folder `/docs`. The page is then at `https://<user>.github.io/bimanualBCI/html/replays.html`. Pages makes that folder public, and private repositories need a paid plan for it.
+- **Rebuilding** (`pixi run replays`) needs inputs that are not in git, about 220 MB in total:
+  - the Dryad files for days 1778, 1855, 1869, 1881 and 1883 in `Data/`;
+  - 11 model checkpoints in `results/checkpoints/`;
+  - three Fig 3 caches in `results/cache/`.
+
+  Keep a backup of these if you may want to change the replays. Without them, the caches come back with `pixi run fig3-decoding --force`, but the checkpoints need retraining (`fig4-rnn`, `ext-lstm`, `ext-arrays`, `ext-feas`: several GPU-hours). The script refuses any model that doesn't reproduce its logged test r.
 
 ## Setup
 1. Install [pixi](https://pixi.sh), then run `pixi install`.

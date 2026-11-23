@@ -321,3 +321,19 @@ Live status of the replication of Deo et al. 2024. The replication plan has phas
   - on bimanual trials (Supp Fig 2c), ridge ≥ FFN in ours.
 
   `REPLICATION.md` results rows and `paper_check.md` items updated.
+- **2026-11-23 paper-style figures (in progress):** `scripts/paper_style_figures.py` redraws our results in the paper's panel layouts into `results/figures/paperstyle/ps_*.png`; numbers in `results/paperstyle/values.json`. First findings:
+  - With the paper's statistic (median TTA, failures = 10 s), our 4 Fig 5a sessions match 4 of the paper's 6 almost point for point.
+  - Supp Fig 1d averaged per block set is 1.92 (paper 1.95; our earlier pooled day-1776 value was 1.70).
+  - Per-dimension jitter for ridge matches the paper (0.47 / 0.40 / 0.92 / 0.78 vs 0.48 / 0.41 / 0.93 / 0.81); the FFN is jitterier than the paper's.
+  - The PC1 time course reproduces the paper's pre-go laterality offset.
+  - Next: diagnose the remaining gaps (angular error, Supp Fig 1 counts, FFN, Fig 2b), then update `docs/figure_comparison.md`.
+- **2026-11-23 paper-style comparison done:** `docs/figure_comparison.md` now pairs each paper figure with our paper-layout version (`scripts/paper_style_figures.py`) and lists 12 major differences with tested causes (`scripts/diagnose_differences.py`, D1–D4).
+  - **Resolved:**
+    - #29: Fig 5a = 4 days + 1881/1883 simultaneous; all 18 median-TTA points match;
+    - #30: the paper's figure shows the 2×;
+    - #8: net displacement + median matches the paper's angular errors;
+    - Supp Fig 1d: 1.92 per set vs 1.95;
+    - Fig 2c: UniL-BiL with the literal method 0.41 / 0.44.
+  - **Partly open:** Fig 2b ratios; Supp Fig 1c counts (threshold-sensitive).
+  - **Open:** FFN jitter and laterality reliance (training settings ruled out).
+  - Tests 114 passed; HTML rebuilt.

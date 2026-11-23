@@ -14,7 +14,11 @@
   - Simulations reproduce the mechanism.
   - RNNs decode well offline. Training on time-warped, shuffled clips costs a little offline but is what made online control work.
 - **Bimanual time to target** is about 2× unimanual in the logs, where the paper's text says "only slightly longer" (#30). The paper's own Fig 5a shows the same 2× ([figure comparison](figure_comparison.md)), so only the wording disagrees.
-- **Remaining gaps are small:** right-hand (RH) suppression of 19% vs 12%; fewer single-electrode-tuned channels than in Supp Fig 1 (bimanual LH 28 vs 52); higher online angular errors (definition, #8).
+- **Redrawn in the paper's own figure formats** ([figure comparison](figure_comparison.md)), most panels match closely. With the paper's statistic (median, failures = 10 s) and session set, all 18 Fig 5a time-to-target points match, and the angular errors match with the paper's definition (#8).
+- **Remaining gaps:**
+  - suppression somewhat larger in ours (RH 19% vs 12%), partly an estimator choice;
+  - fewer tuned electrodes in Supp Fig 1 at our threshold;
+  - our FFN is jitterier at rest than the paper's and leans more on laterality. The cause is not the data or its training settings (open).
 - **Two of the paper's methods had to change to work at all:**
   - 5-fold cross-validated regression → split-half (#23)
   - raw position-difference regressors → unit direction (#21)

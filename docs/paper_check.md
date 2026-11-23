@@ -57,7 +57,7 @@ Tick each box once checked, and note what the paper actually says. Anything that
 
   Look for the exact definition, a formula, or the description of Fig 4b.
   - *Where:* Methods, "RNN decoder" / "Velocity targets"; the Fig 4b legend.
-- [ ] **Augmentation clip length (#14).** Is it "0.2–0.8 × snippet length" or "200–800 ms"? We now use 2–8 s (the Methods reading). Fig 4d supports it: the paper's augmented r is 0.82 / 0.82 vs raw 0.90 / 0.83, a drop like our 2–8-s models' and far smaller than with 200–800-ms clips ([figure comparison](figure_comparison.md#fig-4b-d-rnn-training-targets-and-offline-decoding-day-1869)).
+- [ ] **Augmentation clip length (#14).** Is it "0.2–0.8 × snippet length" or "200–800 ms"? We now use 2–8 s (the Methods reading). Fig 4d supports it: the paper's augmented r is 0.82 / 0.82 vs raw 0.90 / 0.83, a drop like our 2–8-s models' and far smaller than with 200–800-ms clips ([figure comparison](figure_comparison.md#fig-4d-rnn-offline-decoding)).
   - *Where:* Methods, "Data augmentation"; the Fig 4c legend.
 - [ ] **Augmentation velocity scaling (#15).** When a clip is stretched or compressed in time, is the velocity target rescaled? We assume not.
 - [ ] **RNN hyperparameters.** Any values for learning rate, batch size, number of steps, input noise, mean drift or L2 weight, even in a table or supplement.
@@ -76,10 +76,10 @@ Tick each box once checked, and note what the paper actually says. Anything that
   - tuned electrodes: uniR 83, uniL 50, biR 87, biL 28;
   - electrodes tuned to 0/1/2/3/4 contexts: 88 / 25 / 29 / 35 / 15.
 - [ ] **Supp Fig 1 ANOVA window and quadrant definition (#6, #18).** We use 300–700 ms and axis-aligned quadrants of the cursor→target direction.
-- [ ] **Fig 5 angular error (#8).** How is the "movement direction" computed: from cursor displacement or from decoded velocity? Is the target direction fixed at the go cue?
+- [x] **Fig 5 angular error (#8).** Answered by the data (2026-11-23): the paper's values match the angle of the net cursor displacement over 300–500 ms, median over trials ([figure comparison](figure_comparison.md#fig-5-online-two-cursor-control)). Original question: How is the "movement direction" computed: from cursor displacement or from decoded velocity? Is the target direction fixed at the go cue?
 - [x] **Fig 5a bimanual vs unimanual TTA (#30).** Read on 2026-11-23: the paper's Fig 5a itself shows bimanual ≈ 4.4–5.9 s vs unimanual ≈ 2–3 s on good sessions (about 2×), so it agrees with our logs; the text understates it. In our re-scoring, bimanual TTA is about 2× unimanual on every day (e.g. 1776: 5.7 s vs 2.2–2.6 s). The paper calls bimanual "only slightly longer". Read the Fig 5a values off the plot and check how TTA is defined (with or without the dwell? time to the first target?).
 - [ ] **Fig 5 time to acquisition (#7).** Does it include the 500-ms dwell? We use the task's logged trial length, which does.
-- [ ] **Fig 5a day list.**
+- [x] **Fig 5a day list.** Answered by the data (2026-11-23): 1776, 1778, 1790, 1792 plus the simultaneous blocks of 1881 and 1883 reproduce all six of the paper's sessions; Supp Table 2 was right.
   - Supplementary Table 2 lists 1881 and 1883 under Fig 5A.
   - The Methods summary listed only 1752, 1771, 1776, 1778, 1790 and 1792.
 

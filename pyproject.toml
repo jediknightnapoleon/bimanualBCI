@@ -84,6 +84,8 @@ ext-sbp = { cmd = "python -I -u scripts/ext_sbp.py", env = { CUDA_VISIBLE_DEVICE
 ext-sbp-plot = "python -u scripts/ext_sbp_plot.py"
 # Standalone HTML copies of the main docs (images embedded) in docs/html/; rerun after editing the .md files
 docs-html = "python scripts/build_html_docs.py"
+# Our results redrawn in the paper's figure layouts (results/figures/paperstyle/)
+paper-style = "python -u scripts/paper_style_figures.py"
 # Images for docs/figure_comparison.md (add --paper-dir DIR to re-crop the paper figures)
 figure-comparison = "python scripts/make_figure_comparison.py"
 check-gpu = "python -c \"import torch; print('torch', torch.__version__, 'cuda', torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else '')\""

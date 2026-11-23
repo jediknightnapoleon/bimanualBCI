@@ -135,7 +135,7 @@ The Markdown file is the source: edit it, then rebuild.</p>
 <td>Tuned electrodes (p &lt; 1e-5), uniR / uniL / biR / biL</td>
 <td>90 / 60 / 97 / 52 (figure)</td>
 <td>83 / 50 / 87 / 28 (<a href="../../results/figures/supp_fig1_tuning_counts.png">figure</a>)</td>
-<td>⚠️ RH preference matches; we find fewer tuned electrodes, most for biL (28 vs 52)</td>
+<td>⚠️ RH preference matches; we find fewer tuned electrodes, most for biL (28 vs 52); threshold-sensitive: at p &lt; 1e-3 with 8 directions 90 / 62 / 100 / 40 (<a href="figure_comparison.html#major-differences-and-their-causes">figure comparison</a>)</td>
 </tr>
 <tr>
 <td>Supp Fig 1e</td>
@@ -169,8 +169,8 @@ The Markdown file is the source: edit it, then rebuild.</p>
 <td>Fig 2c</td>
 <td>LH uni/bi tuning correlation, x / y</td>
 <td>0.42 / 0.45</td>
-<td>0.49 / 0.60</td>
-<td>✅ qualitatively (LH decorrelated); y somewhat higher</td>
+<td>0.49 / 0.60 (split-half, unit direction); <strong>0.41 / 0.44</strong> with the paper's literal 5-fold cvOLS and Eq. 2 per-step regressors</td>
+<td>✅ the gap is the estimator / regressor choice (<a href="figure_comparison.html#major-differences-and-their-causes">figure comparison</a>)</td>
 </tr>
 <tr>
 <td>Fig 2c</td>
@@ -188,10 +188,10 @@ The Markdown file is the source: edit it, then rebuild.</p>
 </tr>
 <tr>
 <td>Supp Fig 1d</td>
-<td>RH vs LH unimanual tuning strength (day 1776)</td>
-<td>1.95× (figure)</td>
-<td>1.70× (LH 41% weaker)</td>
-<td>✅ close</td>
+<td>RH vs LH unimanual tuning strength</td>
+<td>1.95× (figure; mean of per-set dots)</td>
+<td><strong>1.92×</strong> as the mean over 22 block sets (1.70× from one pooled fit on day 1776)</td>
+<td>✅ match once aggregated like the paper (<a href="figure_comparison.html#major-differences-and-their-causes">figure comparison</a>)</td>
 </tr>
 <tr>
 <td>Fig 2 PCA</td>
@@ -279,17 +279,17 @@ The Markdown file is the source: edit it, then rebuild.</p>
 </tr>
 <tr>
 <td>Fig 5a</td>
-<td>Bimanual TTA vs unimanual (RNN, 1776/1778/1790/1792)</td>
-<td>Text: bimanual &quot;only slightly longer&quot;. Figure: bi ≈ 4.4–5.9 s vs uni ≈ 2–3 s on good sessions (about 2×), timeouts on 3 sessions</td>
-<td>bi 5.4 s vs uniR 2.8 s / uniL 3.0 s (successful trials; about 2× on every day) (<a href="../../results/figures/fig5_online.png">figure</a>)</td>
-<td>✅ matches the paper's figure; only the text understates the gap (#30)</td>
+<td>Bimanual TTA vs unimanual (RNN; 6 sessions: 1776, 1778, 1790, 1792 + simultaneous blocks of 1881, 1883)</td>
+<td>Text: bimanual &quot;only slightly longer&quot;. Figure (median, failures = 10 s): bi ≈ 4.4–5.9 s vs uni ≈ 2–3 s on good sessions, timeouts on 3</td>
+<td><strong>Median with failures = 10 s: all 18 points match the paper's figure</strong> (e.g. 1778: 2.05 / 2.34 / 4.44 s vs ≈ 2.1 / 2.3 / 4.4). Mean over successful trials (our earlier summary): bi 5.4 s vs uni 2.8 / 3.0 s</td>
+<td>✅ matches the figure; only the text understates the gap (#30; <a href="figure_comparison.html#major-differences-and-their-causes">figure comparison</a>)</td>
 </tr>
 <tr>
 <td>Fig 5a</td>
 <td>Bimanual angular error higher</td>
-<td>Yes</td>
-<td>bi 52° vs uniR 34° / uniL 43°; higher on every day</td>
-<td>✅</td>
+<td>Yes; ≈ uniR 11–25°, biR 20–40°, uniL 13–49°, biL 30–65° (figure)</td>
+<td>Paper-consistent definition (net displacement 300–500 ms, median): 11–23° / 20–40° / 12–39° / 32–63°. Our per-bin mean (#8): 26–50° / 36–63° / 30–65° / 54–77°</td>
+<td>✅ (<a href="figure_comparison.html#major-differences-and-their-causes">figure comparison</a>)</td>
 </tr>
 <tr>
 <td>Fig 5a</td>
@@ -390,7 +390,7 @@ The Markdown file is the source: edit it, then rebuild.</p>
 <td>Fig 5 angular error</td>
 <td>The target direction is fixed at the go cue; movement direction comes from the per-bin cursor displacement over 300–500 ms; bins with no movement are skipped.</td>
 <td>The paper says only &quot;average difference ... 300–500 ms&quot;.</td>
-<td>Check in Phase 5</td>
+<td>RESOLVED 2026-11-23: the paper's values match the angle of the NET displacement over 300–500 ms with the median over trials (diagnostic D2); our per-bin mean is about 10–25° higher. Main pipeline unchanged; the paper-style figure uses the paper-consistent definition</td>
 </tr>
 <tr>
 <td>9</td>
@@ -550,7 +550,7 @@ The Markdown file is the source: edit it, then rebuild.</p>
 <td>Fig 5a day set</td>
 <td>MAIN: 1776, 1778, 1790, 1792 (standard RNN CL evaluation blocks). 1752 / 1771 have no CL data (calibration days); 1881 / 1883 &quot;simultaneous&quot; blocks are reported separately.</td>
 <td>Resolves the Supp Table 2 vs Methods discrepancy using the data.</td>
-<td>Done; PMC lists 1752, 1771, 1776, 1778, 1790, 1792, but the Dryad data for 1752 / 1771 has no CL blocks</td>
+<td>RESOLVED 2026-11-23: the paper's 6 Fig 5a sessions are 1776, 1778, 1790, 1792 + the simultaneous blocks of 1881 and 1883 (their medians match the paper's two remaining sessions); 1752 / 1771 are not in Fig 5a</td>
 </tr>
 <tr>
 <td>30</td>
@@ -558,7 +558,7 @@ The Markdown file is the source: edit it, then rebuild.</p>
 <td>Fig 5a bimanual TTA</td>
 <td>Reported as logged: bimanual about 2× unimanual on every day, larger than the paper's &quot;only slightly longer&quot;. Possible causes: a different TTA definition in the paper (e.g. excluding the dwell, or time to first target), or a different trial subset.</td>
 <td>Our TTA is the task's own record (<code>durationBinnedMove</code>).</td>
-<td>RESOLVED 2026-11-23: the paper's own Fig 5a shows bimanual about 2× unimanual on its good sessions, so our numbers match the figure; only the text's wording understates it (<a href="figure_comparison.html#fig-5a-online-two-cursor-control">figure comparison</a>)</td>
+<td>RESOLVED 2026-11-23: the paper's own Fig 5a shows bimanual about 2× unimanual on its good sessions, so our numbers match the figure; only the text's wording understates it (<a href="figure_comparison.html#fig-5-online-two-cursor-control">figure comparison</a>)</td>
 </tr>
 <tr>
 <td>31</td>

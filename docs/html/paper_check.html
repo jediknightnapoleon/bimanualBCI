@@ -153,7 +153,7 @@ The Markdown file is the source: edit it, then rebuild.</p>
 </ul>
 </li>
 <li class="task-list-item">
-<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Augmentation clip length (#14).</strong> Is it &quot;0.2–0.8 × snippet length&quot; or &quot;200–800 ms&quot;? We now use 2–8 s (the Methods reading). Fig 4d supports it: the paper's augmented r is 0.82 / 0.82 vs raw 0.90 / 0.83, a drop like our 2–8-s models' and far smaller than with 200–800-ms clips (<a href="figure_comparison.html#fig-4b-d-rnn-training-targets-and-offline-decoding-day-1869">figure comparison</a>).</p>
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Augmentation clip length (#14).</strong> Is it &quot;0.2–0.8 × snippet length&quot; or &quot;200–800 ms&quot;? We now use 2–8 s (the Methods reading). Fig 4d supports it: the paper's augmented r is 0.82 / 0.82 vs raw 0.90 / 0.83, a drop like our 2–8-s models' and far smaller than with 200–800-ms clips (<a href="figure_comparison.html#fig-4d-rnn-offline-decoding">figure comparison</a>).</p>
 <ul>
 <li><em>Where:</em> Methods, &quot;Data augmentation&quot;; the Fig 4c legend.</li>
 </ul>
@@ -191,7 +191,7 @@ The Markdown file is the source: edit it, then rebuild.</p>
 <p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Supp Fig 1 ANOVA window and quadrant definition (#6, #18).</strong> We use 300–700 ms and axis-aligned quadrants of the cursor→target direction.</p>
 </li>
 <li class="task-list-item">
-<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Fig 5 angular error (#8).</strong> How is the &quot;movement direction&quot; computed: from cursor displacement or from decoded velocity? Is the target direction fixed at the go cue?</p>
+<p><input class="task-list-item-checkbox" checked="checked" disabled="disabled" type="checkbox"> <strong>Fig 5 angular error (#8).</strong> Answered by the data (2026-11-23): the paper's values match the angle of the net cursor displacement over 300–500 ms, median over trials (<a href="figure_comparison.html#fig-5-online-two-cursor-control">figure comparison</a>). Original question: How is the &quot;movement direction&quot; computed: from cursor displacement or from decoded velocity? Is the target direction fixed at the go cue?</p>
 </li>
 <li class="task-list-item">
 <p><input class="task-list-item-checkbox" checked="checked" disabled="disabled" type="checkbox"> <strong>Fig 5a bimanual vs unimanual TTA (#30).</strong> Read on 2026-11-23: the paper's Fig 5a itself shows bimanual ≈ 4.4–5.9 s vs unimanual ≈ 2–3 s on good sessions (about 2×), so it agrees with our logs; the text understates it. In our re-scoring, bimanual TTA is about 2× unimanual on every day (e.g. 1776: 5.7 s vs 2.2–2.6 s). The paper calls bimanual &quot;only slightly longer&quot;. Read the Fig 5a values off the plot and check how TTA is defined (with or without the dwell? time to the first target?).</p>
@@ -200,7 +200,7 @@ The Markdown file is the source: edit it, then rebuild.</p>
 <p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Fig 5 time to acquisition (#7).</strong> Does it include the 500-ms dwell? We use the task's logged trial length, which does.</p>
 </li>
 <li class="task-list-item">
-<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Fig 5a day list.</strong></p>
+<p><input class="task-list-item-checkbox" checked="checked" disabled="disabled" type="checkbox"> <strong>Fig 5a day list.</strong> Answered by the data (2026-11-23): 1776, 1778, 1790, 1792 plus the simultaneous blocks of 1881 and 1883 reproduce all six of the paper's sessions; Supp Table 2 was right.</p>
 <ul>
 <li>Supplementary Table 2 lists 1881 and 1883 under Fig 5A.</li>
 <li>The Methods summary listed only 1752, 1771, 1776, 1778, 1790 and 1792.</li>

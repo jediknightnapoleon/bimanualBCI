@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phase 11: threshold crossings vs spike-band power in T5</title>
+<style>
+:root {
+  --bg: #ffffff; --fg: #1f2328; --muted: #59636e; --border: #d1d9e0; --soft: #f6f8fa;
+  --link: #0969da; --accent: #0969da; --code-bg: #eff1f3;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --border: #3d444d; --soft: #151b23;
+    --link: #4493f8; --accent: #4493f8; --code-bg: #262c36;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --border: #3d444d; --soft: #151b23;
+  --link: #4493f8; --accent: #4493f8; --code-bg: #262c36;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+}
+nav {
+  position: sticky; top: 0; z-index: 1; background: var(--soft); border-bottom: 1px solid var(--border);
+  padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 14px;
+}
+nav a { color: var(--muted); text-decoration: none; }
+nav a:hover { color: var(--link); }
+nav a.current { color: var(--fg); font-weight: 600; }
+main { max-width: 1180px; margin: 0 auto; padding: 24px 16px 64px; }
+.source-note { color: var(--muted); font-size: 13px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 16px; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 1.6em 0 0.6em; }
+h1 { font-size: 2em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; margin-top: 0.4em; }
+h2 { font-size: 1.5em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+h3 { font-size: 1.25em; }
+a { color: var(--link); }
+p, ul, ol, table, pre, blockquote { margin: 0 0 1em; }
+ul, ol { padding-left: 2em; }
+li + li { margin-top: 0.25em; }
+li.task-list-item { list-style: none; }
+li.task-list-item input { margin: 0 0.4em 0 -1.4em; vertical-align: middle; }
+code { background: var(--code-bg); border-radius: 4px; padding: 0.15em 0.35em; font-size: 0.88em;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; }
+pre { background: var(--code-bg); border-radius: 6px; padding: 12px 16px; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+blockquote { color: var(--muted); border-left: 4px solid var(--border); margin-left: 0; padding: 0 1em; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
+img { max-width: 100%; height: auto; background: #fff; }
+.table-wrap { overflow-x: auto; margin: 0 0 1em; }
+table { border-collapse: collapse; font-size: 14px; }
+th, td { border: 1px solid var(--border); padding: 6px 10px; vertical-align: top; text-align: left; }
+th { background: var(--soft); }
+tr:nth-child(2n) td { background: color-mix(in srgb, var(--soft) 60%, transparent); }
+/* side-by-side figure tables (raw HTML <table> with <img>) span the page in two equal columns */
+table:has(img) { width: 100%; table-layout: fixed; }
+table:has(img) td { background: transparent; }
+</style>
+</head>
+<body>
+<nav><a href="README.html">README</a> <a href="report.html">Report</a> <a href="figure_comparison.html">Figure comparison</a> <a href="REPLICATION.html">Results &amp; register</a> <a href="ext_sbp_notes.html" class=current>SBP notes</a> <a href="paper_check.html">Paper check</a> <a href="methods_notes.html">Methods notes</a> <a href="briefings.html">Briefings</a></nav>
+<main>
+<p class="source-note">HTML copy of <code>docs/ext_sbp_notes.md</code>, built 2026-11-23 by <code>pixi run docs-html</code>.
+The Markdown file is the source: edit it, then rebuild.</p>
+<h1 id="phase-11-threshold-crossings-vs-spike-band-power-in-t5">Phase 11: threshold crossings vs spike-band power in T5</h1>
+<p><strong>Question.</strong> The 8 × 32 flexible-shank system records spike-band power (SBP) only. The bimanual T5 data used in Phases 0–10 has threshold crossings (TX) only. Would an SBP-only system lose decoding performance, or degrade differently with fewer or bad channels?</p>
+<p><strong>Short answer.</strong> With the same participant and arrays, SBP decoded slightly worse than TX on all 48 channels:</p>
+<ul>
+<li>velocity r 0.61–0.63 vs 0.66 with ridge, 0.67 vs 0.70 with the FFN;</li>
+<li>8-target accuracy 0.74–0.77 vs 0.81.</li>
+</ul>
+<p>The gap shrinks or reverses with few channels:</p>
+<ul>
+<li>With 4–8 random channels, SBP was equal or slightly better.</li>
+<li>On array B alone, SBP matched TX for velocity and beat it for target classification (0.78–0.81 vs 0.66).</li>
+</ul>
+<p>Under random channel muting, SBP keeps about the same fraction of its performance as TX. SBP is not just a copy of TX:</p>
+<ul>
+<li>on average, an electrode's own TX explains only 35% of its SBP variance;</li>
+<li>SBP added to TX improves decoding slightly (+0.02 velocity r).</li>
+</ul>
+<p>Read every number with the caveats below. Several of them probably favour TX.</p>
+<p>Figure: <code>results/figures/ext_sbp.png</code>. Numbers: <code>results/ext_sbp/summary.json</code>. Code: <code>scripts/ext_sbp.py</code>, <code>scripts/ext_sbp_plot.py</code>, <code>bimanual/sbp.py</code>.</p>
+<hr />
+<h2 id="caveats-read-first">Caveats (read first)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Caveat</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Only 48 of 192 electrodes, kept by a TX firing-rate cut (&gt; 2 Hz)</strong> (20 on array A, 28 on array B).</td>
+<td>Electrodes with few threshold crossings were removed before we got the data. Those are exactly the electrodes where SBP can still carry signal (small, distant units below the −3.5 × RMS threshold). The selection therefore <strong>favours TX</strong>, and the SBP-only advantage on a full array is likely underestimated. It also caps the channel-count curves at 20 / 28 per array, not 64 / 96.</td>
+</tr>
+<tr>
+<td><strong>Acausal Gaussian smoothing (σ = 100 ms) applied by the data authors</strong></td>
+<td>The features use future samples, so nothing here is a real-time decoder. Absolute r and accuracy values are inflated relative to a causal decoder. The TX–SBP <em>comparison</em> is fair because both features had the same smoothing. Smoothing also helps TX more than it would online: raw 20-ms TX counts are noisier than raw SBP, so causal decoding would likely narrow the gap further. That is an expectation, not something tested here.</td>
+</tr>
+<tr>
+<td><strong>Open-loop, one-hand, radial-8 attempted wrist movements</strong></td>
+<td>The cursor followed a cued trajectory, so &quot;velocity&quot; is the instructed movement, not a decoded one. There is no bimanual, closed-loop or two-cursor condition. Whether SBP preserves the <em>laterality</em> signal that the paper's FFN/RNN exploit is <strong>not tested</strong>.</td>
+</tr>
+<tr>
+<td><strong>One session, 3 blocks (7, 8, 9), 337 usable trials</strong> (5 dropped for NaNs)</td>
+<td>Leave-one-block-out has 3 folds and about 225 training trials. Classification accuracies have wide CIs (±5–8 points), and day-to-day drift (a known difference between TX and SBP) is not tested.</td>
+</tr>
+<tr>
+<td><strong>The SBP band differs from the target system's</strong></td>
+<td>Here: 250–5000 Hz band-pass, acausal 4th-order Butterworth, mean power per bin. Target system: 300 Hz high-pass, with the rest of the processing unknown. Band edges, power vs amplitude, rectification and decimation all change SBP's noise level and how much unit activity it carries.</td>
+</tr>
+<tr>
+<td><strong>No LSTM and no bimanual pipeline</strong></td>
+<td>Only ridge and a 1-layer FFN were used. The smoothed, trial-aligned data cannot feed the Phase 8 LSTM. We also could not build an SBP stand-in for the bimanual sessions: a raw-bin TX→SBP model cannot be fitted from smoothed, trial-aligned data, so that planned step was dropped (register #44).</td>
+</tr>
+<tr>
+<td><strong>T5 only</strong></td>
+<td>One participant, one pair of Utah arrays, years after implant. Flexible shanks have different electrode sizes, impedances and tissue contact, so their SBP-to-TX relation may differ.</td>
+</tr>
+<tr>
+<td><strong>Log vs raw SBP</strong></td>
+<td>log(SBP) was chosen a priori as the main SBP feature. Raw SBP turned out slightly better (by 0.01–0.03), so the log-SBP numbers in items 2–3 are mildly pessimistic. Raw SBP is in <code>summary.json</code> throughout.</td>
+</tr>
+<tr>
+<td><strong>The &quot;dead channel&quot; muting value for SBP is an assumption</strong></td>
+<td>A disconnected SBP channel was set to its training 1st percentile, i.e. its floor. Real failed SBP channels may instead sit at amplifier noise or rail high. The dead-mode classification results (below) depend on this choice.</td>
+</tr>
+<tr>
+<td><strong>The &quot;noisy&quot; muting mode is unsmoothed N(0, 1)</strong></td>
+<td>Real channels in this data set are smoothed, so the injected noise is rougher than a real noisy smoothed channel would be. It is the same for TX and SBP.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="what-was-tested">What was tested</h2>
+<p>Everything is CPU only and leave-one-block-out (3 folds). Ridge α is chosen by an inner leave-one-block-out on the training blocks. Features are z-scored with training-block statistics.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Analysis</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Feature comparison</td>
+<td>Features:<br>• TX<br>• SBP (raw)<br>• log SBP<br>• TX + log SBP<br>• <strong>SBP residual</strong>: log SBP minus the part predicted from the same electrode's TX (5 time shifts, fitted on training blocks)<br><br>Targets:<br>• per-bin cursor velocity, −200 to 500 ms after the go cue: the cursor's outward movement, excluding its jump back at about 600 ms<br>• 8-target classification from mean features over 0–400 ms<br>• preparatory classification from the delay period, 200–700 ms after delay start, for trials with delay ≥ 1 s (183 trials)<br><br>Decoders: ridge, ridge with causal lags (0/40/80 ms), FFN with 3 seeds.<br>Paired bootstrap over trials (2000 resamples) of SBP − TX.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Channel count</td>
+<td>200 random subsets per n, <strong>the same subsets for TX and SBP</strong>:<br>• all 48: n = 4, 8, 16, 32, 48<br>• array A: n = 4, 8, 16, 20<br>• array B: n = 4, 8, 16, 28<br><br>Plus greedy best-n (forward selection on the inner-fold velocity r, separately for TX and SBP).</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Muting at test time</td>
+<td>Fraction f = 0–0.6, 20 masks each (seed 7000 + 100f, as in Phase 10).<br><br>Modes:<br>• zero: detected and removed<br>• dead: flat channel<br>• noisy: N(0, 1)<br><br>Ridge trained normally and with channel-dropout augmentation.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Overlap</td>
+<td>Per-electrode correlation of TX and SBP; held-out R² of SBP predicted from the same electrode's TX and from all 48 TX channels.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="results">Results</h2>
+<h3 id="1-feature-comparison-all-48-channels-sbp--log-sbp-unless-marked">1. Feature comparison, all 48 channels (SBP = log SBP unless marked)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analysis</th>
+<th>TX</th>
+<th>SBP</th>
+<th>SBP − TX [95% CI]</th>
+<th>raw SBP</th>
+<th>TX + SBP</th>
+<th>SBP residual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Velocity r, ridge</td>
+<td>0.662</td>
+<td>0.613</td>
+<td>−0.049 [−0.070, −0.031]</td>
+<td>0.625</td>
+<td>0.681</td>
+<td>0.546</td>
+</tr>
+<tr>
+<td>Velocity r, ridge + lags</td>
+<td>0.663</td>
+<td>0.619</td>
+<td>−0.044 [−0.064, −0.027]</td>
+<td>0.634</td>
+<td>0.685</td>
+<td>0.520</td>
+</tr>
+<tr>
+<td>Velocity r, FFN (3 seeds)</td>
+<td>0.700</td>
+<td>0.673</td>
+<td>−0.027 [−0.047, −0.009]</td>
+<td>0.676</td>
+<td>0.713</td>
+<td>0.547</td>
+</tr>
+<tr>
+<td>8-target accuracy, movement</td>
+<td>0.810</td>
+<td>0.736</td>
+<td>−0.074 [−0.128, −0.018]</td>
+<td>0.766 (−0.045 [−0.098, +0.009])</td>
+<td>0.843</td>
+<td>0.576</td>
+</tr>
+<tr>
+<td>8-target accuracy, delay period (preparatory)</td>
+<td>0.617</td>
+<td>0.568</td>
+<td>−0.049 [−0.131, +0.033]</td>
+<td>0.590</td>
+<td>0.639</td>
+<td>0.525</td>
+</tr>
+</tbody>
+</table></div>
+<p>Chance for 8-target accuracy is 0.125.</p>
+<ul>
+<li>SBP reaches about 93–96% of TX velocity r and about 91–95% of TX target accuracy.</li>
+<li>The gap is smallest for the nonlinear decoder (FFN) and is not significant for preparatory activity.</li>
+<li>TX + SBP beats TX alone for velocity: +0.019 [+0.010, +0.028] for ridge and +0.013 [+0.002, +0.025] for the FFN. So SBP carries some information TX does not.</li>
+<li>The SBP residual (SBP with its own electrode's TX removed) still decodes velocity at r = 0.55 and targets at 0.58. Part of that is information shared with <em>other</em> electrodes' TX, which is why adding SBP to TX helps only slightly.</li>
+<li>Causal lags barely help either feature (+0.001 to +0.009), as expected for already-smoothed data.</li>
+</ul>
+<h3 id="2-channel-count-ridge-median-of-200-random-subsets-velocity-r--8-target-accuracy">2. Channel count (ridge, median of 200 random subsets; velocity r / 8-target accuracy)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Pool</th>
+<th>n</th>
+<th>TX</th>
+<th>log SBP</th>
+<th>raw SBP</th>
+<th>SBP better in (log / raw)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all 48</td>
+<td>4</td>
+<td>0.256 / 0.31</td>
+<td>0.273 / 0.32</td>
+<td>0.283 / 0.32</td>
+<td>61% / 67% of subsets (velocity)</td>
+</tr>
+<tr>
+<td>all 48</td>
+<td>8</td>
+<td>0.380 / 0.44</td>
+<td>0.396 / 0.43</td>
+<td>0.409 / 0.44</td>
+<td>56% / 59%</td>
+</tr>
+<tr>
+<td>all 48</td>
+<td>16</td>
+<td>0.510 / 0.59</td>
+<td>0.507 / 0.59</td>
+<td>0.518 / 0.59</td>
+<td>53% / 57%</td>
+</tr>
+<tr>
+<td>all 48</td>
+<td>32</td>
+<td>0.622 / 0.73</td>
+<td>0.581 / 0.70</td>
+<td>0.594 / 0.71</td>
+<td>20% / 26%</td>
+</tr>
+<tr>
+<td>all 48</td>
+<td>48</td>
+<td>0.662 / 0.81</td>
+<td>0.613 / 0.74</td>
+<td>0.625 / 0.77</td>
+<td>—</td>
+</tr>
+<tr>
+<td>array A</td>
+<td>8</td>
+<td>0.396 / 0.47</td>
+<td>0.405 / 0.43</td>
+<td>0.410 / 0.43</td>
+<td>53% / 59%</td>
+</tr>
+<tr>
+<td>array A</td>
+<td>20</td>
+<td>0.543 / 0.69</td>
+<td>0.524 / 0.56</td>
+<td>0.526 / 0.58</td>
+<td>—</td>
+</tr>
+<tr>
+<td>array B</td>
+<td>8</td>
+<td>0.369 / 0.42</td>
+<td>0.411 / 0.49</td>
+<td>0.423 / 0.50</td>
+<td>70% / 74%</td>
+</tr>
+<tr>
+<td>array B</td>
+<td>16</td>
+<td>0.520 / 0.56</td>
+<td>0.537 / 0.65</td>
+<td>0.551 / 0.66</td>
+<td>69% / 82%</td>
+</tr>
+<tr>
+<td>array B</td>
+<td>28</td>
+<td>0.618 / 0.66</td>
+<td>0.624 / 0.78</td>
+<td>0.641 / 0.81</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Greedy best-n, velocity r</strong> (TX / log SBP / raw SBP):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Pool</th>
+<th>n = 4</th>
+<th>n = 8</th>
+<th>n = 16</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all 48</td>
+<td>0.48 / 0.49 / 0.50</td>
+<td>0.61 / 0.54 / 0.58</td>
+<td>0.64 / 0.60 / 0.61</td>
+</tr>
+<tr>
+<td>array B</td>
+<td>0.52 / 0.46 / 0.47</td>
+<td>0.59 / 0.54 / 0.51</td>
+<td>0.61 / 0.58 / 0.60</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>With few random channels (4–16), SBP is as good as TX or slightly better.</strong> Its disadvantage appears only when most channels are used.</li>
+<li>On array B, SBP is equal or better at every n, and much better for target classification.</li>
+<li>On array A, SBP is worse for classification (0.56 vs 0.69 at n = 20).</li>
+<li>With <em>chosen</em> channels, TX has a small edge (about 0.03–0.07 at n = 8), presumably because the best TX electrodes have well-isolated units.</li>
+<li>The per-subset spread is large (5–95% band, about ±0.1 at n = 8). Which channels you get matters more than which feature you use.</li>
+<li>Oddity: SBP target accuracy on all 48 channels (0.74) is <em>below</em> array B alone (0.78). With about 225 training trials and 8 classes, adding array A's weaker SBP channels costs more than it adds. This looks like a small-data effect, not a property of SBP.</li>
+</ul>
+<h3 id="3-muting-ridge-on-all-48-velocity-r-mean-over-20-masks">3. Muting (ridge on all 48; velocity r; mean over 20 masks)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>f</th>
+<th>TX</th>
+<th>log SBP</th>
+<th>Retained (TX / SBP)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>zero (detected)</td>
+<td>0.3</td>
+<td>0.600</td>
+<td>0.546</td>
+<td>91% / 89%</td>
+</tr>
+<tr>
+<td>zero (detected)</td>
+<td>0.5</td>
+<td>0.529</td>
+<td>0.470</td>
+<td>80% / 77%</td>
+</tr>
+<tr>
+<td>dead (undetected)</td>
+<td>0.3</td>
+<td>0.590</td>
+<td>0.526</td>
+<td>89% / 86%</td>
+</tr>
+<tr>
+<td>dead (undetected)</td>
+<td>0.5</td>
+<td>0.507</td>
+<td>0.434</td>
+<td>77% / 71%</td>
+</tr>
+<tr>
+<td>noisy (undetected)</td>
+<td>0.3</td>
+<td>0.543</td>
+<td>0.481</td>
+<td>82% / 78%</td>
+</tr>
+<tr>
+<td>noisy (undetected)</td>
+<td>0.5</td>
+<td>0.417</td>
+<td>0.350</td>
+<td>63% / 57%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>For velocity, SBP loses about the same <em>fraction</em> of performance as TX under muting, a few points more.</li>
+<li>Undetected noisy channels hurt both most, so <strong>bad-channel detection matters more than the choice of feature</strong>.</li>
+<li><strong>8-target classification with undetected dead channels</strong> (assumed floor value; see caveats): at f = 0.3, SBP drops to 0.37–0.40 vs TX 0.54, from 0.74–0.77 and 0.81 at f = 0. A flat SBP channel at its floor pushes the trial-mean input far from the training distribution. This is a warning to detect flat SBP channels online, e.g. by variance, not to assume they are harmless.</li>
+<li><strong>Channel-dropout augmentation does not help a ridge decoder</strong> (±0.01 at every f). A linear model can't learn to ignore a channel conditionally. Phase 10 tests dropout on the LSTM, which is where it can matter.</li>
+</ul>
+<h3 id="4-how-much-of-sbp-is-tx">4. How much of SBP is TX?</h3>
+<ul>
+<li><strong>Correlation</strong> between an electrode's TX and log SBP: median 0.62 (IQR 0.45–0.72); array A 0.59, array B 0.63.</li>
+<li><strong>Held-out R² of SBP from TX:</strong>
+<ul>
+<li>from the same electrode's TX: median 0.35 (IQR 0.14–0.47);</li>
+<li>from all 48 TX channels: median 0.56 (IQR 0.35–0.67).</li>
+</ul>
+</li>
+<li>R² rises with the electrode's TX rate (panel h). On low-rate electrodes, SBP is mostly <em>not</em> TX.</li>
+</ul>
+<hr />
+<h2 id="what-this-means-for-the-8--32-sbp-system">What this means for the 8 × 32 SBP system</h2>
+<ol>
+<li><strong>SBP alone is very likely sufficient for decoding.</strong> On the same electrodes, SBP is at most about 5–7% behind TX with all channels. It is level or ahead with few channels, and ahead on one of the two arrays. Two things work against TX in a real system: the TX-favouring channel cut here, and raw, causal 20-ms bins, where TX counts are noisier. Neither is tested here. So the gap here is <em>probably</em> an overestimate of what an SBP-only system would see, if its SBP is comparable. That is a reasoned expectation, not a measured bound.</li>
+<li><strong>The bimanual-specific question is not answered.</strong> Whether SBP keeps the laterality signal and the hand-specific tuning the paper relies on can only be tested with bimanual SBP data. This is the main reason to ask for SBP from the 8 × 32 system with <em>both</em> hands' attempted movements, even one-hand-at-a-time blocks.</li>
+<li><strong>Channel quality handling matters more than the feature.</strong> Plan for:
+<ul>
+<li>online detection of flat or noisy SBP channels: a flat channel hurt SBP classification badly here;</li>
+<li>re-zeroing detected channels;</li>
+<li>for the LSTM, the channel-dropout training tested in Phase 10.</li>
+</ul>
+</li>
+<li><strong>Match the SBP processing before comparing.</strong> Ask the system's team for:
+<ul>
+<li>the exact SBP definition (filter, band, rectification, bin);</li>
+<li>whether they also log TX;</li>
+<li>raw-rate SBP, i.e. not acausally smoothed.
+If both features are available, TX + SBP was the best combination here (+0.01–0.03).</li>
+</ul>
+</li>
+</ol>
+
+</main>
+</body>
+</html>

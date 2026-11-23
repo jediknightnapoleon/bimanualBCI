@@ -28,7 +28,7 @@
 
 **Where we differ:**
 
-1. Bimanual time to acquisition is about 2× unimanual in the logs, where the paper says "only slightly longer" (#30).
+1. Bimanual time to acquisition is about 2× unimanual in the logs, where the paper's text says "only slightly longer" (#30). The paper's own Fig 5a shows the same 2×, so only the wording differs ([figure comparison](docs/figure_comparison.md)).
 2. RH suppression comes out slightly larger (18.7% vs 12%).
 3. Two methods had to deviate to work at all:
    - split-half instead of 5-fold cvOLS, because 5-fold explodes on small sets (#23);

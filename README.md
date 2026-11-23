@@ -31,6 +31,7 @@ This branch (`replication`) adds an independent Python replication of the paper'
 | File | Contents |
 |---|---|
 | [docs/report.md](docs/report.md) | Narrative write-up, claim by claim, plus the extensions |
+| [docs/html/](docs/html/) | Standalone HTML copies of the documents below, with images embedded; open them in any browser. Rebuild with `pixi run docs-html` |
 | [docs/figure_comparison.md](docs/figure_comparison.md) | Side-by-side: each published figure panel next to our replication, with the numbers |
 | [REPLICATION.md](REPLICATION.md) | Results tables with CIs, and the numbered register of every decision, deviation and assumption (#1–46) |
 | [docs/paper_check.md](docs/paper_check.md) | A reader's guide (paradigm, dPCA) and a list of paper details to verify |

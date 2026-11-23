@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methods notes: paper methods → code</title>
+<style>
+:root {
+  --bg: #ffffff; --fg: #1f2328; --muted: #59636e; --border: #d1d9e0; --soft: #f6f8fa;
+  --link: #0969da; --accent: #0969da; --code-bg: #eff1f3;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --border: #3d444d; --soft: #151b23;
+    --link: #4493f8; --accent: #4493f8; --code-bg: #262c36;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --border: #3d444d; --soft: #151b23;
+  --link: #4493f8; --accent: #4493f8; --code-bg: #262c36;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+}
+nav {
+  position: sticky; top: 0; z-index: 1; background: var(--soft); border-bottom: 1px solid var(--border);
+  padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 14px;
+}
+nav a { color: var(--muted); text-decoration: none; }
+nav a:hover { color: var(--link); }
+nav a.current { color: var(--fg); font-weight: 600; }
+main { max-width: 1180px; margin: 0 auto; padding: 24px 16px 64px; }
+.source-note { color: var(--muted); font-size: 13px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 16px; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 1.6em 0 0.6em; }
+h1 { font-size: 2em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; margin-top: 0.4em; }
+h2 { font-size: 1.5em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+h3 { font-size: 1.25em; }
+a { color: var(--link); }
+p, ul, ol, table, pre, blockquote { margin: 0 0 1em; }
+ul, ol { padding-left: 2em; }
+li + li { margin-top: 0.25em; }
+li.task-list-item { list-style: none; }
+li.task-list-item input { margin: 0 0.4em 0 -1.4em; vertical-align: middle; }
+code { background: var(--code-bg); border-radius: 4px; padding: 0.15em 0.35em; font-size: 0.88em;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; }
+pre { background: var(--code-bg); border-radius: 6px; padding: 12px 16px; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+blockquote { color: var(--muted); border-left: 4px solid var(--border); margin-left: 0; padding: 0 1em; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
+img { max-width: 100%; height: auto; background: #fff; }
+.table-wrap { overflow-x: auto; margin: 0 0 1em; }
+table { border-collapse: collapse; font-size: 14px; }
+th, td { border: 1px solid var(--border); padding: 6px 10px; vertical-align: top; text-align: left; }
+th { background: var(--soft); }
+tr:nth-child(2n) td { background: color-mix(in srgb, var(--soft) 60%, transparent); }
+/* side-by-side figure tables (raw HTML <table> with <img>) span the page in two equal columns */
+table:has(img) { width: 100%; table-layout: fixed; }
+table:has(img) td { background: transparent; }
+</style>
+</head>
+<body>
+<nav><a href="README.html">README</a> <a href="report.html">Report</a> <a href="figure_comparison.html">Figure comparison</a> <a href="REPLICATION.html">Results &amp; register</a> <a href="ext_sbp_notes.html">SBP notes</a> <a href="paper_check.html">Paper check</a> <a href="methods_notes.html" class=current>Methods notes</a> <a href="briefings.html">Briefings</a></nav>
+<main>
+<p class="source-note">HTML copy of <code>docs/methods_notes.md</code>, built 2026-11-23 by <code>pixi run docs-html</code>.
+The Markdown file is the source: edit it, then rebuild.</p>
+<h1 id="methods-notes-paper-methods--code">Methods notes: paper methods → code</h1>
+<p>This file maps each method in the paper to the code that implements it. Each section is filled in when the corresponding code is written.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Paper method</th>
+<th>Code</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Re-run safety (not in the paper)</td>
+<td><code>bimanual/cache.py</code></td>
+<td>Skip a step if its outputs exist, write files atomically, keep append-only JSONL logs</td>
+</tr>
+<tr>
+<td>Trial labels for Fig 1b-c: movement type and 8 direction wedges</td>
+<td><code>bimanual/conditions.py</code> (<code>trial_conditions</code>, <code>which_target</code>)</td>
+<td>Faithful port of <code>tuningAnalysis.m:30-53, 154-202</code>. Keeps the MATLAB quirks: angles are floored to whole degrees, and a vector exactly on an axis gets NaN. <code>goCue</code> is 1-based in the <code>.mat</code> files.</td>
+</tr>
+<tr>
+<td>MATLAB/Octave reference oracle</td>
+<td><code>matlab_reference/export_tuning_reference.m</code></td>
+<td>Runs <code>tuningAnalysis.m</code> lines 13–118 verbatim, without plotting, and saves the tuning curves for comparison with the Python port</td>
+</tr>
+<tr>
+<td>Fig 5 TTA (500-ms simultaneous dwell, 10-s timeout)</td>
+<td><code>bimanual/behavior.py::time_to_acquisition</code></td>
+<td>ASSUMPTION: TTA is measured to the end of the dwell (<code>include_dwell=True</code>). The target radius is a parameter, to be read from the data.</td>
+</tr>
+<tr>
+<td>Fig 5 angular error (300–500 ms after go)</td>
+<td><code>bimanual/behavior.py::angular_error</code></td>
+<td>ASSUMPTION: the target direction is fixed at the go cue; movement direction comes from the per-bin cursor displacement; bins with no movement are skipped.</td>
+</tr>
+<tr>
+<td>Fig 4e speed traces</td>
+<td><code>bimanual/behavior.py::speed_profile</code></td>
+<td>Speed per bin</td>
+</tr>
+<tr>
+<td>95% bootstrap CIs (10k)</td>
+<td><code>bimanual/stats.py::bootstrap_ci</code></td>
+<td>Percentile bootstrap; NaNs (failed trials) are dropped</td>
+</tr>
+<tr>
+<td>Eq. 1–2 encoding model, cvOLS</td>
+<td><code>bimanual/encoding.py::cv_ols</code></td>
+<td><code>method=&quot;kfold&quot;</code> (the paper's 5-fold: train on the other folds, test on fold k alone) or <code>&quot;splithalf&quot;</code> (50 random trial halves; MAIN, register #23). Splits are always by trial (<code>groups</code>).</td>
+</tr>
+<tr>
+<td>Tuning strength (Fig 2b)</td>
+<td><code>encoding.py::cv_magnitude</code>, <code>tuning_strength</code></td>
+<td>Unbiased squared norm = mean of cross-fold products &lt;train_k, test_k&gt;; magnitude = signed square root; a hand's strength = mean of its x and y magnitudes. DEVIATION: reimplemented from the Willett et al. 2020 description, not their code.</td>
+</tr>
+<tr>
+<td>Tuning correlation (Fig 2c)</td>
+<td><code>encoding.py::cv_correlation</code></td>
+<td>Channel-centered (Pearson). Models from different trials use full-fit cross products; within one model, cross-fold products. Can slightly exceed ±1.</td>
+</tr>
+<tr>
+<td>Eq. 4 laterality axis and removal (Figs 2, 3)</td>
+<td><code>encoding.py::laterality_axis</code>, <code>remove_axis</code></td>
+<td>Removal projects out the unit b_lat; a refit then gives b_lat ≈ 0</td>
+</tr>
+<tr>
+<td>RNN targets (Fig 4b; Supp Fig 3)</td>
+<td><code>bimanual/targets.py::build_targets</code></td>
+<td>ASSUMPTION: &quot;saturated&quot; = min-jerk speed bell clipped at <code>sat</code>=0.5 of its peak and rescaled (alternative: <code>hold_to_end=True</code>). 200-ms reaction time. 4 context classes. Balancing strata: delay×3 + rest + movement type × quadrant.</td>
+</tr>
+<tr>
+<td>Temporal fracturing (Fig 4c-d)</td>
+<td><code>bimanual/augment.py::SnippetSampler</code></td>
+<td>10-s snippets (500 bins); ASSUMPTION: clips are 10–40 bins (200–800 ms); dilation U[0.5, 2] by linear interpolation (labels use the nearest bin); strata sampled uniformly; train/val split by trial before augmentation. ASSUMPTION: velocity amplitude is not rescaled by the dilation.</td>
+</tr>
+<tr>
+<td>Non-augmented baseline (Fig 4d)</td>
+<td><code>augment.py::raw_snippets</code></td>
+<td>Consecutive 500-bin windows in the original order</td>
+</tr>
+<tr>
+<td>Session catalogue and block labels</td>
+<td><code>bimanual/sessions.py</code></td>
+<td>Supp Table 2 plus the readme's block conditions, checked against the data by <code>scripts/01_inventory.py</code></td>
+</tr>
+<tr>
+<td>Loading and preprocessing (block-mean removal, ×50 Hz, z-score)</td>
+<td><code>bimanual/io.py</code></td>
+<td>Time-major arrays; the only place where 1-based <code>goCue</code> becomes 0-based</td>
+</tr>
+<tr>
+<td>Trial windows; <code>computeFeatureMatrices</code> port</td>
+<td><code>bimanual/epochs.py</code></td>
+<td>Windows are inclusive, like MATLAB: (15, 35) = 21 bins</td>
+</tr>
+<tr>
+<td>Fig 1b-c tuning curves (port of <code>tuningAnalysis.m</code>)</td>
+<td><code>bimanual/tuning.py::tuning_curves</code></td>
+<td>Matches Octave running the authors' code to 3e-14 (<code>pixi run compare-reference</code>)</td>
+</tr>
+<tr>
+<td>Direction quadrants (Supp Fig 1 ANOVA, augmentation balancing)</td>
+<td><code>bimanual/conditions.py::quadrant</code>, <code>trial_quadrants</code></td>
+<td>ASSUMPTION: axis-aligned quadrants of the cursor→target vector at the go cue. Targets are at random positions; directions are evenly spread.</td>
+</tr>
+<tr>
+<td>Fig 5 TTA source</td>
+<td><code>durationBinnedMove</code> (logged)</td>
+<td>Decision from step 0.3: use the task's logged trial length (≥ 499 bins = timeout failure); <code>behavior.time_to_acquisition</code> is a sanity check only</td>
+</tr>
+<tr>
+<td>Data version</td>
+<td>Dryad download (current version)</td>
+<td>ASSUMPTION: the 3 Dryad versions have identical data and differ only in the README (zip size is 138.35 MB in all)</td>
+</tr>
+<tr>
+<td>Fig 1b-c tuning curves with CIs</td>
+<td><code>scripts/fig1_tuning.py</code></td>
+<td>Trial-mean rates over bins 15–35; 10k bootstrap over trials; centred like <code>tuningAnalysis.m</code>; asserts equality with the verified port</td>
+</tr>
+<tr>
+<td>Supp Fig 1 single-electrode ANOVA and FVAF</td>
+<td><code>bimanual/stats.py::anova_fvaf</code>, <code>scripts/fig1_supp_anova.py</code></td>
+<td>1-way ANOVA over 4 quadrants, tuned if p &lt; 1e-5; FVAF = SS_dir / SS_total</td>
+</tr>
+<tr>
+<td>Figure style</td>
+<td><code>bimanual/plotting.py</code></td>
+<td>Fixed palette slots: blue = unimanual, orange = bimanual; hatching = left hand</td>
+</tr>
+<tr>
+<td>Fig 2 block sets</td>
+<td><code>bimanual/blocksets.py</code></td>
+<td><code>adjacent_all</code> (main, n = 25), <code>all_pairs_mixed</code> (38), <code>adjacent_mixed</code> (17)</td>
+</tr>
+<tr>
+<td>Encoding regressors</td>
+<td><code>conditions.trial_directions</code></td>
+<td>Unit direction at the go cue (register #21)</td>
+</tr>
+<tr>
+<td>Fig 2b-c, Supp Table 1, Supp Fig 1d</td>
+<td><code>scripts/fig2_tuning_change.py</code></td>
+<td>Three cvOLS models per set (uniR, uniL, bi); suppression = bi/uni strength; 4 correlation types × x/y; pairwise two-sample t-tests</td>
+</tr>
+<tr>
+<td>Fig 2 PCA (day 1881)</td>
+<td><code>scripts/fig2_pca.py</code></td>
+<td>OL trials; z-scored block-wise; trial means over bins 15–35; SVD; condition-centroid distances in the top 2/3 PCs and the full space</td>
+</tr>
+<tr>
+<td>Fig 2 dPCA variance (laterality / direction / interaction / time)</td>
+<td><code>bimanual/dpca_analysis.py</code>, <code>scripts/fig2_dpca.py</code></td>
+<td>Own marginalization (each factor absorbs its interaction with time, as in Kobak et al. 2016); two-split CV variance = sum(M1·M2), averaged over 100 splits. The dPCA package is installed but not needed for the variance numbers.</td>
+</tr>
+<tr>
+<td>Fig 3 / Supp Fig 2 single-bin decoders</td>
+<td><code>bimanual/decoders.py</code>, <code>scripts/fig3_decoding.py</code></td>
+<td>Stratified trial folds; ridge (alpha sweep by CV r); FFN 1×512 ReLU (register #25). Laterality removal is fitted on the training fold only. Jitter = idle speed / active speed. Paired bootstrap over trials for comparisons.</td>
+</tr>
+<tr>
+<td>Fig 3 simulations, fSNR (Supp Fig 4)</td>
+<td><code>bimanual/simulate.py</code>, <code>scripts/fig3_simulations.py</code></td>
+<td>Eq. 4 population with RH-LH correlation ρ (exact) and a laterality scale; Eq. 3 i.i.d. noise with σ calibrated to the real single-bin fSNR; clip ≥ 0. fSNR = mean diag(D) / std(ε) from decoded = D·true + c + ε.</td>
+</tr>
+<tr>
+<td>RNN decoder (Supp Fig 3)</td>
+<td><code>bimanual/rnn.py</code></td>
+<td>Day-affine (identity init) → GRU(512) → velocity + context heads; MSE + CE + L2; white-noise and per-snippet mean-drift augmentation; atomic checkpoints with RNG state, so resume is exact</td>
+</tr>
+<tr>
+<td>Fig 4b-d RNN raw vs augmented</td>
+<td><code>scripts/fig4_rnn.py</code></td>
+<td>Block split (train 1–5 / val 6 / test 7); paired random search; continuous zero-state decode of whole blocks; r per dim; roughness = mean abs(Δv) / std(v)</td>
+</tr>
+<tr>
+<td>Fig 5a-c, Fig 4e online re-scoring</td>
+<td><code>scripts/fig5_behavior.py</code></td>
+<td>CL blocks only. Success = durationBinnedMove &lt; 499; TTA = logged × 20 ms (successful trials, and with failures = 10 s); angular error per moving hand at 300–500 ms; 10k bootstrap CIs. Sanity check: TTA recomputed at radius 60 agrees within 2 bins on 60% of day-1776 trials, so the logged value is used.</td>
+</tr>
+<tr>
+<td>Ext. Phase 8 LSTM vs GRU</td>
+<td><code>bimanual/rnn.py</code> (<code>RNNDecoder(cell=)</code>), <code>scripts/ext_lstm.py</code>, <code>scripts/ext_lstm_plot.py</code></td>
+<td>LSTM forget bias 1 (#32); paired search, same 10 settings and seeds (#33); GRU 2–8-s search added (#34); LSTM-433 parameter-matched; Wilcoxon + bootstrap CI on paired val r</td>
+</tr>
+<tr>
+<td>Ext. closed-loop proxy</td>
+<td><code>bimanual/proxy.py</code></td>
+<td>Day-1869 CL blocks; target = unit cursor→target vector of the active hand from go+10 bins to move end (minus the dwell), 0 otherwise; r, angle at 300–500 ms, sustain, idle-hand jitter (#35)</td>
+</tr>
+<tr>
+<td>Ext. Phase 9 one array</td>
+<td><code>scripts/ext_arrays.py</code>, <code>scripts/ext_arrays_plot.py</code></td>
+<td>Channels 1–96 / 97–192 (#36, checked against the correlation structure); Phase 8 best hyperparameters (#37); zero-out = 0 in z-units (#38); random-96 control</td>
+</tr>
+<tr>
+<td>Ext. Phase 10 job queue</td>
+<td><code>bimanual/jobs.py</code></td>
+<td>File-based queue: priorities, <code>requires</code> prerequisites, O_EXCL claim locks, one <code>trials_w{k}.jsonl</code> per worker; resumable. 1 worker chosen after the concurrency smoke test (2–3 workers gave lower total throughput and exhausted RAM)</td>
+</tr>
+<tr>
+<td>Ext. Phase 10 feasibility runs</td>
+<td><code>scripts/ext_feasibility.py</code>, <code>scripts/ext_feasibility_plot.py</code>, <code>scripts/fig4_rnn.py</code> (<code>Data(channels, day, blocks)</code>), <code>bimanual/rnn.py</code> (<code>chan_dropout</code>)</td>
+<td>Channel dropout (#39); data amount (#40); days 1750 / 1867 splits (#41); test-time muting zero / dead / noisy (#42); <code>timing.json</code> tracks measured vs planned GPU time</td>
+</tr>
+<tr>
+<td>Ext. Phase 10 channel selection</td>
+<td><code>bimanual/select.py</code>, <code>scripts/ext_select.py</code></td>
+<td>Surrogate ridge on raw + exponentially smoothed features; greedy forward + best-swap refinement; group lasso by FISTA with ridge refit; 1,000-subset random baseline; LSTM ablation ranking; blocks 1–6 only (#43)</td>
+</tr>
+<tr>
+<td>Ext. Phase 11 TX vs SBP</td>
+<td><code>bimanual/sbp.py</code>, <code>scripts/ext_sbp.py</code>, <code>scripts/ext_sbp_plot.py</code></td>
+<td>Rigotti-Thompson T5 h5 loader; leave-one-block-out ridge (inner-LOBO α) and FFN; paired random subsets for TX and SBP; muting modes as #42 with an SBP floor (#46); SBP residual and TX→SBP R² (#44–46)</td>
+</tr>
+</tbody>
+</table></div>
+
+</main>
+</body>
+</html>

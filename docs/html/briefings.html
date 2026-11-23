@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phase briefings</title>
+<style>
+:root {
+  --bg: #ffffff; --fg: #1f2328; --muted: #59636e; --border: #d1d9e0; --soft: #f6f8fa;
+  --link: #0969da; --accent: #0969da; --code-bg: #eff1f3;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --border: #3d444d; --soft: #151b23;
+    --link: #4493f8; --accent: #4493f8; --code-bg: #262c36;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --border: #3d444d; --soft: #151b23;
+  --link: #4493f8; --accent: #4493f8; --code-bg: #262c36;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+}
+nav {
+  position: sticky; top: 0; z-index: 1; background: var(--soft); border-bottom: 1px solid var(--border);
+  padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 14px;
+}
+nav a { color: var(--muted); text-decoration: none; }
+nav a:hover { color: var(--link); }
+nav a.current { color: var(--fg); font-weight: 600; }
+main { max-width: 1180px; margin: 0 auto; padding: 24px 16px 64px; }
+.source-note { color: var(--muted); font-size: 13px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 16px; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 1.6em 0 0.6em; }
+h1 { font-size: 2em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; margin-top: 0.4em; }
+h2 { font-size: 1.5em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+h3 { font-size: 1.25em; }
+a { color: var(--link); }
+p, ul, ol, table, pre, blockquote { margin: 0 0 1em; }
+ul, ol { padding-left: 2em; }
+li + li { margin-top: 0.25em; }
+li.task-list-item { list-style: none; }
+li.task-list-item input { margin: 0 0.4em 0 -1.4em; vertical-align: middle; }
+code { background: var(--code-bg); border-radius: 4px; padding: 0.15em 0.35em; font-size: 0.88em;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; }
+pre { background: var(--code-bg); border-radius: 6px; padding: 12px 16px; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+blockquote { color: var(--muted); border-left: 4px solid var(--border); margin-left: 0; padding: 0 1em; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
+img { max-width: 100%; height: auto; background: #fff; }
+.table-wrap { overflow-x: auto; margin: 0 0 1em; }
+table { border-collapse: collapse; font-size: 14px; }
+th, td { border: 1px solid var(--border); padding: 6px 10px; vertical-align: top; text-align: left; }
+th { background: var(--soft); }
+tr:nth-child(2n) td { background: color-mix(in srgb, var(--soft) 60%, transparent); }
+/* side-by-side figure tables (raw HTML <table> with <img>) span the page in two equal columns */
+table:has(img) { width: 100%; table-layout: fixed; }
+table:has(img) td { background: transparent; }
+</style>
+</head>
+<body>
+<nav><a href="README.html">README</a> <a href="report.html">Report</a> <a href="figure_comparison.html">Figure comparison</a> <a href="REPLICATION.html">Results &amp; register</a> <a href="ext_sbp_notes.html">SBP notes</a> <a href="paper_check.html">Paper check</a> <a href="methods_notes.html">Methods notes</a> <a href="briefings.html" class=current>Briefings</a></nav>
+<main>
+<p class="source-note">HTML copy of <code>docs/briefings.md</code>, built 2026-11-23 by <code>pixi run docs-html</code>.
+The Markdown file is the source: edit it, then rebuild.</p>
+<h1 id="phase-briefings">Phase briefings</h1>
+<p>Written at the end of each phase while the user was away (see the 2026-11-21 entry in PROGRESS.md). Newest first.</p>
+<hr />
+<h2 id="phases-1011-feasibility-for-an-8--32-sbp-only-implant-done-final-briefing">Phases 10–11: feasibility for an 8 × 32 SBP-only implant. Done. Final briefing.</h2>
+<ul>
+<li><strong>What:</strong>
+<ul>
+<li>
+<p>Phase 10: 85 LSTM runs on T5 threshold crossings (5.57 GPU-h, no failures):</p>
+<ul>
+<li>random channel dropout plus test-time muting (3 failure modes);</li>
+<li>random vs best-chosen 8/16/32/64 channels within each array;</li>
+<li>training-data amount;</li>
+<li>days 1750 and 1867, with both arrays and with each array alone.</li>
+</ul>
+<p>Channel selection: greedy + swap, group lasso and LSTM ablation on a fast surrogate (CPU agent, 44 min).</p>
+</li>
+<li>
+<p>Phase 11: crossings vs SBP on public T5 files with both signals (CPU agent, about 8 min). The planned T11 / MINDFUL comparison and the SBP stand-in were dropped: that download was blocked, and the T5 files are smoothed and trial-aligned (#44).</p>
+</li>
+</ul>
+</li>
+<li><strong>Results:</strong>
+<ul>
+<li><strong>Channel selection matters more than channel count.</strong>
+<ul>
+<li>8 chosen channels of array B keep 96–97% of the 192-channel r; 16 keep 98–100%; on array A, 8 chosen channels keep 86–92%.</li>
+<li>8 random channels: r 0.11–0.61.</li>
+<li>Greedy + swap is the best or tied method. The surrogate tracks the LSTM (r = 0.94).</li>
+</ul>
+</li>
+<li><strong>Dropout training works.</strong> With 50% of channels zeroed it keeps 94–95% of its r (normal 67–71%), and it costs about 0.01 when nothing is muted.</li>
+<li><strong>Undetected dead channels break every decoder</strong> (r 0.47 / 0.32 at 30%). Online detection is needed.</li>
+<li><strong>Training data:</strong> one 4-min block gives 95–96% of the 21-min r.</li>
+<li><strong>Days:</strong> on 1867 either array keeps 95–99%. On 1750 array B loses 23% for the LH; two-hand trials score like all trials.</li>
+<li><strong>SBP vs crossings (Phase 11):</strong>
+<ul>
+<li>All 48 electrodes: SBP is 4–9% behind.</li>
+<li>4–16 electrodes: SBP is equal or ahead; on array B it is equal or better at every count.</li>
+<li>Muting: SBP degrades about the same as crossings.</li>
+<li>The caveats (<a href="ext_sbp_notes.html">ext_sbp_notes.md</a>) mostly favour crossings.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Timing (predicted vs actual):</strong>
+<ul>
+<li>GPU queue 6.63 h planned vs 5.57 h actual (230 s per run vs 281 s from the smoke test).</li>
+<li>Adjustment 1: 17 extra seeds demoted to the last tier; they all ran anyway.</li>
+<li>The concurrency test showed 2–3 parallel workers were slower and ran out of RAM, so 1 worker.</li>
+<li>Whole investigation 19:18 → about 02:00, inside the 12-h limit.</li>
+</ul>
+</li>
+<li><strong>Your input:</strong>
+<ul>
+<li>next steps;</li>
+<li>whether the 8 × 32 team can provide bimanual or both-hand SBP data and their exact SBP processing;</li>
+<li>the new paper-check item: did the online decoder use SBP?</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="phase-9-decoding-with-one-array-day-1869-done-final-briefing-for-phases-79">Phase 9: decoding with one array (day 1869). Done. Final briefing for Phases 7–9.</h2>
+<ul>
+<li><strong>What:</strong>
+<ul>
+<li>30 models (1.82 GPU-h, nothing skipped): array A only and array B only for GRU and LSTM, raw and 2–8 s clips, 3 seeds each, plus 6 random-96 GRU controls.</li>
+<li>A zero-out test on the 12 best 192-channel models.</li>
+<li>Array identity: channels 1–96 = A and 97–192 = B, supported at moderate strength by the correlation structure (#36).</li>
+</ul>
+</li>
+<li><strong>Result:</strong>
+<ul>
+<li>Array B alone keeps 98–103% of the 192-channel r; array A alone keeps 86–94% (LH worst, GRU raw LH 86%); random 96 keep 96–98%.</li>
+<li>Zeroing an array in a 192-channel decoder without retraining drops r to 0.44–0.82, worst when B is lost and for augmented models.</li>
+<li>The LSTM keeps more than the GRU on array A for the LH (93–94% vs 86–90%).</li>
+</ul>
+</li>
+<li><strong>Your input:</strong> which physical array (medial/lateral, hand knob) channels 97–192 are. Supp Fig 1b may say; see <code>docs/paper_check.md</code>.</li>
+</ul>
+<h3 id="overall-phases-79">Overall (Phases 7–9)</h3>
+<ul>
+<li><strong>Phase 7:</strong> write-up in <a href="report.html">docs/report.md</a>.</li>
+<li><strong>Phase 8:</strong>
+<ul>
+<li>The LSTM ties the GRU on raw data and beats it under temporal fracturing (+0.03 validation r with 2–8 s clips, +0.11 with 0.2–0.8 s).</li>
+<li>The advantage is not from parameter count.</li>
+<li>The weak closed-loop proxy hints that an LSTM is less fragile.</li>
+</ul>
+</li>
+<li><strong>Phase 9:</strong> almost all decodable information sits on one array on this day; robustness to array loss needs retraining.</li>
+<li><strong>Possible next steps</strong> (I'm asking you):
+<ul>
+<li>Repeat Phase 9 on other days (1750, 1883) to see whether &quot;array B dominates&quot; holds.</li>
+<li>Train with array dropout, then test with one array zeroed.</li>
+<li>An LSTM-specific search, or other cores (e.g. a small transformer).</li>
+<li>Clean up, or open a PR to <code>main</code> of your fork.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="phase-8-lstm-vs-gru-day-1869-fig-4-setup-done">Phase 8: LSTM vs GRU (day 1869, Fig 4 setup). Done.</h2>
+<ul>
+<li><strong>What:</strong> 53 new models (3.03 GPU-h; skipped 1, <code>lstm433_augL_seed102</code>):
+<ul>
+<li>the LSTM-512 paired search on raw data, 2–8-s clips and 200–800-ms clips</li>
+<li>the GRU search on 2–8-s clips (#34)</li>
+<li>3 seeds of each best setting</li>
+<li>a parameter-matched LSTM-433</li>
+</ul>
+</li>
+<li><strong>Result:</strong> the LSTM is better, mostly once temporal fracturing is used.
+<ul>
+<li>Paired validation r, LSTM − GRU:
+<ul>
+<li>raw +0.013 (9/10 settings, p = 0.006)</li>
+<li>2–8 s +0.033 (10/10, p = 0.002)</li>
+<li>0.2–0.8 s +0.113 (10/10, p = 0.002)</li>
+</ul>
+</li>
+<li>Test r (RH / LH): raw ties at 0.96 / 0.89; 2–8 s LSTM 0.93 / 0.88 vs GRU 0.92 / 0.86, with smoother output (roughness 0.083 vs 0.113).</li>
+<li>LSTM-433 ≈ LSTM-512, so this is not parameter count.</li>
+</ul>
+</li>
+<li><strong>Proxy (weak, #35):</strong> the raw LSTM scores about like the augmented GRU (r 0.34 vs 0.36; angle 47° vs 51°; raw GRU 0.29, 56°). It is only a hint about online robustness.</li>
+<li><strong>Docs:</strong>
+<ul>
+<li><a href="../../results/figures/ext_lstm_vs_gru.png">figure</a></li>
+<li>the &quot;Extensions&quot; section of <code>REPLICATION.md</code></li>
+<li>a section in <code>docs/report.md</code></li>
+<li>rows in <code>docs/methods_notes.md</code></li>
+</ul>
+</li>
+<li><strong>Next:</strong> Phase 9 (one array) is already training in the background; then its summary and the final briefing.</li>
+</ul>
+<hr />
+<h2 id="phase-7-write-up-done">Phase 7: Write-up. Done.</h2>
+<ul>
+<li><strong>What:</strong> <a href="report.html">docs/report.md</a>, a short narrative of the replication written for you. It covers a TL;DR, each claim with numbers and figures, where we differ and why, how robust each result is, and the pitfalls. It is linked from the README and the top of <code>REPLICATION.md</code>. No new analysis.</li>
+<li><strong>Next (block 2, high effort):</strong> the LSTM code and the closed-loop proxy metric, the array-split check, and the one-array script. Then one background GPU job runs the LSTM/GRU search (cap 3 h) and the one-array runs (cap 2 h).</li>
+</ul>
+<hr />
+<h2 id="phase-6-final-report-done-replication-complete">Phase 6: Final report. Done; replication complete.</h2>
+<ul>
+<li><strong><code>REPLICATION.md</code>:</strong> has a summary at the top, the full paper-vs-ours table (every figure and supplementary item), the decisions/assumptions register (#1–31) and how to reproduce.</li>
+<li><strong><code>docs/paper_check.md</code>:</strong> Claude's PMC verification table, plus the items only you can check (values shown only in figures, e.g. the Supp Fig 1 counts and the Fig 5a TTA bars).</li>
+<li><strong><code>docs/methods_notes.md</code>:</strong> maps every paper method to its code.</li>
+<li><strong>README:</strong> its &quot;Replication&quot; section lists every <code>pixi run</code> command.</li>
+</ul>
+<p><strong>Headline:</strong> every qualitative claim reproduces, and most numbers are close. Read the summary at the top of <code>REPLICATION.md</code> first.</p>
+<p><strong>Open for you:</strong></p>
+<ol>
+<li>Go through <code>docs/paper_check.md</code>, especially the ❓ rows: the Fig 5a TTA bars (#30) and the Supp Fig 1 counts.</li>
+<li><strong>Tell Claude the next steps</strong> (e.g. extensions, robustness checks, a write-up, a pull request to the authors).</li>
+</ol>
+<hr />
+<h2 id="phase-5-online-performance-re-scored-from-closed-loop-logs-fig-5a-c-fig-4e-done">Phase 5: Online performance re-scored from closed-loop logs (Fig 5a-c, Fig 4e). Done.</h2>
+<h3 id="1-what-was-done">1. What was done</h3>
+<p><code>scripts/fig5_behavior.py</code> scores every closed-loop evaluation trial (CL blocks only; assisted recalibration blocks are excluded):</p>
+<ul>
+<li>success and time to acquisition (TTA), taken from the logged <code>durationBinnedMove</code> (≥ 499 bins = timeout);</li>
+<li>angular error at 300–500 ms after go;</li>
+<li>10k bootstrap CIs.</li>
+</ul>
+<p>It also plots the active-cursor speed profiles for Fig 4e. The trial table is in <code>results/fig5/trials.csv</code>.</p>
+<h3 id="2-results-fig-5-fig-4e">2. Results (<a href="../../results/figures/fig5_online.png">Fig 5</a>, <a href="../../results/figures/fig4e_online_speed.png">Fig 4e</a>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Ours</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5a: bimanual angular error higher</td>
+<td>bi 52° vs uniR 34° / uniL 43°, on every day</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>5a: bimanual TTA &quot;only slightly longer&quot;</td>
+<td>bi 5.4 s vs uni 2.8 / 3.0 s (about 2× on every day)</td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td>5a: uniR and uniL TTA similar</td>
+<td>2.8 vs 3.0 s</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>5a: decoders sometimes failed</td>
+<td>success 99% / 97% (1776 / 1778) vs 63% / 43% (1790 / 1792)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>5b: sequential faster than simultaneous</td>
+<td>bi 5.3 vs 7.1 s; success 96% vs 67%</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>5c: RNN better than linear at all gains</td>
+<td>Linear mostly times out on mixed blocks; works on uni-only locked blocks</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>4e: augmented RNN works online, raw makes pulses</td>
+<td>success 59% / 86% vs 7% / 16%; raw makes one speed pulse, then nearly stops</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="3-decisions-to-review">3. Decisions to review</h3>
+<ul>
+<li><strong>#29, Fig 5a days.</strong> The paper lists 1752, 1771, 1776, 1778, 1790 and 1792, but the Dryad files for 1752 / 1771 contain no CL blocks, so Fig 5a uses the 4 days that have them.</li>
+<li><strong>#30, bimanual TTA.</strong> About 2× unimanual, larger than &quot;only slightly longer&quot;. It is on your paper-check list: compare it with the Fig 5a bars.</li>
+<li><strong>#7, TTA source.</strong> The logged value is used. Recomputing TTA from positions with a fixed radius of 60 agrees within 2 bins on only 60% of trials, so the task's own record is more trustworthy.</li>
+</ul>
+<hr />
+<h2 id="phase-4-rnn-decoders-and-temporal-fracturing-fig-4b-d-day-1869-done">Phase 4: RNN decoders and temporal fracturing (Fig 4b-d, day 1869). Done.</h2>
+<h3 id="1-what-was-done-1">1. What was done</h3>
+<ul>
+<li><code>bimanual/rnn.py</code>: a GRU(512) decoder with a day-specific input transform, a velocity output and a context output (which hands are moving). Its checkpoints save the random-number state too, so an interrupted run resumes exactly.</li>
+<li><code>scripts/fig4_rnn.py</code>: the open-loop data split by block (train 1–5, select on 6, test on 7) and a paired random search: 10 settings, each trained on raw and on augmented data.</li>
+<li>Extras: extra seeds, an alternative target reading, and a clip-length check. About 1.6 GPU-hours in total.</li>
+</ul>
+<h3 id="2-results-figure">2. Results (<a href="../../results/figures/fig4_rnn.png">figure</a>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Training data</th>
+<th>Test r (RH / LH)</th>
+<th>Velocity roughness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw</td>
+<td><strong>0.96 / 0.89</strong> (paper 0.90 / 0.83) ✅</td>
+<td>0.04</td>
+</tr>
+<tr>
+<td>Augmented, 2–8-s clips (main)</td>
+<td>0.93 / 0.87, &quot;slightly poorer&quot; ✅</td>
+<td>0.08 (about 2× noisier) ✅</td>
+</tr>
+<tr>
+<td>Augmented, 200–800-ms clips</td>
+<td>0.76 / 0.67, much poorer</td>
+<td>0.31</td>
+</tr>
+</tbody>
+</table></div>
+<p>Online (Phase 5, logged data): the augmented RNN acquired 59% / 86% of targets on days 1867 / 1869, against 7% / 16% for the raw-trained one. That is the payoff of augmentation that offline r doesn't show.</p>
+<h3 id="3-decisions-to-review-1">3. Decisions to review</h3>
+<ul>
+<li><strong>#14, clip length.</strong> The paper contradicts itself: Methods say 0.2–0.8 × the 10-s snippet, Results say 200–800 ms (confirmed by the PMC check). Only the 2–8-s reading reproduces &quot;slightly poorer&quot; offline, so it is MAIN.</li>
+<li><strong>#13, &quot;saturated&quot; targets.</strong> The &quot;hold&quot; reading was worse, so the clip reading is kept.</li>
+<li><strong>#28, design.</strong> Single-day training on 1869 (the paper used 1867 + 1869). The long-clip models reuse the best short-clip hyperparameters (#31).</li>
+</ul>
+<hr />
+<h2 id="phase-3-fig-3-supp-figs-2-and-4-day-1883-done">Phase 3: Fig 3, Supp Figs 2 and 4 (day 1883). Done.</h2>
+<h3 id="1-what-was-done-2">1. What was done</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bimanual/decoders.py</code></td>
+<td>Single-bin ridge and FFN decoders</td>
+</tr>
+<tr>
+<td><code>scripts/fig3_decoding.py</code></td>
+<td>Fig 3a-c and Supp Fig 2</td>
+</tr>
+<tr>
+<td><code>bimanual/simulate.py</code>, <code>scripts/fig3_simulations.py</code></td>
+<td>Simulations and Supp Fig 4</td>
+</tr>
+</tbody>
+</table></div>
+<p>All tests pass.</p>
+<h3 id="2-results">2. Results</h3>
+<p><strong>Real data</strong>, day 1883, 491 open-loop unimanual trials (<a href="../../results/figures/fig3_decoding_direction.png">figure</a>):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Result</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FFN decodes better than ridge, most of all the LH</td>
+<td>+0.07 r overall, <strong>+0.12 for the LH</strong> (p &lt; 0.001)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Removing laterality hurts the FFN, not ridge</td>
+<td>FFN −0.08 (LH −0.13); ridge ±0.000 (p = 0.78)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>FFN keeps the idle cursor steadier</td>
+<td>LH jitter: FFN 0.42 vs ridge 0.84, back to 0.84 when laterality is removed</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Bimanual: RH decodes better than LH</td>
+<td>RH 0.68–0.77 vs LH 0.32–0.49</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>fSNR</strong> (<a href="../../results/figures/supp_fig4_fsnr.png">figure</a>):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Paper</th>
+<th>Ours</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Real single-bin fSNR</td>
+<td>2.03</td>
+<td><strong>2.11</strong></td>
+</tr>
+<tr>
+<td>Window-average, real vs simulated</td>
+<td>Should not match (simulated noise is independent across bins)</td>
+<td>4.60 vs 9.01</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Simulations</strong> (<a href="../../results/figures/fig3_simulations.png">figure</a>):</p>
+<ul>
+<li>Ridge degrades as RH-LH tuning correlation rises: 0.59 → 0.50.</li>
+<li>The FFN holds at about 0.69 for every correlation once laterality is at least 2× the real size.</li>
+</ul>
+<h3 id="3-decisions-to-review-register-11-12-2527">3. Decisions to review (register #11, #12, #25–27)</h3>
+<ul>
+<li><strong>#11, decoder targets.</strong> The recorded open-loop cursor velocity was tried first. The cursor only starts moving about 300 ms after the go cue, so in the 300–700 ms window that target is mostly an acceleration ramp, and every r stayed low (0.2–0.5). The MAIN target is the unit direction to the target. With cursor velocity the same effects appear, smaller but significant.</li>
+<li><strong>#12, trial subset.</strong> 491 trials are used vs the paper's 482.</li>
+<li><strong>#26, environment.</strong> The process crashed with an OpenMP conflict between conda's MKL and the PyTorch wheel. conda numpy/scipy now use OpenBLAS; the reference cross-check is unchanged.</li>
+<li><strong>#25 and #27.</strong> FFN training details and simulation details are choices of ours; the paper doesn't give them.</li>
+</ul>
+
+</main>
+</body>
+</html>

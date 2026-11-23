@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reader&#x27;s guide and paper-check list</title>
+<style>
+:root {
+  --bg: #ffffff; --fg: #1f2328; --muted: #59636e; --border: #d1d9e0; --soft: #f6f8fa;
+  --link: #0969da; --accent: #0969da; --code-bg: #eff1f3;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --border: #3d444d; --soft: #151b23;
+    --link: #4493f8; --accent: #4493f8; --code-bg: #262c36;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --border: #3d444d; --soft: #151b23;
+  --link: #4493f8; --accent: #4493f8; --code-bg: #262c36;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+}
+nav {
+  position: sticky; top: 0; z-index: 1; background: var(--soft); border-bottom: 1px solid var(--border);
+  padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 14px;
+}
+nav a { color: var(--muted); text-decoration: none; }
+nav a:hover { color: var(--link); }
+nav a.current { color: var(--fg); font-weight: 600; }
+main { max-width: 1180px; margin: 0 auto; padding: 24px 16px 64px; }
+.source-note { color: var(--muted); font-size: 13px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 16px; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 1.6em 0 0.6em; }
+h1 { font-size: 2em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; margin-top: 0.4em; }
+h2 { font-size: 1.5em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+h3 { font-size: 1.25em; }
+a { color: var(--link); }
+p, ul, ol, table, pre, blockquote { margin: 0 0 1em; }
+ul, ol { padding-left: 2em; }
+li + li { margin-top: 0.25em; }
+li.task-list-item { list-style: none; }
+li.task-list-item input { margin: 0 0.4em 0 -1.4em; vertical-align: middle; }
+code { background: var(--code-bg); border-radius: 4px; padding: 0.15em 0.35em; font-size: 0.88em;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; }
+pre { background: var(--code-bg); border-radius: 6px; padding: 12px 16px; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+blockquote { color: var(--muted); border-left: 4px solid var(--border); margin-left: 0; padding: 0 1em; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
+img { max-width: 100%; height: auto; background: #fff; }
+.table-wrap { overflow-x: auto; margin: 0 0 1em; }
+table { border-collapse: collapse; font-size: 14px; }
+th, td { border: 1px solid var(--border); padding: 6px 10px; vertical-align: top; text-align: left; }
+th { background: var(--soft); }
+tr:nth-child(2n) td { background: color-mix(in srgb, var(--soft) 60%, transparent); }
+/* side-by-side figure tables (raw HTML <table> with <img>) span the page in two equal columns */
+table:has(img) { width: 100%; table-layout: fixed; }
+table:has(img) td { background: transparent; }
+</style>
+</head>
+<body>
+<nav><a href="README.html">README</a> <a href="report.html">Report</a> <a href="figure_comparison.html">Figure comparison</a> <a href="REPLICATION.html">Results &amp; register</a> <a href="ext_sbp_notes.html">SBP notes</a> <a href="paper_check.html" class=current>Paper check</a> <a href="methods_notes.html">Methods notes</a> <a href="briefings.html">Briefings</a></nav>
+<main>
+<p class="source-note">HTML copy of <code>docs/paper_check.md</code>, built 2026-11-23 by <code>pixi run docs-html</code>.
+The Markdown file is the source: edit it, then rebuild.</p>
+<h1 id="readers-guide-and-paper-check-list">Reader's guide and paper-check list</h1>
+<p><strong>Who this is for:</strong> you, reading the paper (Deo et al. 2024, <em>Sci Rep</em> 14:1598) alongside this replication.</p>
+<p>There are three parts:</p>
+<ol>
+<li><strong>Things to check in the paper yourself.</strong> Claude read the paper through a summarizer, not the PDF, so some details are uncertain. Each entry says what to look for, where it probably is, what we assumed, and why it matters.</li>
+<li><strong>The experiment paradigm</strong>, in plain terms.</li>
+<li><strong>dPCA</strong>, the time window and cross-validation, in plain terms.</li>
+</ol>
+<p>The numbered register in <a href="REPLICATION.html">REPLICATION.md</a> is the full list of decisions and assumptions; register numbers (#) refer to it.</p>
+<hr />
+<h2 id="1-things-to-check-in-the-paper-yourself">1. Things to check in the paper yourself</h2>
+<p>Tick each box once checked, and note what the paper actually says. Anything that contradicts our choice should be raised with Claude so the analysis can be redone.</p>
+<h3 id="high-priority-could-change-headline-numbers">High priority: could change headline numbers</h3>
+<ul class="contains-task-list">
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Target numbers (#17).</strong> All &quot;paper&quot; values in <code>REPLICATION.md</code> came from summaries. Check them against the text and figures:</p>
+<ul>
+<li>Fig 2b suppression: RH 12%, LH 34%.</li>
+<li>Fig 2c correlations: RH 0.87 (x) / 0.84 (y); LH 0.42 (x) / 0.45 (y).</li>
+<li>dPCA: laterality 39%, direction 30%.</li>
+<li>Supp Fig 1d: LH 48% weaker.</li>
+<li>Fig 4d: raw-trained RNN r = 0.90 (RH) / 0.83 (LH).</li>
+<li>Supp Fig 4: single-bin fSNR 2.03.</li>
+</ul>
+<p><em>Where:</em> Results sections for Figs 2 and 4, the figure legends, and the Supplementary PDF.</p>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Block grouping for Fig 2b-c (#10).</strong> The paper says the data were &quot;grouped in pairs of blocks to ~40 repetitions per trial type&quot;, with n = 25.</p>
+<ul>
+<li><strong>Our main rule:</strong> consecutive pairs of all open-loop blocks, including the unimanual-only ones. This gives exactly 25 sets, but 3 of them have almost no bimanual trials, so 22 are usable.</li>
+<li><strong>What to look for:</strong> any sentence on how blocks were paired, whether unimanual-only blocks were used, and whether n = 25 counts sets or something else.</li>
+<li><em>Where:</em> Methods, &quot;Tuning strength and correlation&quot;; the Fig 2 legend.</li>
+</ul>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Five-fold cvOLS (#23).</strong> We found that the literal five-fold estimate becomes unstable when a set has about 25 bimanual trials, so we switched to split-half.</p>
+<ul>
+<li><strong>What to look for:</strong> exactly how the paper's cvOLS works. Does each fold's &quot;test&quot; coefficient come from that fold alone? Is a reference (e.g. Willett et al. 2020) followed?</li>
+<li><em>Where:</em> Methods, &quot;Encoding model&quot;; the cited references.</li>
+</ul>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Encoding-model regressors (#21).</strong> Eq. 2 defines d as target position minus cursor position.</p>
+<ul>
+<li><strong>Our choice:</strong> the unit direction at the go cue, held constant over 300–700 ms, because target distances vary from 30 to 750 units.</li>
+<li><strong>What to look for:</strong> is d per time bin, at the go cue, or normalized?</li>
+<li><em>Where:</em> Methods, Eq. 2.</li>
+</ul>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>dPCA time window (#24).</strong> We report both windows:</p>
+<ul>
+<li>300–700 ms gives laterality 41% / direction 33%;</li>
+<li>0–1000 ms gives 39% / 29%, which matches the paper.</li>
+</ul>
+<p><strong>What to look for:</strong> the window used for dPCA, and whether rates were z-scored.</p>
+<ul>
+<li><em>Where:</em> Methods, &quot;Demixed PCA&quot;; the Fig 2d legend.</li>
+</ul>
+</li>
+</ul>
+<h3 id="medium-priority-needed-for-upcoming-phases">Medium priority: needed for upcoming phases</h3>
+<ul class="contains-task-list">
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Fig 3 trial subset (#12).</strong> <em>(We now use the 491 OL unimanual trials; check what the paper's 482 are.)</em> The paper uses 482 trials from day 1883, while the file has 951 (open-loop, recalibration and closed-loop). Which blocks or trial types make up the 482?</p>
+<ul>
+<li><em>Where:</em> Methods, &quot;Offline single-bin decoding&quot;; the Fig 3 legend.</li>
+</ul>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Fig 3 decoder targets (#11).</strong> <em>(We now use the unit direction; recorded cursor velocity gives much lower r. Check which the paper used, and what its r values look like in Fig 3b.)</em> What were ridge and the FFN trained to output: cursor velocity, the direction to the target, or something else? What did the idle hand's target look like?</p>
+<ul>
+<li><em>Where:</em> Methods, &quot;Single-bin decoders&quot;.</li>
+</ul>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>&quot;Saturated&quot; velocity targets for the RNN (#13).</strong></p>
+<ul>
+<li><strong>Our reading:</strong> the minimum-jerk speed bell clipped at half its peak.</li>
+<li><strong>Alternative:</strong> rise, then hold until the trial ends.</li>
+</ul>
+<p>Look for the exact definition, a formula, or the description of Fig 4b.</p>
+<ul>
+<li><em>Where:</em> Methods, &quot;RNN decoder&quot; / &quot;Velocity targets&quot;; the Fig 4b legend.</li>
+</ul>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Augmentation clip length (#14).</strong> Is it &quot;0.2–0.8 × snippet length&quot; or &quot;200–800 ms&quot;? We now use 2–8 s (the Methods reading). Fig 4d supports it: the paper's augmented r is 0.82 / 0.82 vs raw 0.90 / 0.83, a drop like our 2–8-s models' and far smaller than with 200–800-ms clips (<a href="figure_comparison.html#fig-4b-d-rnn-training-targets-and-offline-decoding-day-1869">figure comparison</a>).</p>
+<ul>
+<li><em>Where:</em> Methods, &quot;Data augmentation&quot;; the Fig 4c legend.</li>
+</ul>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Augmentation velocity scaling (#15).</strong> When a clip is stretched or compressed in time, is the velocity target rescaled? We assume not.</p>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>RNN hyperparameters.</strong> Any values for learning rate, batch size, number of steps, input noise, mean drift or L2 weight, even in a table or supplement.</p>
+</li>
+</ul>
+<h3 id="extensions-phases-811">Extensions (Phases 8–11)</h3>
+<ul class="contains-task-list">
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Did the online decoder use SBP as well as threshold crossings? NEW (Phase 11).</strong> The Dryad data has threshold crossings only. Check the Methods (&quot;Neural signal processing&quot; or similar) for spike-band power, and if it was used, how it was computed (band, bin). If the online RNN used SBP too, our offline crossings-only results may understate it. Phase 11's T5 comparison suggests SBP alone is roughly as informative (<a href="ext_sbp_notes.html">ext_sbp_notes.md</a>).</p>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Which channels belong to which array (#36). NEW.</strong> The one-array analysis assumes channels 1–96 are one array and 97–192 the other. The data supports this only moderately (<a href="../../results/figures/ext_arrays_check.png">check figure</a>). Check the paper (Supp Fig 1b array layout, Methods) or other T5 datasets for:</p>
+<ul>
+<li>the channel → array mapping;</li>
+<li>which array is medial and which lateral.</li>
+</ul>
+</li>
+</ul>
+<h3 id="low-priority-details-and-sanity-checks">Low priority: details and sanity checks</h3>
+<ul class="contains-task-list">
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" checked="checked" disabled="disabled" type="checkbox"> <strong>Supp Fig 1 counts.</strong> Read on 2026-11-23 (<a href="figure_comparison.html#supp-fig-1-single-electrode-tuning">figure comparison</a>). Paper: tuned uniR 90 / biR 97 / uniL 60 / biL 52; contexts 0–4: 82 / 16 / 33 / 27 / 34. We find fewer, most for biL. Still open: the paper's ANOVA threshold, window and session. Ours:</p>
+<ul>
+<li>tuned electrodes: uniR 83, uniL 50, biR 87, biL 28;</li>
+<li>electrodes tuned to 0/1/2/3/4 contexts: 88 / 25 / 29 / 35 / 15.</li>
+</ul>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Supp Fig 1 ANOVA window and quadrant definition (#6, #18).</strong> We use 300–700 ms and axis-aligned quadrants of the cursor→target direction.</p>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Fig 5 angular error (#8).</strong> How is the &quot;movement direction&quot; computed: from cursor displacement or from decoded velocity? Is the target direction fixed at the go cue?</p>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" checked="checked" disabled="disabled" type="checkbox"> <strong>Fig 5a bimanual vs unimanual TTA (#30).</strong> Read on 2026-11-23: the paper's Fig 5a itself shows bimanual ≈ 4.4–5.9 s vs unimanual ≈ 2–3 s on good sessions (about 2×), so it agrees with our logs; the text understates it. In our re-scoring, bimanual TTA is about 2× unimanual on every day (e.g. 1776: 5.7 s vs 2.2–2.6 s). The paper calls bimanual &quot;only slightly longer&quot;. Read the Fig 5a values off the plot and check how TTA is defined (with or without the dwell? time to the first target?).</p>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Fig 5 time to acquisition (#7).</strong> Does it include the 500-ms dwell? We use the task's logged trial length, which does.</p>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Fig 5a day list.</strong></p>
+<ul>
+<li>Supplementary Table 2 lists 1881 and 1883 under Fig 5A.</li>
+<li>The Methods summary listed only 1752, 1771, 1776, 1778, 1790 and 1792.</li>
+</ul>
+<p>Which is right?</p>
+</li>
+</ul>
+<hr />
+<h2 id="claudes-pmc-check-step-62-2026-11-21">Claude's PMC check (step 6.2, 2026-11-21)</h2>
+<p>Claude re-read the full text on PMC (PMC10796685): Results, figure legends and Methods. Items still marked ❓ need your eyes, mostly on the figures themselves.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Item</th>
+<th>What the paper says</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>17</td>
+<td>Target numbers</td>
+<td>Fig 2b &quot;12% suppression&quot; (RH), &quot;suppressed by 34%&quot; (LH); Fig 2c RH &quot;0.87 and 0.84&quot;, LH &quot;0.42 and 0.45&quot;; dPCA laterality &quot;39%&quot;, direction &quot;30%&quot;; raw RNN &quot;0.9 and 0.83&quot;</td>
+<td>✅ confirmed</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Fig 2 block sets</td>
+<td>&quot;grouped consecutive blocks together in pairs to reach around 40 repetitions, at least, per trial type&quot;; &quot;sample size of 25&quot;</td>
+<td>✅ matches our main rule (consecutive pairs, n = 25)</td>
+</tr>
+<tr>
+<td>9/23</td>
+<td>cvOLS</td>
+<td>&quot;five-fold cross-validated ordinary least-squares regression&quot;; no detail on how the folds are used</td>
+<td>❓ our split-half deviation stands (k-fold is unstable on small sets)</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Eq. 2 regressors</td>
+<td>per time step, d = target position − cursor position, not normalized</td>
+<td>⚠️ confirmed DEVIATION: we use the unit direction at the go cue (ratios and correlations are scale-free)</td>
+</tr>
+<tr>
+<td>24</td>
+<td>dPCA window / scaling</td>
+<td>not stated; dPCA &quot;in unimanual movement data only&quot;</td>
+<td>❓ not stated; our 0–1000 ms window reproduces 39 / 30</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Fig 3 trials</td>
+<td>&quot;482 total trials&quot;, unimanual, day 1883 (open-loop not stated)</td>
+<td>✅ about our 491 OL unimanual trials</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Fig 3 targets</td>
+<td>&quot;velocity target for each time step as the unit vector pointing from the cursor to the target&quot;</td>
+<td>✅ our main choice (we fix the vector at the go cue; the paper updates it per step)</td>
+</tr>
+<tr>
+<td>13</td>
+<td>&quot;Saturated&quot; targets</td>
+<td>&quot;moving with maximum velocity from movement onset up until they are very near the target&quot;; 200-ms reaction time; no formula</td>
+<td>❓ wording leans toward a long plateau. Both of our readings were tested; &quot;clip&quot; did better offline</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Clip length</td>
+<td>Methods: &quot;ranging between 0.2 and 0.8 times the 10 s total snippet length&quot; (2–8 s). Results: &quot;ranging between 200 and 800 ms&quot;. <strong>The paper contradicts itself.</strong></td>
+<td>⚠️ both readings tested in Phase 4</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Velocity scaling under dilation</td>
+<td>&quot;Linear interpolation was used to either compress or stretch both the input and output clips&quot;; no amplitude rescaling</td>
+<td>✅ matches</td>
+</tr>
+<tr>
+<td>4d</td>
+<td>Augmented offline r</td>
+<td>not given; only &quot;slightly poorer decoding performance on offline held-out test data and noisier output velocities&quot;</td>
+<td>✅ qualitative only</td>
+</tr>
+<tr>
+<td>7/30</td>
+<td>TTA</td>
+<td>&quot;the amount of time after the go cue in which the targets were successfully acquired&quot;; dwell inclusion not stated; &quot;bimanual ... only slightly longer than ... unimanual on average&quot;; &quot;average TTA for right- and left-hand trials was similar&quot;</td>
+<td>❓ our bimanual TTA is about 2× unimanual; check the Fig 5a bars yourself</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Angular error</td>
+<td>&quot;average difference between movement direction within the 300–500 ms window after the go cue&quot;; reference direction not stated</td>
+<td>❓</td>
+</tr>
+<tr>
+<td>29</td>
+<td>Fig 5a days</td>
+<td>&quot;6 days (trial days 1752, 1771, 1776, 1778, 1790, 1792)&quot;</td>
+<td>⚠️ the Dryad files for 1752 / 1771 contain only open-loop blocks, so those days can't be re-scored</td>
+</tr>
+<tr>
+<td>—</td>
+<td>RNN hyperparameters</td>
+<td>random search over 100 RNNs; no values</td>
+<td>✅ not stated (our search is documented)</td>
+</tr>
+<tr>
+<td>—</td>
+<td>Fig 4 training days</td>
+<td>RNNs for Fig 4 trained on days 1867 and 1869 only</td>
+<td>⚠️ we trained on 1869 OL only (block split)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="2-the-experiment-paradigm">2. The experiment paradigm</h2>
+<p><strong>Participant and recording.</strong></p>
+<ul>
+<li>Participant T5 has paralysis from a cervical spinal cord injury.</li>
+<li>He has two 96-electrode Utah arrays (192 electrodes in total) in the hand area of the LEFT motor cortex, the dominant hemisphere.</li>
+<li>On each electrode, voltage dips below −3.5 × that electrode's RMS noise are counted as &quot;spikes&quot; (threshold crossings) in 20-ms bins. The files contain these counts (<code>tx</code>) for every bin.</li>
+</ul>
+<p><strong>The screen.</strong> Two cursors: a white &quot;R&quot; for the right hand and a purple &quot;L&quot; for the left. Each has a target circle in its own colour. T5 imagines gripping a joystick in each hand and pushing it.</p>
+<p><strong>Trial types.</strong> Each trial is one of three, chosen at random:</p>
+<ul>
+<li><strong>Bimanual:</strong> both cursors move.</li>
+<li><strong>Unimanual right:</strong> only the right cursor moves.</li>
+<li><strong>Unimanual left:</strong> only the left cursor moves.</li>
+</ul>
+<p><strong>Open-loop (OL) blocks, the &quot;instructed delay&quot; task.</strong></p>
+<ol>
+<li><strong>Delay (1–2 s, random).</strong> Lines connect each cursor to its target, and T5 prepares the movement.</li>
+<li><strong>Go cue (a beep).</strong> The lines disappear.</li>
+<li><strong>Movement (1–2 s).</strong> The cursors glide to their targets on their own, along smooth minimum-jerk paths, and arrive together. T5 attempts the movement in sync.</li>
+<li><strong>End beep.</strong> T5 stops and prepares for the next trial.</li>
+</ol>
+<p>The computer moves the cursors, so the neural activity is a clean response to known intended movements. That makes this the data used to study tuning (Figs 1–2) and to train decoders.</p>
+<p>Targets are at random positions in a ±300-unit workspace, and each trial starts where the previous target was. Movement directions therefore cover all angles.</p>
+<p><strong>Closed-loop (CL) blocks, real brain control.</strong></p>
+<ul>
+<li>The cursors are driven by a decoder (the RNN or a linear decoder) that reads the neural activity in real time.</li>
+<li><strong>Success:</strong> both cursors sit inside their targets at the same time for 500 ms without a break. Leaving a target restarts the 500-ms count.</li>
+<li><strong>Timeout:</strong> 10 s, which counts as a failure.</li>
+</ul>
+<p><strong>Closed-loop recalibration (CLR) blocks.</strong> Assisted closed-loop blocks used to retune the decoder before evaluation:</p>
+<ul>
+<li><strong>&quot;Lock mode&quot;</strong> freezes the idle cursor on unimanual trials.</li>
+<li><strong>Push assistance</strong> nudges the cursor toward the target.</li>
+<li><strong>Error assistance</strong> damps sideways motion.</li>
+</ul>
+<p><strong>Days and what they test</strong> (see <code>bimanual/sessions.py</code> and <code>docs/data_inventory.md</code>):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Days</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1750</td>
+<td>Open-loop only; tuning examples (Fig 1, Supp Fig 1)</td>
+</tr>
+<tr>
+<td>1752, 1771</td>
+<td>Open-loop pilot data used to first train the RNN</td>
+</tr>
+<tr>
+<td>1776, 1778, 1790, 1792</td>
+<td>Open-loop + RNN closed-loop evaluation (Fig 2, Fig 5a)</td>
+</tr>
+<tr>
+<td>1853, 1855</td>
+<td>RNN vs linear decoder at several gains (Fig 5c)</td>
+</tr>
+<tr>
+<td>1867, 1869</td>
+<td>RNN trained with vs without augmentation (Fig 4)</td>
+</tr>
+<tr>
+<td>1881, 1883</td>
+<td>Sequential (one hand at a time) vs simultaneous strategy (Fig 5b); also Figs 2 and 3</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>What <code>durationBinnedMove</code> means.</strong></p>
+<ul>
+<li>On open-loop trials: the length of the move period.</li>
+<li>On closed-loop trials: the time to acquisition. The maximum is 499 bins, the 10-s timeout.</li>
+</ul>
+<hr />
+<h2 id="3-dpca-the-time-window-and-cross-validation">3. dPCA, the time window, and cross-validation</h2>
+<h3 id="the-question">The question</h3>
+<p>Each of the 192 electrodes' firing rates varies with <strong>which hand</strong> moves (laterality), <strong>where</strong> it moves (4 direction quadrants), and <strong>time</strong> within the movement.</p>
+<p>The paper asks: how much of the population activity is explained by laterality versus direction?</p>
+<ul>
+<li>If laterality dominates, the cortex carries a strong &quot;which hand&quot; signal.</li>
+<li>A decoder can use that signal to tell the hands apart.</li>
+<li>This is the paper's explanation for why nonlinear decoders work (Fig 3).</li>
+</ul>
+<h3 id="splitting-the-variance-marginalization">Splitting the variance (marginalization)</h3>
+<p>Average the trials into 8 conditions (2 hands × 4 directions), each a time course per electrode. Then split that array into four non-overlapping parts that add back up to the data:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Captures</th>
+<th>Computed as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Time</td>
+<td>What all conditions share, e.g. the ramp-up after go</td>
+<td>Average over all conditions</td>
+</tr>
+<tr>
+<td>Laterality</td>
+<td>How right-hand trials differ from left-hand trials</td>
+<td>Average over directions, minus time</td>
+</tr>
+<tr>
+<td>Direction</td>
+<td>How the 4 directions differ</td>
+<td>Average over hands, minus time</td>
+</tr>
+<tr>
+<td>Interaction</td>
+<td>Direction effects that differ between hands</td>
+<td>Whatever is left</td>
+</tr>
+</tbody>
+</table></div>
+<p>The parts don't overlap, so their variances add up. &quot;Laterality 39%&quot; means 39% of the summed variance is in the laterality part.</p>
+<p>Full dPCA also finds a few neural directions that best capture each part, for plotting. The percentages come from the split alone, so we compute them directly (<code>bimanual/dpca_analysis.py</code>).</p>
+<h3 id="why-the-time-window-matters">Why the time window matters</h3>
+<p>The time part only captures change within the window.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Window</th>
+<th>Time explains</th>
+<th>Laterality / direction</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>300–700 ms after go</td>
+<td>3% (activity is roughly steady mid-movement)</td>
+<td>41% / 33%</td>
+<td></td>
+</tr>
+<tr>
+<td>0–1000 ms</td>
+<td>12% (includes the rise from rest after the go cue)</td>
+<td>39% / 29%</td>
+<td>≈ paper</td>
+</tr>
+</tbody>
+</table></div>
+<p>The conclusion (laterality &gt; direction, every day) holds in both windows; only the exact percentages shift. The paper doesn't state its window, which is why it's on the check list.</p>
+<h3 id="why-cross-validation-decides-the-answer">Why cross-validation decides the answer</h3>
+<p>Condition averages still contain leftover noise. Noise always ADDS variance, since squared wobbles are positive, so a naive estimate inflates every part.</p>
+<p>The inflation is uneven:</p>
+<ul>
+<li>Laterality comes from just 2 big averaged groups, so its noise largely averages out.</li>
+<li>Direction and interaction come from smaller groups, so they are inflated more.</li>
+</ul>
+<p><strong>The paper's fix (two-split cross-validation):</strong></p>
+<ol>
+<li>Split the trials into two random halves.</li>
+<li>Do the full split on each half separately.</li>
+<li>Multiply the two halves' parts together element by element, and sum.</li>
+</ol>
+<p>The true signal is the same in both halves, so it survives. The noise is independent between halves, so its products cancel to 0 on average. We repeat this over 100 random splits.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Laterality</th>
+<th>Direction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Without CV</td>
+<td>28%</td>
+<td>35% (wrong order)</td>
+</tr>
+<tr>
+<td>With CV</td>
+<td>41%</td>
+<td>33%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Without cross-validation, the paper's main claim would come out backwards purely because of noise. Our simulated tests confirm it: on pure noise the CV estimate is 0 on average, while the naive estimate shows a large fake laterality effect.</p>
+<p><strong>The same idea in Fig 2b-c.</strong> Tuning strengths and correlations are also computed from independent halves of the data (cvOLS):</p>
+<ul>
+<li>a noisy tuning vector looks stronger than it really is;</li>
+<li>noisy correlations shrink toward 0.</li>
+</ul>
+<p>Comparing estimates from independent data removes both biases.</p>
+
+</main>
+</body>
+</html>

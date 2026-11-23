@@ -1,0 +1,1151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Replication report: Deo et al. 2024, Sci Rep</title>
+<style>
+:root {
+  --bg: #ffffff; --fg: #1f2328; --muted: #59636e; --border: #d1d9e0; --soft: #f6f8fa;
+  --link: #0969da; --accent: #0969da; --code-bg: #eff1f3;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --border: #3d444d; --soft: #151b23;
+    --link: #4493f8; --accent: #4493f8; --code-bg: #262c36;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --border: #3d444d; --soft: #151b23;
+  --link: #4493f8; --accent: #4493f8; --code-bg: #262c36;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+}
+nav {
+  position: sticky; top: 0; z-index: 1; background: var(--soft); border-bottom: 1px solid var(--border);
+  padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 14px;
+}
+nav a { color: var(--muted); text-decoration: none; }
+nav a:hover { color: var(--link); }
+nav a.current { color: var(--fg); font-weight: 600; }
+main { max-width: 1180px; margin: 0 auto; padding: 24px 16px 64px; }
+.source-note { color: var(--muted); font-size: 13px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 16px; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 1.6em 0 0.6em; }
+h1 { font-size: 2em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; margin-top: 0.4em; }
+h2 { font-size: 1.5em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+h3 { font-size: 1.25em; }
+a { color: var(--link); }
+p, ul, ol, table, pre, blockquote { margin: 0 0 1em; }
+ul, ol { padding-left: 2em; }
+li + li { margin-top: 0.25em; }
+li.task-list-item { list-style: none; }
+li.task-list-item input { margin: 0 0.4em 0 -1.4em; vertical-align: middle; }
+code { background: var(--code-bg); border-radius: 4px; padding: 0.15em 0.35em; font-size: 0.88em;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; }
+pre { background: var(--code-bg); border-radius: 6px; padding: 12px 16px; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+blockquote { color: var(--muted); border-left: 4px solid var(--border); margin-left: 0; padding: 0 1em; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
+img { max-width: 100%; height: auto; background: #fff; }
+.table-wrap { overflow-x: auto; margin: 0 0 1em; }
+table { border-collapse: collapse; font-size: 14px; }
+th, td { border: 1px solid var(--border); padding: 6px 10px; vertical-align: top; text-align: left; }
+th { background: var(--soft); }
+tr:nth-child(2n) td { background: color-mix(in srgb, var(--soft) 60%, transparent); }
+/* side-by-side figure tables (raw HTML <table> with <img>) span the page in two equal columns */
+table:has(img) { width: 100%; table-layout: fixed; }
+table:has(img) td { background: transparent; }
+</style>
+</head>
+<body>
+<nav><a href="README.html">README</a> <a href="report.html">Report</a> <a href="figure_comparison.html">Figure comparison</a> <a href="REPLICATION.html" class=current>Results &amp; register</a> <a href="ext_sbp_notes.html">SBP notes</a> <a href="paper_check.html">Paper check</a> <a href="methods_notes.html">Methods notes</a> <a href="briefings.html">Briefings</a></nav>
+<main>
+<p class="source-note">HTML copy of <code>REPLICATION.md</code>, built 2026-11-23 by <code>pixi run docs-html</code>.
+The Markdown file is the source: edit it, then rebuild.</p>
+<h1 id="replication-report-deo-et-al-2024-sci-rep">Replication report: Deo et al. 2024, Sci Rep</h1>
+<p><strong>Paper:</strong> &quot;Brain control of bimanual movement enabled by recurrent neural networks&quot;. DOI: <a href="https://doi.org/10.1038/s41598-024-51617-3">10.1038/s41598-024-51617-3</a>.</p>
+<p><strong>Data:</strong> Dryad, <a href="https://doi.org/10.5061/dryad.sn02v6xbb">doi:10.5061/dryad.sn02v6xbb</a>.</p>
+<p><strong>Short write-up:</strong> <a href="report.html">docs/report.md</a>.</p>
+<p><strong>Status (2026-11-21): complete.</strong> Every result that can be reproduced offline was attempted. Phase-by-phase notes are in <a href="briefings.html">docs/briefings.md</a>; the build log is <a href="../../PROGRESS.md">PROGRESS.md</a>.</p>
+<h2 id="summary">Summary</h2>
+<p><strong>Every qualitative claim of the paper reproduces from the public data.</strong> Most headline numbers land close to the paper's:</p>
+<ul>
+<li><strong>Neural tuning (Figs 1–2):</strong>
+<ul>
+<li>The non-dominant LEFT hand's tuning is suppressed (41% vs 18% for the RH; paper 34% / 12%) and decorrelated (uni/bi r 0.49 / 0.60 vs RH 0.86 / 0.86; paper 0.42 / 0.45 vs 0.87 / 0.84) during bimanual movement.</li>
+<li>Bimanual activity sits on top of unimanual-RH activity.</li>
+<li>Laterality explains more variance than direction (cross-validated dPCA 39% vs 29%; paper 39% / 30%).</li>
+</ul>
+</li>
+<li><strong>Decoders (Fig 3):</strong>
+<ul>
+<li>A one-layer nonlinear decoder beats ridge regression, mostly on the LH (+0.12 r).</li>
+<li>It does so by using the laterality dimension: removing it erases the advantage and the steadier idle cursor.</li>
+<li>Simulations reproduce the mechanism. The real single-bin fSNR is 2.11 (paper 2.03).</li>
+</ul>
+</li>
+<li><strong>RNNs (Fig 4):</strong>
+<ul>
+<li>Raw-trained RNN offline r = 0.96 / 0.89 (paper 0.90 / 0.83).</li>
+<li>Time-warped, shuffled (&quot;fractured&quot;) training data costs a little offline (0.93 / 0.87, noisier).</li>
+<li>Online, the logged sessions show the fractured-data RNN acquiring 59–86% of targets vs 7–16% for the raw-trained one.</li>
+</ul>
+</li>
+<li><strong>Online control (Fig 5):</strong> RNN ≫ linear decoder; sequential strategy faster than simultaneous; bimanual angular errors higher.</li>
+</ul>
+<p><strong>Where we differ:</strong></p>
+<ol>
+<li>Bimanual time to acquisition is about 2× unimanual in the logs, where the paper's text says &quot;only slightly longer&quot; (#30). The paper's own Fig 5a shows the same 2×, so only the wording differs (<a href="figure_comparison.html">figure comparison</a>).</li>
+<li>RH suppression comes out slightly larger (18.7% vs 12%).</li>
+<li>Two methods had to deviate to work at all:
+<ul>
+<li>split-half instead of 5-fold cvOLS, because 5-fold explodes on small sets (#23);</li>
+<li>unit-direction regressors instead of raw position differences in Eq. 2 (#21).</li>
+</ul>
+</li>
+<li>The paper contradicts itself on the augmentation clip length (#14). Only the 2–8 s reading reproduces its offline result.</li>
+</ol>
+<p><strong>Not reproducible offline:</strong> live closed-loop control, so Figs 4e and 5 are re-scored from the logs. Days 1752 / 1771 have no closed-loop data on Dryad.</p>
+<h2 id="results-paper-vs-replication">Results: paper vs replication</h2>
+<p>The paper's numbers were re-checked against the full text on PMC in step 6.2 (see <a href="paper_check.html">docs/paper_check.md</a>). Values given only in figures were read off the published figures on 2026-11-23. A side-by-side, panel-by-panel comparison is in <a href="figure_comparison.html">docs/figure_comparison.md</a>.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Figure</th>
+<th>Quantity</th>
+<th>Paper</th>
+<th>Ours (95% CI)</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fig 1b-c</td>
+<td>Electrode 97 / 13 / 23 tuning, uni vs bi</td>
+<td>97 keeps both hands; 13 suppressed for both hands; 23 LH suppressed</td>
+<td>97: RH identical, LH kept but weaker. 13: both hands weaker. 23: LH abolished, RH kept. (<a href="../../results/figures/fig1_tuning_curves.png">figure</a>)</td>
+<td>✅ qualitative match</td>
+</tr>
+<tr>
+<td>Supp Fig 1c</td>
+<td>Tuned electrodes (p &lt; 1e-5), uniR / uniL / biR / biL</td>
+<td>90 / 60 / 97 / 52 (figure)</td>
+<td>83 / 50 / 87 / 28 (<a href="../../results/figures/supp_fig1_tuning_counts.png">figure</a>)</td>
+<td>⚠️ RH preference matches; we find fewer tuned electrodes, most for biL (28 vs 52)</td>
+</tr>
+<tr>
+<td>Supp Fig 1e</td>
+<td>Electrodes tuned to 0 / 1 / 2 / 3 / 4 contexts</td>
+<td>82 / 16 / 33 / 27 / 34 (figure)</td>
+<td>88 / 25 / 29 / 35 / 15</td>
+<td>⚠️ fewer electrodes tuned to all 4 (15 vs 34), following from biL</td>
+</tr>
+<tr>
+<td>Fig 2b</td>
+<td>RH tuning suppression, bimanual vs unimanual</td>
+<td>12%</td>
+<td>18.7% (CI 15.5–22.5%); all schemes 18–19% (<a href="../../results/figures/fig2bc_tuning_change_splithalf.png">figure</a>)</td>
+<td>✅ direction and size similar; somewhat larger</td>
+</tr>
+<tr>
+<td>Fig 2b</td>
+<td>LH tuning suppression, bimanual vs unimanual</td>
+<td>34%</td>
+<td>41.3% (CI 34–49%); all schemes 36–41%</td>
+<td>✅ LH ≫ RH; t-test p = 6e-6 (n = 22)</td>
+</tr>
+<tr>
+<td>Fig 2c</td>
+<td>RH uni/bi tuning correlation, x / y</td>
+<td>0.87 / 0.84</td>
+<td>0.86 / 0.86</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Fig 2c</td>
+<td>LH uni/bi tuning correlation, x / y</td>
+<td>0.42 / 0.45</td>
+<td>0.49 / 0.60</td>
+<td>✅ qualitatively (LH decorrelated); y somewhat higher</td>
+</tr>
+<tr>
+<td>Fig 2c</td>
+<td>UniR-UniL correlation, x / y</td>
+<td>anti-correlated in x, correlated in y</td>
+<td>−0.34 / +0.51</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Supp Table 1</td>
+<td>Pairwise t-tests between correlation types (12 p-values)</td>
+<td>11 significant, 1 n.s. (y: UniL-BiL vs UniR-UniL, 0.76)</td>
+<td>Same significance pattern at 0.01 in 11/12; the exception is x UniL-BiL vs BiR-BiL (paper 0.05, ours 0.001)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Supp Fig 1d</td>
+<td>RH vs LH unimanual tuning strength (day 1776)</td>
+<td>1.95× (figure)</td>
+<td>1.70× (LH 41% weaker)</td>
+<td>✅ close</td>
+</tr>
+<tr>
+<td>Fig 2 PCA</td>
+<td>Bimanual activity is closest to unimanual RH (day 1881)</td>
+<td>Yes (qualitative)</td>
+<td>Centroid distance in PC1-2: bi–uniR 0.28 vs bi–uniL 3.21; full space 2.21 vs 3.53 (<a href="../../results/figures/fig2_pca.png">figure</a>)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Fig 2 dPCA</td>
+<td>Share of marginalized variance: laterality / direction</td>
+<td>39% / 30%</td>
+<td>0–1000 ms: <strong>39% / 29%</strong>; 300–700 ms: 41% / 33% (5 days, cross-validated) (<a href="../../results/figures/fig2_dpca.png">figure</a>)</td>
+<td>✅ laterality &gt; direction on every day. Non-CV estimates flip the order.</td>
+</tr>
+<tr>
+<td>Fig 3b</td>
+<td>Unimanual single-bin decoding: FFN vs ridge (day 1883)</td>
+<td>Ridge R 0.69/0.77, L 0.45/0.55; FFN R 0.77/0.82, L 0.59/0.70 (figure)</td>
+<td>r ridge R 0.72/0.79, L 0.45/0.56; FFN R 0.75/0.80, L 0.56/0.69. FFN − ridge: +0.07 overall, +0.12 LH (p &lt; 0.001) (<a href="../../results/figures/fig3_decoding_direction.png">figure</a>)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Fig 3b</td>
+<td>Laterality removed</td>
+<td>Hurts the FFN, not ridge</td>
+<td>FFN −0.08 (LH −0.13), p &lt; 0.001; ridge ±0.000 (p = 0.78)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Fig 3c</td>
+<td>Idle-cursor jitter</td>
+<td>FFN steadier; laterality removal increases FFN jitter</td>
+<td>L jitter: ridge 0.84, FFN 0.42, FFN − lat 0.84</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Supp Fig 2c</td>
+<td>Bimanual decoding</td>
+<td>RH better than LH: ridge R 0.69/0.69, L 0.40/0.31; FFN R 0.76/0.75, L 0.42/0.32 (figure)</td>
+<td>RH 0.68–0.77 vs LH 0.32–0.49</td>
+<td>✅ RH ≫ LH; but our ridge ≥ FFN here, while the paper has FFN slightly above ridge</td>
+</tr>
+<tr>
+<td>Supp Fig 4</td>
+<td>Single-bin fSNR, unimanual RH (day 1883)</td>
+<td>2.03</td>
+<td><strong>2.11</strong>; window-average 4.60 (<a href="../../results/figures/supp_fig4_fsnr.png">figure</a>)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Supp Fig 4</td>
+<td>i.i.d. noise matches single-bin but not window-average fSNR</td>
+<td>Yes</td>
+<td>Simulated: 2.12 single-bin (matched), 9.01 window-average (vs real 4.60)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Fig 3d-e</td>
+<td>Simulation: ridge degrades as RH-LH tuning correlation rises; the FFN holds when laterality is large</td>
+<td>Qualitative</td>
+<td>Ridge r 0.59 → 0.50 (LH 0.45 → 0.32) for ρ 0→1, flat across laterality. FFN ≈ 0.69 for every ρ at laterality ≥ 2× real; FFN jitter is far below ridge once laterality &gt; 0 (<a href="../../results/figures/fig3_simulations.png">figure</a>)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Fig 4d</td>
+<td>Raw-trained RNN offline r, RH / LH (day 1869, held-out block)</td>
+<td>0.90 / 0.83</td>
+<td><strong>0.96 / 0.89</strong> (best setting, 3 seeds) (<a href="../../results/figures/fig4_rnn.png">figure</a>)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Fig 4d</td>
+<td>Augmented RNN offline: &quot;slightly poorer ... noisier output velocities&quot;</td>
+<td>0.82 / 0.82 (figure)</td>
+<td>2–8-s clips (main): 0.93 / 0.87, roughness 0.08 vs raw 0.04. 200–800-ms clips: 0.76 / 0.67, roughness 0.31</td>
+<td>✅ with 2–8-s clips; the 200–800-ms reading drops much more than &quot;slightly&quot;</td>
+</tr>
+<tr>
+<td>Fig 4e</td>
+<td>Online: augmented RNN gives continuous movement and acquires more targets than raw</td>
+<td>Qualitative</td>
+<td>Success: 1867 59% vs 7%; 1869 86% vs 16%. Raw: one speed pulse, then nearly stops; augmented: sustained speed (<a href="../../results/figures/fig4e_online_speed.png">figure</a>)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Fig 5a</td>
+<td>Bimanual TTA vs unimanual (RNN, 1776/1778/1790/1792)</td>
+<td>Text: bimanual &quot;only slightly longer&quot;. Figure: bi ≈ 4.4–5.9 s vs uni ≈ 2–3 s on good sessions (about 2×), timeouts on 3 sessions</td>
+<td>bi 5.4 s vs uniR 2.8 s / uniL 3.0 s (successful trials; about 2× on every day) (<a href="../../results/figures/fig5_online.png">figure</a>)</td>
+<td>✅ matches the paper's figure; only the text understates the gap (#30)</td>
+</tr>
+<tr>
+<td>Fig 5a</td>
+<td>Bimanual angular error higher</td>
+<td>Yes</td>
+<td>bi 52° vs uniR 34° / uniL 43°; higher on every day</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Fig 5a</td>
+<td>Decoders sometimes failed</td>
+<td>Yes</td>
+<td>Success 99% / 97% (1776 / 1778) vs 63% / 43% (1790 / 1792)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Fig 5b</td>
+<td>Sequential faster than simultaneous (1881 + 1883)</td>
+<td>Yes</td>
+<td>bi 5.3 vs 7.1 s; uniR 2.6 vs 3.4 s; uniL 2.5 vs 4.4 s (failures = 10 s)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Fig 5c</td>
+<td>RNN beats linear at all gains; linear fails at separating the hands</td>
+<td>Yes</td>
+<td>Mixed blocks: linear mostly times out (0–47% success) while the RNN succeeds on 59–100%. Uni-only locked blocks: linear works (TTA about 3.4–4.2 s)</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="decisions-deviations-and-assumptions">Decisions, deviations and assumptions</h2>
+<p>This is the full register. Each entry is also marked in the code with <code># ASSUMPTION:</code> or <code># DEVIATION:</code>, and <a href="methods_notes.html">docs/methods_notes.md</a> maps each to its code. <strong>Type:</strong> D = decision (made from evidence in the data), A = assumption (the paper is silent or ambiguous), V = deviation (we do something differently from the paper).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Type</th>
+<th>Topic</th>
+<th>What we do</th>
+<th>Why / evidence</th>
+<th>Status / check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>A</td>
+<td>Dryad data versions</td>
+<td>Use the current download. Assume the 3 Dryad versions (Dec 28 2023, Jan 2 2024, Jan 18 2024) contain identical <code>.mat</code> data and differ only in the README.</td>
+<td>The zip is 138.35 MB in all three versions; only the README size changes (2.16 → 2.17 KB).</td>
+<td>Accepted (user, 2026-11-20)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>D</td>
+<td>Corrupted file</td>
+<td>Day 1867 (<code>t5_09_27_2021.mat</code>) was re-extracted by the user after its <code>tx</code> failed to decompress.</td>
+<td>All 13 files now load fully.</td>
+<td>Resolved</td>
+</tr>
+<tr>
+<td>3</td>
+<td>D</td>
+<td>Session/block labels</td>
+<td>Block conditions are transcribed by hand from <code>Data/readme.txt</code> into <code>bimanual/sessions.py</code>.</td>
+<td><code>pixi run inventory</code> checks every block both ways: none missing, none unlabeled.</td>
+<td>Verified</td>
+</tr>
+<tr>
+<td>4</td>
+<td>V</td>
+<td>Language</td>
+<td>The MATLAB analysis is ported to Python.</td>
+<td>User choice. The port matches the authors' <code>tuningAnalysis.m</code> run in Octave on day 1750 (max diff 3e-14).</td>
+<td>Verified. The Mac MATLAB check was dropped by the user.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>D</td>
+<td>Port fidelity</td>
+<td>MATLAB quirks are kept: angles are floored to whole degrees, a target exactly on an axis gets NaN, and windows are inclusive ((15, 35) = 21 bins).</td>
+<td>Needed for an exact match with the authors' code.</td>
+<td>Verified</td>
+</tr>
+<tr>
+<td>6</td>
+<td>A</td>
+<td>Direction quadrants (Supp Fig 1 ANOVA; augmentation balancing)</td>
+<td>Axis-aligned quadrants of the cursor→target vector at the go cue.</td>
+<td>The paper doesn't define them. Targets are at random positions, and directions are evenly spread over 0–360°.</td>
+<td>Open: affects Supp Fig 1 counts</td>
+</tr>
+<tr>
+<td>7</td>
+<td>D</td>
+<td>Fig 5 time to acquisition</td>
+<td>Use the logged <code>durationBinnedMove</code> × 20 ms; ≥ 499 bins = 10-s timeout = failure. This includes the 500-ms dwell.</td>
+<td>The target radius isn't stored, and no fixed radius fits all dwells (step 0.3). The logged value is the task's own record.</td>
+<td>Decided; <code>behavior.time_to_acquisition</code> is a sanity check</td>
+</tr>
+<tr>
+<td>8</td>
+<td>A</td>
+<td>Fig 5 angular error</td>
+<td>The target direction is fixed at the go cue; movement direction comes from the per-bin cursor displacement over 300–500 ms; bins with no movement are skipped.</td>
+<td>The paper says only &quot;average difference ... 300–500 ms&quot;.</td>
+<td>Check in Phase 5</td>
+</tr>
+<tr>
+<td>9</td>
+<td>V</td>
+<td>cvOLS / unbiased statistics</td>
+<td>Reimplemented from the description in Willett et al. 2020, not from their code.</td>
+<td>No code was released. Synthetic tests show it is unbiased.</td>
+<td>Check against the Fig 2 numbers in Phase 2</td>
+</tr>
+<tr>
+<td>10</td>
+<td>A</td>
+<td>Fig 2 block grouping</td>
+<td>MAIN: consecutive pairs of all OL blocks per day, including uni-only blocks: exactly 25 pairs, 22 usable (3 uni-only pairs have about 2 bimanual trials). Robustness: all pairs of mixed blocks (38) and adjacent mixed pairs (17).</td>
+<td>Only <code>adjacent_all</code> reproduces n = 25 (user decision 2026-11-21: matches the figure's description).</td>
+<td>Done; PMC (step 6.2) CONFIRMS &quot;consecutive blocks together in pairs&quot;, n = 25</td>
+</tr>
+<tr>
+<td>11</td>
+<td>A</td>
+<td>Fig 3 decoder targets</td>
+<td>MAIN: unit cursor→target direction at the go cue (0 for the idle hand), constant over the 400-ms window. ALT: recorded OL cursor velocity (<code>--target cursor</code>).</td>
+<td>In OL trials the cursor starts moving about 300 ms after go, so cursor velocity in the window is mostly the onset ramp scaled by distance, which caps every r low. Unit direction equals the saturated targets the paper's online decoders used. Every effect holds with both targets.</td>
+<td>Done; PMC CONFIRMS the unit cursor→target vector (the paper updates it per time step; we fix it at go)</td>
+</tr>
+<tr>
+<td>12</td>
+<td>A</td>
+<td>Fig 3 trial subset</td>
+<td>All 491 open-loop unimanual trials of day 1883 (254 uniR, 237 uniL, from all 8 OL blocks).</td>
+<td>The closest natural subset to the paper's 482 (the file has 951 trials in total).</td>
+<td>Done; PMC: &quot;482 total trials&quot;, unimanual</td>
+</tr>
+<tr>
+<td>13</td>
+<td>A</td>
+<td>RNN &quot;saturated&quot; targets</td>
+<td>Min-jerk speed bell clipped at 0.5 of its peak and rescaled (alternative: rise then hold to the end).</td>
+<td>The wording is ambiguous.</td>
+<td>Both tested; &quot;hold&quot; is worse offline for raw and aug, so the clip reading stays MAIN</td>
+</tr>
+<tr>
+<td>14</td>
+<td>A</td>
+<td>Augmentation clip length</td>
+<td>200–800 ms (10–40 bins).</td>
+<td>The paper's wording is ambiguous (&quot;0.2–0.8 ×&quot; vs &quot;200–800 ms&quot;).</td>
+<td>DECIDED: MAIN = 2–8 s (Methods reading). It reproduces &quot;slightly poorer, noisier&quot; offline (r -0.03, 2x roughness), while 200–800 ms gives r -0.2. Online behaviour of the 2–8 s version can't be tested</td>
+</tr>
+<tr>
+<td>15</td>
+<td>A</td>
+<td>Augmentation velocity scaling</td>
+<td>Velocity amplitude is not rescaled when a clip is stretched.</td>
+<td>The targets encode intent, not physical speed.</td>
+<td>PMC CONFIRMS (&quot;compress or stretch both the input and output clips&quot;)</td>
+</tr>
+<tr>
+<td>16</td>
+<td>V</td>
+<td>RNN hyperparameter search</td>
+<td>10 random settings, each trained on raw AND augmented data (20 models, paired), plus 2 extra seeds per best setting; selection on the val block. Space: lr 3e-4–3e-3, batch {16, 32, 48}, steps {2000, 3000, 4000}, L2 1e-6–1e-4, noise 0.1–0.6, drift 0–0.3.</td>
+<td>GPU budget (RTX 3050, 4 GB; 69 ms/step). User approved a default of about 20 models with a ≤ 3 h cap (2026-11-21).</td>
+<td>Done: 20 search + 4 seed + 2 hold + 3 long-clip models, about 1.6 GPU-h</td>
+</tr>
+<tr>
+<td>17</td>
+<td>D</td>
+<td>Paper target numbers</td>
+<td>Taken from summaries of the paper text.</td>
+<td>The paper was read through a summarizer.</td>
+<td>Done; PMC CONFIRMS all headline values (see docs/paper_check.md)</td>
+</tr>
+<tr>
+<td>18</td>
+<td>A</td>
+<td>Supp Fig 1 ANOVA window</td>
+<td>Same 300–700 ms window (bins 15–35) as the encoding analyses.</td>
+<td>The paper doesn't state the window for the ANOVA.</td>
+<td>Applied in Phase 1</td>
+</tr>
+<tr>
+<td>19</td>
+<td>V</td>
+<td>Supp Fig 1b layout</td>
+<td>FVAF is shown as an electrode × context heat map, not on the array anatomy.</td>
+<td>The data has no electrode positions.</td>
+<td>Phase 1</td>
+</tr>
+<tr>
+<td>21</td>
+<td>A</td>
+<td>Encoding-model regressors (Eq. 2)</td>
+<td>Unit cursor→target direction at the go cue, held constant over 300–700 ms; 0 for the idle hand.</td>
+<td>Eq. 2 says target − cursor, but target distances vary from 30 to 750 units, and a direction-tuning model should not encode distance. Ratios and correlations don't depend on scale.</td>
+<td>PMC: Eq. 2 is the raw per-step difference, so this is a confirmed DEVIATION (scale-free statistics only)</td>
+</tr>
+<tr>
+<td>22</td>
+<td>A</td>
+<td>Minimum trials per context in a set</td>
+<td>≥ 10 trials of each type.</td>
+<td>The cross-validated fits need enough trials.</td>
+<td>Excludes exactly the 3 uni-only pairs</td>
+</tr>
+<tr>
+<td>23</td>
+<td>V</td>
+<td>cvOLS estimator</td>
+<td>MAIN: split-half cross-validation (50 random halves of trials). The paper's literal 5-fold is kept as <code>--method kfold</code>.</td>
+<td>5-fold fits each fold alone; with about 25 bimanual trials that is about 5 trials for 5 parameters, so the estimates explode (main-scheme k-fold LH suppression 62%, correlation 1.20). Synthetic test: split-half is unbiased with far lower variance. The mixed-only schemes give similar values with either method.</td>
+<td>Decided 2026-11-21</td>
+</tr>
+<tr>
+<td>24</td>
+<td>A</td>
+<td>dPCA window and scaling</td>
+<td>Unimanual OL trials; z-scored per block. Windows: 300–700 ms (pre-registered main) and 0–1000 ms (robustness). 100 random two-way splits per day; mean over 5 days.</td>
+<td>The paper gives no window. The 0–1000 ms window reproduces 39% / 30% almost exactly, so the paper probably used a longer window.</td>
+<td>Both reported</td>
+</tr>
+<tr>
+<td>25</td>
+<td>V</td>
+<td>FFN training details</td>
+<td>ReLU, Adam (lr 1e-3, weight decay 1e-4), MSE on standardized targets, batch 512, early stopping on 10% of the training trials; PyTorch on the GPU. Ridge: closed form, alpha grid 0.1–1e5, best mean CV r.</td>
+<td>The paper gives only &quot;1 dense layer, 512 units, TensorFlow v1&quot; and &quot;RidgeCV swept to maximize Pearson correlation&quot;.</td>
+<td>Phase 3</td>
+</tr>
+<tr>
+<td>26</td>
+<td>D</td>
+<td>Environment: BLAS</td>
+<td>conda-forge numpy/scipy use OpenBLAS instead of MKL.</td>
+<td>The MKL build loads LLVM <code>libomp.dll</code>, which aborts against the Intel <code>libiomp5md.dll</code> in the PyTorch wheel (OMP Error #15). The reference cross-check is unchanged (3e-14).</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>27</td>
+<td>A</td>
+<td>Simulation details</td>
+<td>20 noisy bins per trial; 8 wedge directions; one population draw per grid cell; ρ ∈ {0, .25, .5, .75, .9, 1}, laterality ×{0, .5, 1, 2, 4} of the real size; noise σ calibrated (bisection) to the real single-bin fSNR at ρ = 0, lat ×1; ridge alpha chosen on 10% of the training trials.</td>
+<td>The paper gives no per-trial bin count, grid values or seeds.</td>
+<td>Phase 3</td>
+</tr>
+<tr>
+<td>28</td>
+<td>V</td>
+<td>RNN implementation</td>
+<td>PyTorch GRU(512), day-affine input (one day), Adam + gradient clipping (1.0), MSE + CE + L2; white noise + per-snippet mean drift. Day 1869 OL only, split by block (train 1–5 / val 6 / test 7). Raw data = random contiguous 10-s windows; augmented = 2000 fixed snippets.</td>
+<td>The paper trained online decoders on pooled multi-day data (40% newest day) in TF v1. For the offline Fig 4d comparison, a single-day, block-split design isolates the effect of augmentation.</td>
+<td>Phase 4</td>
+</tr>
+<tr>
+<td>29</td>
+<td>D</td>
+<td>Fig 5a day set</td>
+<td>MAIN: 1776, 1778, 1790, 1792 (standard RNN CL evaluation blocks). 1752 / 1771 have no CL data (calibration days); 1881 / 1883 &quot;simultaneous&quot; blocks are reported separately.</td>
+<td>Resolves the Supp Table 2 vs Methods discrepancy using the data.</td>
+<td>Done; PMC lists 1752, 1771, 1776, 1778, 1790, 1792, but the Dryad data for 1752 / 1771 has no CL blocks</td>
+</tr>
+<tr>
+<td>30</td>
+<td>D</td>
+<td>Fig 5a bimanual TTA</td>
+<td>Reported as logged: bimanual about 2× unimanual on every day, larger than the paper's &quot;only slightly longer&quot;. Possible causes: a different TTA definition in the paper (e.g. excluding the dwell, or time to first target), or a different trial subset.</td>
+<td>Our TTA is the task's own record (<code>durationBinnedMove</code>).</td>
+<td>RESOLVED 2026-11-23: the paper's own Fig 5a shows bimanual about 2× unimanual on its good sessions, so our numbers match the figure; only the text's wording understates it (<a href="figure_comparison.html#fig-5a-online-two-cursor-control">figure comparison</a>)</td>
+</tr>
+<tr>
+<td>31</td>
+<td>D</td>
+<td>Long-clip augmentation run</td>
+<td>The 2–8-s clip models reuse the best hyperparameters found with 200–800-ms clips (no separate search).</td>
+<td>Budget. A dedicated search could do slightly better.</td>
+<td>Phase 4</td>
+</tr>
+<tr>
+<td>32</td>
+<td>D</td>
+<td>LSTM initialization (Phase 8)</td>
+<td>The LSTM forget-gate bias starts at 1 (0.5 in each of PyTorch's two bias vectors); everything else is PyTorch's default.</td>
+<td>The standard LSTM choice (Gers 2000; Jozefowicz 2015).</td>
+<td>Extension</td>
+</tr>
+<tr>
+<td>33</td>
+<td>D</td>
+<td>GRU vs LSTM comparison design</td>
+<td>A paired search: the same 10 hyperparameter draws (<code>default_rng(2021)</code>), per-setting seeds, fixed snippet sets, splits and targets as the GRU search; only the cell differs. Width 512 (main) plus a parameter-matched LSTM of 433 units (1.086M vs 1.084M recurrent parameters) at the best LSTM-512 settings.</td>
+<td>Isolates the effect of the cell type. Retraining s07_raw through the new code reproduces its test r exactly.</td>
+<td>Extension</td>
+</tr>
+<tr>
+<td>34</td>
+<td>D</td>
+<td>GRU long-clip search</td>
+<td>The GRU is also searched with 2–8-s clips (10 settings), so each kind gets its own best GRU setting.</td>
+<td>Resolves #31.</td>
+<td>Extension</td>
+</tr>
+<tr>
+<td>35</td>
+<td>A</td>
+<td>Closed-loop proxy target</td>
+<td>On day 1869's 12 CL blocks: the unit cursor→target vector of the active hand from go + 200 ms until the logged end of pursuit (the last 500 ms of successful trials are the dwell, so 0 there); 0 elsewhere. Metrics: r, decoded angular error at 300–500 ms, &quot;sustain&quot; (1–3 s vs 0.3–1 s projected speed), idle-hand jitter.</td>
+<td>ReFIT-style intention estimate; the target radius isn't stored (#7). <strong>Validity check on the existing GRU models:</strong> augmented beats raw on r (about 0.33–0.35 vs 0.29) and angular error (about 43–52° vs 55–58°), matching the online direction, but the gap is far smaller than online, and the raw RNN's &quot;pulse, then stop&quot; doesn't appear offline (sustain about 0.8 for both). So it is a WEAK, secondary metric.</td>
+<td>Extension</td>
+</tr>
+<tr>
+<td>36</td>
+<td>A</td>
+<td>Which channels belong to which array</td>
+<td>Channels 1–96 = array A, 97–192 = array B (contiguous; usual BrainGate layout). Which one is medial and which lateral is unknown.</td>
+<td>Data check (<code>ext-arrays --stage check</code>, days 1869 / 1750 / 1883): within-half correlation exceeds across-half beyond every one of 200 random 96/96 splits, and about 92% of channels correlate more with their own half. Among the 96 contiguous shifted splits, 1–96 ranks 2 / 1 / 40, so the boundary location is supported only moderately. Clustering is uninformative (r ≈ 0.01), and there is no firing-rate step at 96. Verdict: consistent with the split, not proof.</td>
+<td>Extension; on the paper-check list</td>
+</tr>
+<tr>
+<td>37</td>
+<td>V</td>
+<td>One-array hyperparameters</td>
+<td>The one-array and random-96 models reuse the best 192-channel setting of their (cell, kind); there is no separate search.</td>
+<td>Budget. This may slightly favour the 192-channel models; the random-96 control uses the same settings, so the array-vs-random comparison is fair.</td>
+<td>Extension</td>
+</tr>
+<tr>
+<td>38</td>
+<td>D</td>
+<td>Zeroing one array at test</td>
+<td>Set that array's z-scored inputs to 0, i.e. its block mean (a silent / disconnected array after re-centring).</td>
+<td>The simplest failure model; no retraining.</td>
+<td>Extension</td>
+</tr>
+<tr>
+<td>39</td>
+<td>D</td>
+<td>Channel-dropout training (Phase 10)</td>
+<td><code>HParams.chan_dropout</code> = 0.5: each training sample draws p ~ U(0, 0.5) and sets that fraction of its channels to 0 (z-units) after the noise and drift augmentation; no rescaling. At 0, no extra RNG draws are made, so old runs reproduce bit for bit.</td>
+<td>Simulates channels lost to bad signal, which cannot be predicted.</td>
+<td>Extension; tested (<code>tests/test_rnn.py</code>)</td>
+</tr>
+<tr>
+<td>40</td>
+<td>D</td>
+<td>Training-data amount (Phase 10)</td>
+<td>Train on the last k of blocks 1–5 (k = 1–4; k = 5 is the Phase 8 model); validation 6 / test 7 unchanged; 3 seeds.</td>
+<td>The newest blocks are closest to the test block, as in a real recalibration.</td>
+<td>Extension</td>
+</tr>
+<tr>
+<td>41</td>
+<td>D</td>
+<td>Splits for days 1750 and 1867 (Phase 10)</td>
+<td>The last 2 open-loop blocks are test, the 2 before them validation, the rest training. 1750: train 12–24, val 25–26, test 27–28 (the plan said 28–29, but the readme's range ends at 28). 1867: train 1–4, 12–17, 22–23; val 24–25; test 26–27. Two-hand r is scored on bins of two-hand trials (&gt; 500 bins).</td>
+<td>Same rule as day 1869 (train early, test late).</td>
+<td>Extension; the 1750 test blocks contain two-hand trials (asserted)</td>
+</tr>
+<tr>
+<td>42</td>
+<td>A</td>
+<td>Muting modes (Phase 10)</td>
+<td>At test only, f ∈ {0, 0.1, …, 0.6} of the 192 channels, 20 masks per f (<code>default_rng(7000 + 100f)</code>). Modes: <strong>zero</strong> (detected and re-centred: 0 in z-units); <strong>dead</strong> (undetected silent electrode: the z-value of 0 counts under training-block statistics, −μ/σ); <strong>noisy</strong> (undetected noise: N(0, 1) per bin). Proxy r at f = 0, 0.3, 0.5.</td>
+<td>Three plausible failure types for a chronic implant.</td>
+<td>Extension; f = 0 reproduces the logged test r (asserted)</td>
+</tr>
+<tr>
+<td>43</td>
+<td>V</td>
+<td>Best-n channel selection (Phase 10)</td>
+<td>Greedy forward selection with swap refinement on a fast surrogate: ridge from each channel's raw bin plus causal exponential smoothings (τ = 2, 5, 12, 30, 75 bins) to the 4 velocity targets; train 1–5, score validation block 6; α chosen once per array (1e-3 A, 1e-4 B). Joint benchmark: group lasso (one group per channel, FISTA, λ path, ridge refit). Baseline: 1,000 random subsets per n. Cross-check: LSTM ablation ranking on block 6. Block 7 is never used (asserted).</td>
+<td>DEVIATION from the plan's 10 raw lags, which decoded poorly (all-96 val r 0.35 vs 0.61 / 0.72 with smoothings). The surrogate tracks the LSTM across random subsets (r = 0.94 with LSTM test r).</td>
+<td>Extension</td>
+</tr>
+<tr>
+<td>44</td>
+<td>V</td>
+<td>Phase 11 data</td>
+<td>The Rigotti-Thompson 2026 T5 files (Dryad doi:10.5061/dryad.brv15dvr9, <code>fig1_T5_{move,delay}.h5</code>): TX and SBP from the same 48 electrodes (TX rate &gt; 2 Hz), acausal Gaussian smoothing σ = 100 ms, 20-ms bins, trial-aligned, open-loop radial-8 wrist task. Replaces the planned T11 (MINDFUL) comparison and the TX→SBP stand-in for the bimanual sessions. Ridge and FFN only, no LSTM.</td>
+<td>The MINDFUL download was blocked and the user could fetch only the T5 files. A raw-bin stand-in cannot be fitted from smoothed, trial-aligned data.</td>
+<td>Extension; caveats in <a href="ext_sbp_notes.html">docs/ext_sbp_notes.md</a></td>
+</tr>
+<tr>
+<td>45</td>
+<td>D</td>
+<td>Phase 11 splits and windows</td>
+<td>Leave-one-block-out over blocks 7 / 8 / 9; ridge α by an inner leave-one-block-out on the training blocks; z-scoring with training-block statistics. Velocity: cursor velocity −200 to 500 ms after go. Classification: 0–400 ms (movement); 200–700 ms of the delay period for trials with delay ≥ 1 s (183 trials). Paired bootstrap (2,000 trial resamples).</td>
+<td>Only 3 blocks / 337 usable trials.</td>
+<td>Extension</td>
+</tr>
+<tr>
+<td>46</td>
+<td>A</td>
+<td>Phase 11 feature and muting details</td>
+<td>log SBP is the main SBP feature (chosen in advance; raw SBP, slightly better, reported alongside). Dead SBP channel = its training 1st percentile; dead TX channel = 0 counts; noisy = N(0, 1) per bin (unsmoothed). Masks as #42. SBP residual = log SBP minus a ridge prediction from the same electrode's TX at shifts −4, −2, 0, 2, 4 bins.</td>
+<td>The dead-SBP value is a guess; real failed SBP channels might sit at amplifier noise or rail high.</td>
+<td>Extension</td>
+</tr>
+<tr>
+<td>20</td>
+<td>D</td>
+<td>Fig 1 curve centring and CIs</td>
+<td>Curves are centred on their 8-direction mean, as in <code>tuningAnalysis.m</code>. CIs come from a 10k bootstrap over trials.</td>
+<td>Follows the authors' script; the paper's CI method is 10k bootstrap.</td>
+<td>Phase 1</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="data-quirks-noted-no-action-yet">Data quirks noted (no action yet)</h3>
+<ul>
+<li>&quot;Unimanual only&quot; open-loop blocks each contain about 1 bimanual trial.</li>
+<li>One moving-hand trial in the whole dataset (day 1869, closed-loop) has the target at the cursor at the go cue. It gets a NaN quadrant (<code>min_dist</code> = 1). Checked in Phase 1: day 1750 is clean.</li>
+</ul>
+<h2 id="extensions-phases-811-beyond-the-paper">Extensions (Phases 8–11, beyond the paper)</h2>
+<p>Phases 8–10: all offline, day 1869 unless stated, Fig 4 setup (train blocks 1–5 / select on 6 / test on 7). A closed-loop proxy (#35) scores each model on the 12 recorded closed-loop blocks. It is a weak metric: it ranks augmented above raw for the GRU, but by far less than online success does.</p>
+<h3 id="phase-8-lstm-vs-gru-figure-resultsext_lstmsummaryjson">Phase 8: LSTM vs GRU (<a href="../../results/figures/ext_lstm_vs_gru.png">figure</a>, <code>results/ext_lstm/summary.json</code>)</h3>
+<p><strong>Paired search</strong> (same 10 settings and seeds, #33): LSTM − GRU validation r.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Mean diff [95% CI]</th>
+<th>Wilcoxon p</th>
+<th>LSTM better</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw</td>
+<td>+0.013 [+0.008, +0.017]</td>
+<td>0.006</td>
+<td>9/10</td>
+</tr>
+<tr>
+<td>2–8-s clips</td>
+<td>+0.033 [+0.019, +0.049]</td>
+<td>0.002</td>
+<td>10/10</td>
+</tr>
+<tr>
+<td>200–800-ms clips</td>
+<td>+0.113 [+0.087, +0.138]</td>
+<td>0.002</td>
+<td>10/10</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Best setting × 3 seeds</strong>, test block:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>r RH / LH</th>
+<th>Roughness</th>
+<th>Proxy r</th>
+<th>Proxy angle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GRU raw</td>
+<td>0.959 / 0.887</td>
+<td>0.038</td>
+<td>0.29</td>
+<td>56°</td>
+</tr>
+<tr>
+<td>GRU 2–8 s</td>
+<td>0.918 / 0.860</td>
+<td>0.113</td>
+<td>0.36</td>
+<td>51°</td>
+</tr>
+<tr>
+<td>GRU 0.2–0.8 s</td>
+<td>0.764 / 0.667</td>
+<td>0.313</td>
+<td>0.33</td>
+<td>48°</td>
+</tr>
+<tr>
+<td>LSTM raw</td>
+<td>0.959 / 0.885</td>
+<td>0.054</td>
+<td>0.34</td>
+<td>47°</td>
+</tr>
+<tr>
+<td>LSTM 2–8 s</td>
+<td>0.931 / 0.876</td>
+<td>0.083</td>
+<td>0.37</td>
+<td>44°</td>
+</tr>
+<tr>
+<td>LSTM 0.2–0.8 s</td>
+<td>0.808 / 0.744</td>
+<td>0.288</td>
+<td>0.36</td>
+<td>46°</td>
+</tr>
+<tr>
+<td>LSTM-433 raw (parameter-matched)</td>
+<td>0.964 / 0.885</td>
+<td>0.052</td>
+<td>0.33</td>
+<td>46°</td>
+</tr>
+<tr>
+<td>LSTM-433 2–8 s (2 seeds)</td>
+<td>0.930 / 0.887</td>
+<td>0.083</td>
+<td>0.37</td>
+<td>41°</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Findings:</strong></p>
+<ul>
+<li>On raw data the LSTM is no better on the test block. It wins the paired search by a small, consistent margin across settings.</li>
+<li>With augmentation the LSTM loses less of the raw-data r than the GRU does. The gap grows as clips get shorter (short clips are where the GRU struggled, #14). Its decoded velocity is also smoother (2–8 s: roughness 0.083 vs 0.113).</li>
+<li>The parameter-matched LSTM-433 does as well as LSTM-512, so the advantage isn't parameter count.</li>
+<li>On the proxy, every LSTM scores at or above the best GRU, and the raw LSTM is close to the augmented GRU. That hints the LSTM might be less fragile in closed loop. It can only be tested online, and the proxy is weak (#35).</li>
+<li><strong>Budget:</strong> 3.03 GPU-h. One run was skipped (<code>lstm433_augL_seed102</code>), so that row has 2 seeds.</li>
+</ul>
+<h3 id="phase-9-one-array-only-figure-resultsext_arrayssummaryjson">Phase 9: one array only (<a href="../../results/figures/ext_arrays.png">figure</a>, <code>results/ext_arrays/summary.json</code>)</h3>
+<p><strong>Array split.</strong> We assume channels 1–96 are array A and 97–192 are array B (#36). The data's correlation structure supports this split at moderate strength. Which array is medial and which is lateral is not known.</p>
+<p><strong>Setup.</strong> Each model uses the Phase 8 best hyperparameters for its (cell, data kind) (#37). Each one-array model is trained with 3 seeds. The random-96 controls are 3 subsets drawn across both arrays, 1 seed each, GRU only.</p>
+<p><strong>Test r, RH / LH (% of the 192-channel r retained):</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Both arrays</th>
+<th>Array A only</th>
+<th>Array B only</th>
+<th>Random 96</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GRU raw</td>
+<td>0.959 / 0.887</td>
+<td>0.859 / 0.765 (90% / 86%)</td>
+<td>0.948 / 0.887 (99% / 100%)</td>
+<td>0.937 / 0.854 (98% / 96%)</td>
+</tr>
+<tr>
+<td>GRU 2–8 s</td>
+<td>0.918 / 0.860</td>
+<td>0.861 / 0.773 (94% / 90%)</td>
+<td>0.904 / 0.844 (99% / 98%)</td>
+<td>0.901 / 0.823 (98% / 96%)</td>
+</tr>
+<tr>
+<td>LSTM raw</td>
+<td>0.959 / 0.885</td>
+<td>0.869 / 0.835 (91% / 94%)</td>
+<td>0.959 / 0.908 (100% / 103%)</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>LSTM 2–8 s</td>
+<td>0.931 / 0.876</td>
+<td>0.877 / 0.811 (94% / 93%)</td>
+<td>0.924 / 0.878 (99% / 100%)</td>
+<td>not run</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>One array zeroed at test, no retraining (#38).</strong> These are the 192-channel models, mean of 3 seeds.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Nothing zeroed</th>
+<th>Array A zeroed</th>
+<th>Array B zeroed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GRU raw</td>
+<td>0.96 / 0.89</td>
+<td>0.79 / 0.76</td>
+<td>0.69 / 0.62</td>
+</tr>
+<tr>
+<td>GRU 2–8 s</td>
+<td>0.92 / 0.86</td>
+<td>0.75 / 0.60</td>
+<td>0.44 / 0.49</td>
+</tr>
+<tr>
+<td>LSTM raw</td>
+<td>0.96 / 0.89</td>
+<td>0.82 / 0.77</td>
+<td>0.65 / 0.54</td>
+</tr>
+<tr>
+<td>LSTM 2–8 s</td>
+<td>0.93 / 0.88</td>
+<td>0.76 / 0.77</td>
+<td>0.58 / 0.55</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Findings:</strong></p>
+<ul>
+<li><strong>Array B alone keeps essentially all of the offline performance</strong>: 98–103% of the 192-channel r, for both hands and both cells.</li>
+<li><strong>Array A alone loses 6–14%.</strong> The left hand loses more with the GRU (86–90% retained), less with the LSTM (93–94%).</li>
+<li><strong>Random 96 channels from both arrays</strong> retain 96–98%, between A and B. So the result depends on which array, not only on channel count. On this day, adding array A to B buys almost nothing offline.</li>
+<li><strong>Retraining is essential.</strong> A 192-channel decoder with one array silenced degrades badly (r 0.44–0.82), worst when B is lost and for the augmented models.</li>
+<li><strong>The closed-loop proxy ranks the sets the same way</strong>: A &lt; B ≤ 192.</li>
+<li><strong>Caveats:</strong>
+<ul>
+<li>one day (1869), offline only</li>
+<li>array identity is assumed (#36)</li>
+<li>no per-array hyperparameter search (#37), which may slightly favor the 192-channel models</li>
+<li>random-96 was GRU only</li>
+</ul>
+</li>
+<li><strong>Budget:</strong> 1.82 GPU-h, nothing skipped.</li>
+</ul>
+<h3 id="phase-10-feasibility-for-a-smaller-implant-figure-resultsext_feassummaryjson">Phase 10: feasibility for a smaller implant (<a href="../../results/figures/ext_feasibility.png">figure</a>, <code>results/ext_feas/summary.json</code>)</h3>
+<p><strong>Why.</strong> The user is considering a different implant: 8 flexible shanks × 32 electrodes, about one Utah array's area in one hemisphere, SBP only. These tests ask how far the paper's decoder survives fewer channels, bad channels, less data and other days.</p>
+<p><strong>Setup.</strong> LSTM-512 on 2–8-s clips with the Phase 8 best setting; day 1869 unless stated; test block 7, mean of the runs shown; RH / LH test r. Reference: 192 channels 0.931 / 0.876. 85 runs, 5.57 GPU-h, none failed.</p>
+<p><strong>Channel count within one array</strong> (random: 3 subsets × 1 seed; greedy + swap: 2 seeds; group lasso and LSTM ablation: 1 seed):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Array, n</th>
+<th>Random (mean)</th>
+<th>Greedy + swap</th>
+<th>Group lasso</th>
+<th>LSTM ablation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A, 8</td>
+<td>0.42 / 0.30</td>
+<td>0.80 / 0.80</td>
+<td>0.79 / 0.69</td>
+<td>0.83 / 0.70</td>
+</tr>
+<tr>
+<td>A, 16</td>
+<td>0.64 / 0.57</td>
+<td>0.88 / 0.82</td>
+<td>0.86 / 0.83</td>
+<td>0.90 / 0.76</td>
+</tr>
+<tr>
+<td>A, 32</td>
+<td>0.73 / 0.59</td>
+<td>0.87 / 0.83</td>
+<td>0.90 / 0.83</td>
+<td>—</td>
+</tr>
+<tr>
+<td>A, 64</td>
+<td>0.87 / 0.77</td>
+<td>0.89 / 0.83</td>
+<td>0.88 / 0.84</td>
+<td>—</td>
+</tr>
+<tr>
+<td>A, 96 (Phase 9)</td>
+<td>0.88 / 0.81</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>B, 8</td>
+<td>0.45 / 0.29</td>
+<td>0.89 / 0.85</td>
+<td>0.87 / 0.80</td>
+<td>0.91 / 0.83</td>
+</tr>
+<tr>
+<td>B, 16</td>
+<td>0.78 / 0.63</td>
+<td>0.92 / 0.87</td>
+<td>0.92 / 0.87</td>
+<td>0.92 / 0.89</td>
+</tr>
+<tr>
+<td>B, 32</td>
+<td>0.85 / 0.74</td>
+<td>0.93 / 0.88</td>
+<td>0.94 / 0.89</td>
+<td>—</td>
+</tr>
+<tr>
+<td>B, 64</td>
+<td>0.91 / 0.85</td>
+<td>0.93 / 0.90</td>
+<td>0.92 / 0.90</td>
+<td>—</td>
+</tr>
+<tr>
+<td>B, 96 (Phase 9)</td>
+<td>0.92 / 0.88</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>On the surrogate (validation block 6), every selection method scores at or above the 99.7th percentile of 1,000 random sets. Swaps help only at n = 8 (+0.01), and group lasso is below greedy + swap at every n. The sets differ: at n = 8, greedy and group lasso share 4–5 channels, greedy and ablation 4–5.</p>
+<p><strong>Muted channels at test</strong> (192 channels, mean of 3 models × 20 masks):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Mode</th>
+<th>30% muted</th>
+<th>50% muted</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Normal</td>
+<td>zero (detected)</td>
+<td>0.87 / 0.84</td>
+<td>0.62 / 0.62</td>
+</tr>
+<tr>
+<td>Normal</td>
+<td>noisy</td>
+<td>0.85 / 0.80</td>
+<td>0.60 / 0.53</td>
+</tr>
+<tr>
+<td>Normal</td>
+<td>dead (undetected)</td>
+<td>0.47 / 0.32</td>
+<td>0.13 / −0.01</td>
+</tr>
+<tr>
+<td>Dropout-trained</td>
+<td>zero (detected)</td>
+<td>0.91 / 0.87</td>
+<td>0.87 / 0.83</td>
+</tr>
+<tr>
+<td>Dropout-trained</td>
+<td>noisy</td>
+<td>0.89 / 0.85</td>
+<td>0.78 / 0.72</td>
+</tr>
+<tr>
+<td>Dropout-trained</td>
+<td>dead (undetected)</td>
+<td>0.54 / 0.32</td>
+<td>0.11 / −0.03</td>
+</tr>
+</tbody>
+</table></div>
+<p>Dropout-trained, nothing muted: 0.917 / 0.883 (normal 0.931 / 0.876). Proxy r (#35): dropout 0.43 / 0.37 / 0.29 at 0 / 30 / 50% vs normal 0.37 / 0.25 / 0.11.</p>
+<p><strong>Training data</strong> (last k blocks, 3 seeds): 1 block (4.2 min) 0.884 / 0.840; 2 (8.4 min) 0.909 / 0.863; 3 (12.8 min) 0.921 / 0.867; 4 (17.1 min) 0.924 / 0.867; 5 (21.4 min) 0.931 / 0.876.</p>
+<p><strong>Other days</strong> (3 seeds; all trials, then two-hand trials only):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Both arrays</th>
+<th>Array A</th>
+<th>Array B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1750 (one- and two-hand trials)</td>
+<td>0.736 / 0.618; two-hand 0.734 / 0.600</td>
+<td>0.664 / 0.514; two-hand 0.670 / 0.549</td>
+<td>0.733 / 0.475; two-hand 0.736 / 0.457</td>
+</tr>
+<tr>
+<td>1867 (one-hand)</td>
+<td>0.906 / 0.891</td>
+<td>0.893 / 0.844</td>
+<td>0.896 / 0.862</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Findings:</strong></p>
+<ul>
+<li><strong>A few well-chosen channels go a long way.</strong> 8 chosen channels of array B keep 96% / 97% of the 192-channel r; 16 keep 98–100%. On array A, 8 chosen channels keep 86% / 92%. Random small subsets are far worse and highly variable (8 random: r 0.11–0.61). So the implant's <em>best</em> channels matter far more than the channel count.</li>
+<li><strong>Selection method:</strong> greedy + swap is best or tied for both hands. LSTM ablation matches it for the RH but is weaker for the LH, and group lasso is slightly weaker at n = 8. Selection used block 6 only, so the test-block numbers are fair, but the chosen sets fit day 1869; their value on other days is untested.</li>
+<li><strong>Channel dropout training makes the decoder robust to detected or noisy channel loss</strong> at almost no cost: with 50% of channels zeroed it keeps 95% / 94% of its r, vs 67% / 71% for the normal decoder. It also scores higher on the closed-loop proxy at every f.</li>
+<li><strong>Undetected dead channels are catastrophic for every decoder</strong>, dropout-trained or not (r 0.47 / 0.32 at 30%). A silent channel's z-value (−μ/σ) is far outside the training range. Bad-channel detection and re-zeroing is essential.</li>
+<li><strong>Little data suffices offline.</strong> One block (4.2 min) keeps 95% / 96% of the r of 21 min.</li>
+<li><strong>&quot;One array is enough&quot; depends on the day.</strong> On 1867 either array keeps 95–99%. On 1750 (harder; both arrays only 0.74 / 0.62) array B keeps the RH (100%) but loses the LH (77%), and array A keeps 90% / 83%. Two-hand trials score about like all trials.</li>
+</ul>
+<h3 id="phase-11-crossings-vs-sbp-in-t5-figure-resultsext_sbpsummaryjson-caveats-docsext_sbp_notesmd">Phase 11: crossings vs SBP in T5 (<a href="../../results/figures/ext_sbp.png">figure</a>, <code>results/ext_sbp/summary.json</code>, <strong>caveats: <a href="ext_sbp_notes.html">docs/ext_sbp_notes.md</a></strong>)</h3>
+<p><strong>Setup.</strong> Public T5 data with both features on the same 48 electrodes (#44): one session, 337 open-loop wrist trials, acausally smoothed. Ridge and FFN, leave-one-block-out (#45). CPU only, about 8 min.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analysis (all 48 channels)</th>
+<th>TX</th>
+<th>log SBP</th>
+<th>SBP − TX [95% CI]</th>
+<th>TX + SBP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Velocity r, ridge</td>
+<td>0.662</td>
+<td>0.613</td>
+<td>−0.049 [−0.070, −0.031]</td>
+<td>0.681</td>
+</tr>
+<tr>
+<td>Velocity r, FFN</td>
+<td>0.700</td>
+<td>0.673</td>
+<td>−0.027 [−0.047, −0.009]</td>
+<td>0.713</td>
+</tr>
+<tr>
+<td>8-target accuracy, movement</td>
+<td>0.810</td>
+<td>0.736</td>
+<td>−0.074 [−0.128, −0.018]</td>
+<td>0.843</td>
+</tr>
+<tr>
+<td>8-target accuracy, delay period</td>
+<td>0.617</td>
+<td>0.568</td>
+<td>−0.049 [−0.131, +0.033]</td>
+<td>0.639</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Findings:</strong></p>
+<ul>
+<li>On all 48 channels SBP is 4–9% behind TX; raw SBP is slightly better than log SBP (velocity 0.625 / 0.676, accuracy 0.766).</li>
+<li>With 4–16 random channels SBP equals or beats TX; within array B it is equal or better at every n, and much better for classification (n = 28: 0.78 vs 0.66). Chosen (greedy) channels favour TX slightly.</li>
+<li>Under muting SBP keeps about the same fraction as TX (50% zeroed: 77% vs 80%). A flat, undetected SBP channel hurts classification badly (the floor value is an assumption, #46).</li>
+<li>An electrode's TX explains a median 35% of its SBP variance; TX + SBP beats either.</li>
+<li><strong>The main caveats:</strong> the 48 electrodes were kept for their TX rate (favours TX); acausal smoothing; open-loop one-hand task; one session; a different SBP band from the target system's; no LSTM; no bimanual data.</li>
+</ul>
+<h2 id="how-to-reproduce">How to reproduce</h2>
+<p>Install pixi, run <code>pixi install</code>, put the Dryad <code>.mat</code> files in <code>Data/</code>, then run the <code>pixi run …</code> commands in <a href="README.html">README.md</a> (Replication section) in figure order. GPU steps (<code>fig3-decoding</code>, <code>fig3-sim</code>, <code>fig4-rnn</code>) are resumable.</p>
+<h2 id="open-items-for-the-user">Open items for the user</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Check the paper against <a href="paper_check.html">docs/paper_check.md</a></strong> and report anything that contradicts our assumptions.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="checked" disabled="disabled" type="checkbox"> <strong>After Phase 6, give Claude the next steps.</strong> Given 2026-11-21: a write-up (Phase 7), LSTM vs GRU (Phase 8) and one-array decoding (Phase 9).</li>
+</ul>
+
+</main>
+</body>
+</html>

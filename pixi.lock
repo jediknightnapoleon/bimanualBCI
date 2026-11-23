@@ -87,8 +87,11 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/win-64/libzlib-1.3.2-hfd05255_3.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/llvm-openmp-23.1.6-ha52be66_0.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/llvmlite-0.50.0-py312h1534abe_1.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/markdown-it-py-4.3.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/matplotlib-3.11.2-py312h8e0e4fc_1.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/matplotlib-base-3.11.2-py312hf9659c1_1.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mdit-py-plugins-0.7.0-pyhd8ed1ab_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mdurl-0.1.2-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/munkres-1.1.4-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/narwhals-2.29.0-pyh5ded981_0.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/numba-0.68.1-py312ha1a9051_1.conda
@@ -272,7 +275,7 @@ packages:
 - pypi: ./
   name: bimanual
   version: 0.1.0
-  sha256: b451909ca6760d37222980354d5cc75c0b097d0b40f72e407fe2de4d2ea2ea35
+  sha256: d505f93252d1a541177cf36cb017fa32d9ea14c236b148fd5f1fac7a5dc1ca1f
   requires_python: '>=3.12,<3.13'
 - conda: https://conda.anaconda.org/conda-forge/win-64/brotli-1.2.1-hc8c2fe1_1.conda
   sha256: 1ae9f55800f9f7aa683a83ca697ce9a52f860a937df9654f502648b976ce365d
@@ -1338,6 +1341,18 @@ packages:
   - pkg:pypi/llvmlite?source=compressed-mapping
   size: 28571283
   timestamp: 1794829642222
+- conda: https://conda.anaconda.org/conda-forge/noarch/markdown-it-py-4.3.0-pyhd8ed1ab_0.conda
+  sha256: 4ccea503ad204bba76b8911fce9245488456bf31249fc6e3d95c072602dc1143
+  md5: 975dce37a9e7d56c4f56981666578b07
+  depends:
+  - mdurl >=0.1,<1
+  - python >=3.10
+  license: MIT
+  license_family: MIT
+  purls:
+  - pkg:pypi/markdown-it-py?source=compressed-mapping
+  size: 74305
+  timestamp: 1794422554733
 - pypi: https://files.pythonhosted.org/packages/3f/bf/62495e180b7000aaf30000fff849e933f74264638057176cf46852500adc/markupsafe-3.0.4-cp312-cp312-win_amd64.whl
   name: markupsafe
   version: 3.0.4
@@ -1388,6 +1403,29 @@ packages:
   - pkg:pypi/matplotlib?source=compressed-mapping
   size: 8538743
   timestamp: 1789824147891
+- conda: https://conda.anaconda.org/conda-forge/noarch/mdit-py-plugins-0.7.0-pyhd8ed1ab_0.conda
+  sha256: 9757a597362961195f6bf0cb93b77ed41814f8461fb99e5728a676193d676b1a
+  md5: b3f1ff606285e87cb76017e004d3b463
+  depends:
+  - markdown-it-py >=3.0.0,<5.0.0
+  - python >=3.10
+  license: MIT
+  license_family: MIT
+  purls:
+  - pkg:pypi/mdit-py-plugins?source=hash-mapping
+  size: 56027
+  timestamp: 1794422336457
+- conda: https://conda.anaconda.org/conda-forge/noarch/mdurl-0.1.2-pyhd8ed1ab_1.conda
+  sha256: 78c1bbe1723449c52b7a9df1af2ee5f005209f67e40b6e1d3c7619127c43b1c7
+  md5: 592132998493b3ff25fd7479396e8351
+  depends:
+  - python >=3.9
+  license: MIT
+  license_family: MIT
+  purls:
+  - pkg:pypi/mdurl?source=hash-mapping
+  size: 14465
+  timestamp: 1733255681319
 - pypi: https://files.pythonhosted.org/packages/43/e3/7d92a15f894aa0c9c4b49b8ee9ac9850d6e63b03c9c32c0367a13ae62209/mpmath-1.3.0-py3-none-any.whl
   name: mpmath
   version: 1.3.0

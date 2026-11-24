@@ -56,6 +56,20 @@ def pearson_per_dim(y: np.ndarray, yhat: np.ndarray) -> np.ndarray:
     return (yc * hc).sum(0) / np.sqrt((yc**2).sum(0) * (hc**2).sum(0))
 
 
+def r2_per_dim(y: np.ndarray, yhat: np.ndarray) -> np.ndarray:
+    """Coefficient of determination per output column: 1 - SSE / SST.
+
+    SST is taken around each column's own mean over the evaluated rows (as sklearn's
+    ``r2_score(..., multioutput="raw_values")``). Unlike Pearson r it penalises gain and offset
+    errors: a prediction with the right shape but twice the amplitude has r = 1 and R^2 = 0, and
+    R^2 is negative when the prediction is worse than the constant mean.
+    """
+    y, yhat = np.asarray(y, float), np.asarray(yhat, float)
+    sse = ((y - yhat) ** 2).sum(0)
+    sst = ((y - y.mean(0)) ** 2).sum(0)
+    return 1.0 - sse / sst
+
+
 # ----------------------------------------------------------------------------- ridge
 def ridge_fit_predict(Xtr, Ytr, Xte, alpha):
     """Closed-form ridge with an unpenalized intercept; returns predictions for Xte."""

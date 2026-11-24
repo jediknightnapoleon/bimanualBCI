@@ -1,0 +1,23 @@
+Pixi task (rescore-r2): python -u scripts/rescore_r2.py --stage sbp
+[    0.5s] move: (337, 175, 48) (5 dropped); delay: (337, 150, 48); blocks [7, 8, 9]; A 20 / B 28 channels
+[   20.9s] item1 velocity_ridge: TX 0.434  SBP 0.323  logSBP 0.300  both 0.462  resid 0.283
+[   40.6s] item1 velocity_ridge_lags: TX 0.434  SBP 0.366  logSBP 0.317  both 0.467  resid 0.203
+[   41.8s] item1 class8_ridge: TX 0.810  SBP 0.766  logSBP 0.736  both 0.843  resid 0.576
+[   42.9s] item1 delay8_ridge: TX 0.617  SBP 0.590  logSBP 0.568  both 0.639  resid 0.525
+[  107.6s] item1 velocity_ffn: TX 0.486  SBP 0.412  logSBP 0.407  both 0.498  resid 0.198
+[  225.2s] item2 velocity all: n4 TX 0.061 SBP 0.075  n8 TX 0.144 SBP 0.148  n16 TX 0.260 SBP 0.237  n32 TX 0.384 SBP 0.292  n48 TX 0.434 SBP 0.300
+[  299.5s] item2 velocity A: n4 TX 0.073 SBP 0.080  n8 TX 0.155 SBP 0.147  n16 TX 0.256 SBP 0.220  n20 TX 0.291 SBP 0.248
+[  349.3s] item2 velocity B: n4 TX 0.061 SBP 0.084  n8 TX 0.134 SBP 0.162  n16 TX 0.274 SBP 0.281  n28 TX 0.378 SBP 0.384
+[  358.9s] item2 greedy all: TX 0.239,0.371,0.415,0.437,0.434  logSBP 0.220,0.286,0.346,0.346,0.300  SBP 0.241,0.321,0.366,0.370,0.323
+[  360.5s] item2 greedy A: TX 0.217,0.276,0.302,0.291  logSBP 0.207,0.215,0.241,0.248  SBP 0.216,0.221,0.243,0.247
+[  363.1s] item2 greedy B: TX 0.271,0.344,0.371,0.378  logSBP 0.215,0.260,0.329,0.384  SBP 0.225,0.241,0.350,0.408
+[  376.0s] item2 class8 all: n4 TX 0.312 SBP 0.320  n8 TX 0.442 SBP 0.432  n16 TX 0.588 SBP 0.585  n32 TX 0.726 SBP 0.703  n48 TX 0.810 SBP 0.736
+[  384.9s] item2 class8 A: n4 TX 0.320 SBP 0.316  n8 TX 0.470 SBP 0.433  n16 TX 0.644 SBP 0.543  n20 TX 0.688 SBP 0.564
+[  393.7s] item2 class8 B: n4 TX 0.306 SBP 0.350  n8 TX 0.421 SBP 0.488  n16 TX 0.555 SBP 0.650  n28 TX 0.656 SBP 0.777
+[  403.4s] item3 velocity TX: normal/zero f0.3 0.331  normal/dead f0.3 0.245  normal/noisy f0.3 0.292  dropout/zero f0.3 0.357  dropout/dead f0.3 0.211  dropout/noisy f0.3 0.291
+[  413.8s] item3 velocity logSBP: normal/zero f0.3 0.248  normal/dead f0.3 -0.290  normal/noisy f0.3 0.145  dropout/zero f0.3 0.231  dropout/dead f0.3 -0.343  dropout/noisy f0.3 0.118
+[  423.6s] item3 velocity SBP: normal/zero f0.3 0.263  normal/dead f0.3 -0.135  normal/noisy f0.3 0.168  dropout/zero f0.3 0.248  dropout/dead f0.3 -0.170  dropout/noisy f0.3 0.144
+[  432.5s] item3 class8 TX: normal/zero f0.3 0.670  normal/dead f0.3 0.538  normal/noisy f0.3 0.662  dropout/zero f0.3 0.668  dropout/dead f0.3 0.528  dropout/noisy f0.3 0.662
+[  440.1s] item3 class8 logSBP: normal/zero f0.3 0.635  normal/dead f0.3 0.367  normal/noisy f0.3 0.632  dropout/zero f0.3 0.635  dropout/dead f0.3 0.359  dropout/noisy f0.3 0.632
+[  447.7s] item3 class8 SBP: normal/zero f0.3 0.650  normal/dead f0.3 0.403  normal/noisy f0.3 0.651  dropout/zero f0.3 0.652  dropout/dead f0.3 0.408  dropout/noisy f0.3 0.650
+[  447.7s] done -> C:\Users\10910\Downloads\bimanual_bci_test\bimanualBCI\results\r2\sbp.json

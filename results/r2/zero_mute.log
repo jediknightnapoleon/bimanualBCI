@@ -1,0 +1,20 @@
+Pixi task (rescore-r2): python -u scripts/rescore_r2.py --stage zero
+zero s08_raw: none R2 0.92/0.77  A R2 0.66/0.57  B R2 0.50/0.35
+zero best_raw_seed101: none R2 0.92/0.79  A R2 0.60/0.58  B R2 0.45/0.35
+zero best_raw_seed102: none R2 0.92/0.80  A R2 0.57/0.57  B R2 0.46/0.43
+zero gru_augL_s08: none R2 0.82/0.73  A R2 0.52/0.52  B R2 0.22/0.35
+zero gru_augL_best_seed101: none R2 0.86/0.73  A R2 0.55/0.19  B R2 0.19/0.14
+zero gru_augL_best_seed102: none R2 0.84/0.75  A R2 0.55/0.38  B R2 0.13/0.23
+zero lstm_raw_s06: none R2 0.92/0.80  A R2 0.63/0.59  B R2 0.44/0.27
+zero lstm_raw_best_seed101: none R2 0.93/0.77  A R2 0.76/0.63  B R2 0.40/0.28
+zero lstm_raw_best_seed102: none R2 0.90/0.75  A R2 0.57/0.57  B R2 0.39/0.23
+zero lstm_augL_s03: none R2 0.86/0.75  A R2 0.59/0.56  B R2 0.34/0.34
+zero lstm_augL_best_seed101: none R2 0.85/0.76  A R2 0.55/0.60  B R2 0.22/0.28
+zero lstm_augL_best_seed102: none R2 0.88/0.78  A R2 0.53/0.61  B R2 0.49/0.29
+Pixi task (rescore-r2): python -u scripts/rescore_r2.py --stage mute
+mute lstm_augL_s03 (normal) zero-mode R2: f=0.0: 0.86/0.75  f=0.1: 0.84/0.74  f=0.2: 0.81/0.70  f=0.3: 0.75/0.69  f=0.4: 0.66/0.63  f=0.5: 0.42/0.39  f=0.6: 0.32/0.26
+mute lstm_augL_best_seed101 (normal) zero-mode R2: f=0.0: 0.85/0.76  f=0.1: 0.83/0.75  f=0.2: 0.80/0.73  f=0.3: 0.71/0.69  f=0.4: 0.61/0.63  f=0.5: 0.33/0.39  f=0.6: 0.20/0.26
+mute lstm_augL_best_seed102 (normal) zero-mode R2: f=0.0: 0.88/0.78  f=0.1: 0.86/0.76  f=0.2: 0.84/0.75  f=0.3: 0.77/0.71  f=0.4: 0.68/0.63  f=0.5: 0.41/0.40  f=0.6: 0.33/0.29
+mute drop_seed3 (dropout) zero-mode R2: f=0.0: 0.83/0.77  f=0.1: 0.83/0.77  f=0.2: 0.83/0.76  f=0.3: 0.83/0.75  f=0.4: 0.82/0.73  f=0.5: 0.75/0.66  f=0.6: 0.74/0.63
+mute drop_seed101 (dropout) zero-mode R2: f=0.0: 0.85/0.78  f=0.1: 0.84/0.78  f=0.2: 0.84/0.77  f=0.3: 0.83/0.76  f=0.4: 0.82/0.75  f=0.5: 0.74/0.70  f=0.6: 0.74/0.67
+mute drop_seed102 (dropout) zero-mode R2: f=0.0: 0.83/0.76  f=0.1: 0.83/0.76  f=0.2: 0.82/0.75  f=0.3: 0.81/0.74  f=0.4: 0.79/0.72  f=0.5: 0.72/0.67  f=0.6: 0.70/0.64

@@ -50,6 +50,8 @@ Items
 
 Outputs: results/ext_sbp/summary.json; then scripts/ext_sbp_plot.py draws
 results/figures/ext_sbp.{png,svg}.
+With ``--metric r2 --out results/r2/sbp.json`` (run by scripts/rescore_r2.py) the velocity scores are
+R^2 instead of r (register #47); models and selections are the same.
 Run    : CUDA_VISIBLE_DEVICES="" OMP_NUM_THREADS=4 pixi run python -I scripts/ext_sbp.py
 """
 
@@ -75,7 +77,7 @@ torch.set_num_threads(4)
 
 from bimanual import sbp as S  # noqa: E402
 from bimanual.cache import atomic_write_json  # noqa: E402
-from bimanual.decoders import ffn_fit_predict  # noqa: E402
+from bimanual.decoders import ffn_fit_predict, r2_per_dim  # noqa: E402
 
 ALPHAS = np.logspace(-1, 5, 13)
 VEL_WIN = (-200, 500)
@@ -89,6 +91,10 @@ POOLS = {"all": (4, 8, 16, 32, 48), "A": (4, 8, 16, 20), "B": (4, 8, 16, 28)}
 MUTE_FRACS = (0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6)
 N_MASKS = 20
 DROPOUT_COPIES, DROPOUT_MAX = 4, 0.5
+# Reported velocity metric: "r" (default, Pearson r) or "r2" (1 - SSE/SST, set by --metric r2 for the R^2
+# rescoring). Model selection (ridge alpha, greedy channel order) always uses r, so both runs fit the
+# same models and only the reported score differs.
+REPORT_METRIC = "r"
 MAIN = ("TX", "logSBP", "SBP")  # features compared in items 2-3 (logSBP = main SBP feature, chosen a priori)
 
 
@@ -135,7 +141,12 @@ class VelTask:
             return F[:, self.w]
         return np.concatenate([S.shift_bins(F, k)[:, self.w] for k in self.lags], -1)
 
-    def score(self, y, yhat):  # y, yhat: (trials, W, 2)
+    def score(self, y, yhat):  # y, yhat: (trials, W, 2); the reported metric
+        if REPORT_METRIC == "r2":
+            return float(r2_per_dim(y.reshape(-1, 2), yhat.reshape(-1, 2)).mean())
+        return S.mean_r(y.reshape(-1, 2), yhat.reshape(-1, 2))
+
+    def select_score(self, y, yhat):  # model selection: always Pearson r
         return S.mean_r(y.reshape(-1, 2), yhat.reshape(-1, 2))
 
 
@@ -153,6 +164,8 @@ class ClsTask:
 
     def score(self, y, yhat):
         return float(np.mean(y.argmax(-1) == yhat.argmax(-1)))
+
+    select_score = score
 
 
 def _rows(task, A, m):
@@ -181,7 +194,7 @@ class FoldModel:
         out = []
         for g, Xv, Yv in self.inner:
             p = g.predict(Xv, s, alpha).reshape(Yv.shape)
-            out.append(self.task.score(Yv, p))
+            out.append(self.task.select_score(Yv, p))
         return float(np.mean(out))
 
     def best_alpha(self, s):
@@ -417,9 +430,14 @@ def main():
     ap.add_argument("--move", default=str(S.MOVE_FILE))
     ap.add_argument("--delay", default=str(S.DELAY_FILE))
     ap.add_argument("--items", default="1234")
+    ap.add_argument("--metric", choices=["r", "r2"], default="r", help="reported velocity metric (selection uses r)")
+    ap.add_argument("--out", default=str(S.OUT_DIR / "summary.json"))
     args = ap.parse_args()
-    S.OUT_DIR.mkdir(parents=True, exist_ok=True)
-    logf = open(S.OUT_DIR / "run_log.txt", "a")
+    global REPORT_METRIC
+    REPORT_METRIC = args.metric
+    out_path = Path(args.out)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    logf = open(out_path.parent / ("run_log.txt" if args.metric == "r" else f"run_log_{args.metric}.txt"), "a")
     t0 = time.time()
 
     def log(msg):
@@ -433,7 +451,6 @@ def main():
     fb, dead = zip(*[fold_features(d, train) for _, train, _ in folds(d)])
     fb_delay = [fold_features(dd, train)[0] for _, train, _ in folds(dd)]
 
-    out_path = S.OUT_DIR / "summary.json"
     summary = json.loads(out_path.read_text()) if out_path.exists() else {}
     summary["meta"] = dict(
         data=[d.meta, dd.meta], n_trials_move=int(len(d.tx)), n_trials_delay_used=int((dd.delay >= DELAY_MIN_S).sum()),
@@ -443,7 +460,7 @@ def main():
         velocity_window_ms=VEL_WIN, class8_window_ms=CLS_WIN, delay8_window_ms=DELAY_WIN, delay_min_s=DELAY_MIN_S,
         alphas=ALPHAS.tolist(), lags_bins=LAGS, ffn_seeds=FFN_SEEDS, n_boot=N_BOOT, n_subsets=N_SUB, pools=POOLS,
         mute_fracs=MUTE_FRACS, n_masks=N_MASKS, dropout=dict(copies=DROPOUT_COPIES, max_p=DROPOUT_MAX),
-        main_sbp_feature="logSBP", chance_class8=0.125)
+        main_sbp_feature="logSBP", chance_class8=0.125, velocity_metric=REPORT_METRIC)
     if "1" in args.items:
         summary["item1_features"] = item1(d, dd, fb, fb_delay, log)
         atomic_write_json(out_path, summary)

@@ -90,4 +90,5 @@ paper-style = "python -u scripts/paper_style_figures.py"
 figure-comparison = "python scripts/make_figure_comparison.py"
 # Cursor replays (logged online blocks, our decoders re-run offline) -> docs/html/replays.html
 replays = "python -u scripts/make_replays.py"
+rescore-r2 = "python -u scripts/rescore_r2.py"
 check-gpu = "python -c \"import torch; print('torch', torch.__version__, 'cuda', torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else '')\""

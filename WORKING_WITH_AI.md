@@ -63,7 +63,7 @@ The short version:
 
 Both are in [docs/figure_comparison.md](docs/figure_comparison.md).
 
-**Look at the data, not only at summary numbers.** [docs/html/replays.html](docs/html/replays.html) replays the logged cursors and our decoders' outputs next to the neural activity. A result you have watched happen is much easier to explain and defend.
+**Look at the data, not only at summary numbers.** [docs/html/replays.html](docs/html/replays.html) replays the logged cursors and our decoders' outputs next to the neural activity (how to open it, and its online copy: [Viewing the replays](README.md#viewing-the-replays)). A result you have watched happen is much easier to explain and defend.
 
 **Reproduce one key number yourself.** In a blank notebook, recompute one headline value from the raw data without the project's helper functions. For example, take the ridge decoding r on day 1883. If you can't, you don't yet understand the pipeline.
 

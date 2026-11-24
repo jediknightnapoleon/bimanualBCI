@@ -47,6 +47,7 @@ This branch (`replication`) adds an independent Python replication of the paper'
 
 ### Viewing the replays
 - **Open it in any browser.** [docs/html/replays.html](docs/html/replays.html) is self-contained (about 10 MB, data embedded), so it needs no server and no Python. Only the fonts come from the internet; offline it uses system fonts.
+- **Online copy:** the same replays are published at <https://claude.ai/artifact/8uo59AGFwhUPsZWmH16KA4> (a Claude artifact). It is private to its owner's claude.ai account until they share it from there, so anyone else gets an access page rather than the replays. It can also lag behind the copy in git, which is the reference version.
 - **From GitHub**, an HTML file shows as source code. Either download it (open the file, then *Download raw file*), or serve it with GitHub Pages: *Settings → Pages → Deploy from a branch*, branch `replication`, folder `/docs`. The page is then at `https://<user>.github.io/bimanualBCI/html/replays.html`. Pages makes that folder public, and private repositories need a paid plan for it.
 - **Rebuilding** (`pixi run replays`) needs inputs that are not in git, about 220 MB in total:
   - the Dryad files for days 1778, 1855, 1869, 1881 and 1883 in `Data/`;
